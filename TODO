@@ -1,0 +1,38 @@
+Knowed bugs
+--------------------
+
+
+New features
+--------------------
+
+New features next versions
+---------------------------
+
+- To options, order by positions, the options in a product.
+
+- Blocks for change language and change currency.
+
+- Modules for different parts (comments for products, etc). 
+
+- products in front, this model is a table width 2 fields, idproduct and order in portada.
+
+- A module for other countries...
+
+- Options can add more costs...
+
+- Protection for DOS attacks in buying?.
+
+- Plugin for images that options products.
+
+- Select all products in products with options.
+
+- Things how gift paper in a module.
+
+- Group products with same options Example
+
+-- Iron man
+
+-- 5 with this options
+
+-- 6 with this options
+
