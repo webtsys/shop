@@ -3,7 +3,7 @@
 function ProductListView($idproduct, $title_product, $description, $image, $price, $stock, $tax, $weight)
 {
 
-global $base_url, $lang, $model, $config_data;
+global $base_url, $lang, $model, $config_data, $config_shop;
 
 //Set image 1
 
@@ -43,11 +43,18 @@ else
 			<a href="<?php echo make_fancy_url($base_url, 'shop', 'viewproduct', $title_product, array('IdProduct' => $idproduct) ); ?>" class="see">
 				<?php echo $lang['shop']['see_product']; ?>
 			</a>
+			<?php
+		if($config_shop['view_only_mode']==0)
+		{
+		?>
 		<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship">
 				<span id="text_buy_<?php echo $idproduct; ?>"><?php echo $lang['shop']['buy_product']; ?></span><img id="loading_buy_<?php echo $idproduct; ?>" src="<?php echo $base_url; ?>/media/default/images/loading.gif" alt="<?php echo $lang['shop']['buying_product']; ?>" style="display: none;" />
 		</a>
 		<br clear="all" />
 		<p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p>
+		<?php
+		}
+		?>
 		</div>
 	</div>
 </div>

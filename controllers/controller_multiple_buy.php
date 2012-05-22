@@ -25,7 +25,7 @@ function Multiple_Buy()
 
 	//print_r($_POST);
 
-	if($user_data['IdUser']>0)
+	if($user_data['IdUser']>0 && $config_shop['view_only_mode']==0)
 	{
 
 		$arr_product=array();

@@ -102,6 +102,7 @@ function ShopAdmin()
 			$model['config_shop']->forms['bill_data_shop']->label=$lang['shop']['bill_data_shop'];
 			$model['config_shop']->forms['footer_bill']->label=$lang['shop']['footer_bill'];
 			$model['config_shop']->forms['idcurrency']->label=$lang['shop']['currency'];
+			$model['config_shop']->forms['view_only_mode']->label=$lang['shop']['view_only_mode'];
 
 			$query=$model['config_shop']->select('limit 1', array(), 1);
 			
@@ -109,7 +110,7 @@ function ShopAdmin()
 			
 			SetValuesForm($result, $model['config_shop']->forms, $show_error=0);
 
-			InsertModelForm('config_shop', make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('image_bill', 'num_news', 'yes_taxes', 'idtax', 'yes_transport', 'idcurrency', 'type_index', 'explain_discounts_page', 'ssl_url', 'title_shop', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
+			InsertModelForm('config_shop', make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('image_bill', 'num_news', 'yes_taxes', 'idtax', 'yes_transport', 'view_only_mode', 'idcurrency', 'type_index', 'explain_discounts_page', 'ssl_url', 'title_shop', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
 
 		break;
 

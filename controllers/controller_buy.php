@@ -48,7 +48,7 @@ function Buy()
 	
 	$name_product=$model['product']->components['title']->show_formatted($name_product);
 	
-	if($num_prod>0 && ( $stock>0 || $about_order==1 ))
+	if($num_prod>0 && ( $stock>0 || $about_order==1 ) && $config_shop['view_only_mode']==0)
 	{	
 
 		ob_clean();

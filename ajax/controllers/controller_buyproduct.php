@@ -12,28 +12,39 @@ function BuyProduct()
 	settype($_GET['IdProduct'], 'integer');
 
 	//Only for buy products without options.
-
-	$buy_return=0;
-
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('price', 'special_offer','extra_options'));
 	
-	list($price, $special_offer, $extra_options)=webtsys_fetch_row($query);
-	 
-	if($extra_options=='')
+	if($config_shop['view_only_mode']==0)
 	{
 
-		//No extra_options, add to cart...
+		$buy_return=0;
 
-		$buy_return=add_cart($arr_details=array(), $price, $special_offer, $redirect=0);
-
+		$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('price', 'special_offer','extra_options'));
 		
+		list($price, $special_offer, $extra_options)=webtsys_fetch_row($query);
 		
+		if($extra_options=='')
+		{
 
+			//No extra_options, add to cart...
+
+			$buy_return=add_cart($arr_details=array(), $price, $special_offer, $redirect=0);
+
+			
+			
+
+		}
+
+		$jsondata['buy_return']=$buy_return;
+
+		echo json_encode($jsondata);
+	  
 	}
-
-	$jsondata['buy_return']=$buy_return;
-
-	echo json_encode($jsondata);
+	else
+	{
+	
+		echo json_encode(array());
+	
+	}
 
 }
 

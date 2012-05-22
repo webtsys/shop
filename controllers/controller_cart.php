@@ -51,7 +51,7 @@ function Cart()
 
 	//If order is send, then go to payment gateway
 
-	if($num_products>0)
+	if($num_products>0 && $config_shop['view_only_mode']==0)
 	{
 
 		if($arr_order_shop['IdOrder_shop']==0)

@@ -451,6 +451,8 @@ $model['config_shop']->components['explain_discounts_page']->container_model='pa
 $model['config_shop']->components['idcurrency']=new ForeignKeyField('currency', 11);
 $model['config_shop']->components['idcurrency']->required=1;
 
+$model['config_shop']->components['view_only_mode']=new BooleanField();
+
 class dir_transport extends Webmodel {
 
 	function __construct()
