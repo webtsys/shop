@@ -698,6 +698,15 @@ function ShopAdmin()
 
 			load_libraries(array('config_shop', 'fpdf/fpdf'), $base_path.'/modules/shop/libraries/');
 			load_libraries(array('form_date'));
+			
+			if(!function_exists('iconv'))
+			{
+			
+				echo '<p>Error: iconv function don\'t exists. Install php iconv module</p>';
+			
+				break;
+			
+			}
 
 			
 			class PDF extends FPDF
@@ -1005,7 +1014,7 @@ function ShopAdmin()
 
 					$price_final=apply_discount($arr_order['discount_percent'], $arr_product_total[$arr_product['idproduct']]);
 
-					$arr_product['product_title']=iconv("UTF-8", "CP1252", $model['product']->components['title']->show_formatted( $arr_product['product_title'] ) );
+					$arr_product['product_title']=iconv("UTF-8", "CP1252", substr( $model['product']->components['title']->show_formatted( $arr_product['product_title'] ) , 0, 25) );
 					$price_product=iconv("UTF-8", "CP1252", MoneyField::currency_format($arr_product['price_product']) );
 					$price_final_product=iconv("UTF-8", "CP1252", MoneyField::currency_format($price_final) );
 

@@ -5,9 +5,13 @@ Knowed bugs
 New features
 --------------------
 
-In facturation i need pdflib.
-
 I need revise bills for no long name in products, etc.
+
+Need example countries.
+
+Need set need transport to default.
+
+Need set payment by default. Payment need be internationalized.
 
 New features next versions
 ---------------------------

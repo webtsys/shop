@@ -30,6 +30,23 @@ function Cart()
 	
 	}
 	
+	//If no yes_transport don't need transport_fields in order shop
+					
+	if($config_shop['yes_transport']==0)
+	{
+	
+		$arr_fields_trans=array('name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'zone_transport', 'transport');
+	
+		foreach($arr_fields_trans as $name_trans)
+		{
+		
+			$model['order_shop']->components[$name_trans]->required=0;
+		
+		}
+		
+	
+	}
+	
 	
 	settype($_GET['op'], 'integer');
 
@@ -133,10 +150,11 @@ function Cart()
 					$model['user']->check_all($_POST);
 
 					//echo $_POST['zone_transport'];
+					
 
 					if($model['order_shop']->check_all($_POST))
 					{
-
+					
 						//Prepare post...
 						
 						$post=array();
@@ -147,14 +165,19 @@ function Cart()
 							$post[$field]=$_POST[$field];
 
 						}
-
+						
 						$post_transport=array();
-
-						foreach($update_transport as $field)
+						
+						if($config_shop['yes_transport'])
 						{
 
-							$post_transport[$field]=$_POST[$field];
+							foreach($update_transport as $field)
+							{
 
+								$post_transport[$field]=$_POST[$field];
+
+							}
+							
 						}
 
 						//Obtain real name for country
@@ -268,25 +291,30 @@ function Cart()
 
 							}
 
-							$post['country']=$real_country;
-
-							$num_dir_transport=$model['dir_transport']->select_count('where iduser='.$user_data['IdUser'], 'IdDir_transport');
-
-							settype($num_dir_transport, 'integer');
+							if($config_shop['yes_transport'])
+							{
 							
-							if($num_dir_transport>0)
-							{
+								$post['country']=$real_country;
 
-								$model['dir_transport']->update($post_transport, 'where iduser='.$user_data['IdUser']);
+								$num_dir_transport=$model['dir_transport']->select_count('where iduser='.$user_data['IdUser'], 'IdDir_transport');
 
-							}
-							else
-							{
+								settype($num_dir_transport, 'integer');
+								
+								if($num_dir_transport>0)
+								{
 
-								$post_transport['iduser']=$user_data['IdUser'];
+									$model['dir_transport']->update($post_transport, 'where iduser='.$user_data['IdUser']);
 
-								$model['dir_transport']->insert($post_transport);
+								}
+								else
+								{
 
+									$post_transport['iduser']=$user_data['IdUser'];
+
+									$model['dir_transport']->insert($post_transport);
+
+								}
+								
 							}
 
 						}
@@ -436,6 +464,8 @@ function Cart()
 						{
 							//print_r($arr_product);
 							settype($arr_products[$arr_product['idproduct']]['units'], 'integer');
+							
+							$price=$arr_product['product_price'];
 							
 							$arr_products[$arr_product['idproduct']]['units']++;
 							
@@ -826,7 +856,7 @@ function Cart()
 				if( !send_mail($user_data['email'], $lang['shop']['your_orders']." - ".$portal_name, $text_explain_user.$content_mail, 'html') || !send_mail($config_data['portal_email'], $lang['shop']['orders']." - ".$portal_name, '<h1>'.$lang['shop']['new_order'].'</h1><p>'.$lang['shop']['explain_new_order'].'</p>'.$content_mail.$send_email_admin, 'html') )
 				{
 
-					echo '<p>Error: '.$lang['shop']['error_cannot_send_email'].', '.$lang['shop']['use_this_id_for_contact_with_us'].' '.$arr_order_shop['IdOrder_shop'];
+					echo '<p>'.$lang['shop']['error_cannot_send_email'].', '.$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
 
 				}
 
@@ -1326,6 +1356,10 @@ function show_total_prices($sha1_token, $type_cart=0)
 	//obtain products...
 	
 	list($total_sum, $total_weight, $total_taxes, $discount_name, $discount_principal, $discount_taxes, $discount_transport, $discount_payment)=show_cart_simple($sha1_token, 0, $type_cart);
+	
+	$name_transport=0;
+	$price_total_transport=0;
+	$price_total_transport_original=0;
 	
 	//obtain prices for transport...
 					
