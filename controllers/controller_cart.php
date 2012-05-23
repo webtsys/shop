@@ -562,7 +562,7 @@ function Cart()
 						$text_num_products=TextForm('num_products', 'units', $num_products);
 
 						?>
-						<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'modify_product_options', array('IdProduct' => $_GET['IdProduct'])); ?>">
+						<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'modify_product_options', array('IdProduct' => $_GET['IdProduct'], 'add_more_units' => 1)); ?>">
 						<?php
 						set_csrf_key();
 

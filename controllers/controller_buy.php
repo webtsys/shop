@@ -48,7 +48,9 @@ function Buy()
 	
 	$name_product=$model['product']->components['title']->show_formatted($name_product);
 	
-	if($num_prod>0 && ( $stock>0 || $about_order==1 ) && $config_shop['view_only_mode']==0)
+	//$config_shop['view_only_mode']==0
+	
+	if($num_prod>0 && ( $stock>0 || $about_order==1 ))
 	{	
 
 		ob_clean();
@@ -116,69 +118,81 @@ function Buy()
 		{
 
 			settype($_POST['num_products'], 'integer');
+			settype($_GET['add_more_units'], 'integer');
 	
 			$num_products=$model['cart_shop']->select_count('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"', 'IdProduct');
 
 			$redirect_url=make_fancy_url($base_url, 'shop', 'cart', 'modify_product_options', array('op' => 4, 'IdProduct' => $_GET['IdProduct']));
 
-			if($_POST['num_products']==0)
+			if($_GET['add_more_units']==1)
 			{
-
-				/*$redirect_url=make_fancy_url($base_url, 'shop', 'cart', 'cart', array(''));
-
-				$query=$model['cart_shop']->delete('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"');
-		
-				load_libraries(array('redirect'));
-				die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );*/
-
-				 delete_all_products($_GET['IdProduct'], $sha1_token, $arr_block);
-
-			}
-			else
-			if($_POST['num_products']<$num_products)
-			{
-
-				$delete_products=$num_products-$_POST['num_products'];
-
-				$query=$model['cart_shop']->delete('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'" limit '.$delete_products);
-
-				ob_end_clean();
-
-				load_libraries(array('redirect'));
-				die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
-
-
-			}
-			else
-			if($_POST['num_products']>$num_products)
-			{
-
-				$add_products=$_POST['num_products']-$num_products;
-
-				//This rutine need optimitation
-
-				for($x=0;$x<$add_products;$x++)
+			
+				if($_POST['num_products']==0)
 				{
 
-					//add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
-					add_cart(array(), $price, $special_offer, 0);
+					/*$redirect_url=make_fancy_url($base_url, 'shop', 'cart', 'cart', array(''));
+
+					$query=$model['cart_shop']->delete('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"');
+			
+					load_libraries(array('redirect'));
+					die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );*/
+
+					delete_all_products($_GET['IdProduct'], $sha1_token, $arr_block);
 
 				}
+				else
+				if($_POST['num_products']<$num_products)
+				{
 
-				ob_end_clean();
+					$delete_products=$num_products-$_POST['num_products'];
 
-				load_libraries(array('redirect'));
-				die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+					$query=$model['cart_shop']->delete('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'" limit '.$delete_products);
 
+					ob_end_clean();
+
+					load_libraries(array('redirect'));
+					die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+
+
+				}
+				else
+				if($_POST['num_products']>$num_products)
+				{
+
+					$add_products=$_POST['num_products']-$num_products;
+
+					//This rutine need optimitation
+
+					for($x=0;$x<$add_products;$x++)
+					{
+
+						//add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
+						add_cart(array(), $price, $special_offer, 0);
+
+					}
+
+					ob_end_clean();
+
+					load_libraries(array('redirect'));
+					die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+
+				}
+				else
+				{
+
+					ob_end_clean();
+
+					load_libraries(array('redirect'));
+					die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+
+				}
+				
 			}
 			else
 			{
-
-				ob_end_clean();
-
-				load_libraries(array('redirect'));
-				die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
-
+			
+				add_cart(array(), $price, $special_offer);
+			
 			}
 
 			//add_cart(array(), $price, $special_offer);
