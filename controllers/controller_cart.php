@@ -334,6 +334,8 @@ function Cart()
 						
 						while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
 						{
+						
+							$name=I18nField::show_formatted($name);
 				
 							if($price>0)
 							{
@@ -711,6 +713,8 @@ function Cart()
 				$query=webtsys_query('select order_shop.payment_form, payment_form.name, payment_form.code from order_shop, payment_form where order_shop.payment_form=payment_form.IdPayment_form and order_shop.token="'.$sha1_token.'"');
 
 				list($idpayment_form, $name_payment, $code_payment)=webtsys_fetch_row($query);
+				
+				$name_payment=I18nField::show_formatted($name_payment);
 				
 				if(!include($base_path.'modules/shop/payment/'.basename($code_payment)))
 				{
@@ -1404,6 +1408,8 @@ function show_total_prices($sha1_token, $type_cart=0)
 	$query=$model['payment_form']->select('where IdPayment_form='.$arr_order_shop['payment_form'], array('name', 'price_payment'));
 
 	list($name_payment_form, $price_payment)=webtsys_fetch_row($query);
+	
+	$name_payment_form=I18nField::show_formatted($name_payment_form);
 
 	settype($price_payment, 'double');
 

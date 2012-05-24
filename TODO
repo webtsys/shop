@@ -20,7 +20,7 @@ New features next versions
 
 - Blocks for change language and change currency.
 
-- Modules for different parts (comments for products, etc). 
+- Modules for different parts (comments for products, etc). The modules can be how properties in pages. You can order the properties.
 
 - products in front, this model is a table width 2 fields, idproduct and order in portada.
 

@@ -490,7 +490,7 @@ class payment_form extends Webmodel {
 }
 
 $model['payment_form']=new payment_form();
-$model['payment_form']->components['name']=new CharField(255);
+$model['payment_form']->components['name']=new I18nField(new TextField());;
 $model['payment_form']->components['name']->required=1;
 $model['payment_form']->components['code']=new ChoiceField(255, 'string');
 $model['payment_form']->components['price_payment']=new MoneyField();
