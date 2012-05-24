@@ -292,6 +292,8 @@ $lang['shop']['countries_zones']='Zonas';
 
 $lang['shop']['country_code']='Código de zona';
 
+$lang['shop']['other_countries']='Abarcar todos los países que no estén en ninguna otra zona';
+
 $lang['shop']['go_back_to_transport']='Regresar a transporte';
 
 $lang['shop']['go_back_to_taxes']='Regresar a impuestos';

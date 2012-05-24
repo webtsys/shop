@@ -292,6 +292,8 @@ $lang['shop']['countries_zones']='countries_zones';
 
 $lang['shop']['country_code']='country_code';
 
+$lang['shop']['other_countries']='other_countries';
+
 $lang['shop']['go_back_to_transport']='go_back_to_transport';
 
 $lang['shop']['go_back_to_taxes']='go_back_to_taxes';

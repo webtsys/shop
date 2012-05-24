@@ -387,6 +387,8 @@ function ShopAdmin()
 			$model['zone_shop']->forms['name']->label=$lang['common']['name'];
 
 			$model['zone_shop']->forms['code']->label=$lang['shop']['country_code'];
+			
+			$model['zone_shop']->forms['other_countries']->label=$lang['shop']['other_countries'];
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array('name', 'code');
