@@ -155,18 +155,21 @@ class image_product extends Webmodel {
 
 		//Delete images from field...
 		
-		$query=$this->select($conditions, array('principal', 'photo', 'idproduct'));
+		$query=$this->select($conditions, array('IdImage_product', 'principal', 'photo', 'idproduct'));
 
-		while(list($principal, $photo, $idproduct)=webtsys_fetch_row($query))
+		while(list($idimage, $principal, $photo, $idproduct)=webtsys_fetch_row($query))
 		{
+			
 			if($photo!='')
 			{
 				//echo $this->components['photo']->path.'/'.$photo;
 
 				@unlink($this->components['photo']->path.'/'.$photo);
+				
 
 				foreach($this->components['photo']->img_width as $name_width => $width)
 				{
+				
 
 					@unlink($this->components['photo']->path.'/'.$name_width.'_'.$photo);
 
@@ -176,8 +179,8 @@ class image_product extends Webmodel {
 
 			if($principal==1)
 			{
-
-				$query=webtsys_query('update image_product set principal=1 where idproduct='.$idproduct.' limit 1');
+				
+				$query=webtsys_query('update image_product set principal=1 where idproduct='.$idproduct.' and IdImage_product!='.$idimage.' limit 1');
 
 			}
 
