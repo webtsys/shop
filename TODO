@@ -1,6 +1,9 @@
 Knowed bugs
 --------------------
 
+- In sql file, error in sql sentence.
+
+<p>Error: INSERT INTO `transport` VALUES (0,'0',0),(1,'SEUR',1),(2,'UPS',2),(3,'GPS',3); -> Duplicate entry '2' for key 'PRIMARY'</p>Error: in sentence INSERT INTO `transport` VALUES (0,'0',0),(1,'SEUR',1),(2,'UPS',2),(3,'GPS',3);
 
 New features
 --------------------
