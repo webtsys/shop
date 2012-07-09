@@ -150,8 +150,8 @@ function ViewCategory()
 
 			}
 
-			$arr_stock[0]=$lang['shop']['in_stock'];
-			$arr_stock[1]=$lang['shop']['no_stock'];
+			$arr_stock[0]=$lang['shop']['no_stock'];
+			$arr_stock[1]=$lang['shop']['in_stock'];
 
 			if($about_order==0)
 			{

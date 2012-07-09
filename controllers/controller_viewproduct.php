@@ -23,9 +23,9 @@ function ViewProduct()
 
 	$idtax=$config_shop['idtax'];
 
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array($model['product']->idmodel, 'title', 'description',  'price', 'special_offer', 'stock', 'about_order', 'weight'), 1);
+	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array($model['product']->idmodel, 'title', 'description', 'idcat',  'price', 'special_offer', 'stock', 'about_order', 'weight'), 1);
 
-	list($idproduct, $title, $description, $price, $offer, $stock, $about_order, $weight)=webtsys_fetch_row($query);
+	list($idproduct, $title, $description, $idcat_product, $price, $offer, $stock, $about_order, $weight)=webtsys_fetch_row($query);
 	
 	$title=$model['product']->components['title']->show_formatted($title);
 	$description=$model['product']->components['description']->show_formatted($description);
