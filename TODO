@@ -5,12 +5,14 @@ Knowed bugs
 
 <p>Error: INSERT INTO `transport` VALUES (0,'0',0),(1,'SEUR',1),(2,'UPS',2),(3,'GPS',3); -> Duplicate entry '2' for key 'PRIMARY'</p>Error: in sentence INSERT INTO `transport` VALUES (0,'0',0),(1,'SEUR',1),(2,'UPS',2),(3,'GPS',3);
 
-- Pagination in viewcategory...
+- When delete products, the system don't delete images...
 
 New features
 --------------------
 
 - In Viewcategory, load all objects, also subcategories.
+
+- Can add new index page types without programming.
 
 
 New features next versions
@@ -35,8 +37,6 @@ New features next versions
 - Select all products in products with options.
 
 - Things how gift paper in a module.
-
-- Make modular the index page, user have to can create his own index pages...
 
 - Group products with same options Example
 

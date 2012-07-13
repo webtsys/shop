@@ -1,5 +1,7 @@
 <?php
 
+$lang['shop']['see_products']='see_products';
+
 $lang['shop']['offer']='offer';
 
 $lang['shop']['no_stock']='no_stock';
@@ -9,8 +11,6 @@ $lang['shop']['in_stock']='in_stock';
 $lang['shop']['served_on_request']='served_on_request';
 
 $lang['shop']['no_new_products']='no_new_products';
-
-$lang['shop']['see_products']='see_products';
 
 $lang['shop']['included']='included';
 
@@ -50,9 +50,37 @@ $lang['shop']['paypal_explain']='paypal_explain';
 
 $lang['shop']['checkout_order']='checkout_order';
 
-$lang['shop']['no_exists_product']='no_exists_product';
+$lang['shop']['error_other_countries_is_selected']='error_other_countries_is_selected';
 
-$lang['shop']['this_product_is_not_found']='this_product_is_not_found';
+$lang['shop']['zone']='zone';
+
+$lang['shop']['transport']='transport';
+
+$lang['shop']['make_payment']='make_payment';
+
+$lang['shop']['observations']='observations';
+
+$lang['shop']['this_currency_have_equivalence']='this_currency_have_equivalence';
+
+$lang['shop']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
+
+$lang['shop']['options_for_product']='options_for_product';
+
+$lang['shop']['need_minimum_an_option']='need_minimum_an_option';
+
+$lang['shop']['go_back_cart']='go_back_cart';
+
+$lang['shop']['product_options']='product_options';
+
+$lang['shop']['shopping_cart']='shopping_cart';
+
+$lang['shop']['no_stock_for_this_article']='no_stock_for_this_article';
+
+$lang['shop']['select_category_shop']='select_category_shop';
+
+$lang['shop']['choose_category']='choose_category';
+
+$lang['shop']['no_products_in_category']='no_products_in_category';
 
 $lang['shop']['explain_cart_options']='explain_cart_options';
 
@@ -63,8 +91,6 @@ $lang['shop']['explain_payment_type_transport_type']='explain_payment_type_trans
 $lang['shop']['payment_type']='payment_type';
 
 $lang['shop']['mode_payment_free_charge']='mode_payment_free_charge';
-
-$lang['shop']['transport']='transport';
 
 $lang['shop']['error_in_country_no_exists_transport']='error_in_country_no_exists_transport';
 
@@ -151,8 +177,6 @@ $lang['shop']['explain_order']='explain_order';
 $lang['shop']['send_address_equal_shopping_address']='send_address_equal_shopping_address';
 
 $lang['shop']['register_user_if_not_register']='register_user_if_not_register';
-
-$lang['shop']['observations']='observations';
 
 $lang['shop']['observations_text']='observations_text';
 
@@ -278,8 +302,6 @@ $lang['shop']['zones_taxes']='zones_taxes';
 
 $lang['shop']['percent']='Porcentaje';
 
-$lang['shop']['zone']='zone';
-
 $lang['shop']['edit_transport']='edit_transport';
 
 $lang['shop']['zones_transport']='zones_transport';
@@ -313,8 +335,6 @@ $lang['shop']['transport_for_group']='transport_for_group';
 $lang['shop']['shipping_costs_for_group']='shipping_costs_for_group';
 
 $lang['shop']['total_price']='total_price';
-
-$lang['shop']['make_payment']='make_payment';
 
 $lang['shop']['edit_image_product']='edit_image_product';
 
@@ -360,39 +380,9 @@ $lang['shop']['add__user_to_group_shop']='add__user_to_group_shop';
 
 $lang['shop']['obtain_bill']='obtain_bill';
 
-$lang['shop']['select_category_shop']='select_category_shop';
+$lang['shop']['no_exists_product']='no_exists_product';
 
-$lang['shop']['choose_category']='choose_category';
-
-$lang['shop']['no_products_in_category']='no_products_in_category';
-
-$lang['shop']['go_back_cart']='go_back_cart';
-
-$lang['shop']['product_options']='product_options';
-
-$lang['shop']['shopping_cart']='shopping_cart';
-
-$lang['shop']['no_stock_for_this_article']='no_stock_for_this_article';
-
-$lang['shop']['options_for_product']='options_for_product';
-
-$lang['shop']['need_minimum_an_option']='need_minimum_an_option';
-
-$lang['shop']['see_more']='see_more';
-
-$lang['shop']['pvp']='pvp';
-
-$lang['shop']['weight_in_kg']='weight_in_kg';
-
-$lang['shop']['kg']='kg';
-
-$lang['shop']['see_product']='see_product';
-
-$lang['shop']['buy_product']='buy_product';
-
-$lang['shop']['buying_product']='buying_product';
-
-$lang['shop']['success_buy']='success_buy';
+$lang['shop']['this_product_is_not_found']='this_product_is_not_found';
 
 $lang['shop']['profile_shop']='profile_shop';
 
@@ -416,11 +406,21 @@ $lang['shop']['dir_transport']='dir_transport';
 
 $lang['shop']['no_dir_transport_for_now']='no_dir_transport_for_now';
 
-$lang['shop']['error_other_countries_is_selected']='error_other_countries_is_selected';
+$lang['shop']['pvp']='pvp';
 
-$lang['shop']['this_currency_have_equivalence']='this_currency_have_equivalence';
+$lang['shop']['weight_in_kg']='weight_in_kg';
 
-$lang['shop']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
+$lang['shop']['kg']='kg';
+
+$lang['shop']['see_product']='see_product';
+
+$lang['shop']['buy_product']='buy_product';
+
+$lang['shop']['buying_product']='buying_product';
+
+$lang['shop']['success_buy']='success_buy';
+
+$lang['shop']['see_more']='see_more';
 
 $lang['shop']['error_buy_ajax']='error_buy_ajax';
 

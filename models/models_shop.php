@@ -964,7 +964,7 @@ $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' 
 
 $arr_module_sql['shop']='shop.sql';
 
-$arr_module_remove['shop']=array('product', 'image_product', 'cat_product', 'taxes', 'transport', 'price_transport', 'zone_shop', 'country_shop', 'config_shop', 'dir_transport', 'payment_form', 'cart_shop', 'order_shop', 'type_product_option', 'product_option', 'group_shop', 'group_shop_users');
+$arr_module_remove['shop']=array('product', 'image_product', 'cat_product', 'taxes', 'transport', 'price_transport', 'zone_shop', 'country_shop', 'config_shop', 'dir_transport', 'payment_form', 'cart_shop', 'order_shop', 'type_product_option', 'product_option', 'group_shop', 'group_shop_users', 'currency', 'currency_change', );
 
 ?>
 
