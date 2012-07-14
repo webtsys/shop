@@ -8,7 +8,7 @@ function ViewCategory()
 	load_lang('shop');
 	load_model('shop');
 	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
-	load_libraries(array('pages', 'forms/selectmodelformbyorder', 'generate_admin_ng'));
+	load_libraries(array('pages', 'forms/selectmodelformbyorder', 'generate_admin_ng', 'utilities/hierarchy_links'));
 
 	$cont_index='';
 
@@ -17,6 +17,13 @@ function ViewCategory()
 	//Load page...
 
 	settype($_GET['IdCat_product'], 'integer');
+	
+	if($_GET['IdCat_product']==0)
+	{
+	
+		die( header( 'Location: '.make_fancy_url($base_url, 'shop', 'index', $config_shop['title_shop'], array() ) ) );
+	
+	}
 	
 	//Load list for objects..
 
@@ -29,6 +36,10 @@ function ViewCategory()
 	if($idcat_product>0)
 	{
 
+		$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
+
+		echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');
+	
 		$title_category=$model['cat_product']->components['title']->show_formatted($title_category);
 		$description_cat=$model['cat_product']->components['description']->show_formatted($description_cat);
 		ob_start();

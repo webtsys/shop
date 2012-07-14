@@ -16,6 +16,7 @@ function ViewProduct()
 	load_model('shop');
 
 	load_lang('shop');
+	load_libraries(array('utilities/hierarchy_links'));
 	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
 
 	settype($_GET['IdProduct'], 'integer');
@@ -34,6 +35,8 @@ function ViewProduct()
 
 	if($idproduct>0)
 	{
+	
+		//Load product
 
 		$arr_image=array();
 		$arr_image_mini=array();
@@ -103,14 +106,16 @@ function ViewProduct()
 	$cont_index=ob_get_contents();
 
 	ob_clean();
+	
+	//Show links for categories
 
-	echo load_view(array($title, $cont_index), 'content');
+	echo load_view(array($title, $cont_index, $idcat_product), 'shop/loadproduct');
 
 	$cont_index=ob_get_contents();
 
 	ob_end_clean();
 
-	echo load_view(array($title, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, "<link href=\"".$base_url."/media/comics/lytebox/lytebox.css\" rel=\"stylesheet\" type=\"text/css\" />\n<script type=\"text/javascript\" src=\"".$base_url."/media/comics/lytebox/lytebox.js\"></script>\n"), $arr_block);
+	echo load_view(array($title, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
 }
 
