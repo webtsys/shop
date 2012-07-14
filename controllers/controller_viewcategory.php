@@ -35,16 +35,19 @@ function ViewCategory()
 	
 	if($idcat_product>0)
 	{
-
-		$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
-
-		echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');
 	
 		$title_category=$model['cat_product']->components['title']->show_formatted($title_category);
 		$description_cat=$model['cat_product']->components['description']->show_formatted($description_cat);
+		
+		echo load_view(array($title_category, $description_cat), 'shop/productshow');
+
+		/*$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
+
+		echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');
+	
 		ob_start();
 		?>
-		<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'viewcategory', 'viewcategory', array()); ?>">
+		<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'viewcategory', $title_category, array()); ?>">
 		<p>
 		<?php
 		
@@ -111,37 +114,9 @@ function ViewCategory()
 			
 			settype($arr_photo[$idproduct], 'string');
 
-			//$image='mini_'.$arr_photo[$idproduct];
 			$image=$arr_photo[$idproduct];
 			
-			/*if($image!='mini_')
-			{
-
-				$image=$model['image_product']->components['photo']->url_path.'/'.$image;
-
-			}
-			else
-			{
-
-				$image=$base_url.'/media/'.$config_data['dir_theme'].'/images/mini_default.png';
-
-			}*/
-
-			/*if($image=='')
-			{
-
-				$image='default.png';
-
-			}*/
-			
 			$add_tax=0;
-
-		/*	if($config_shop['yes_taxes']==1)
-			{
-
-				$add_tax=$price*($arr_taxes[$idtax]/100);
-
-			}*/
 
 			$add_tax=calculate_taxes($idtax, $price);
 
@@ -154,7 +129,7 @@ function ViewCategory()
 			if($offer>0)
 			{
 
-				$add_tax_offer=calculate_taxes($idtax, $offer);//$offer*($arr_taxes[$idtax]/100);
+				$add_tax_offer=calculate_taxes($idtax, $offer);
 				$offer+=$add_tax_offer;
 
 				$price= '<strong>'.$lang['shop']['offer'].'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_real).' </span> -> '.MoneyField::currency_format($offer);
@@ -188,7 +163,7 @@ function ViewCategory()
 
 			echo '<p>'.$lang['shop']['no_products_in_category'].'</p>';
 
-		}
+		}*/
 
 	}
 	
