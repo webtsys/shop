@@ -1,15 +1,8 @@
 Knowed bugs
 --------------------
 
-- When delete products, the system don't delete images...
-
 New features
 --------------------
-
-- In Viewcategory, load all objects, also subcategories.
-
-- Can add new index page types without programming.
-
 
 New features next versions
 ---------------------------

@@ -14,7 +14,31 @@ class product extends Webmodel {
 
 		parent::__construct("product");
 
-	}	
+	}
+	
+	function delete($conditions="")
+	{
+	
+		global $model;
+	
+		//Obtain ids for this product for delete images of product.
+		
+		$query=$this->select($conditions, array('IdProduct'));
+		
+		$arr_id_prod=array(0);
+		
+		while(list($idproduct)=webtsys_fetch_row($query))
+		{
+		
+			$arr_id_prod[]=$idproduct;
+		
+		}
+		
+		$model['image_product']->delete('where image_product.idproduct IN ('.implode(', ', $arr_id_prod).')');
+	
+		return parent::delete($conditions);
+	
+	}
 	
 }
 
@@ -164,15 +188,28 @@ class image_product extends Webmodel {
 			{
 				//echo $this->components['photo']->path.'/'.$photo;
 
-				@unlink($this->components['photo']->path.'/'.$photo);
-				
+				if(unlink($this->components['photo']->path.'/'.$photo))
+				{
 
-				foreach($this->components['photo']->img_width as $name_width => $width)
+					foreach($this->components['photo']->img_width as $name_width => $width)
+					{
+					
+
+						if(!unlink($this->components['photo']->path.'/'.$name_width.'_'.$photo))
+						{
+						
+							//die;
+						
+						}
+
+					}
+					
+				}
+				else
 				{
 				
-
-					@unlink($this->components['photo']->path.'/'.$name_width.'_'.$photo);
-
+					//die;
+				
 				}
 
 			}
@@ -180,7 +217,7 @@ class image_product extends Webmodel {
 			if($principal==1)
 			{
 				
-				$query=webtsys_query('update image_product set principal=1 where idproduct='.$idproduct.' and IdImage_product!='.$idimage.' limit 1');
+				$query2=webtsys_query('update image_product set principal=1 where idproduct='.$idproduct.' and IdImage_product!='.$idimage.' limit 1');
 
 			}
 
@@ -426,7 +463,7 @@ $field_conditions=new TextHTMLField();
 $model['config_shop']->components['conditions']=new I18nField($field_conditions);
 //create_field_multilang('config_shop', 'conditions', $field_conditions, 0);
 $model['config_shop']->components['yes_transport']=new BooleanField();
-$model['config_shop']->components['type_index']=new IntegerField(11);
+$model['config_shop']->components['type_index']=new CharField(25);
 $model['config_shop']->components['ssl_url']=new CharField(255);
 
 $field_title_shop=new TextHTMLField();

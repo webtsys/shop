@@ -50,6 +50,45 @@ function ShopAdmin()
 	{
 
 		case 1:
+		
+			//Load type_index
+			
+			$arr_type_index=array('new_products');
+			
+			if ($dh = opendir($base_path.'modules/shop/libraries/type_index/')) 
+			{
+				while ($file = readdir($dh))
+				{
+				
+					if($file!='.' && $file!='..')
+					{
+
+						$file=basename($file);
+						$filename=ucfirst(str_replace('.php', '', $file) );
+						
+						/*if(isset($lang['shop'][$file]))
+						{
+						
+							$filename=$lang['shop'][$file];
+						
+						}
+						else if(isset($lang['common'][$file]))
+						{
+						
+							$filename=$lang['common'][$file];
+						
+						}*/
+					
+						$arr_type_index[]=$filename;
+						$arr_type_index[]=$file;
+				
+					}
+			
+				}
+			
+				closedir($dh);
+			}
+			
 
 			echo '<h3>'.$lang['shop']['edit_config_shop'].'</h3>';
 
@@ -57,7 +96,9 @@ function ShopAdmin()
 
 			$model['config_shop']->set_enctype_binary();
 
-			$model['config_shop']->forms['type_index']->SetParameters(array(0, $lang['shop']['new_products'], 0, $lang['common']['categories'], 1, $lang['shop']['listing'], 2, $lang['shop']['bestsellers'], 3, $lang['shop']['cool'], 4));
+			//array(0, $lang['shop']['new_products'], 0, $lang['common']['categories'], 1, $lang['shop']['listing'], 2, $lang['shop']['bestsellers'], 3, $lang['shop']['cool'], 4)
+			
+			$model['config_shop']->forms['type_index']->SetParameters($arr_type_index);
 
 			$model['config_shop']->forms['yes_taxes']->form='SelectForm';
 			$model['config_shop']->forms['yes_transport']->form='SelectForm';

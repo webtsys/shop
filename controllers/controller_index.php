@@ -8,11 +8,13 @@ function Index()
 	load_lang('shop');
 	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
 	
-	$arr_index[0]=$base_path.'modules/shop/libraries/shop.php';
+	/*$arr_index[0]=$base_path.'modules/shop/libraries/shop.php';
 	$arr_index[1]=$base_path.'modules/shop/libraries/categories.php';
 	$arr_index[2]=$base_path.'modules/shop/libraries/list.php';
 	$arr_index[3]=$base_path.'modules/shop/libraries/bestsellers.php';
-	$arr_index[4]=$base_path.'modules/shop/libraries/cool.php';
+	$arr_index[4]=$base_path.'modules/shop/libraries/cool.php';*/
+	
+	$load_file=$base_path.'modules/shop/libraries/type_index/'.$config_shop['type_index'];
 	
 	$cont_index='';
 
@@ -24,7 +26,7 @@ function Index()
 
 	ob_clean();
 
-	include($arr_index[$config_shop['type_index']]);
+	include($load_file);
 
 	$cont_index.=ob_get_contents();
 

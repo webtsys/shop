@@ -8,9 +8,7 @@ function ProductShowView($title_category, $description_cat)
 	$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
 
 	echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');
-
-	$title_category=$model['cat_product']->components['title']->show_formatted($title_category);
-	$description_cat=$model['cat_product']->components['description']->show_formatted($description_cat);
+	
 	ob_start();
 	?>
 	<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'viewcategory', $title_category, array()); ?>">
@@ -49,7 +47,7 @@ function ProductShowView($title_category, $description_cat)
 	$arr_id=array();
 	$arr_photo=array();
 
-	$query=$model['product']->select($where_sql.' limit '.$num_news, array($model['product']->idmodel), true);
+	$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel), true);
 
 	while(list($idproduct)=webtsys_fetch_row($query))
 	{
@@ -67,7 +65,7 @@ function ProductShowView($title_category, $description_cat)
 
 	}
 	
-	$query=$model['product']->select($where_sql.' limit '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight'), true);
+	$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight'), true);
 
 	$z=0;
 
@@ -130,6 +128,20 @@ function ProductShowView($title_category, $description_cat)
 		echo '<p>'.$lang['shop']['no_products_in_category'].'</p>';
 
 	}
+	else
+	{
+	
+		load_libraries(array('pages'));
+	
+		$total_elements=$model['product']->select_count($where_sql, 'IdProduct');
+		
+		$url_next=make_fancy_url($base_url, 'shop', 'viewcategory', $title_category, array('IdCat_product' => $_GET['IdCat_product']) );
+		
+		echo '<p>'.$lang['common']['pages'].': '.pages( $_GET['begin_page'], $total_elements, $num_news, $url_next).'</p>';
+	
+	}
+	
+	
 
 }
 
