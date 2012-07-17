@@ -270,7 +270,7 @@ function ShopAdmin()
 
 			generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql='where idcat='.$_GET['idcat'], $arr_fields_form=array(), $type_list='Basic');
 
-			if($_GET['IdProduct']==0)
+			if($_GET['IdProduct']==0 && !isset($_GET['op_update']))
 			{
 
 				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
