@@ -3,7 +3,7 @@
 function ShopAdmin()
 {
 
-	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header;
+	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header, $arr_block;
 
 	load_lang('shop');
 	load_model('shop');
@@ -658,7 +658,11 @@ function ShopAdmin()
 
 			list($title, $idcat)=webtsys_fetch_row($query);
 
-			echo '<h3>'.$lang['shop']['edit_image_product'].': </h3>';
+			echo '<h3>'.$lang['shop']['edit_image_product'].'</h3>';
+			
+			$url_add_images=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
+			
+			echo '<p><a href="'.$url_add_images.'">'.$lang['shop']['add_new_images'].'</a></h3>';
 
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) );
 
@@ -1179,6 +1183,91 @@ function ShopAdmin()
 
 			}
 
+		break;
+		
+		case 19:
+		
+			settype($_GET['op_image'], 'integer');
+			settype($_GET['IdProduct'], 'integer');
+			
+			//ew ImageField('photo', $base_path.'application/media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600));
+			
+			$arr_field['image_form1']=clone $model['image_product']->components['photo'];
+			$arr_field['image_form1']->name_file='image_form1';
+		
+			$arr_form['image_form1']=new ModelForm('create_image', 'image_form1', 'ImageForm', $lang['common']['image'].' 1', $arr_field['image_form1'], $required=1, $parameters='');
+			
+			/*$bool[1]=new BooleanField();
+			
+			$arr_form['principal1']=new ModelForm('create_image', 'principal1', 'SelectForm', $lang['shop']['principal_photo'].' 1', $bool[1], $required=0, $parameters=$bool[1]->get_parameters_default());*/
+			
+			for($x=2;$x<6;$x++)
+			{
+			
+				$arr_field['image_form'.$x]=clone $model['image_product']->components['photo'];
+				$arr_field['image_form'.$x]->name_file='image_form'.$x;
+			
+				$arr_form['image_form'.$x]=new ModelForm('create_image', 'image_form'.$x.'', 'ImageForm', $lang['common']['image'].' '.$x, $arr_field['image_form'.$x], $required=0, $parameters='');
+				
+				/*$bool[$x]=new BooleanField();
+				
+				$arr_form['principal'.$x]=new ModelForm('create_image', 'principal'.$x, 'SelectForm', $lang['shop']['principal_photo'].' 1', $bool[$x], $required=0, $parameters=$bool[$x]->get_parameters_default());*/
+			
+			}
+			
+			switch($_GET['op_image'])
+			{
+			
+				default:
+				
+					ob_start();
+				
+					$url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct'], 'op_image' => 1) );
+			
+					echo load_view(array($arr_form, array(), $url_post, 'enctype="multipart/form-data"'), 'common/forms/updatemodelform');
+					
+					$cont_add=ob_get_contents();
+					
+					ob_end_clean();
+					
+					echo load_view(array($lang['shop']['add_new_images'], $cont_add), 'content');
+				
+				break;
+				
+				case 1:
+					
+					$arr_post=ModelForm::check_form($arr_form, $_POST);
+					
+					if($arr_post!=0)
+					{
+					
+						//Insert images..
+						
+						foreach($arr_form as $img_form)
+						{
+							
+							if($img_form->error_flag==0)
+							{
+							
+								$file_name=$img_form->type->name_file;
+							
+								$model['image_product']->insert(array('photo' => $arr_post[$file_name], 'principal' => 0, 'idproduct' => $_GET['IdProduct']));
+							
+							}
+						
+						}
+					
+					}
+					
+					ob_end_clean();
+					load_libraries(array('redirect'));
+					die( redirect_webtsys( $url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ), $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+					
+				
+				break;
+			
+			}
+		
 		break;
 
 	}

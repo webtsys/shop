@@ -1,6 +1,8 @@
 Knowed bugs
 --------------------
 
+- Don't delete products when delete a product category.
+
 New features
 --------------------
 
