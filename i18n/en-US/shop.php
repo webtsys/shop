@@ -1,18 +1,18 @@
 <?php
 
-$lang['shop']['offer']='offer';
+$lang['shop']['offer']='Offer';
 
-$lang['shop']['no_stock']='no_stock';
+$lang['shop']['no_stock']='No stock';
 
-$lang['shop']['in_stock']='in_stock';
+$lang['shop']['in_stock']='In stock';
 
-$lang['shop']['served_on_request']='served_on_request';
+$lang['shop']['served_on_request']='Served on request';
 
 $lang['shop']['no_new_products']='no_new_products';
 
-$lang['shop']['see_products']='see_products';
+$lang['shop']['see_products']='See products';
 
-$lang['shop']['choose_cat']='choose_cat';
+$lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['referer']='referer';
 
@@ -318,7 +318,7 @@ $lang['shop']['make_payment']='make_payment';
 
 $lang['shop']['edit_image_product']='edit_image_product';
 
-$lang['shop']['add_new_images']='add_new_images';
+$lang['shop']['add_new_images']='Add new images';
 
 $lang['shop']['principal_photo']='principal_photo';
 

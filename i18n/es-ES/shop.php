@@ -318,7 +318,7 @@ $lang['shop']['make_payment']='¿Pagado?';
 
 $lang['shop']['edit_image_product']='Editar imagen de producto';
 
-$lang['shop']['add_new_images']='add_new_images';
+$lang['shop']['add_new_images']='Añadir nuevas imágenes';
 
 $lang['shop']['principal_photo']='Imagen principal';
 

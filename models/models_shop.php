@@ -246,6 +246,15 @@ class cat_product extends Webmodel {
 		parent::__construct("cat_product");
 
 	}	
+	
+	function delete($conditions="")
+	{
+	
+		global $model;
+	
+		parent::delete($conditions);
+	
+	}
 
 }
 
