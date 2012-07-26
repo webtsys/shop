@@ -187,13 +187,10 @@ function ShopAdmin()
 			$model['cat_product']->forms['description']->label=$lang['shop']['description'];
 			$model['cat_product']->forms['description']->parameters=array('description', $class='', array(), $type_form='TextAreaBBForm');
 
-			/*$model['cat_product']->forms['title']->form='MultiLangForm';
-			$model['cat_product']->forms['title']->parameters=array('title', '', '', 'TextForm', array());*/
-
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $_GET['subcat']) );
 
 			$arr_fields=array('title');
-			$arr_fields_edit=array();//array('title', 'subcat', 'description');
+			$arr_fields_edit=array();
 
 			generate_admin_model_ng('cat_product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ShopOptionsListModel', $where_sql='where subcat='.$_GET['subcat'], $arr_fields_form=array(), $type_list='Basic');
 
@@ -270,7 +267,7 @@ function ShopAdmin()
 
 			generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql='where idcat='.$_GET['idcat'], $arr_fields_form=array(), $type_list='Basic');
 
-			if($_GET['IdProduct']==0 && !isset($_GET['op_update']))
+			if($_GET['IdProduct']==0 || !isset($_GET['op_update']))
 			{
 
 				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';

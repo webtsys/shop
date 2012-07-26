@@ -251,8 +251,17 @@ class cat_product extends Webmodel {
 	{
 	
 		global $model;
+		
+		$query=$this->select($conditions, array('IdCat_product'));
+		
+		while(list($idcat_product)=webtsys_fetch_row($query))
+		{
+		
+			$query=$model['product']->delete('where idcat='.$idcat_product);
+		
+		}
 	
-		parent::delete($conditions);
+		return parent::delete($conditions);
 	
 	}
 

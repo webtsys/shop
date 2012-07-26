@@ -1,9 +1,6 @@
 Knowed bugs
 --------------------
 
-- Don't delete products when delete a product category.
-- When delete category, the process die.
-- Possible error in show_categories type index.
 
 New features
 --------------------
