@@ -657,8 +657,10 @@ function ShopAdmin()
 			$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title', 'idcat'));
 
 			list($title, $idcat)=webtsys_fetch_row($query);
+			
+			$title=I18nField::show_formatted($title);
 
-			echo '<h3>'.$lang['shop']['edit_image_product'].'</h3>';
+			echo '<h3>'.$lang['shop']['edit_image_product'].' - '.$title.'</h3>';
 			
 			$url_add_images=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
 			
@@ -1201,7 +1203,7 @@ function ShopAdmin()
 			
 			$arr_form['principal1']=new ModelForm('create_image', 'principal1', 'SelectForm', $lang['shop']['principal_photo'].' 1', $bool[1], $required=0, $parameters=$bool[1]->get_parameters_default());*/
 			
-			for($x=2;$x<6;$x++)
+			for($x=2;$x<11;$x++)
 			{
 			
 				$arr_field['image_form'.$x]=clone $model['image_product']->components['photo'];
@@ -1221,6 +1223,12 @@ function ShopAdmin()
 				default:
 				
 					ob_start();
+					
+					$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title'));
+					
+					list($title)=webtsys_fetch_row($query);
+					
+					$title=I18nField::show_formatted($title);
 				
 					$url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct'], 'op_image' => 1) );
 			
@@ -1230,7 +1238,9 @@ function ShopAdmin()
 					
 					ob_end_clean();
 					
-					echo load_view(array($lang['shop']['add_new_images'], $cont_add), 'content');
+					echo load_view(array($lang['shop']['add_new_images'].' - '.$title, $cont_add), 'content');
+					
+					echo '<p><a href="'.$url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ).'">'.$lang['common']['go_back'].'</a></p>';
 				
 				break;
 				
