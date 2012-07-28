@@ -74,7 +74,7 @@ $lang['shop']['success_buy_go_to_payment']='Se ha hecho el pedido correctamente.
 
 $lang['shop']['modify_product_options']='Modificar opciones de este producto.';
 
-$lang['shop']['explain_delete_options']='Para borrar productos del carro de la compra, por favor, marque los productos elegidos y pulse en "Borrar productos seleccionados"';
+$lang['shop']['explain_delete_options']='Para borrar productos del carro de la compra, por favor, marque los productos elegidos y pulse en &quot;Borrar productos seleccionados&quot;';
 
 $lang['shop']['option_selected']='Opción seleccionado';
 
@@ -82,7 +82,7 @@ $lang['shop']['select_product']='Seleccionar producto';
 
 $lang['shop']['delete_products_selected']='Borrar productos seleccionados';
 
-$lang['shop']['explain_delete_options_form']='Para eliminar el producto, ponga a cero "Unidades" y pulse enviar';
+$lang['shop']['explain_delete_options_form']='Para eliminar el producto, ponga a cero &quot;Unidades&quot; y pulse enviar';
 
 $lang['shop']['num_products']='Unidades';
 
@@ -128,7 +128,7 @@ $lang['shop']['error_cannot_send_email']='Error: no puedo enviar el email';
 
 $lang['shop']['use_this_id_for_contact_with_us']='Este es su número de pedido, especifíquelo en el email que nos envíe.';
 
-$lang['shop']['order_success_cart_clean']='<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>';
+$lang['shop']['order_success_cart_clean']='&lt;p&gt;&lt;strong&gt;Se realizó el pedido con éxito.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.&lt;/p&gt;';
 
 $lang['shop']['cancelling_order']='Cancelando pedido';
 
@@ -348,8 +348,7 @@ $lang['shop']['symbol']='Símbolo';
 
 $lang['shop']['modify_change_currencies']='Modificar cambios entre monedas';
 
-$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda 
-elegida en relación a';
+$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda<br />elegida en relación a<br />';
 
 $lang['shop']['modify_products']='Modificar productos';
 
