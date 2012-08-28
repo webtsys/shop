@@ -173,6 +173,12 @@ function ShopAdmin()
 				$title='';
 
 			}
+			
+			//Get view_only_mode from config_shop
+			
+			$query=$model['config_shop']->select('limit 1', array('view_only_mode'), 1);
+			
+			list($view_only_mode)=webtsys_fetch_row($query);
 
 			echo '<h3>'.$lang['shop']['edit_categories_shop'].' '.$title.'</h3>';
 
@@ -186,6 +192,9 @@ function ShopAdmin()
 			$model['cat_product']->forms['subcat']->label=$lang['shop']['subcat'];
 			$model['cat_product']->forms['description']->label=$lang['shop']['description'];
 			$model['cat_product']->forms['description']->parameters=array('description', $class='', array(), $type_form='TextAreaBBForm');
+			
+			$model['cat_product']->forms['view_only_mode']->SetForm($view_only_mode);
+			$model['cat_product']->forms['view_only_mode']->label=$lang['shop']['view_only_mode'];
 
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $_GET['subcat']) );
 

@@ -278,6 +278,8 @@ $model['cat_product']->components['subcat']=new ParentField('cat_product', 255);
 $model['cat_product']->components['description']=new I18nField(new TextHTMLField());
 $model['cat_product']->components['description']->required=1;
 
+$model['cat_product']->components['view_only_mode']=new BooleanField();
+
 class taxes extends Webmodel {
 
 	function __construct()
