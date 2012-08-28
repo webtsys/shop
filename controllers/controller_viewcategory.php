@@ -27,9 +27,9 @@ function ViewCategory()
 	
 	//Load list for objects..
 
-	$query=$model['cat_product']->select('where IdCat_product='.$_GET['IdCat_product'], array('IdCat_product', 'title', 'description', 'subcat'));
+	$query=$model['cat_product']->select('where IdCat_product='.$_GET['IdCat_product'], array('IdCat_product', 'title', 'description', 'subcat', 'view_only_mode'));
 
-	list($idcat_product, $title_category, $description_cat, $subcat)=webtsys_fetch_row($query);
+	list($idcat_product, $title_category, $description_cat, $subcat, $view_only_mode)=webtsys_fetch_row($query);
 	
 	settype($idcat_product, 'integer');
 	
@@ -39,7 +39,7 @@ function ViewCategory()
 		$title_category=$model['cat_product']->components['title']->show_formatted($title_category);
 		$description_cat=$model['cat_product']->components['description']->show_formatted($description_cat);
 		
-		echo load_view(array($title_category, $description_cat), 'shop/productshow');
+		echo load_view(array($title_category, $description_cat, $view_only_mode), 'shop/productshow');
 
 		/*$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
 

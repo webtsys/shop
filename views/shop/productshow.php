@@ -1,6 +1,6 @@
 <?php
 
-function ProductShowView($title_category, $description_cat)
+function ProductShowView($title_category, $description_cat, $view_only_mode)
 {
 
 	global $lang, $model, $base_url, $config_shop;
@@ -116,7 +116,7 @@ function ProductShowView($title_category, $description_cat)
 
 		}
 		
-		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock, $text_taxes, $weight), 'shop/productlist');
+		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock, $text_taxes, $weight, $view_only_mode), 'shop/productlist');
 
 		$z++;
 

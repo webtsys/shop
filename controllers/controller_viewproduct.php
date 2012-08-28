@@ -31,6 +31,10 @@ function ViewProduct()
 	$title=$model['product']->components['title']->show_formatted($title);
 	$description=$model['product']->components['description']->show_formatted($description);
 
+	$query=$model['cat_product']->select('where IdCat_product='.$idcat_product, array('view_only_mode'));
+	
+	list($view_only_mode)=webtsys_fetch_row($query);
+	
 	settype($idproduct, 'integer');
 
 	if($idproduct>0)
@@ -91,7 +95,7 @@ function ViewProduct()
 
 		$text_taxes=add_text_taxes($idtax);
 		
-		echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight), 'shop/product');
+		echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode), 'shop/product');
 
 	}
 	else

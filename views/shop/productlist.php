@@ -1,6 +1,6 @@
 <?php
 
-function ProductListView($idproduct, $title_product, $description, $image, $price, $stock, $tax, $weight)
+function ProductListView($idproduct, $title_product, $description, $image, $price, $stock, $tax, $weight, $view_only_mode)
 {
 
 global $base_url, $lang, $model, $config_data, $config_shop;
@@ -44,7 +44,7 @@ else
 				<?php echo $lang['shop']['see_product']; ?>
 			</a>
 			<?php
-		if($config_shop['view_only_mode']==0)
+		if($config_shop['view_only_mode']==0 && $view_only_mode==0)
 		{
 		?>
 		<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship">

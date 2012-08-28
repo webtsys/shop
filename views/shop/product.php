@@ -1,6 +1,6 @@
 <?php
 
-function ProductView($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $tax, $weight)
+function ProductView($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $tax, $weight, $view_only_mode)
 {
 
 global $base_url, $lang, $model, $config_shop;
@@ -38,7 +38,7 @@ global $base_url, $lang, $model, $config_shop;
 		<br />
 		<br />
 		<?php
-		if($config_shop['view_only_mode']==0)
+		if($config_shop['view_only_mode']==0 && $view_only_mode==0)
 		{
 		?>
 		<p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p>
