@@ -42,15 +42,23 @@ function Buy()
 
 	load_lang('shop');
 	
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('IdProduct', 'title', 'stock', 'about_order', 'extra_options' , 'price', 'special_offer'));
+	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('IdProduct', 'title', 'stock', 'about_order', 'extra_options' , 'price', 'special_offer', 'idcat'));
 
-	list($num_prod, $name_product, $stock, $about_order, $extra_options, $price, $special_offer)=webtsys_fetch_row($query);
+	list($num_prod, $name_product, $stock, $about_order, $extra_options, $price, $special_offer, $idcat)=webtsys_fetch_row($query);
 	
 	$name_product=$model['product']->components['title']->show_formatted($name_product);
 	
+	//Obtain product...
+	
+	settype($idcat, 'integer');
+	
+	$query=$model['cat_product']->select('where IdCat_product='.$idcat, array('view_only_mode'));
+	
+	list($view_only_mode)=webtsys_fetch_row($query);
+	
 	//$config_shop['view_only_mode']==0
 	
-	if($num_prod>0 && ( $stock>0 || $about_order==1 ))
+	if($num_prod>0 && ( $stock>0 || $about_order==1 ) && ($config_shop['view_only_mode']==0 && $view_only_mode==0))
 	{	
 
 		ob_clean();

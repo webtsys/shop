@@ -13,14 +13,21 @@ function BuyProduct()
 
 	//Only for buy products without options.
 	
-	if($config_shop['view_only_mode']==0)
+	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('IdProduct', 'price', 'special_offer','extra_options', 'idcat'));
+		
+	list($idproduct, $price, $special_offer, $extra_options, $idcat)=webtsys_fetch_row($query);
+	
+	settype($idproduct, 'integer');
+	settype($idcat, 'integer');
+	
+	$query=$model['cat_product']->select('where IdCat_product='.$idcat, array('view_only_mode'));
+	
+	list($view_only_mode)=webtsys_fetch_row($query);
+	
+	if($config_shop['view_only_mode']==0 && $view_only_mode==0 && $idproduct>0)
 	{
 
 		$buy_return=0;
-
-		$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('price', 'special_offer','extra_options'));
-		
-		list($price, $special_offer, $extra_options)=webtsys_fetch_row($query);
 		
 		if($extra_options=='')
 		{

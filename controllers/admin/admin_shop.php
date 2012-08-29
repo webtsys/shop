@@ -3,7 +3,7 @@
 function ShopAdmin()
 {
 
-	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header, $arr_block;
+	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header, $arr_block, $arr_plugin_list;
 
 	load_lang('shop');
 	load_model('shop');
@@ -25,6 +25,8 @@ function ShopAdmin()
 	$arr_link_options[15]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 15) ), 'text' => $lang['shop']['countries']);
 
 	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
+	
+	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
 	
 	menu_selected($_GET['op'], $arr_link_options);
 	
@@ -1281,6 +1283,83 @@ function ShopAdmin()
 					
 				
 				break;
+			
+			}
+		
+		break;
+		
+		case 20:
+		
+			//First, select form for choose an module, for now, products.
+			
+			echo '<h3>'.$lang['shop']['plugin_admin'].'</h3>';
+			
+			settype($_GET['element_choice'], 'string');
+			
+			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product');
+			
+			echo '<form method="get" action="'.make_fancy_url($base_url, 'admin', 'index', 'element_choice', array('IdModule' => $_GET['IdModule'], 'op' => 20)).'">';
+			
+			echo '<p>'.$lang['shop']['element_choice'].': '.SelectForm('element_choice', '', $arr_elements_plugin).' <input type="submit" value="'.$lang['common']['send'].'" /></p>';
+			
+			echo '</form>';
+			
+			//Now the form...
+			
+			$element_choice=$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			
+			if($element_choice!='')
+			{
+			
+				$model['plugin_shop']->create_form();
+				
+				$model['plugin_shop']->forms['element']->form='HiddenForm';
+				$model['plugin_shop']->forms['element']->SetForm($element_choice);
+				
+				$arr_plugins=array('', '', '');
+				
+				foreach($arr_plugin_list[$element_choice] as $plugin)
+				{
+				
+					$arr_plugins[]=$plugin;
+					$arr_plugins[]=$plugin;
+					
+				
+				}
+				
+				$model['plugin_shop']->components['plugin']->arr_values=&$arr_plugin_list[$element_choice];
+				
+				$model['plugin_shop']->forms['plugin']->SetParameters($arr_plugins);
+			
+				$arr_fields=array('name', 'plugin');
+				$arr_fields_edit=array('name', 'element', 'plugin');
+				$url_options=make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice));
+			
+				generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', 
+				$where_sql='where element="'.$element_choice.'"', $arr_fields_form=array(), $type_list='Basic');
+				
+				//Now the order...
+				
+				echo '<p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 21, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)).'">'.$lang['shop']['order_plugins'].'</a></p>';
+			
+			}
+			
+			
+		
+		break;
+		
+		case 21:
+		
+			$element_choice=$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			
+			if($element_choice!='')
+			{
+			
+				echo '<h3>'.$lang['shop']['order_plugins'].'</h3>';
+				
+				GeneratePositionModel('plugin_shop', 'name', 'position', make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 21, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)), $where='where element="'.$element_choice.'"');
+				
+				echo '<p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)).'">'.$lang['common']['go_back'].'</a></p>';
 			
 			}
 		

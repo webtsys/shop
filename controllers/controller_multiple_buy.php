@@ -24,18 +24,41 @@ function Multiple_Buy()
 	//settype($_POST['num_product'], 'integer');
 
 	//print_r($_POST);
+	
+	$arr_product=array(0);
+	$arr_cat_view=array(0);
+	$arr_check_product=array();
 
-	if($user_data['IdUser']>0 && $config_shop['view_only_mode']==0)
+	foreach($_POST['idproduct'] as $idproduct => $num_units)
 	{
 
-		$arr_product=array();
+		$arr_product[$idproduct]=$num_units;
 
-		foreach($_POST['idproduct'] as $idproduct => $num_units)
-		{
+	}
+	
+	$query=$model['product']->select( 'where IdProduct IN ('.implode(',', $arr_product).')', array('IdProduct', 'idcat'), 1);
+	
+	//Reset the array...
+	
+	while(list($idproduct, $idcat)=webtsys_fetch_row($query))
+	{
+	
+		$arr_check_product[$idproduct]=1;
+		$arr_cat_view[$idcat]=1;
+	
+	}
+	
+	$query=$model['cat_product']->select( 'where IdCat_product IN ('.implode(',', array_keys($arr_cat_view) ).')', array('IdCat_product', 'view_only_mode'), 1);
+	
+	while(list($idcat, $view_only_mode)=webtsys_fetch_row($query))
+	{
+	
+		$arr_cat_view[$idcat]=$view_only_mode;
+	
+	}
 
-			$arr_product[$idproduct]=$num_units;
-
-		}
+	if($user_data['IdUser']>0 && $config_shop['view_only_mode']==0 && count($arr_check_product)>0)
+	{
 		
 		$arr_idproduct=array_keys($arr_product);
 		
@@ -62,30 +85,35 @@ function Multiple_Buy()
 
 		
 
-		$query=$model['product']->select('where IdProduct IN ('.implode(',', $arr_idproduct).')', array('IdProduct', 'referer', 'stock', 'price', 'special_offer', 'about_order', 'extra_options' ));
+		$query=$model['product']->select('where IdProduct IN ('.implode(',', $arr_idproduct).')', array('IdProduct', 'referer', 'stock', 'price', 'special_offer', 'about_order', 'extra_options' ,'idcat'));
 		
-		while(list($idproduct, $referer, $stock, $price, $special_offer, $about_order, $extra_options)=webtsys_fetch_row($query))
+		while(list($idproduct, $referer, $stock, $price, $special_offer, $about_order, $extra_options, $idcat)=webtsys_fetch_row($query))
 		{
 
-			if($special_offer>0)
+			if($arr_cat_view[$idcat]==0)
 			{
-
-				$price=$special_offer;
-
-			}
-
-			$num_units=$arr_product[$idproduct];
-			
-			for($x=0;$x<$num_units;$x++)
-			{
-
-				$query2=$model['cart_shop']->insert( array('token' => sha1($token), 'idproduct' => $idproduct, 'time' => time(), 'price_product' => $price) );
 				
-			}
-			
-			if(isset($_SESSION['products'][$idproduct]))
-			{	
-				unset($_SESSION['products'][$idproduct]);
+				if($special_offer>0)
+				{
+
+					$price=$special_offer;
+
+				}
+
+				$num_units=$arr_product[$idproduct];
+				
+				for($x=0;$x<$num_units;$x++)
+				{
+
+					$query2=$model['cart_shop']->insert( array('token' => sha1($token), 'idproduct' => $idproduct, 'time' => time(), 'price_product' => $price) );
+					
+				}
+				
+				if(isset($_SESSION['products'][$idproduct]))
+				{	
+					unset($_SESSION['products'][$idproduct]);
+				}
+				
 			}
 
 		}

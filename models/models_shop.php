@@ -1,5 +1,5 @@
 <?php
-global $arr_i18n, $base_url;
+global $arr_i18n, $base_url, $arr_plugin_list;
 
 load_libraries(array('i18n_fields'));
 
@@ -918,6 +918,24 @@ $model['currency_change']->components['change_value']=new MoneyField();
 
 $model['currency_change']->components['change_value']->required=1;
 
+//Class plugin_shop
+
+$model['plugin_shop']=new Webmodel('plugin_shop');
+
+$model['plugin_shop']->components['name']=new CharField(255);
+$model['plugin_shop']->components['name']->required=1;
+
+$model['plugin_shop']->components['element']=new ChoiceField($size=255, $type='string', $arr_values=array('product'), $default_value='');
+$model['plugin_shop']->components['element']->required=1;
+
+$model['plugin_shop']->components['plugin']=new ChoiceField($size=255, $type='string', $arr_values=array(''), $default_value='');
+$model['plugin_shop']->components['plugin']->required=1;
+
+$model['plugin_shop']->components['position']=new IntegerField();
+
+$arr_plugin_list=array();
+
+$arr_plugin_list['product']=array('attachments');
 
 //Special field PercentField for discount, taxes_for_group, transport_for_group
 
@@ -1012,10 +1030,6 @@ class MoneyField extends DoubleField{
 	}
 
 }
-
-//Create MoneyForm
-
-//Group transport
 
 $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1);
 

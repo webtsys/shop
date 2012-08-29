@@ -222,6 +222,8 @@ $lang['shop']['countries']='Paises';
 
 $lang['shop']['currency']='Moneda';
 
+$lang['shop']['plugins_shop']='plugins_shop';
+
 $lang['shop']['edit_config_shop']='Editar configuración de tienda';
 
 $lang['shop']['new_products']='Nuevos productos';
@@ -369,6 +371,12 @@ $lang['shop']['symbol']='Símbolo';
 $lang['shop']['modify_change_currencies']='Modificar cambios entre monedas';
 
 $lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda<br />elegida en relación a<br />';
+
+$lang['shop']['plugin_admin']='plugin_admin';
+
+$lang['shop']['element_choice']='element_choice';
+
+$lang['shop']['order_plugins']='order_plugins';
 
 $lang['shop']['modify_products']='Modificar productos';
 

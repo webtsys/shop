@@ -11,16 +11,17 @@ function list_products_index($where)
 
 	$arr_id=array();
 	$arr_photo=array();
+	
+	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel, 'idcat'), true);
 
-	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel), true);
-
-	while(list($idproduct)=webtsys_fetch_row($query))
+	while(list($idproduct, $idcat)=webtsys_fetch_row($query))
 	{
 
 		$arr_id[]=$idproduct;
+		$arr_idcat[$idcat]=1;
 
 	}
-	
+	//print_r($arr_idcat);
 	$query=$model['image_product']->select('where idproduct IN (\''.implode("', '", $arr_id).'\') and principal=1', array('photo', 'idproduct'), true);
 
 	while(list($photo, $idproduct)=webtsys_fetch_row($query))
@@ -30,15 +31,26 @@ function list_products_index($where)
 
 	}
 	
-	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight'), true);
-
+	//Obtain view_only_mode for cats...
+	
+	$query=$model['cat_product']->select('where IdCat_product IN (\''.implode("', '", array_keys($arr_idcat)).'\')', array('IdCat_product', 'view_only_mode'));
+	
+	while(list($idcat, $view_only_mode)=webtsys_fetch_row($query))
+	{
+	
+		$arr_idcat[$idcat]=$view_only_mode;
+	
+	}
+	
 	$z=0;
 
 	$image='';
 
 	$idtax=$config_shop['idtax'];
+	
+	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight', 'idcat'), true);
 
-	while(list($idproduct, $title, $description, $price, $offer, $stock, $about_order, $weight)=webtsys_fetch_row($query))
+	while(list($idproduct, $title, $description, $price, $offer, $stock, $about_order, $weight, $idcat)=webtsys_fetch_row($query))
 	{
 		
 		settype($arr_photo[$idproduct], 'string');
@@ -101,7 +113,7 @@ function list_products_index($where)
 
 		}
 		
-		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock, $text_taxes, $weight), 'shop/productlist', 'shop');
+		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock, $text_taxes, $weight, $arr_idcat[$idcat]), 'shop/productlist', 'shop');
 
 		$z++;
 

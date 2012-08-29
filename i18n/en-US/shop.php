@@ -222,6 +222,8 @@ $lang['shop']['countries']='Countries';
 
 $lang['shop']['currency']='Currency';
 
+$lang['shop']['plugins_shop']='plugins_shop';
+
 $lang['shop']['edit_config_shop']='Edit shop configuration';
 
 $lang['shop']['new_products']='New products';
@@ -369,6 +371,12 @@ $lang['shop']['symbol']='Symbol';
 $lang['shop']['modify_change_currencies']='Modify currencies changes';
 
 $lang['shop']['explain_change_value']='Indicates that value is 1 unit of currency&lt;br /&gt; used in relation to&lt;br /&gt;';
+
+$lang['shop']['plugin_admin']='plugin_admin';
+
+$lang['shop']['element_choice']='element_choice';
+
+$lang['shop']['order_plugins']='order_plugins';
 
 $lang['shop']['modify_products']='Modify products';
 
