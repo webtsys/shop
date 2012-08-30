@@ -3,7 +3,7 @@
 function ShopAdmin()
 {
 
-	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header, $arr_block, $arr_plugin_list;
+	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header, $arr_block, $arr_plugin_list, $arr_plugin_product_list;
 
 	load_lang('shop');
 	load_model('shop');
@@ -275,6 +275,19 @@ function ShopAdmin()
 			//Set enctype for this model...
 
 			$model['product']->set_enctype_binary();
+			
+			//Load plugins for show links to ProductOptionsListModel
+			
+			$arr_plugin_product_list=array();
+			
+			$query=$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
+			
+			while(list($plugin)=webtsys_fetch_row($query))
+			{
+			
+				$arr_plugin_product_list[]=$plugin;
+				
+			}
 
 			generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql='where idcat='.$_GET['idcat'], $arr_fields_form=array(), $type_list='Basic');
 
@@ -1364,6 +1377,36 @@ function ShopAdmin()
 			}
 		
 		break;
+		
+		case 22:
+		
+			settype($_GET['IdProduct'], 'integer');
+		
+			echo '<h3>'.$lang['shop']['edit_plugin'].'</h3>';
+			
+			$element_choice=$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			
+			if($element_choice!='')
+			{
+			
+				$plugin=@form_text($_GET['plugin']);
+			
+				if( in_array($plugin, $arr_plugin_list[$element_choice]) )
+				{
+				
+					load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
+	
+					$var_func=ucfirst($plugin).'Admin';
+					
+					$var_func($_GET['IdProduct']);
+				
+				}
+				
+			
+			}
+			
+		
+		break;
 
 	}
 
@@ -1401,8 +1444,8 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 {
 
-	global $lang, $base_url;
-
+	global $lang, $base_url, $base_path, $arr_plugin_product_list;
+	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $id) ).'">'.$lang['shop']['edit_image_product'].'</a>';
@@ -1410,8 +1453,23 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 	if($arr_row_raw['extra_options']=='standard_options.php')
 	{
 
-		$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 5, 'IdProduct' => $id) ).'">'.$lang['shop']['add__select_options_to_product'].'</a>';
+		$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', $lang['shop']['add__select_options_to_product'], array('IdModule' => $_GET['IdModule'], 'op' => 5, 'IdProduct' => $id) ).'">'.$lang['shop']['add__select_options_to_product'].'</a>';
 
+	}
+	
+	//Add plugin options
+	
+	foreach($arr_plugin_product_list as $plugin)
+	{
+	
+		//include($);
+		
+		load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
+	
+		$var_func=ucfirst($plugin).'Link';
+	
+		$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $var_func(), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func().'</a>';
+	
 	}
 
 	return $arr_options;

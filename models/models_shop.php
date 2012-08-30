@@ -937,6 +937,19 @@ $arr_plugin_list=array();
 
 $arr_plugin_list['product']=array('attachments');
 
+//Standard plugins. The user can create her plugins in other files.
+
+$model['product_attachments']=new Webmodel('product_attachments');
+
+$model['product_attachments']->components['name']=new CharField(255);
+$model['product_attachments']->components['name']->required=1;
+
+$model['product_attachments']->components['file']=new FileField('file', $base_path.'/application/media/shop/files/', $base_url.'/media/shop/files', $type);
+$model['product_attachments']->components['file']->required=1;
+
+$model['product_attachments']->components['idproduct']=new ForeignKeyField('product', 11);
+$model['product_attachments']->components['idproduct']->required=1;
+
 //Special field PercentField for discount, taxes_for_group, transport_for_group
 
 class PercentField extends IntegerField{

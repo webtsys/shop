@@ -378,6 +378,8 @@ $lang['shop']['element_choice']='element_choice';
 
 $lang['shop']['order_plugins']='order_plugins';
 
+$lang['shop']['edit_plugin']='edit_plugin';
+
 $lang['shop']['modify_products']='Modify products';
 
 $lang['shop']['subcat_products']='Products subcategories';
