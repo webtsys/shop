@@ -139,7 +139,13 @@ class image_product extends Webmodel {
 		settype($post['idproduct'], 'integer');
 
 		//If is not defined idproduct cannot change principal image.
-
+		
+		//$query=$this->select('where idproduct='.);
+		
+		//Array ( [photo] => arcoiris_jaen.jpg [idproduct] => 10 [principal] => 1 ) 
+		
+			//if exists a new photo...
+		
 		if($post['idproduct']>0)
 		{
 
@@ -168,9 +174,36 @@ class image_product extends Webmodel {
 			unset($post['principal']);
 
 		}
+		
+		$return_file=Webmodel::update($post, $conditions);
+		
+		if($return_file==1)
+		{
+		
+			if($post['photo']!=$_FILES['photo']['name'])
+			{
+			
+				//Delete old photo...
+				
+				foreach($this->components['photo']->img_width as $name_width => $width)
+				{
+				
+
+					if(!unlink($this->components['photo']->path.'/'.$name_width.'_'.$post['photo']))
+					{
+					
+						//die;
+					
+					}
+
+				}
+			
+			}
+			
+		}
 
 
-		return Webmodel::update($post, $conditions);
+		return $return_file;
 
 	}
 
@@ -938,8 +971,78 @@ $arr_plugin_list=array();
 $arr_plugin_list['product']=array('attachments');
 
 //Standard plugins. The user can create her plugins in other files.
+class product_attachments extends Webmodel {
 
-$model['product_attachments']=new Webmodel('product_attachments');
+	function __construct()
+	{
+
+		parent::__construct("product_attachments");
+
+	}
+	
+	function update($post, $conditions="")
+	{
+	
+		$return_file=Webmodel::update($post, $conditions);
+		
+		if($return_file==1 && $_FILES['file']['name']!='')
+		{
+		
+			if($post['file']!=$_FILES['file']['name'])
+			{
+			
+				//Delete old photo...
+
+				if(!unlink($this->components['file']->path.'/'.$post['file']))
+				{
+				
+					//die;
+				
+				}
+			
+			}
+			
+		}
+
+
+		return $return_file;
+			
+	}
+
+	function delete($conditions="")
+	{
+
+		//Delete images from field...
+		
+		$query=$this->select($conditions, array('IdProduct_attachments', 'file', 'idproduct'));
+
+		while(list($iattachment, $file, $idproduct)=webtsys_fetch_row($query))
+		{
+			
+			if($file!='')
+			{
+				
+
+				if(!unlink($this->components['file']->path.'/'.$file))
+				{
+
+					return 0;
+					
+				}
+				
+
+			}
+
+		}
+
+ 		return webtsys_query('delete from '.$this->name.' '.$conditions);
+		
+	}
+
+}
+
+
+$model['product_attachments']=new product_attachments();
 
 $model['product_attachments']->components['name']=new CharField(255);
 $model['product_attachments']->components['name']->required=1;

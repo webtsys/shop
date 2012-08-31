@@ -41,10 +41,10 @@ function AttachmentsAdmin($idproduct)
 	
 }
 
-function AttachmentsShow()
+function AttachmentsShow($idproduct)
 {
 
-
+	
 
 }
 
