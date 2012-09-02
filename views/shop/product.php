@@ -1,6 +1,6 @@
 <?php
 
-function ProductView($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $tax, $weight, $view_only_mode)
+function ProductView($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $tax, $weight, $view_only_mode, $arr_plugin)
 {
 
 global $base_url, $lang, $model, $config_shop;
@@ -47,6 +47,18 @@ global $base_url, $lang, $model, $config_shop;
 		</a>
 		<?php
 		}
+		?>
+		
+		
+		<?php
+		
+		foreach($arr_plugin as $plugin)
+		{
+		
+			echo $plugin;
+		
+		}
+		
 		?>
 	</div>
 </div>

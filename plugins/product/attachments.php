@@ -44,7 +44,13 @@ function AttachmentsAdmin($idproduct)
 function AttachmentsShow($idproduct)
 {
 
+	global $model, $lang, $base_url, $base_path, $language, $config_shop, $user_data, $arr_i18n, $header, $arr_block, $arr_plugin_list, $arr_plugin_product_list;
+
+	$query=$model['product_attachments']->select('where idproduct='.$idproduct, array(), 1);
 	
+	//Load view..., pass the query?.
+	
+	return load_view(array($query), 'shop/plugins/attachments');
 
 }
 

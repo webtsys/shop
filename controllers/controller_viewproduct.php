@@ -95,7 +95,24 @@ function ViewProduct()
 
 		$text_taxes=add_text_taxes($idtax);
 		
-		echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode), 'shop/product');
+		//Obtain plugins...
+		
+		$arr_plugin=array();
+		
+		$query=$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
+		
+		while(list($plugin)=webtsys_fetch_row($query))
+		{
+			
+			load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
+		
+			$func_plugin=ucfirst($plugin).'Show';
+			
+			$arr_plugin[$plugin]=$func_plugin($idproduct);
+		
+		}
+		
+		echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin), 'shop/product');
 
 	}
 	else

@@ -2,4 +2,6 @@
 
 $lang['shop_attachments']['add_attachments']='add_attachments';
 
+$lang['shop_attachments']['attachments']='attachments';
+
 ?>
