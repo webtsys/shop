@@ -222,7 +222,7 @@ $lang['shop']['countries']='Countries';
 
 $lang['shop']['currency']='Currency';
 
-$lang['shop']['plugins_shop']='plugins_shop';
+$lang['shop']['plugins_shop']='Shop plugins';
 
 $lang['shop']['edit_config_shop']='Edit shop configuration';
 
@@ -322,23 +322,23 @@ $lang['shop']['go_back_to_transport']='Go back to transport edition';
 
 $lang['shop']['go_back_to_taxes']='Go back to taxes edition';
 
-$lang['shop']['price_transport_for']='Precio de transporte para';
+$lang['shop']['price_transport_for']='Price transport for';
 
-$lang['shop']['code_payment']='Código php';
+$lang['shop']['code_payment']='Php code';
 
-$lang['shop']['group_shop']='Grupo';
+$lang['shop']['group_shop']='Group';
 
-$lang['shop']['discount']='Descuento';
+$lang['shop']['discount']='Discount';
 
-$lang['shop']['taxes_for_group']='Descuentos en impuestos';
+$lang['shop']['taxes_for_group']='Taxes discounts';
 
-$lang['shop']['transport_for_group']='Descuento en portes';
+$lang['shop']['transport_for_group']='Transport discounts';
 
-$lang['shop']['shipping_costs_for_group']='Descuento en pasarela de pago';
+$lang['shop']['shipping_costs_for_group']='Gateways discount';
 
-$lang['shop']['total_price']='Precio total';
+$lang['shop']['total_price']='Total price';
 
-$lang['shop']['edit_image_product']='Editar imagen de producto';
+$lang['shop']['edit_image_product']='Edit product image';
 
 $lang['shop']['add_new_images']='Add new images';
 
@@ -372,13 +372,13 @@ $lang['shop']['modify_change_currencies']='Modify currencies changes';
 
 $lang['shop']['explain_change_value']='Indicates that value is 1 unit of currency&lt;br /&gt; used in relation to&lt;br /&gt;';
 
-$lang['shop']['plugin_admin']='plugin_admin';
+$lang['shop']['plugin_admin']='Admin plugin';
 
-$lang['shop']['element_choice']='element_choice';
+$lang['shop']['element_choice']='Choise element';
 
-$lang['shop']['order_plugins']='order_plugins';
+$lang['shop']['order_plugins']='Order plugins';
 
-$lang['shop']['edit_plugin']='edit_plugin';
+$lang['shop']['edit_plugin']='Edit plugin';
 
 $lang['shop']['modify_products']='Modify products';
 

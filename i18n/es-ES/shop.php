@@ -370,15 +370,15 @@ $lang['shop']['symbol']='Símbolo';
 
 $lang['shop']['modify_change_currencies']='Modificar cambios entre monedas';
 
-$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda<br />elegida en relación a<br />';
+$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda&lt;br /&gt;elegida en relación a&lt;br /&gt;';
 
-$lang['shop']['plugin_admin']='plugin_admin';
+$lang['shop']['plugin_admin']='Administración de plugins';
 
-$lang['shop']['element_choice']='element_choice';
+$lang['shop']['element_choice']='Elegir elemento';
 
-$lang['shop']['order_plugins']='order_plugins';
+$lang['shop']['order_plugins']='Ordenar plugins';
 
-$lang['shop']['edit_plugin']='edit_plugin';
+$lang['shop']['edit_plugin']='Edit plugin';
 
 $lang['shop']['modify_products']='Modificar productos';
 
