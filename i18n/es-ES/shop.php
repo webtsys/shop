@@ -222,7 +222,7 @@ $lang['shop']['countries']='Paises';
 
 $lang['shop']['currency']='Moneda';
 
-$lang['shop']['plugins_shop']='plugins_shop';
+$lang['shop']['plugins_shop']='Plugins de tienda';
 
 $lang['shop']['edit_config_shop']='Editar configuración de tienda';
 
