@@ -4,7 +4,7 @@ global $base_url, $lang;
 
 load_libraries(array('i18n_fields'));
 
-$query=mysql_query('select IdCat_product, title, subcat from cat_product order by subcat ASC');
+$query=webtsys_query('select IdCat_product, title, subcat from cat_product order by subcat ASC');
 
 $arr_cat=array();
 
