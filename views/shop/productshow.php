@@ -31,10 +31,18 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 	$model['product']->create_form();
 	
 	$model['product']->forms['title']->label=$lang['common']['title'];
+	$model['product']->forms['date']->label=$lang['common']['date'];
 	
-	$arr_fields=array('title');
+	$arr_fields=array('date', 'title');
 	$where_sql='';
 	$url_options=make_fancy_url($base_url, 'shop', 'viewcategory', 'viewcategory', array('IdCat_product' => $_GET['IdCat_product']));
+	
+	if(!isset($_GET['order_desc']))
+	{
+	
+		$_GET['order_desc']=1;
+	
+	}
 	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields, $where_sql='where idcat='.$_GET['IdCat_product'], $url_options, 0);
 	
