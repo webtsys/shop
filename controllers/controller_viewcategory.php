@@ -18,26 +18,34 @@ function ViewCategory()
 
 	settype($_GET['IdCat_product'], 'integer');
 	
-	if($_GET['IdCat_product']==0)
-	{
-	
-		die( header( 'Location: '.make_fancy_url($base_url, 'shop', 'index', $config_shop['title_shop'], array() ) ) );
-	
-	}
-	
 	//Load list for objects..
 
 	$query=$model['cat_product']->select('where IdCat_product='.$_GET['IdCat_product'], array('IdCat_product', 'title', 'description', 'subcat', 'view_only_mode'));
 
 	list($idcat_product, $title_category, $description_cat, $subcat, $view_only_mode)=webtsys_fetch_row($query);
 	
-	settype($idcat_product, 'integer');
+	if($idcat_product==0)
+	{
 	
-	if($idcat_product>0)
+		$title_category=$lang['shop']['all_products'];
+		$description_cat=$lang['shop']['desc_all_products'];
+		$subcat=0;
+		$view_only_mode=$config_shop['view_only_mode'];
+		$_GET['IdCat_product']=0;
+	
+	}
+	else
 	{
 	
 		$title_category=$model['cat_product']->components['title']->show_formatted($title_category);
 		$description_cat=$model['cat_product']->components['description']->show_formatted($description_cat);
+	 
+	}
+	
+	settype($idcat_product, 'integer');
+	
+	/*if($idcat_product>0)
+	{*/
 		
 		echo load_view(array($title_category, $description_cat, $view_only_mode), 'shop/productshow');
 
@@ -165,7 +173,7 @@ function ViewCategory()
 
 		}*/
 
-	}
+	//}
 	
 	$cont_index.=ob_get_contents();
 

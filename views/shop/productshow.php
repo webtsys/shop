@@ -2,7 +2,7 @@
 
 function ProductShowView($title_category, $description_cat, $view_only_mode)
 {
-
+	
 	global $lang, $model, $base_url, $config_shop;
 
 	$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
@@ -33,18 +33,28 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 	$model['product']->forms['title']->label=$lang['common']['title'];
 	$model['product']->forms['date']->label=$lang['common']['date'];
 	
-	$arr_fields=array('date', 'title');
+	$arr_fields=array('title', 'date');
 	$where_sql='';
 	$url_options=make_fancy_url($base_url, 'shop', 'viewcategory', 'viewcategory', array('IdCat_product' => $_GET['IdCat_product']));
 	
-	if(!isset($_GET['order_desc']))
+	if(!isset($_GET['order_field']))
 	{
 	
+		$_GET['order_field']='date';
 		$_GET['order_desc']=1;
 	
 	}
 	
-	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields, $where_sql='where idcat='.$_GET['IdCat_product'], $url_options, 0);
+	//$_GET['IdCat_product']
+	
+	if($_GET['IdCat_product']>0)
+	{
+	
+		$where_sql='where idcat='.$_GET['IdCat_product'];
+	
+	}
+	
+	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields, $where_sql, $url_options, 0);
 	
 	$where_sql.=$arr_where_sql.' order by '.$location.$_GET['order_field'].' '.$arr_order[$_GET['order_desc']];
 	

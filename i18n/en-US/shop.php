@@ -1,5 +1,15 @@
 <?php
 
+$lang['shop']['offer']='Offer';
+
+$lang['shop']['no_stock']='No stock';
+
+$lang['shop']['in_stock']='In stock';
+
+$lang['shop']['served_on_request']='Served on request';
+
+$lang['shop']['no_new_products']='No hay novedades';
+
 $lang['shop']['see_products']='See products';
 
 $lang['shop']['choose_cat']='Choose products category';
@@ -15,16 +25,6 @@ $lang['shop']['price']='Price';
 $lang['shop']['buy_product_units']='Units';
 
 $lang['shop']['warning_products_with_options']='Warning: have been detected some products that have multiple options for choose. In this mode, you cannot specify options for the products';
-
-$lang['shop']['offer']='Offer';
-
-$lang['shop']['no_stock']='No stock';
-
-$lang['shop']['in_stock']='In stock';
-
-$lang['shop']['served_on_request']='Served on request';
-
-$lang['shop']['no_new_products']='No hay novedades';
 
 $lang['shop']['included']='Included';
 
@@ -50,37 +50,9 @@ $lang['shop']['paypal_explain']='Clicking on pay order, you will go to paypal pa
 
 $lang['shop']['checkout_order']='Pay order';
 
-$lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
+$lang['shop']['no_exists_product']='Don&#39;t exists this product';
 
-$lang['shop']['zone']='Zone';
-
-$lang['shop']['transport']='Transport';
-
-$lang['shop']['make_payment']='¿Pagado?';
-
-$lang['shop']['observations']='Observations';
-
-$lang['shop']['this_currency_have_equivalence']='It has applied a value to this currency. Edit the corresponding relationship created earlier, or change the currency to which you want to apply the equivalence';
-
-$lang['shop']['the_value_can_not_be_greater_than_100']='The value can not be greater than 100';
-
-$lang['shop']['options_for_product']='Product options';
-
-$lang['shop']['need_minimum_an_option']='Error: you need an option or more';
-
-$lang['shop']['go_back_cart']='Go back to cart';
-
-$lang['shop']['product_options']='Product options';
-
-$lang['shop']['shopping_cart']='Shopping cart';
-
-$lang['shop']['no_stock_for_this_article']='There isn&#39;t stock for this product';
-
-$lang['shop']['select_category_shop']='Select shop category';
-
-$lang['shop']['choose_category']='Choose category';
-
-$lang['shop']['no_products_in_category']='Still there is no product in this category';
+$lang['shop']['this_product_is_not_found']='The product is not found';
 
 $lang['shop']['explain_cart_options']='From here you can change the settings of your products or eliminate their purchase.';
 
@@ -91,6 +63,8 @@ $lang['shop']['explain_payment_type_transport_type']='Please, choose the payment
 $lang['shop']['payment_type']='Payment method';
 
 $lang['shop']['mode_payment_free_charge']='Payment method without charge';
+
+$lang['shop']['transport']='Transport';
 
 $lang['shop']['error_in_country_no_exists_transport']='Sorry, but your country don&#39;t have transport medium for delivery orders in this moment.';
 
@@ -177,6 +151,8 @@ $lang['shop']['explain_order']='Explain order';
 $lang['shop']['send_address_equal_shopping_address']='Shipping address same as billing address?';
 
 $lang['shop']['register_user_if_not_register']='If you don&#39;t have registered, a user is created for you.';
+
+$lang['shop']['observations']='Observations';
 
 $lang['shop']['observations_text']='Observations';
 
@@ -304,6 +280,8 @@ $lang['shop']['zones_taxes']='Tax zones';
 
 $lang['shop']['percent']='Percent';
 
+$lang['shop']['zone']='Zone';
+
 $lang['shop']['edit_transport']='Edit transport';
 
 $lang['shop']['zones_transport']='Transport zone';
@@ -337,6 +315,8 @@ $lang['shop']['transport_for_group']='Transport discounts';
 $lang['shop']['shipping_costs_for_group']='Gateways discount';
 
 $lang['shop']['total_price']='Total price';
+
+$lang['shop']['make_payment']='¿Pagado?';
 
 $lang['shop']['edit_image_product']='Edit product image';
 
@@ -392,9 +372,43 @@ $lang['shop']['add__user_to_group_shop']='Add user to discount group';
 
 $lang['shop']['obtain_bill']='Obtain invoice';
 
-$lang['shop']['no_exists_product']='Don&#39;t exists this product';
+$lang['shop']['all_products']='all_products';
 
-$lang['shop']['this_product_is_not_found']='The product is not found';
+$lang['shop']['desc_all_products']='desc_all_products';
+
+$lang['shop']['select_category_shop']='Select shop category';
+
+$lang['shop']['choose_category']='Choose category';
+
+$lang['shop']['no_products_in_category']='Still there is no product in this category';
+
+$lang['shop']['go_back_cart']='Go back to cart';
+
+$lang['shop']['product_options']='Product options';
+
+$lang['shop']['shopping_cart']='Shopping cart';
+
+$lang['shop']['no_stock_for_this_article']='There isn&#39;t stock for this product';
+
+$lang['shop']['options_for_product']='Product options';
+
+$lang['shop']['need_minimum_an_option']='Error: you need an option or more';
+
+$lang['shop']['see_more']='See more';
+
+$lang['shop']['pvp']='Price';
+
+$lang['shop']['weight_in_kg']='Weight in Kg.';
+
+$lang['shop']['kg']='Kg';
+
+$lang['shop']['see_product']='View product details';
+
+$lang['shop']['buy_product']='Buy product';
+
+$lang['shop']['buying_product']='Buying product';
+
+$lang['shop']['success_buy']='This product was added to the shopping cart';
 
 $lang['shop']['profile_shop']='Client profile';
 
@@ -418,21 +432,11 @@ $lang['shop']['dir_transport']='Mailing address';
 
 $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Please make your first order so have it.';
 
-$lang['shop']['pvp']='Price';
+$lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 
-$lang['shop']['weight_in_kg']='Weight in Kg.';
+$lang['shop']['this_currency_have_equivalence']='It has applied a value to this currency. Edit the corresponding relationship created earlier, or change the currency to which you want to apply the equivalence';
 
-$lang['shop']['kg']='Kg';
-
-$lang['shop']['see_product']='View product details';
-
-$lang['shop']['buy_product']='Buy product';
-
-$lang['shop']['buying_product']='Buying product';
-
-$lang['shop']['success_buy']='This product was added to the shopping cart';
-
-$lang['shop']['see_more']='See more';
+$lang['shop']['the_value_can_not_be_greater_than_100']='The value can not be greater than 100';
 
 $lang['shop']['error_buy_ajax']='Error: Ajax report a buying error';
 

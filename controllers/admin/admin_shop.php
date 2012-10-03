@@ -185,6 +185,8 @@ function ShopAdmin()
 			echo '<h3>'.$lang['shop']['edit_categories_shop'].' '.$title.'</h3>';
 
 			$model['cat_product']->create_form();
+			
+			$model['cat_product']->set_enctype_binary();
 
 			$model['cat_product']->forms['subcat']->form='SelectModelFormByOrder';
 
@@ -197,6 +199,8 @@ function ShopAdmin()
 			
 			$model['cat_product']->forms['view_only_mode']->SetForm($view_only_mode);
 			$model['cat_product']->forms['view_only_mode']->label=$lang['shop']['view_only_mode'];
+			
+			$model['cat_product']->forms['image_cat']->parameters=array('image_cat', '', '', 1, $model['cat_product']->components['image_cat']->url_path);
 
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $_GET['subcat']) );
 
@@ -255,6 +259,8 @@ function ShopAdmin()
 			$model['product']->forms['extra_options']->SetParameters($arr_options);
 
 			$model['product']->forms['description']->parameters=array('description', '', '', 'TextAreaBBForm');
+			
+			$model['product']->forms['stock']->SetForm(1);
 
 			//Labels for forms..
 
