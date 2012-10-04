@@ -28,6 +28,8 @@ function ViewProduct()
 
 	list($idproduct, $title, $description, $idcat_product, $price, $offer, $stock, $about_order, $weight)=webtsys_fetch_row($query);
 	
+	settype($idcat_product, 'integer');
+	
 	$title=$model['product']->components['title']->show_formatted($title);
 	$description=$model['product']->components['description']->show_formatted($description);
 
