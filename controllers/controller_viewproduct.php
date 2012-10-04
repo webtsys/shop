@@ -112,7 +112,11 @@ function ViewProduct()
 		
 		}
 		
-		echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin), 'shop/product');
+		//echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin), 'shop/product');
+		
+		$arr_product_view=array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin);
+		
+		echo load_view(array($title, $arr_product_view, $idcat_product), 'shop/loadproduct');
 
 	}
 	else
@@ -129,12 +133,6 @@ function ViewProduct()
 	ob_clean();
 	
 	//Show links for categories
-
-	echo load_view(array($title, $cont_index, $idcat_product), 'shop/loadproduct');
-
-	$cont_index=ob_get_contents();
-
-	ob_end_clean();
 
 	echo load_view(array($title, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
