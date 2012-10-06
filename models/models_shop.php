@@ -968,9 +968,9 @@ $model['plugin_shop']->components['plugin']->required=1;
 
 $model['plugin_shop']->components['position']=new IntegerField();
 
-$arr_plugin_list=array();
+//$arr_plugin_list=array();
 
-$arr_plugin_list['product']=array('attachments');
+$arr_plugin_list['product'][]='attachments';
 
 //Standard plugins. The user can create her plugins in other files.
 class product_attachments extends Webmodel {

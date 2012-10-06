@@ -1404,7 +1404,12 @@ function ShopAdmin()
 	
 					$var_func=ucfirst($plugin).'Admin';
 					
-					$var_func($_GET['IdProduct']);
+					if(function_exists($var_func))
+					{
+					
+						$var_func($_GET['IdProduct']);
+						
+					}
 				
 				}
 				
@@ -1473,8 +1478,13 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 		load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
 	
 		$var_func=ucfirst($plugin).'Link';
+		
+		if(function_exists($var_func))
+		{
 	
-		$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $var_func(), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func().'</a>';
+			$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $var_func(), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func().'</a>';
+			
+		}
 	
 	}
 

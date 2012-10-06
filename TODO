@@ -1,11 +1,19 @@
 Knowed bugs
 --------------------
 
+- Fix "Hacer pedido" translation.
+- Bug in text payment from contrareembolso.
+
+
 New features
 --------------------
 
+- Plugin for recommended.
+
 New features next versions
 ---------------------------
+
+- Extra page for conditions?.
 
 - Purge product images without product or config related.
 
