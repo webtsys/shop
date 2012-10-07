@@ -372,9 +372,9 @@ $lang['shop']['add__user_to_group_shop']='Añadir usuario a grupo de descuento';
 
 $lang['shop']['obtain_bill']='Obtener factura';
 
-$lang['shop']['all_products']='all_products';
+$lang['shop']['all_products']='Todos los productos';
 
-$lang['shop']['desc_all_products']='desc_all_products';
+$lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
 
 $lang['shop']['select_category_shop']='Seleccionar categoría';
 
