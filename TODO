@@ -3,6 +3,7 @@ Knowed bugs
 
 - Fix "Hacer pedido" translation.
 - Bug in text payment from contrareembolso.
+- Bug: currencies module admin do not have link.
 
 
 New features
