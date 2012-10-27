@@ -88,6 +88,14 @@ $lang['shop']['no_products_in_category']='Todavía no hay ningún producto en es
 
 $lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
 
+$lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
+
+$lang['shop']['login_shop']='Si tiene un usuario y desea identificarse';
+
+$lang['shop']['click_here']='pulse aquí';
+
+$lang['shop']['register_shop_or_buying']='Si desea registrarse durante el proceso de compra';
+
 $lang['shop']['choose_more_options']='Elegir más opciones';
 
 $lang['shop']['explain_payment_type_transport_type']='Por favor, elija el medio de pago y el modo de envio de su pedido';
@@ -188,6 +196,8 @@ $lang['shop']['terms_of_sale']='Condiciones de venta';
 
 $lang['shop']['accept_terms_of_sale_push_send_button']='Usted acepta los terminos de venta al pulsar en el botón enviar';
 
+$lang['shop']['conditions']='Terminos de venta';
+
 $lang['shop']['price_transport']='Portes';
 
 $lang['shop']['order_sended_with']='Pedido enviado por';
@@ -247,10 +257,6 @@ $lang['shop']['yes_transport']='¿Necesitan transporte los productos?';
 $lang['shop']['type_index']='Tipo de página principal';
 
 $lang['shop']['explain_discounts_page']='Página donde se definen los descuentos';
-
-$lang['shop']['explain_conditions_page']='explain_conditions_page';
-
-$lang['shop']['conditions']='Terminos de venta';
 
 $lang['shop']['ssl_url']='Url SSL para el carro';
 
@@ -443,6 +449,8 @@ $lang['shop']['see_more']='Ver más';
 $lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
 $lang['shop']['change_currency']='Cambiar moneda';
+
+$lang['shop']['explain_conditions_page']='explain_conditions_page';
 
 $lang['shop']['num_options_unspecified']='Opciones no especificadas';
 

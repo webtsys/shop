@@ -3,7 +3,7 @@
 function ConditionsView($title, $content)
 {
 
-global $base_url, $base_path, $arr_i18n, $language, $lang, $user_data, $arr_cache_jscript, $arr_check_table;
+global $base_url, $base_path, $arr_i18n, $language, $lang, $user_data, $arr_cache_jscript, $arr_check_table, $config_data;
 
 
 ?>

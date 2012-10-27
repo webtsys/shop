@@ -91,27 +91,48 @@ function Cart()
 
 					$post_user=array();
 					$post_transport=array();
-
-					if($user_data['IdUser']>0)
+					
+					settype($_GET['go_buy'], 'integer');
+					
+					if($user_data['IdUser']<=0 && $_GET['go_buy']==0)
+					{
+					
+						$url_login=make_fancy_url($base_url, 'shop', 'cart', 'buy_products', array('op' => 1, 'go_buy' => 1));
+					
+						echo '<p>'.$lang['shop']['explain_buying_without_register'].'</p>';
+					
+						echo '<p>'.$lang['shop']['login_shop'].', <a href="'.make_fancy_url($base_url, 'user',
+						'index', 'login', array('register_page' => urlencode_redirect($url_login)) ).'">'.$lang['shop']['click_here'].'</a></p>';
+						
+						echo '<p>'.$lang['shop']['register_shop_or_buying'].', <a href="'.$url_login.'">'.$lang['shop']['click_here'].'</a></p>';
+					
+					}
+					else if($_GET['go_buy']==1)
 					{
 
-						$post_user=&$user_data;
+						if($user_data['IdUser']>0)
+						{
 
-						$query=$model['dir_transport']->select('where iduser='.$user_data['IdUser'], array(), 1);
+							$post_user=&$user_data;
 
-						$post_transport=webtsys_fetch_array($query);
+							$query=$model['dir_transport']->select('where iduser='.$user_data['IdUser'], array(), 1);
 
-						settype($post_transport, 'array');
+							$post_transport=webtsys_fetch_array($query);
 
+							settype($post_transport, 'array');
+
+						}
+
+						$query=$model['country_user_shop']->select('where IdUser='.$user_data['IdUser'], array('idcountry'));
+
+						list($idcountry_user)=webtsys_fetch_row($query);
+
+						$post_user['country']=$idcountry_user;
+
+						form_order($sha1_token, $post_user, $post_transport, 0);
+						
+						
 					}
-
-					$query=$model['country_user_shop']->select('where IdUser='.$user_data['IdUser'], array('idcountry'));
-
-					list($idcountry_user)=webtsys_fetch_row($query);
-
-					$post_user['country']=$idcountry_user;
-
-					form_order($sha1_token, $post_user, $post_transport, 0);
 
 				break;
 
