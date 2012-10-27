@@ -1294,11 +1294,23 @@ function ShopAdmin()
 						
 						}
 					
-					}
 					
-					ob_end_clean();
-					load_libraries(array('redirect'));
-					die( redirect_webtsys( $url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ), $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+					
+						ob_end_clean();
+						load_libraries(array('redirect'));
+						die( redirect_webtsys( $url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ), $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+						
+					}
+					else
+					{
+						
+						$url_go_back=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
+						
+						echo '<p>'.$lang['common']['error_cannot_upload_this_image_to_the_server'].'</p>';
+					
+						echo '<p><a href="'.$url_go_back.'">'.$lang['common']['go_back'].'</a></p>';
+					
+					}
 					
 				
 				break;
