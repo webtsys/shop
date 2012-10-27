@@ -158,7 +158,7 @@ $lang['shop']['error_cannot_send_email']='Error: can not send email';
 
 $lang['shop']['use_this_id_for_contact_with_us']='This is your order number, enter it in the email you send us if you have problems.';
 
-$lang['shop']['order_success_cart_clean']='&lt;p&gt;&lt;strong&gt;The order was submitted successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;You will receive an email with the details of your purchase and the number of reference which may make a claim for this request if there were any problem.&lt;/p&gt;';
+$lang['shop']['order_success_cart_clean']='<p><strong>The order was submitted successfully.</strong></p><p>You will receive an email with the details of your purchase and the number of reference which may make a claim for this request if there were any problem.</p>';
 
 $lang['shop']['cancelling_order']='Canceling order';
 
@@ -176,7 +176,7 @@ $lang['shop']['total_price_with_discounts']='Total price with discounts';
 
 $lang['shop']['make_order']='Purchase order';
 
-$lang['shop']['explain_order']='Explain order';
+$lang['shop']['explain_order']='Please, fill the form with your personal data for finish your order.';
 
 $lang['shop']['send_address_equal_shopping_address']='Shipping address same as billing address?';
 

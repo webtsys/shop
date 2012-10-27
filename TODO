@@ -1,8 +1,6 @@
 Knowed bugs
 --------------------
 
-- Fix "Explicar pedido" translation.
-- Bug in text payment from contrareembolso.
 - Need wrap in description in productlist...
 - Bug in conditions. Conditions in html but they are in a textarea!.
 - Bug: currencies module admin do not have link.
@@ -11,6 +9,7 @@ New features
 --------------------
 
 - Plugin for recommended.
+- If user is not registered, i need a gateway where you have a login and a link for the cart, where the user can register.
 
 New features next versions
 ---------------------------
