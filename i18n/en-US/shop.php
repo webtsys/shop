@@ -248,6 +248,8 @@ $lang['shop']['type_index']='Type of home';
 
 $lang['shop']['explain_discounts_page']='Page where the discounts are explained';
 
+$lang['shop']['explain_conditions_page']='explain_conditions_page';
+
 $lang['shop']['conditions']='Terms of sale';
 
 $lang['shop']['ssl_url']='SSL url for the cart';

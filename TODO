@@ -1,9 +1,6 @@
 Knowed bugs
 --------------------
 
-- Need wrap in description in productlist...
-- Bug in conditions. Conditions in html but they are in a textarea!.
-
 New features
 --------------------
 
@@ -12,6 +9,8 @@ New features
 
 New features next versions
 ---------------------------
+
+- Need wrap in description in productlist in views or in shop?
 
 - Extra page for conditions?.
 

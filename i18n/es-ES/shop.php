@@ -248,7 +248,9 @@ $lang['shop']['type_index']='Tipo de página principal';
 
 $lang['shop']['explain_discounts_page']='Página donde se definen los descuentos';
 
-$lang['shop']['conditions']='Condiciones';
+$lang['shop']['explain_conditions_page']='explain_conditions_page';
+
+$lang['shop']['conditions']='Terminos de venta';
 
 $lang['shop']['ssl_url']='Url SSL para el carro';
 

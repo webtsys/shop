@@ -1261,7 +1261,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 	<p><?php echo $lang['shop']['accept_terms_of_sale_push_send_button']; ?></p>
 	
 	<div class="form">
-	<textarea readonly><?php echo $config_shop['conditions']; ?></textarea>
+	<iframe src="<?php echo make_fancy_url($base_url, 'shop', 'conditions', $lang['shop']['conditions'], array()); ?>"></iframe>
 	</div>
 	<script language="Javascript">
 		function add_data_transport()
