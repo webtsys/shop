@@ -26,7 +26,7 @@ function ShopAdmin()
 
 	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
 	
-	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
+	$arr_link_options[20]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
 	
 	menu_selected($_GET['op'], $arr_link_options);
 	

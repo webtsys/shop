@@ -3,7 +3,6 @@ Knowed bugs
 
 - Need wrap in description in productlist...
 - Bug in conditions. Conditions in html but they are in a textarea!.
-- Bug: currencies module admin do not have link.
 
 New features
 --------------------
