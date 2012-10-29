@@ -4,10 +4,12 @@ Knowed bugs
 New features
 --------------------
 
-- Plugin for recommended.
-
 New features next versions
 ---------------------------
+
+- Plugin for recommended.
+
+- In install, put array with plugins for shop if shop module is included.
 
 - Need wrap in description in productlist in views or in shop?
 
