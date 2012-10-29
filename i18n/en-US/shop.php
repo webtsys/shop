@@ -62,8 +62,6 @@ $lang['shop']['observations']='Observations';
 
 $lang['shop']['this_currency_have_equivalence']='It has applied a value to this currency. Edit the corresponding relationship created earlier, or change the currency to which you want to apply the equivalence';
 
-$lang['shop']['the_value_can_not_be_greater_than_100']='The value can not be greater than 100';
-
 $lang['shop']['options_for_product']='Product options';
 
 $lang['shop']['need_minimum_an_option']='Error: you need an option or more';

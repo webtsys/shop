@@ -62,8 +62,6 @@ $lang['shop']['observations']='Observaciones';
 
 $lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
 
-$lang['shop']['the_value_can_not_be_greater_than_100']='El valor no puede ser más grande de 100';
-
 $lang['shop']['options_for_product']='Opciones para este producto';
 
 $lang['shop']['need_minimum_an_option']='Necesita como mínimo una opción';
