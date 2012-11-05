@@ -94,10 +94,10 @@ function Cart()
 					
 					settype($_GET['go_buy'], 'integer');
 					
+					$url_login=make_fancy_url($base_url, 'shop', 'cart', 'buy_products', array('op' => 1, 'go_buy' => 1));
+					
 					if($user_data['IdUser']<=0 && $_GET['go_buy']==0)
 					{
-					
-						$url_login=make_fancy_url($base_url, 'shop', 'cart', 'buy_products', array('op' => 1, 'go_buy' => 1));
 					
 						echo '<p>'.$lang['shop']['explain_buying_without_register'].'</p>';
 					
@@ -105,6 +105,12 @@ function Cart()
 						'index', 'login', array('register_page' => urlencode_redirect($url_login)) ).'">'.$lang['shop']['click_here'].'</a></p>';
 						
 						echo '<p>'.$lang['shop']['register_shop_or_buying'].', <a href="'.$url_login.'">'.$lang['shop']['click_here'].'</a></p>';
+					
+					}
+					else if($user_data['IdUser']>0 && $_GET['go_buy']==0)
+					{
+					
+						die(header('Location: '.$url_login));
 					
 					}
 					else if($_GET['go_buy']==1)

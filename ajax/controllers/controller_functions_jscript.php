@@ -63,9 +63,10 @@ function buy_product(idproduct)
 {
 
 	//Check if is a product with options via ajax.
-	$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo $lang['shop']['success_buy']; ?></span>');
-	$('#text_buy_'+idproduct).hide();
-	$('#loading_buy_'+idproduct).show();
+	//$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo $lang['shop']['success_buy']; ?></span>');
+
+	$('#loading_buy_'+idproduct).fadeIn(1000);
+	$('#buying_'+idproduct).fadeIn(1000);
 
 	$.ajax({
 		url: "<?php echo make_fancy_url($base_url, 'shop/ajax', 'checkoptionsproduct', 'checkoptionsproduct', array() ); ?>",
@@ -106,6 +107,23 @@ function buy_product(idproduct)
 
 							}
 							
+							 $('#buying_'+idproduct).fadeOut(1000, function () {
+							 
+								//$('#loading_buy_'+idproduct).fadeOut(2000);
+								
+                                                                $('#sucess_buy_'+idproduct).fadeIn(1000, function () { 
+                                                                
+                                                                $('#sucess_buy_'+idproduct).fadeOut(1000);
+								
+								$('#loading_buy_'+idproduct).fadeOut(1000);
+								
+								} );
+
+                                                        });
+                                                        
+                                                        /*$('#sucess_buy_'+idproduct).fadeOut(1000);
+                                                        $('#sucess_buy_'+idproduct).fadeOut(1000);
+                                                        $('#loading_buy_'+idproduct).fadeOut(1000);*/
 
 						}
 						else
@@ -116,8 +134,22 @@ function buy_product(idproduct)
 							$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo $lang['shop']['error_buy_ajax']; ?></span>');
 
 						}
+						
+						/*$('#sucess_buy_'+idproduct).fadeIn(500);
 
-					}
+						$('#loading_buy_'+idproduct).fadeOut(2000);
+
+						$('#sucess_buy_'+idproduct).delay(2000).fadeOut(500);*/
+
+					},
+					
+					error: function(data){
+					
+						alert('<?php echo $lang['shop']['error_buy_ajax']; ?>');
+
+						$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo $lang['shop']['error_buy_ajax']; ?></span>');
+					
+					},
 				});
 
 
@@ -139,12 +171,6 @@ function buy_product(idproduct)
 
 	});
 	
-	$('#sucess_buy_'+idproduct).show(500);
-
-	$('#loading_buy_'+idproduct).hide(2000);
-
-	$('#text_buy_'+idproduct).delay(2000).show(0);
-	$('#sucess_buy_'+idproduct).delay(2000).hide(500);
 	
 }
 
