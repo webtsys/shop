@@ -11,6 +11,7 @@ function list_products_index($where)
 
 	$arr_id=array();
 	$arr_photo=array();
+	$arr_idcat=array();
 	
 	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel, 'idcat'), true);
 
