@@ -519,7 +519,7 @@ $model['config_shop']->components['conditions']=new I18nField($field_conditions)
 //create_field_multilang('config_shop', 'conditions', $field_conditions, 0);
 $model['config_shop']->components['yes_transport']=new BooleanField();
 $model['config_shop']->components['type_index']=new CharField(25);
-$model['config_shop']->components['ssl_url']=new CharField(255);
+$model['config_shop']->components['ssl_url']=new BooleanField();
 
 $field_title_shop=new TextHTMLField();
 $model['config_shop']->components['title_shop']=new I18nField($field_title_shop);

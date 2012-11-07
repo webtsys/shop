@@ -13,14 +13,28 @@ function Cart()
 
 	$arr_block=select_view(array('shop'));
 	
-	//In cart alwais is none...
+	//In cart , blocks showed are none always...
 
 	$arr_block='/none';
 
 	load_lang('shop');
 	load_model('shop');
+	
 	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
-
+	
+	if($config_shop['ssl_url']==1)
+	{
+		
+		if(!isset($_SERVER['HTTPS']))
+		{
+		
+			//Redirect to https if cart isn't in https.
+		
+			die(header('Location:'.make_fancy_url($base_url, 'shop', 'cart', $lang['shop']['cart'], $_GET ) ) );
+			
+		}
+	
+	}
 	//If exists idtax and $config_shop['yes_taxes']==0, we need show the taxes to the client in the cart, yes_taxes is valid only for show products.
 
 	if($config_shop['yes_taxes']==0 && $config_shop['idtax']>0)

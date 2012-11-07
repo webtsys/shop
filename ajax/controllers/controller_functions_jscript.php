@@ -5,6 +5,9 @@ function Functions_Jscript()
 	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop;
 
 	load_lang('shop');
+	
+	$original_base_url=$base_url;
+	
 	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
 
 	load_model('shop');
@@ -13,8 +16,15 @@ function Functions_Jscript()
 
 	$token=$_COOKIE['webtsys_shop'];
 
+	if(!preg_match('/\/shop\//', $_SERVER ['HTTP_REFERER']))
+	{
+	
+		$base_url=$original_base_url;
+	
+	}
+	
 	?>
-
+	
 function obtain_data_cart(mode)
 {
 
@@ -24,6 +34,7 @@ function obtain_data_cart(mode)
 		type: "GET",
 		dataType: "json",
 		success: function(data){
+			
 			process_cart(data, mode);
 		}
 	});
@@ -32,7 +43,7 @@ function obtain_data_cart(mode)
 
 function process_cart(data, mode)
 {
-
+	
 	if (mode == null)
 	{
 		mode = 0;
@@ -172,6 +183,13 @@ function buy_product(idproduct)
 	});
 	
 	
+}
+
+function return_https()
+{
+
+	return "<?php echo $base_url; ?>";
+
 }
 
 	<?php

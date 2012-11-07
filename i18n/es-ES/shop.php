@@ -256,7 +256,7 @@ $lang['shop']['type_index']='Tipo de página principal';
 
 $lang['shop']['explain_discounts_page']='Página donde se definen los descuentos';
 
-$lang['shop']['ssl_url']='Url SSL para el carro';
+$lang['shop']['ssl_url']='¿Este dominio tiene SSL?. Elija sí, si su url base por defecto no tiene SSL';
 
 $lang['shop']['title_shop']='Titulo de la tienda';
 

@@ -256,7 +256,7 @@ $lang['shop']['type_index']='Type of home';
 
 $lang['shop']['explain_discounts_page']='Page where the discounts are explained';
 
-$lang['shop']['ssl_url']='SSL url for the cart';
+$lang['shop']['ssl_url']='Do base domain have SSL?. Choose yes if you default url is not SSL';
 
 $lang['shop']['title_shop']='Title shop';
 
