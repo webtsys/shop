@@ -29,7 +29,9 @@ function Cart()
 		{
 		
 			//Redirect to https if cart isn't in https.
-		
+			
+			unset($_GET['']);
+			
 			die(header('Location:'.make_fancy_url($base_url, 'shop', 'cart', $lang['shop']['cart'], $_GET ) ) );
 			
 		}
