@@ -27,7 +27,7 @@ else
 		<?php echo $title_product; ?>
 	</div>
 	<div class="cont">
-		<div class="image1">
+		<div class="image_list_prod">
 			<img src="<?php echo $image; ?>" /></div>
 		<div class="description_product">
 			<?php echo $description; ?>
