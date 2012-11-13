@@ -84,6 +84,8 @@ $lang['shop']['choose_category']='Choose category';
 
 $lang['shop']['no_products_in_category']='Still there is no product in this category';
 
+$lang['shop']['cart']='Cart';
+
 $lang['shop']['explain_cart_options']='From here you can change the settings of your products or eliminate their purchase.';
 
 $lang['shop']['explain_buying_without_register']='You are not registered. You can choose between register for buying or login if you have an user. When you login, will be redirected to cart for finish the order.';
@@ -167,8 +169,6 @@ $lang['shop']['use_this_id_for_contact_with_us']='This is your order number, ent
 $lang['shop']['order_success_cart_clean']='<p><strong>The order was submitted successfully.</strong></p><p>You will receive an email with the details of your purchase and the number of reference which may make a claim for this request if there were any problem.</p>';
 
 $lang['shop']['cancelling_order']='Canceling order';
-
-$lang['shop']['cart']='Cart';
 
 $lang['shop']['modify_options']='Modify options';
 

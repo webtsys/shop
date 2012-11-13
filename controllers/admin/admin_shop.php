@@ -230,7 +230,8 @@ function ShopAdmin()
 			echo '<h3>'.$lang['shop']['edit_products_from_category'].': '.$model['cat_product']->components['title']->show_formatted($title).'</h3>';
 
 			$arr_fields=array('referer', 'title', 'extra_options');
-			$arr_fields_edit=array();
+			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'idcat', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' ) ;
+			
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
 
 			$model['product']->create_form();

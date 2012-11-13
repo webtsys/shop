@@ -84,6 +84,8 @@ $lang['shop']['choose_category']='Elegir categoría';
 
 $lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
 
+$lang['shop']['cart']='Carrito';
+
 $lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
 
 $lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
@@ -167,8 +169,6 @@ $lang['shop']['use_this_id_for_contact_with_us']='Este es su número de pedido, 
 $lang['shop']['order_success_cart_clean']='<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>';
 
 $lang['shop']['cancelling_order']='Cancelando pedido';
-
-$lang['shop']['cart']='Carrito';
 
 $lang['shop']['modify_options']='Opciones de modificación';
 

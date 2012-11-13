@@ -16,6 +16,24 @@ class product extends Webmodel {
 
 	}
 	
+	function insert($post)
+	{
+	
+		$post=$this->components['title']->add_slugify_i18n_post('title', $post);
+	
+		return parent::insert($post);
+	
+	}
+	
+	function update($post, $conditions='')
+	{
+	
+		$post=$this->components['title']->add_slugify_i18n_post('title', $post);
+	
+		return parent::update($post, $conditions);
+	
+	}
+	
 	function delete($conditions="")
 	{
 	
@@ -51,6 +69,8 @@ $model['product']->components['referer']->required=1;
 $model['product']->components['title']=new I18nField(new CharField(255));
 
 $model['product']->components['title']->required=1;
+
+SlugifyField::add_slugify_i18n_fields('product', 'title');
 
 $model['product']->components['description']=new I18nField(new TextHTMLField());
 
@@ -177,7 +197,7 @@ class image_product extends Webmodel {
 		
 		$return_file=Webmodel::update($post, $conditions);
 		
-		if($return_file==1)
+		/*if($return_file==1)
 		{
 		
 			if($post['photo']!=$_FILES['photo']['name'])
@@ -200,7 +220,7 @@ class image_product extends Webmodel {
 			
 			}
 			
-		}
+		}*/
 
 
 		return $return_file;

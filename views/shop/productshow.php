@@ -30,10 +30,10 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 	
 	$model['product']->create_form();
 	
-	$model['product']->forms['title']->label=$lang['common']['title'];
+	$model['product']->forms['title_'.$_SESSION['language']]->label=$lang['common']['title'];
 	$model['product']->forms['date']->label=$lang['common']['date'];
 	
-	$arr_fields=array('title', 'date');
+	$arr_fields=array('title_'.$_SESSION['language'], 'date');
 	$where_sql='';
 	$url_options=make_fancy_url($base_url, 'shop', 'viewcategory', 'viewcategory', array('IdCat_product' => $_GET['IdCat_product']));
 	
@@ -56,7 +56,7 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields, $where_sql, $url_options, 0);
 	
-	$where_sql.=$arr_where_sql.' order by '.$location.$_GET['order_field'].' '.$arr_order[$_GET['order_desc']];
+	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
 	
 	//Get ids for get images...
 	
