@@ -56,7 +56,7 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields, $where_sql, $url_options, 0);
 	
-	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
+	$where_sql.=$arr_where_sql.' order by '.$location.$_GET['order_field'].' '.$arr_order[$_GET['order_desc']];
 	
 	//Get ids for get images...
 	
