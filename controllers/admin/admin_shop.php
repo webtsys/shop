@@ -323,6 +323,7 @@ function ShopAdmin()
 			$model['type_product_option']->forms['description']->label=$lang['common']['description'];
 			$model['type_product_option']->forms['question']->label=$lang['shop']['question'];
 			$model['type_product_option']->forms['options']->label=$lang['shop']['options_product'];
+			$model['type_product_option']->forms['price']->label=$lang['shop']['price'];
 
 			generate_admin_model_ng('type_product_option', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 

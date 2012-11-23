@@ -1096,15 +1096,17 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 	{
 		
 		$arr_id=array(0);
+		$arr_price=array();
 
-		$query=webtsys_query('select idproduct from cart_shop where token="'.$token.'"');
+		$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$token.'"');
 		
-		while(list($idproduct)=webtsys_fetch_row($query))
+		while(list($idproduct, $price_in_cart)=webtsys_fetch_row($query))
 		{
 			
 			settype($arr_id[$idproduct], 'integer');
 
 			$arr_id[$idproduct]++;
+			$arr_price[$idproduct]=$price_in_cart;
 
 		}
 		
@@ -1126,6 +1128,8 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 		
 		while( list($idproduct, $referer, $title, $price, $offer, $weight, $extra_options)=webtsys_fetch_row($query) )
 		{
+		
+			$price=$arr_price[$idproduct];
 
 			if($offer>0)
 			{

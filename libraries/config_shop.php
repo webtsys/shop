@@ -410,7 +410,7 @@ function add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
 	
 	}
 	
-	if(isset($_POST['IdCart_shop']) && $model['cart_shop']->select_count('where IdCart_shop='.$_POST['IdCart_shop'], 'IdCart_shop'))
+	if($_POST['IdCart_shop']>0 && $model['cart_shop']->select_count('where IdCart_shop='.$_POST['IdCart_shop'], 'IdCart_shop'))
 	{
 		
 		if(!$model['cart_shop']->update( array('details' => $arr_details, 'time' => time(), 'price_product' => $price) , 'where token = "'.sha1($token).'" and IdCart_shop='.$_POST['IdCart_shop'].'  and idproduct ='. $_GET['IdProduct']))

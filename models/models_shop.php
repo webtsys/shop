@@ -778,6 +778,9 @@ $model['type_product_option']->components['question']->required=1;
 $model['type_product_option']->components['options']=new I18nField(new TextField());
 $model['type_product_option']->components['options']->required=0;
 
+$model['type_product_option']->components['price']=new MoneyField();
+$model['type_product_option']->components['price']->required=0;
+
 
 class product_option extends Webmodel {
 
