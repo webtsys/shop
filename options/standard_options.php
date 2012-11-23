@@ -29,46 +29,59 @@ case 1:
 	while(list($title, $question, $description, $options, $price_options, $idproduct_option, $idtype_product_option, $option_required)=webtsys_fetch_row($query))
 	{
 		
-		$price+=$price_options;
-		
 		$options=$model['type_product_option']->components['options']->show_formatted($options);
 		
 		if($options!='')
 		{
-
+		
 			$arr_options=explode('|', $options);
 
 			settype($_POST['option'][$z], 'string');
 			
-			if(in_array($_POST['option'][$z], $arr_options))
+			$_POST['option'][$z]=trim($_POST['option'][$z]);
+			
+			if($_POST['option'][$z]!='')
 			{
+			
+				if(in_array($_POST['option'][$z], $arr_options))
+				{
 
-				$_POST['option'][$z]=@form_text($_POST['option'][$z]);
-				$arr_ident[$z]=$_POST['option'][$z];
-				$no_blank++;
+					$_POST['option'][$z]=@form_text($_POST['option'][$z]);
+					$arr_ident[$z]=$_POST['option'][$z];
+					$no_blank++;
 
-			}
-			else if( trim($_POST['option'][$z])!='' && trim($options)=='' )
-			{
+				}
+				else if( $_POST['option'][$z]!='' && trim($options)=='' )
+				{
+					
+					$_POST['option'][$z]=str_replace('<', '&lt', $_POST['option'][$z]);
+					$_POST['option'][$z]=str_replace('>', '&gt', $_POST['option'][$z]);
+
+					$arr_ident[$z]=$_POST['option'][$z];
+
+					$no_blank++;
+
+				}
 				
-				$_POST['option'][$z]=str_replace('<', '&lt', $_POST['option'][$z]);
-				$_POST['option'][$z]=str_replace('>', '&gt', $_POST['option'][$z]);
-
-				$arr_ident[$z]=$_POST['option'][$z];
-
+				$price+=$price_options;
+				
+			}
+			else if( $_POST['option'][$z]=='' && $option_required==0 )
+			{
+			
 				$no_blank++;
-
+			
 			}
 
 		}
 		else
-		{
+		{	
 
 			$_POST['option'][$z]=form_text($_POST['option'][$z]);
 			
 			if($_POST['option'][$z]=='')
 			{
-
+				
 				if($option_required==0)
 				{
 
@@ -79,12 +92,14 @@ case 1:
 			}
 			else
 			{
+			
+				$arr_ident[$z]=$_POST['option'][$z];
+			
+				$price+=$price_options;
 
 				$no_blank++;
 
 			}
-
-			$arr_ident[$z]=$_POST['option'][$z];
 		
 		}
 
@@ -100,7 +115,7 @@ case 1:
 	else
 	{
 		
-		echo '<p>'.$lang['shop']['need_minimum_an_option'].'</p>';
+		echo '<p>'.$lang['shop']['need_minimum_an_option'].'.</p>';
 		
 		show_form_options($name_product, $product_data, $_POST, 1);
 		
@@ -188,6 +203,18 @@ function show_form_options($name_product, $product_data, $post=array(), $show_er
 	//<input type="hidden" name="IdCart_shop" value="<?php echo $_GET['IdCart_shop']; 
 	$arr_form_options['IdCart_shop']=new ModelForm('options_form', 'IdCart_shop', 'HiddenForm', $_GET['IdCart_shop'], new IntegerField(), 0, $_GET['IdCart_shop']);
 	
+	if(isset($post['option']))
+	{
+		foreach($post['option'] as $key => $value)
+		{
+		
+			$post['option['.$key.']']=$value;
+			
+		
+		}
+		unset($post['option']);
+	}
+	
 	if($show_error==1)
 	{
 	
@@ -195,7 +222,7 @@ function show_form_options($name_product, $product_data, $post=array(), $show_er
 		
 	}
 	
-	//SetValuesForm($arr_form_options,$post, $show_error);
+	SetValuesForm($post, $arr_form_options, $show_error);
 	
 	echo load_view(array($arr_form_options, array(),  make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $_GET['IdProduct'], 'action' => 1) ) ) , 'common/forms/updatemodelform');
 	
