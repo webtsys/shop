@@ -10,8 +10,6 @@ $lang['shop']['served_on_request']='Served on request';
 
 $lang['shop']['no_new_products']='No hay novedades';
 
-$lang['shop']['see_products']='See products';
-
 $lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['referer']='Referer';
@@ -256,6 +254,8 @@ $lang['shop']['description']='Category description';
 
 $lang['shop']['edit_products_from_category']='Edit category products';
 
+$lang['shop']['description_short']='Short description for product lists';
+
 $lang['shop']['idcat']='Shop category';
 
 $lang['shop']['special_offer']='Special offer';
@@ -398,11 +398,11 @@ $lang['shop']['shopping_cart']='Shopping cart';
 
 $lang['shop']['no_stock_for_this_article']='There isn&#39;t stock for this product';
 
+$lang['shop']['need_minimum_an_option']='Error: you need an option or more';
+
 $lang['shop']['options_for_product']='Product options';
 
 $lang['shop']['add_extra_price']='add_extra_price';
-
-$lang['shop']['need_minimum_an_option']='Error: you need an option or more';
 
 $lang['shop']['see_more']='See more';
 
@@ -441,6 +441,8 @@ $lang['shop']['no_in_discount_group']='You are not already in a group discount';
 $lang['shop']['dir_transport']='Mailing address';
 
 $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Please make your first order so have it.';
+
+$lang['shop']['see_products']='See products';
 
 $lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 

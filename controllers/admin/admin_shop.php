@@ -230,7 +230,7 @@ function ShopAdmin()
 			echo '<h3>'.$lang['shop']['edit_products_from_category'].': '.$model['cat_product']->components['title']->show_formatted($title).'</h3>';
 
 			$arr_fields=array('referer', 'title', 'extra_options');
-			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'idcat', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' ) ;
+			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'idcat', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' ) ;
 			
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
 
@@ -261,6 +261,7 @@ function ShopAdmin()
 			$model['product']->forms['extra_options']->SetParameters($arr_options);
 
 			$model['product']->forms['description']->parameters=array('description', '', '', 'TextAreaBBForm');
+			$model['product']->forms['description_short']->parameters=array('description_short', '', '', 'TextAreaBBForm');
 			
 			$model['product']->forms['stock']->SetForm(1);
 
@@ -269,6 +270,7 @@ function ShopAdmin()
 			$model['product']->forms['referer']->label=$lang['shop']['referer'];
 			$model['product']->forms['title']->label=$lang['common']['title'];
 			$model['product']->forms['description']->label=$lang['common']['description'];
+			$model['product']->forms['description_short']->label=$lang['shop']['description_short'];
 			$model['product']->forms['idcat']->label=$lang['shop']['idcat'];
 			$model['product']->forms['price']->label=$lang['shop']['price'];
 			$model['product']->forms['special_offer']->label=$lang['shop']['special_offer'];

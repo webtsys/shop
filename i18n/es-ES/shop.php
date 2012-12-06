@@ -10,8 +10,6 @@ $lang['shop']['served_on_request']='Servido bajo pedido';
 
 $lang['shop']['no_new_products']='No hay novedades';
 
-$lang['shop']['see_products']='Ver productos';
-
 $lang['shop']['choose_cat']='Elegir categoría';
 
 $lang['shop']['referer']='Referencia';
@@ -256,6 +254,8 @@ $lang['shop']['description']='Descripción';
 
 $lang['shop']['edit_products_from_category']='Editar productos de la categoría';
 
+$lang['shop']['description_short']='Descripción breve del producto, útil para listados';
+
 $lang['shop']['idcat']='Categoría de tienda';
 
 $lang['shop']['special_offer']='Oferta especial';
@@ -398,11 +398,11 @@ $lang['shop']['shopping_cart']='Carro de la compra';
 
 $lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
 
+$lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
+
 $lang['shop']['options_for_product']='Opciones para este producto';
 
 $lang['shop']['add_extra_price']='Se añadirá el siguiente valor al precio original';
-
-$lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
 
 $lang['shop']['see_more']='Ver más';
 
@@ -441,6 +441,8 @@ $lang['shop']['no_in_discount_group']='Usted aún no está en un grupo de descue
 $lang['shop']['dir_transport']='Dirección de envio';
 
 $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
+
+$lang['shop']['see_products']='Ver productos';
 
 $lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
 
