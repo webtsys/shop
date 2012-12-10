@@ -1371,7 +1371,7 @@ function ShopAdmin()
 				$arr_fields_edit=array('name', 'element', 'plugin');
 				$url_options=make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice));
 			
-				generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', 
+				generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='PluginsOptionsListModel', 
 				$where_sql='where element="'.$element_choice.'"', $arr_fields_form=array(), $type_list='Basic');
 				
 				//Now the order...
@@ -1433,6 +1433,36 @@ function ShopAdmin()
 			
 			}
 			
+		
+		break;
+		
+		case 23:
+		
+			$element_choice=$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			
+			if($element_choice!='')
+			{
+			
+				$plugin=@form_text($_GET['plugin']);
+			
+				if( in_array($plugin, $arr_plugin_list[$element_choice]) )
+				{
+				
+					load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
+	
+					$var_func=ucfirst($plugin).'AdminExternal';
+					
+					if(function_exists($var_func))
+					{
+					
+						$var_func();
+						
+					}
+				
+				}
+				
+			
+			}
 		
 		break;
 
@@ -1498,8 +1528,8 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 		
 		if(function_exists($var_func))
 		{
-	
-			$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $var_func(), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func().'</a>';
+			
+			$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $var_func($id), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func($id).'</a>';
 			
 		}
 	
@@ -1543,6 +1573,31 @@ function BillOptionsListModel($url_options, $model_name, $id)
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'obtain_bill', array('IdModule' => $_GET['IdModule'], 'op' => 16, 'IdOrder_shop' => $id) ).'">'.$lang['shop']['obtain_bill'].'</a>';
+
+	return $arr_options;
+
+}
+
+function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
+{
+
+	global $lang, $base_url, $arr_plugin_options;
+
+	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	
+	
+	if(isset($arr_plugin_options[$arr_row['plugin']]['admin_external']))
+	{
+	
+		//$func_admin_plugin=$arr_row['plugin'].'AdminExternal';
+		
+		
+		
+		$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $lang['shop']['admin_external_plugin'], array('IdModule' => $_GET['IdModule'], 'op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => 'product') ).'">'.$lang['shop']['edit_plugin_external'].'</a>';
+		
+		//$func_admin_plugin();
+	
+	}
 
 	return $arr_options;
 

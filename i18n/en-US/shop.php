@@ -380,6 +380,10 @@ $lang['shop']['add__user_to_group_shop']='Add user to discount group';
 
 $lang['shop']['obtain_bill']='Obtain invoice';
 
+$lang['shop']['admin_external_plugin']='admin_external_plugin';
+
+$lang['shop']['edit_plugin_external']='edit_plugin_external';
+
 $lang['shop']['all_products']='All products';
 
 $lang['shop']['desc_all_products']='Here, you will find all products.';
