@@ -910,6 +910,25 @@ function Cart()
 				//Sum 1 to num_sold to solded products.
 
 				$query=webtsys_query('update product set num_sold=num_sold+1 where IdProduct IN ('.implode(', ', $arr_idproduct).')');
+				
+				//Now proccess the plugins for last cart process. For example, for stores that sell files. The plugin send an tmp link for download the file, and type a text.
+				
+				$arr_plugin=array();
+		
+				$query=$model['plugin_shop']->select('where element="cart" order by position ASC', array('plugin'));
+				
+				while(list($plugin)=webtsys_fetch_row($query))
+				{
+					
+					load_libraries(array($plugin), $base_path.'modules/shop/plugins/cart/');
+				
+					$func_plugin=ucfirst($plugin).'Show';
+					
+					//Execute plugin. 
+					
+					$func_plugin($sha1_token);
+				
+				}
 
 				setcookie ( "webtsys_shop", FALSE, 0, $cookie_path);
 
