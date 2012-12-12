@@ -926,7 +926,12 @@ function Cart()
 					
 					//Execute plugin. 
 					
-					$func_plugin($sha1_token);
+					if(function_exists($func_plugin))
+					{
+					
+						$func_plugin($sha1_token);
+						
+					}
 				
 				}
 

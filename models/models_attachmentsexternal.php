@@ -80,5 +80,6 @@ $model['external_attachments']->components['file']->required=1;
 
 $model['external_attachments']->components['idproduct']=new ForeignKeyField('product', 11);
 $model['external_attachments']->components['idproduct']->required=1;
+$model['external_attachments']->components['idproduct']->fields_related_model=array('IdProduct', 'title');
 
 ?>
