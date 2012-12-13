@@ -29,6 +29,7 @@ function ViewDownloads()
 	{
 	
 		$arr_token=array();
+		$arr_idproduct=array(0);
 	
 		$query=$model['order_shop']->select('where iduser='.$user_data['IdUser'].' and make_payment=1', array('token'));
 		
@@ -38,6 +39,8 @@ function ViewDownloads()
 			$arr_token[]=$token;
 		
 		}
+		
+		
 		
 		$query=$model['cart_shop']->select('where token IN (\''.implode('\', \'', $arr_token).'\')', array('idproduct'));
 		
