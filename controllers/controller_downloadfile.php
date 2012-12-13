@@ -52,7 +52,7 @@ function DownloadFile()
 		
 			//Download file...
 			
-			$file_download=$model['external_attachments']->components['file']->path.'/'.$file;
+			$file_download=$model['external_attachments']->components['file']->path.'/'.basename($file);
 			
 			header( "Content-disposition: filename=" . $file );
 			header( "Content-type: application/octet-stream" );

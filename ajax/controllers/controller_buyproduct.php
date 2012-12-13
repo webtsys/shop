@@ -13,44 +13,53 @@ function BuyProduct()
 
 	//Only for buy products without options.
 	
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('IdProduct', 'price', 'special_offer','extra_options', 'idcat'));
+	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('IdProduct', 'price', 'special_offer','extra_options', 'idcat', 'stock', 'about_order'));
 		
-	list($idproduct, $price, $special_offer, $extra_options, $idcat)=webtsys_fetch_row($query);
+	list($idproduct, $price, $special_offer, $extra_options, $idcat, $stock, $about_order)=webtsys_fetch_row($query);
 	
-	settype($idproduct, 'integer');
-	settype($idcat, 'integer');
-	
-	$query=$model['cat_product']->select('where IdCat_product='.$idcat, array('view_only_mode'));
-	
-	list($view_only_mode)=webtsys_fetch_row($query);
-	
-	if($config_shop['view_only_mode']==0 && $view_only_mode==0 && $idproduct>0)
+	if($stock==0 && $about_order==0)
 	{
-
-		$buy_return=0;
-		
-		if($extra_options=='')
-		{
-
-			//No extra_options, add to cart...
-
-			$buy_return=add_cart($arr_details=array(), $price, $special_offer, $redirect=0);
-
-			
-			
-
-		}
-
-		$jsondata['buy_return']=$buy_return;
-
-		echo json_encode($jsondata);
-	  
+		echo json_encode(array());
 	}
 	else
 	{
 	
-		echo json_encode(array());
-	
+		settype($idproduct, 'integer');
+		settype($idcat, 'integer');
+		
+		$query=$model['cat_product']->select('where IdCat_product='.$idcat, array('view_only_mode'));
+		
+		list($view_only_mode)=webtsys_fetch_row($query);
+		
+		if($config_shop['view_only_mode']==0 && $view_only_mode==0 && $idproduct>0)
+		{
+
+			$buy_return=0;
+			
+			if($extra_options=='')
+			{
+
+				//No extra_options, add to cart...
+
+				$buy_return=add_cart($arr_details=array(), $price, $special_offer, $redirect=0);
+
+				
+				
+
+			}
+
+			$jsondata['buy_return']=$buy_return;
+
+			echo json_encode($jsondata);
+		
+		}
+		else
+		{
+		
+			echo json_encode(array());
+		
+		}
+		
 	}
 
 }

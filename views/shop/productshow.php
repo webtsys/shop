@@ -124,17 +124,18 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 		if($about_order==0)
 		{
 
-			$stock=$arr_stock[$stock];
+			$stock_text=$arr_stock[$stock];
 
 		}
 		else
 		{
 
-			$stock=$lang['shop']['served_on_request'];
+			$stock_text=$lang['shop']['served_on_request'];
+			$stock=1;
 
 		}
 		
-		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock, $text_taxes, $weight, $view_only_mode), 'shop/productlist');
+		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock_text, $stock, $text_taxes, $weight, $view_only_mode), 'shop/productlist');
 
 		$z++;
 

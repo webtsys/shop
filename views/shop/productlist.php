@@ -1,6 +1,6 @@
 <?php
 
-function ProductListView($idproduct, $title_product, $description, $image, $price, $stock, $tax, $weight, $view_only_mode)
+function ProductListView($idproduct, $title_product, $description, $image, $price, $stock_text, $stock, $tax, $weight, $view_only_mode)
 {
 
 global $base_url, $lang, $model, $config_data, $config_shop, $arr_cache_jscript;
@@ -34,7 +34,7 @@ else
 			<br /><br />
 			<strong><?php echo $lang['shop']['pvp']; ?>:</strong> <?php echo $price; ?>
 			<br />
-			<?php echo $stock; ?>
+			<?php echo $stock_text; ?>
 			<br />
 			<strong><?php echo $tax; ?></strong> 
 			<br />
@@ -45,7 +45,7 @@ else
 				<?php echo $lang['shop']['see_product']; ?>
 			</a>
 			<?php
-		if($config_shop['view_only_mode']==0 && $view_only_mode==0)
+		if($config_shop['view_only_mode']==0 && $view_only_mode==0 && $stock==1)
 		{
 		?>
 		<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship"><span id="text_buy_<?php echo $idproduct; ?>"><?php echo $lang['shop']['buy_product']; ?></span>

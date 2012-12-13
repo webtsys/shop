@@ -78,21 +78,6 @@ function ViewProduct()
 
 		ob_clean();
 
-		$arr_stock[0]=$lang['shop']['no_stock'];
-		$arr_stock[1]=$lang['shop']['in_stock'];
-
-		if($about_order==0)
-		{
-
-			$stock=$arr_stock[$stock];
-
-		}
-		else
-		{
-
-			$stock=$lang['shop']['served_on_request'];
-
-		}
 		//ProductView($idproduct, $description, $arr_image, $price, $stock, $tax, $weight)
 
 		$text_taxes=add_text_taxes($idtax);
@@ -116,7 +101,7 @@ function ViewProduct()
 		
 		//echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin), 'shop/product');
 		
-		$arr_product_view=array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin);
+		$arr_product_view=array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $about_order, $text_taxes, $weight, $view_only_mode, $arr_plugin);
 		
 		echo load_view(array($title, $arr_product_view, $idcat_product), 'shop/loadproduct');
 

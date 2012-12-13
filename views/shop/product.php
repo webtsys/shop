@@ -1,11 +1,27 @@
 <?php
 
-function ProductView($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $tax, $weight, $view_only_mode, $arr_plugin)
+function ProductView($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $about_order, $tax, $weight, $view_only_mode, $arr_plugin)
 {
 
 global $base_url, $lang, $model, $config_shop, $arr_cache_jscript;
 
 $arr_cache_jscript[]='show_big_image.js';
+
+$arr_stock[0]=$lang['shop']['no_stock'];
+$arr_stock[1]=$lang['shop']['in_stock'];
+
+if($about_order==0)
+{
+
+	$stock_text=$arr_stock[$stock];
+
+}
+else
+{
+
+	$stock_text=$lang['shop']['served_on_request'];
+
+}
 
 ?>
 <div style="text-align:center;">
@@ -33,7 +49,7 @@ $arr_cache_jscript[]='show_big_image.js';
 		<br /><br />
 		<strong><?php echo $lang['shop']['pvp']; ?>:</strong> <?php echo $price; ?>
 		<br />
-		<?php echo $stock; ?>
+		<?php echo $stock_text; ?>
 		<br />
 		<strong><?php echo $tax; ?></strong> 
 		<br />
@@ -43,14 +59,18 @@ $arr_cache_jscript[]='show_big_image.js';
 		<?php
 		if($config_shop['view_only_mode']==0 && $view_only_mode==0)
 		{
-		?>
 		
-		<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship">
-				<span id="text_buy_<?php echo $idproduct; ?>"><?php echo $lang['shop']['buy_product']; ?></span>
-		</a><img id="loading_buy_<?php echo $idproduct; ?>" src="<?php echo $base_url; ?>/media/default/images/loading.gif" alt="<?php echo $lang['shop']['buying_product']; ?>" style="display: none;" />
-		<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['buying_product']; ?></span></p><p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p></div>
-		<?php
-		
+			if($stock!=0 || $about_order==1)
+			{
+			?>
+			<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship">
+			<span id="text_buy_<?php echo $idproduct; ?>"><?php echo $lang['shop']['buy_product']; ?></span>
+			</a><img id="loading_buy_<?php echo $idproduct; ?>" src="<?php echo $base_url; ?>/media/default/images/loading.gif" alt="<?php echo $lang['shop']['buying_product']; ?>" style="display: none;" />
+	
+			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['buying_product']; ?></span></p><p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p></div>
+			
+			<?php
+			}
 		}
 		?>
 		
