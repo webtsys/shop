@@ -216,6 +216,16 @@ function ShopAdmin()
 				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
+			else
+			{
+			
+				//Order principal categories, util for various things.
+				
+				echo '<h3>'.$lang['shop']['order_cats'].'</h3>';
+			
+				GeneratePositionModel('cat_product', 'title', 'position', make_fancy_url($base_url, 'admin', 'index', 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 2)), $where='');
+			
+			}
 
 		break;
 

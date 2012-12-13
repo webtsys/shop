@@ -2,6 +2,8 @@
 
 $lang['shop_attachmentsexternal']['download_file']='Download file';
 
+$lang['shop_attachmentsexternal']['sorry_you_dont_have_downloads']='sorry_you_dont_have_downloads';
+
 $lang['shop_attachmentsexternal']['add_external_attachments']='Add files for download';
 
 $lang['shop_attachmentsexternal']['when_you_pay_the_product_you_download_file']='When you pay the product, you can download the file.';

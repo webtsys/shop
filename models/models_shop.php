@@ -337,6 +337,8 @@ $model['cat_product']->components['description']->required=1;
 
 $model['cat_product']->components['view_only_mode']=new BooleanField();
 
+$model['cat_product']->components['position']=new IntegerField();
+
 $model['cat_product']->components['image_cat']=new ImageField('image_cat', $base_path.'application/media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 0);
 
 class taxes extends Webmodel {

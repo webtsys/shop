@@ -252,6 +252,8 @@ $lang['shop']['subcat']='Choose category father';
 
 $lang['shop']['description']='Category description';
 
+$lang['shop']['order_cats']='order_cats';
+
 $lang['shop']['edit_products_from_category']='Edit category products';
 
 $lang['shop']['description_short']='Short description for product lists';

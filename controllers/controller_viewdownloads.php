@@ -51,6 +51,8 @@ function ViewDownloads()
 		
 		}
 		
+		$z=0;
+		
 		echo '<ul>';
 		
 		$query=$model['external_attachments']->select('where external_attachments.idproduct IN ('.implode(', ', $arr_idproduct).')', array(), true);
@@ -62,10 +64,19 @@ function ViewDownloads()
 			$url_download=make_fancy_url($base_url, 'shop', 'downloadfile', $arr_attachment['name'], array('IdExternal_attachments' => $arr_attachment['IdExternal_attachments']));
 			
 			echo '<li>'.$arr_attachment['name'].' - <a href="'.$url_download.'">'.$lang['shop_attachmentsexternal']['download_file'].'</a></li>';
+			
+			$z++;
 		
 		}
 		
 		echo '</ul>';
+		
+		if($z==0)
+		{
+		
+			echo '<p>'.$lang['shop_attachmentsexternal']['sorry_you_dont_have_downloads'].'</p>';
+			
+		}
 		
 	}
 	
