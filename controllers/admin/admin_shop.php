@@ -474,7 +474,7 @@ function ShopAdmin()
 			$model['zone_shop']->forms['other_countries']->label=$lang['shop']['other_countries'];
 
 			$arr_fields=array('name');
-			$arr_fields_edit=array('name', 'code');
+			$arr_fields_edit=array('name', 'code', 'type');
 
 			if($_GET['type']==0)
 			{
