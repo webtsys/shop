@@ -105,8 +105,19 @@ function ProductShowView($title_category, $description_cat, $view_only_mode)
 		$text_taxes=add_text_taxes($idtax);
 		
 		$price_real=number_format($price+$add_tax, 2);
+		
+		if($price_real>0)
+		{
 
-		$price=MoneyField::currency_format($price_real);
+			$price=MoneyField::currency_format($price_real);
+			
+		}
+		else
+		{
+		
+			$price=$lang['shop']['free_product'];
+		
+		}
 
 		if($offer>0)
 		{

@@ -450,6 +450,8 @@ $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Pl
 
 $lang['shop']['see_products']='See products';
 
+$lang['shop']['free_product']='Free';
+
 $lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 
 $lang['shop']['this_currency_have_equivalence']='It has applied a value to this currency. Edit the corresponding relationship created earlier, or change the currency to which you want to apply the equivalence';

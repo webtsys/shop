@@ -92,8 +92,6 @@ $model['product']->components['stock']=new BooleanField();
 
 $model['product']->components['date']=new DateField();
 
-$model['product']->components['price']->required=1;
-
 $model['product']->components['about_order']=new BooleanField();
 
 $model['product']->components['extra_options']=new ChoiceField(255, 'string');

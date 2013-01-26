@@ -450,6 +450,8 @@ $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna direc
 
 $lang['shop']['see_products']='Ver productos';
 
+$lang['shop']['free_product']='Gratuito';
+
 $lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
 
 $lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';

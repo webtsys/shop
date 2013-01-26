@@ -65,19 +65,30 @@ function ViewProduct()
 
 		//$add_tax=$price*$arr_taxes[$idtax];
 		$add_tax=calculate_taxes($idtax, $price);
-
-		$price=MoneyField::currency_format($price+$add_tax);
-
-		if($offer>0)
+		
+		if($price>0)
 		{
-			$add_tax_offer=calculate_taxes($idtax, $offer);
 
-			$price= '<strong>'.$lang['shop']['offer'].'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format( ($price+$add_tax) ).'</span> -> '.MoneyField::currency_format( ($offer+$add_tax_offer) );
+			$price=MoneyField::currency_format($price+$add_tax);
 
+			if($offer>0)
+			{
+				$add_tax_offer=calculate_taxes($idtax, $offer);
+
+				$price= '<strong>'.$lang['shop']['offer'].'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format( ($price+$add_tax) ).'</span> -> '.MoneyField::currency_format( ($offer+$add_tax_offer) );
+
+			}
+			
 		}
-
+		else
+		{
+		
+			$price=$lang['shop']['free_product'];
+		
+		}
+		
 		ob_clean();
-
+		
 		//ProductView($idproduct, $description, $arr_image, $price, $stock, $tax, $weight)
 
 		$text_taxes=add_text_taxes($idtax);
