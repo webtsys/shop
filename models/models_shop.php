@@ -86,8 +86,6 @@ $model['product']->components['idcat']->required=1;
 
 $model['product']->components['price']=new MoneyField();
 
-$model['product']->components['price']->required=1;
-
 $model['product']->components['special_offer']=new DoubleField();
 
 $model['product']->components['stock']=new BooleanField();
