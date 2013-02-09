@@ -44,6 +44,8 @@ default:
 		$taxes_discount=0;
 		$payment_discount=0;
 		
+		$model['group_shop_users']->components['group_shop']->fields_related_model=$model['group_shop_users']->components['group_shop']->get_all_fields();
+		
 		$query=$model['group_shop_users']->select('where group_shop_users.iduser='.$user_data['IdUser'].' order by group_shop_discount DESC, group_shop_transport_for_group DESC, group_shop_shipping_costs_for_group DESC limit 1');
 	
 		while($arr_group=webtsys_fetch_array($query))
@@ -121,7 +123,7 @@ default:
 			
 			?>
 			<input type="hidden" name="item_name_<?php echo $z; ?>" value="<?php echo $model['product']->components['title']->show_formatted($arr_item_name[$idproduct]); ?>">
-			<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo $arr_item_amount[$idproduct]; ?>">
+			<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo MoneyField::currency_format($arr_item_amount[$idproduct], 0); ?>">
 			<input type="hidden" name="quantity_<?php echo $z; ?>" value="<?php echo $arr_item_quantity[$idproduct]; ?>">
 			<?php
 

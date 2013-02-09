@@ -155,7 +155,7 @@ function yes_add_field_taxes($fields, $price, $idtax, $sum_tax)
 	global $lang_taxes, $arr_taxes;
 
 	$fields[]=$lang_taxes[$idtax].' '.$arr_taxes[$idtax].'%<br />'.MoneyField::currency_format($sum_tax);
-	$fields[]=MoneyField::currency_format($price, 2);
+	$fields[]=MoneyField::currency_format($price);
 
 	return $fields;
 

@@ -1091,7 +1091,7 @@ class MoneyField extends DoubleField{
 	}
 
 	
-	static function currency_format($value)
+	static function currency_format($value, $symbol_view=1)
 	{
 
 		global $arr_currency, $arr_change_currency, $config_shop;
@@ -1136,8 +1136,11 @@ class MoneyField extends DoubleField{
 			
 
 		}
-
-		return number_format($value, 2).' '.$symbol_currency;
+		
+		$arr_symbol[0]='';
+		$arr_symbol[1]=' '.$symbol_currency;
+		
+		return number_format($value, 2).$arr_symbol[$symbol_view];
 
 	}
 
