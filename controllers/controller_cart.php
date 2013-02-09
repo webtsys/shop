@@ -840,9 +840,9 @@ function Cart()
 				
 				$arr_description_type=array();
 
-				$model['product_option']->components['idtype']->fields_related_model=array();
+				$model['product_option']->components['idtype']->fields_related_model=array('title', 'description');
 				$model['product_option']->components['idproduct']->fields_related_model=array('title');
-
+				
 				$query=$model['product_option']->select('where product_option.idproduct IN ('.implode(', ', $arr_idproduct).')', array('idtype', 'idproduct'));
 
 				while($arr_product_options=webtsys_fetch_array($query))
