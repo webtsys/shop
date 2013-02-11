@@ -22,7 +22,7 @@ function list_products_index($where)
 		$arr_idcat[$idcat]=1;
 
 	}
-	//print_r($arr_idcat);
+	
 	$query=$model['image_product']->select('where idproduct IN (\''.implode("', '", $arr_id).'\') and principal=1', array('photo', 'idproduct'), true);
 
 	while(list($photo, $idproduct)=webtsys_fetch_row($query))
@@ -58,27 +58,7 @@ function list_products_index($where)
 
 		$image=$arr_photo[$idproduct];
 		
-		/*if($image!='mini_')
-		{
-
-			$image=$model['image_product']->components['photo']->url_path.'/'.$image;
-
-		}
-		else
-		{
-
-			$image=$base_url.'/media/'.$config_data['dir_theme'].'/images/mini_default.png';
-
-		}*/
-		
 		$add_tax=0;
-
-	/*	if($config_shop['yes_taxes']==1)
-		{
-
-			$add_tax=$price*($arr_taxes[$idtax]/100);
-
-		}*/
 
 		$price_real=$price;
 
