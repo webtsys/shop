@@ -394,7 +394,10 @@ $model['price_transport']->components['price']=new MoneyField();
 $model['price_transport']->components['price']->required=1;
 
 $model['price_transport']->components['weight']=new DoubleField();
-$model['price_transport']->components['weight']->required=1;
+$model['price_transport']->components['weight']->required=0;
+
+$model['price_transport']->components['price_limit']=new MoneyField();
+$model['price_transport']->components['price_limit']->required=0;
 
 $model['price_transport']->components['idtransport']=new ForeignKeyField('transport');
 $model['price_transport']->components['idtransport']->form='HiddenForm';
