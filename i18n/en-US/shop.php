@@ -156,6 +156,8 @@ $lang['shop']['make_order']='Purchase order';
 
 $lang['shop']['explain_order']='Please, fill the form with your personal data for finish your order.';
 
+$lang['shop']['country_others']='country_others';
+
 $lang['shop']['send_address_equal_shopping_address']='Shipping address same as billing address?';
 
 $lang['shop']['register_user_if_not_register']='If you don&#39;t have registered, a user is created for you.';

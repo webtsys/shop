@@ -156,6 +156,8 @@ $lang['shop']['make_order']='Hacer pedido';
 
 $lang['shop']['explain_order']='Por favor, rellene los datos que se le piden a continuación para poder hacer su pedido.';
 
+$lang['shop']['country_others']='country_others';
+
 $lang['shop']['send_address_equal_shopping_address']='¿Dirección de envío igual a dirección de facturación?';
 
 $lang['shop']['register_user_if_not_register']='Se le creará un usuario, ya que usted no está registrado.';

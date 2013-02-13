@@ -234,7 +234,7 @@ function Cart()
 						$post['country']=I18nField::show_formatted($country_name);
 
 						//Save order and register to user in first time...
-
+	
 						if($user_data['IdUser']==0)
 						{
 
@@ -1273,6 +1273,8 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 	$model['order_shop']->forms['country']->form='SelectModelForm';
 			
 	$model['order_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='');
+	
+	$model['order_shop']->forms['country_others']=new ModelForm('shopping', 'country_others', 'TextForm', $lang['shop']['country_others'], new CharField(255), $required=0, $parameters='');
 
 	$model['order_shop']->forms['country_transport']->form='SelectModelForm';
 			
@@ -1287,7 +1289,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 	<?php
 	set_csrf_key();
 
-	echo load_view(array($model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
+	echo load_view(array($model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'country_others', 'phone', 'fax'), ''), 'common/forms/modelform');
 	
 	if($config_shop['yes_transport']==1)
 	{
@@ -1295,6 +1297,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 		<div class="form">
 		<p><label for="click"><?php echo $lang['shop']['send_address_equal_shopping_address']; ?></label> <?php echo $lang['common']['yes']; ?><input type="radio" name="click" onclick="javascript:add_data_transport();"/></p>
 		</div>
+		<br clear="all" />
 		<?php
 		echo '<h3>'.$lang['shop']['address_transport'].'</h3>';
 
