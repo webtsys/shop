@@ -298,11 +298,11 @@ $lang['shop']['edit_transport']='Editar transporte';
 
 $lang['shop']['zones_transport']='Zonas de transporte';
 
-$lang['shop']['type_transport']='type_transport';
+$lang['shop']['type_transport']='Tipo de transporte';
 
-$lang['shop']['type_by_weight']='type_by_weight';
+$lang['shop']['type_by_weight']='Por peso';
 
-$lang['shop']['type_by_price']='type_by_price';
+$lang['shop']['type_by_price']='Por precio';
 
 $lang['shop']['countries_zones_transport']='Areas de transporte';
 
@@ -320,7 +320,7 @@ $lang['shop']['go_back_to_taxes']='Regresar a impuestos';
 
 $lang['shop']['price_transport_for']='Precio de transporte para';
 
-$lang['shop']['min_price']='min_price';
+$lang['shop']['min_price']='Precio total de pedido';
 
 $lang['shop']['code_payment']='Código php';
 

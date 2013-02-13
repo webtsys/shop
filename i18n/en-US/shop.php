@@ -298,11 +298,11 @@ $lang['shop']['edit_transport']='Edit transport';
 
 $lang['shop']['zones_transport']='Transport zone';
 
-$lang['shop']['type_transport']='type_transport';
+$lang['shop']['type_transport']='Transport type';
 
-$lang['shop']['type_by_weight']='type_by_weight';
+$lang['shop']['type_by_weight']='By weight';
 
-$lang['shop']['type_by_price']='type_by_price';
+$lang['shop']['type_by_price']='By price';
 
 $lang['shop']['countries_zones_transport']='Transport Areas';
 
