@@ -109,6 +109,8 @@ default:
 
 		}
 		$z=1;
+		
+		$total_price=0;
 
 		foreach($arr_item_name as $idproduct => $value)
 		{
@@ -127,6 +129,8 @@ default:
 			<input type="hidden" name="quantity_<?php echo $z; ?>" value="<?php echo $arr_item_quantity[$idproduct]; ?>">
 			<?php
 
+			$total_price+=$arr_item_amount[$idproduct]*$arr_item_quantity[$idproduct];
+			
 			$z++;
 
 		}
@@ -134,7 +138,7 @@ default:
 		if($yes_transport==1)
 		{
 
-			list($price_total_transport, $num_packs)=obtain_transport_price($total_weight, $arr_order_shop['transport']);
+			list($price_total_transport, $num_packs)=obtain_transport_price($total_weight, $total_price, $arr_order_shop['transport']);
 
 			$discount_transport=obtain_discount($transport_discount, $price_total_transport);
 

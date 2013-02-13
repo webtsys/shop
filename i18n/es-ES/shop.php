@@ -48,6 +48,8 @@ $lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pas
 
 $lang['shop']['checkout_order']='Pagar pedido';
 
+$lang['shop']['free_product']='Gratuito';
+
 $lang['shop']['no_exists_product']='No existe este producto';
 
 $lang['shop']['this_product_is_not_found']='No se encuentra este producto';
@@ -296,6 +298,12 @@ $lang['shop']['edit_transport']='Editar transporte';
 
 $lang['shop']['zones_transport']='Zonas de transporte';
 
+$lang['shop']['type_transport']='type_transport';
+
+$lang['shop']['type_by_weight']='type_by_weight';
+
+$lang['shop']['type_by_price']='type_by_price';
+
 $lang['shop']['countries_zones_transport']='Areas de transporte';
 
 $lang['shop']['countries_zones_taxes']='Areas de impuestos';
@@ -311,6 +319,8 @@ $lang['shop']['go_back_to_transport']='Regresar a transporte';
 $lang['shop']['go_back_to_taxes']='Regresar a impuestos';
 
 $lang['shop']['price_transport_for']='Precio de transporte para';
+
+$lang['shop']['min_price']='min_price';
 
 $lang['shop']['code_payment']='Código php';
 
@@ -449,8 +459,6 @@ $lang['shop']['dir_transport']='Dirección de envio';
 $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
 
 $lang['shop']['see_products']='Ver productos';
-
-$lang['shop']['free_product']='Gratuito';
 
 $lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
 

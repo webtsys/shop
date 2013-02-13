@@ -48,6 +48,8 @@ $lang['shop']['paypal_explain']='Clicking on pay order, you will go to paypal pa
 
 $lang['shop']['checkout_order']='Pay order';
 
+$lang['shop']['free_product']='Free';
+
 $lang['shop']['no_exists_product']='Don&#39;t exists this product';
 
 $lang['shop']['this_product_is_not_found']='The product is not found';
@@ -296,6 +298,12 @@ $lang['shop']['edit_transport']='Edit transport';
 
 $lang['shop']['zones_transport']='Transport zone';
 
+$lang['shop']['type_transport']='type_transport';
+
+$lang['shop']['type_by_weight']='type_by_weight';
+
+$lang['shop']['type_by_price']='type_by_price';
+
 $lang['shop']['countries_zones_transport']='Transport Areas';
 
 $lang['shop']['countries_zones_taxes']='Taxes areas';
@@ -311,6 +319,8 @@ $lang['shop']['go_back_to_transport']='Go back to transport edition';
 $lang['shop']['go_back_to_taxes']='Go back to taxes edition';
 
 $lang['shop']['price_transport_for']='Price transport for';
+
+$lang['shop']['min_price']='min_price';
 
 $lang['shop']['code_payment']='Php code';
 
@@ -449,8 +459,6 @@ $lang['shop']['dir_transport']='Mailing address';
 $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Please make your first order so have it.';
 
 $lang['shop']['see_products']='See products';
-
-$lang['shop']['free_product']='Free';
 
 $lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 

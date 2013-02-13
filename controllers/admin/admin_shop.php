@@ -431,6 +431,11 @@ function ShopAdmin()
 	
 			$model['transport']->forms['name']->label=$lang['common']['name'];
 			$model['transport']->forms['country']->label=$lang['shop']['zone'];
+			$model['transport']->forms['type']->label=$lang['shop']['type_transport'];
+			
+			$arr_type_transport=array(0, $lang['shop']['type_by_weight'], 0, $lang['shop']['type_by_price'], 1);
+			
+			$model['transport']->forms['type']->SetParameters($arr_type_transport);
 
 			generate_admin_model_ng('transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='TransportOptionsListModel', $where_sql='where IdTransport>0', $arr_fields_form=array(), $type_list='Basic');
 
@@ -496,25 +501,46 @@ function ShopAdmin()
 
 			settype($_GET['IdTransport'], 'integer'); 
 
-			$query=$model['transport']->select('where IdTransport='.$_GET['IdTransport'], array('name'));
+			$query=$model['transport']->select('where IdTransport='.$_GET['IdTransport'], array('name', 'type'));
 
-			list($name_transport)=webtsys_fetch_row($query);
+			list($name_transport, $type)=webtsys_fetch_row($query);
 
 			echo '<h3>'.$lang['shop']['price_transport_for'].': '.$name_transport.'</h3>';
 
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'price_transport', array('IdModule' => $_GET['IdModule'], 'op' => 9, 'IdTransport' => $_GET['IdTransport'] ) );
-
-			$arr_fields=array('weight');
-			$arr_fields_edit=array();
-
-			$model['price_transport']->create_form();
 			
-			$model['price_transport']->forms['idtransport']->SetForm($_GET['IdTransport']);
+			if($type==0)
+			{
 
-			$model['price_transport']->forms['price']->label=$lang['shop']['price'];
-			$model['price_transport']->forms['weight']->label=$lang['shop']['weight'];
+				$arr_fields=array('price', 'weight');
+				$arr_fields_edit=array();
 
-			generate_admin_model_ng('price_transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
+				$model['price_transport']->create_form();
+				
+				$model['price_transport']->forms['idtransport']->SetForm($_GET['IdTransport']);
+
+				$model['price_transport']->forms['price']->label=$lang['shop']['price'];
+				$model['price_transport']->forms['weight']->label=$lang['shop']['weight'];
+
+				generate_admin_model_ng('price_transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
+				
+			}
+			else
+			{
+				
+				$arr_fields=array('price', 'min_price');
+				$arr_fields_edit=array();
+
+				$model['price_transport_price']->create_form();
+				
+				$model['price_transport_price']->forms['idtransport']->SetForm($_GET['IdTransport']);
+
+				$model['price_transport_price']->forms['price']->label=$lang['shop']['price'];
+				$model['price_transport_price']->forms['min_price']->label=$lang['shop']['min_price'];
+
+				generate_admin_model_ng('price_transport_price', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
+			
+			}
 
 			if(!isset($_GET['op_edit']))
 			{

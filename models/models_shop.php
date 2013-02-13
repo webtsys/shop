@@ -377,6 +377,9 @@ $model['transport']->components['name']->required=1;
 $model['transport']->components['country']=new ForeignKeyField('zone_shop');
 $model['transport']->components['country']->required=1;
 
+$model['transport']->components['type']=new ChoiceField($size=255, $type='integer', $arr_values=array(0, 1), $default_value=0);
+$model['transport']->components['type']->required=0;
+
 class price_transport extends Webmodel {
 
 	function __construct()
@@ -396,12 +399,32 @@ $model['price_transport']->components['price']->required=1;
 $model['price_transport']->components['weight']=new DoubleField();
 $model['price_transport']->components['weight']->required=0;
 
-$model['price_transport']->components['price_limit']=new MoneyField();
-$model['price_transport']->components['price_limit']->required=0;
-
 $model['price_transport']->components['idtransport']=new ForeignKeyField('transport');
 $model['price_transport']->components['idtransport']->form='HiddenForm';
 $model['price_transport']->components['idtransport']->required=1;
+
+class price_transport_price extends Webmodel {
+
+	function __construct()
+	{
+
+		parent::__construct("price_transport_price");
+
+	}	
+	
+}
+
+$model['price_transport_price']=new price_transport_price();
+
+$model['price_transport_price']->components['price']=new MoneyField();
+$model['price_transport_price']->components['price']->required=1;
+
+$model['price_transport_price']->components['min_price']=new MoneyField();
+$model['price_transport_price']->components['min_price']->required=0;
+
+$model['price_transport_price']->components['idtransport']=new ForeignKeyField('transport');
+$model['price_transport_price']->components['idtransport']->form='HiddenForm';
+$model['price_transport_price']->components['idtransport']->required=1;
 
 class zone_shop extends Webmodel {
 
