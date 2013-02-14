@@ -61,7 +61,7 @@ function HomePageAdminExternal()
 	
 	settype($_GET['op_homepage'], 'integer');
 	
-	$model['homepage_shop']->components['id']->fields_related_model=array();
+	$model['homepage_shop']->components['idproduct']->fields_related_model=array();
 	$model['homepage_shop']->components['idproduct']->name_field_to_field='title'
 	
 	switch($_GET['op_homepage'])
