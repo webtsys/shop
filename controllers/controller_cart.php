@@ -1502,12 +1502,12 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			//Dividimos y obtenemos el resto...
 
-			if($max_min_price==0)
+			/*if($max_min_price==0)
 			{
 
 				$max_min_price=1;
 
-			}
+			}*/
 
 			$num_packs=($total_price/$max_min_price)-1;
 			
