@@ -1368,7 +1368,7 @@ function ShopAdmin()
 			
 			settype($_GET['element_choice'], 'string');
 			
-			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart');
+			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart', 'discounts', 'discounts');
 			
 			echo '<form method="get" action="'.make_fancy_url($base_url, 'admin', 'index', 'element_choice', array('IdModule' => $_GET['IdModule'], 'op' => 20)).'">';
 			

@@ -1011,7 +1011,7 @@ $model['plugin_shop']=new Webmodel('plugin_shop');
 $model['plugin_shop']->components['name']=new CharField(255);
 $model['plugin_shop']->components['name']->required=1;
 
-$model['plugin_shop']->components['element']=new ChoiceField($size=255, $type='string', $arr_values=array('product', 'cart'), $default_value='');
+$model['plugin_shop']->components['element']=new ChoiceField($size=255, $type='string', $arr_values=array('product', 'cart', 'discounts'), $default_value='');
 $model['plugin_shop']->components['element']->required=1;
 
 $model['plugin_shop']->components['plugin']=new ChoiceField($size=255, $type='string', $arr_values=array(''), $default_value='');

@@ -985,7 +985,7 @@ function Cart()
 function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 {
 
-	global $base_url, $lang, $model, $arr_taxes, $config_shop;
+	global $base_url, $lang, $model, $arr_taxes, $config_shop, $sha1_token;
 
 	load_libraries(array('table_config'));
 
@@ -1195,7 +1195,33 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 
 			echo '<p><strong>'.$lang['shop']['total'].': </strong>'.MoneyField::currency_format($total_sum).' </p>';
 			
+			//Here the discounts...
+			
+			list($yes_discount, $total_sum_final, $text_discount, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($final_price, $sha1_token);
+			
+			$final_price=$total_sum_final;
+			
+			//Obtain taxes
+			
 			list($text_price_total, $text_taxes_total, $sum_taxes_final)=add_text_taxes_final($final_price, $idtax);
+			
+			//$lang['shop']['total_price_with_all_payments_and_discounts']
+			
+			 $discount_name='';
+			 $discount_principal='';
+
+			if($yes_discount>0)
+			{
+
+			
+				echo $text_discount;
+
+				echo '<h3>'.$lang['shop']['total_price_with_discounts'].'</h3>';
+
+				echo '<p style="font-size:18px;">'.MoneyField::currency_format( $final_price ).'</p>';
+
+			}
+			
 			
 			if($sum_taxes_final>0)
 			{
@@ -1206,22 +1232,6 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 
 			echo '<p>'.$text_price_total.'</p>';
 			
-			//Here the discounts...
-			
-			list($total_sum_final, $text_discount, $discount_name, $discount_principal, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($final_price, $sum_taxes_final);
-			
-			//$lang['shop']['total_price_with_all_payments_and_discounts']
-
-			if($discount_name!='')
-			{
-
-				echo $text_discount;
-
-				echo '<h3>'.$lang['shop']['total_price_with_discounts'].'</h3>';
-
-				echo '<p style="font-size:18px;">'.MoneyField::currency_format( $total_sum_final ).'</p>';
-
-			}
 
 			//Here the button if $show_button_buy==1
 
@@ -1608,10 +1618,10 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 }
 
-function obtain_discounts($total_sum, $price_total_taxes)
+function obtain_discounts($total_sum, $sha1_token)
 {
 
-	global $user_data, $config_shop, $lang, $model;
+	global $user_data, $config_shop, $lang, $model, $base_path;
 	//Add discount if in group...
 	
 	ob_start();
@@ -1626,13 +1636,46 @@ function obtain_discounts($total_sum, $price_total_taxes)
 	$discount_taxes=0;
 	$discount_transport=0;
 	$discount_payment=0;
-
+	$total_sum_original=$total_sum;
+	$yes_discount=0;
+	
+	//Plugins for discounts...
+	
+	$arr_plugin=array();
+		
+	$query=$model['plugin_shop']->select('where element="discounts" order by position ASC', array('plugin'));
+	
+	while(list($plugin)=webtsys_fetch_row($query))
+	{
+		
+		load_libraries(array($plugin), $base_path.'modules/shop/plugins/discounts/');
+	
+		$func_plugin=ucfirst($plugin).'Show';
+		
+		//Execute plugin. 
+		
+		if(function_exists($func_plugin))
+		{
+			
+			$discount_plugin=$func_plugin($total_sum, $sha1_token);
+			
+			$total_sum=$total_sum-$discount_plugin;
+			
+			if($discount_plugin>0)
+			{
+			
+				$yes_discount++;
+			
+			}
+			
+		}
+	
+	}
+	
 	//Choose the group discount more big for this user...
-
+	/*
 	$query=$model['group_shop_users']->select('where group_shop_users.iduser='.$user_data['IdUser'].' order by group_shop_discount DESC, group_shop_transport_for_group DESC, group_shop_shipping_costs_for_group DESC limit 1');
 	
-	/*while($arr_group=webtsys_fetch_array($query))
-	{*/
 	$arr_group=webtsys_fetch_array($query);
 
 	if($arr_group['group_shop_discount']>0)
@@ -1649,9 +1692,6 @@ function obtain_discounts($total_sum, $price_total_taxes)
 		$no_shipping_costs[]=$arr_group['group_shop_shipping_costs_for_group'];
 
 		echo '<p>'.$arr_group['group_shop_name'].'</p>';
-
-		$total_sum_original=$total_sum;
-
 		$total_sum-=$discounts;
 
 		echo '<p><strong>'.$lang['shop']['discounts'].'</strong>: '.number_format($arr_group['group_shop_discount'], 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).' </span>&nbsp;-> '.MoneyField::currency_format($discounts).'</p>';
@@ -1710,12 +1750,12 @@ function obtain_discounts($total_sum, $price_total_taxes)
 		$discount_payment=max($no_shipping_costs);
 
 	}
-
+	*/
 	$text_return=ob_get_contents();
 
 	ob_end_clean();
 
-	return array($total_sum, $text_return, $arr_group['group_shop_name'], $arr_group['group_shop_discount'], $discount_taxes, $discount_transport, $discount_payment);
+	return array($yes_discount, $total_sum, $text_return, $discount_taxes, $discount_transport, $discount_payment);
 
 }
 
