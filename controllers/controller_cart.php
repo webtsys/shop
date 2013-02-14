@@ -195,12 +195,40 @@ function Cart()
 
 					//echo $_POST['zone_transport'];
 					
-					if($arr_zone_shop['IdCountry_shop']==0)
+					$_POST['country_others']=@form_text($_POST['country_others']);
+					
+					if($arr_zone_shop['IdCountry_shop']==0 && $_POST['country_others']!='')
 					{
 					
 						//Show formulary for create a new country
 						
+						/*load_libraries(array('forms/selectmodelform'));
 						
+						echo '<h2>'.$lang['shop']['choose_new_country'].' - '.$_POST['country_others'].'</h2>';
+						
+						echo '<form method="post" action="">';
+						
+						echo '<p>'.$lang['shop']['explain_choose_new_country'].'</p>';
+						
+						echo '<p><label>'.$lang['shop']['idzone_taxes'].'</label>: '.SelectModelForm('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0').'</p>';
+						
+						echo '<p><label>'.$lang['shop']['idzone_transport'].'</label>: '.SelectModelForm('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1').'</p>';
+						
+						echo '<p><input type="submit" value="'.$lang['common']['send'].'" />';
+						
+						echo '</form>';*/
+			
+						//$model['country_shop']->forms['idzone_transport']->parameters=array('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0');
+
+						/*$model['country_shop']->forms['idzone_taxes']->form='SelectModelForm';
+						
+						$model['country_shop']->forms['idzone_taxes']->parameters=array('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1');*/
+						
+						?>
+						
+						<?php
+						
+						break;
 					
 					}
 					
