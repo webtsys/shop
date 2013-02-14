@@ -1519,7 +1519,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			}
 
-			$min_price_last=$total_min_price-$min_price_substract;
+			$min_price_last=$total_price-$min_price_substract;
 		
 			$query=webtsys_query('select price from price_transport_price where min_price>='.$min_price_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
 			
