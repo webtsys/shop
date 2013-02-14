@@ -61,6 +61,8 @@ function HomePageAdminExternal()
 	
 	settype($_GET['op_homepage'], 'integer');
 	
+	$model['homepage_shop']->components['id']->fields_related_model=array();
+	
 	switch($_GET['op_homepage'])
 	{
 	
