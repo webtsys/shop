@@ -174,6 +174,7 @@ function Cart()
 
 					$arr_zone_shop=webtsys_fetch_array($query);
 
+					settype($arr_zone_shop['IdCountry_shop'], 'integer');
 					settype($arr_zone_shop['idzone_taxes'], 'integer');
 					settype($arr_zone_shop['idzone_transport'], 'integer');
 
@@ -193,6 +194,15 @@ function Cart()
 					$model['user']->check_all($_POST);
 
 					//echo $_POST['zone_transport'];
+					
+					if($arr_zone_shop['IdCountry_shop']==0)
+					{
+					
+						//Show formulary for create a new country
+						
+						
+					
+					}
 					
 
 					if($model['order_shop']->check_all($_POST))
@@ -1303,7 +1313,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 		//'zone_transport'
 
-		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport'), ''), 'common/forms/modelform');
+		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'country_others', 'phone_transport'), ''), 'common/forms/modelform');
 
 	}
 
