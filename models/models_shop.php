@@ -417,7 +417,7 @@ class price_transport_price extends Webmodel {
 $model['price_transport_price']=new price_transport_price();
 
 $model['price_transport_price']->components['price']=new MoneyField();
-$model['price_transport_price']->components['price']->required=1;
+$model['price_transport_price']->components['price']->required=0;
 
 $model['price_transport_price']->components['min_price']=new MoneyField();
 $model['price_transport_price']->components['min_price']->required=0;

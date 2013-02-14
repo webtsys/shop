@@ -264,6 +264,10 @@ $lang['shop']['click_here']='pulse aquí';
 
 $lang['shop']['register_shop_or_buying']='Si desea registrarse durante el proceso de compra';
 
+$lang['shop']['choose_new_country']='choose_new_country';
+
+$lang['shop']['explain_choose_new_country']='explain_choose_new_country';
+
 $lang['shop']['choose_more_options']='Elegir más opciones';
 
 $lang['shop']['explain_payment_type_transport_type']='Por favor, elija el medio de pago y el modo de envio de su pedido';

@@ -174,6 +174,7 @@ function Cart()
 
 					$arr_zone_shop=webtsys_fetch_array($query);
 
+					settype($arr_zone_shop['IdCountry_shop'], 'integer');
 					settype($arr_zone_shop['idzone_taxes'], 'integer');
 					settype($arr_zone_shop['idzone_transport'], 'integer');
 
@@ -193,6 +194,43 @@ function Cart()
 					$model['user']->check_all($_POST);
 
 					//echo $_POST['zone_transport'];
+					
+					$_POST['country_others']=@form_text($_POST['country_others']);
+					
+					if($arr_zone_shop['IdCountry_shop']==0 && $_POST['country_others']!='')
+					{
+					
+						//Show formulary for create a new country
+						
+						/*load_libraries(array('forms/selectmodelform'));
+						
+						echo '<h2>'.$lang['shop']['choose_new_country'].' - '.$_POST['country_others'].'</h2>';
+						
+						echo '<form method="post" action="">';
+						
+						echo '<p>'.$lang['shop']['explain_choose_new_country'].'</p>';
+						
+						echo '<p><label>'.$lang['shop']['idzone_taxes'].'</label>: '.SelectModelForm('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0').'</p>';
+						
+						echo '<p><label>'.$lang['shop']['idzone_transport'].'</label>: '.SelectModelForm('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1').'</p>';
+						
+						echo '<p><input type="submit" value="'.$lang['common']['send'].'" />';
+						
+						echo '</form>';*/
+			
+						//$model['country_shop']->forms['idzone_transport']->parameters=array('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0');
+
+						/*$model['country_shop']->forms['idzone_taxes']->form='SelectModelForm';
+						
+						$model['country_shop']->forms['idzone_taxes']->parameters=array('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1');*/
+						
+						?>
+						
+						<?php
+						
+						//break;
+					
+					}
 					
 
 					if($model['order_shop']->check_all($_POST))
@@ -1313,7 +1351,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 		//'zone_transport'
 
-		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport'), ''), 'common/forms/modelform');
+		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'country_others', 'phone_transport'), ''), 'common/forms/modelform');
 
 	}
 
@@ -1447,13 +1485,13 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 	else
 	{
 	
-		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by price ASC limit 1');
-			
+		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
+		
 		list($price_transport)=webtsys_fetch_row($query);
 
-		settype($price_transport, 'double');
+		//settype($price_transport, 'double');
 		
-		if($price_transport>0)
+		if($price_transport!='')
 		{
 
 			return array($price_transport, 1);
@@ -1466,22 +1504,24 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 			$price_transport=0;
 			$total_price_transport=0;
 
-			$query=webtsys_query('select min_price, price from price_transport_price order by price DESC limit 1');
+			$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
 
 			list($max_min_price, $max_price)=webtsys_fetch_row($query);
+			
+			return array($max_price, 1);
 
 			//Tenemos que ver en cuanto supera los kilos...
 
 			//Dividimos y obtenemos el resto...
 
-			if($max_min_price==0)
+			/*if($max_min_price==0)
 			{
 
 				$max_min_price=1;
 
-			}
+			}*/
 
-			$num_packs=($total_price/$max_min_price)-1;
+			/*$num_packs=($total_price/$max_min_price)-1;
 			
 			for($x=0;$x<$num_packs;$x++)
 			{
@@ -1491,9 +1531,9 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			}
 
-			$min_price_last=$total_min_price-$min_price_substract;
+			$min_price_last=$total_price-$min_price_substract;
 		
-			$query=webtsys_query('select price from price_transport_price where min_price>='.$min_price_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			$query=webtsys_query('select price from price_transport_price where min_price<='.$min_price_last.' and idtransport='.$idtransport.' order by min_price DESC limit 1');
 			
 			list($price_transport)=webtsys_fetch_row($query);
 
@@ -1503,7 +1543,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			$num_packs=ceil($num_packs+1);
 
-			return array($total_price_transport, $num_packs);
+			return array($total_price_transport, $num_packs);*/
 			
 		}
 	
