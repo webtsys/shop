@@ -1498,7 +1498,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			list($max_min_price, $max_price)=webtsys_fetch_row($query);
 			
-			return array($max_min_price, 1);
+			return array($max_price, 1);
 
 			//Tenemos que ver en cuanto supera los kilos...
 
