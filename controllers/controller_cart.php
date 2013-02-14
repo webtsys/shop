@@ -1475,8 +1475,8 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 	else
 	{
 	
-		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
-		
+		$query=webtsys_query('select price from price_transport_price where min_price<='.$total_price.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			
 		list($price_transport)=webtsys_fetch_row($query);
 
 		settype($price_transport, 'double');
@@ -1494,7 +1494,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 			$price_transport=0;
 			$total_price_transport=0;
 
-			$query=webtsys_query('select min_price, price from price_transport_price order by price DESC limit 1');
+			$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
 
 			list($max_min_price, $max_price)=webtsys_fetch_row($query);
 
@@ -1521,7 +1521,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			$min_price_last=$total_price-$min_price_substract;
 		
-			$query=webtsys_query('select price from price_transport_price where min_price>='.$min_price_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			$query=webtsys_query('select price from price_transport_price where min_price<='.$min_price_last.' and idtransport='.$idtransport.' order by min_price DESC limit 1');
 			
 			list($price_transport)=webtsys_fetch_row($query);
 
