@@ -1475,7 +1475,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 	else
 	{
 	
-		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by price ASC limit 1');
+		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
 			
 		list($price_transport)=webtsys_fetch_row($query);
 
