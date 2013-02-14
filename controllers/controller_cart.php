@@ -1497,6 +1497,8 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 			$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
 
 			list($max_min_price, $max_price)=webtsys_fetch_row($query);
+			
+			return array($max_min_price, $num_packs);
 
 			//Tenemos que ver en cuanto supera los kilos...
 
@@ -1509,7 +1511,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			}*/
 
-			$num_packs=($total_price/$max_min_price)-1;
+			/*$num_packs=($total_price/$max_min_price)-1;
 			
 			for($x=0;$x<$num_packs;$x++)
 			{
@@ -1531,7 +1533,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			$num_packs=ceil($num_packs+1);
 
-			return array($total_price_transport, $num_packs);
+			return array($total_price_transport, $num_packs);*/
 			
 		}
 	
