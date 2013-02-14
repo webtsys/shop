@@ -500,6 +500,24 @@ class country_shop extends Webmodel {
 
 	}	
 	
+	function insert($post)
+	{
+	
+		$post=$this->components['name']->add_slugify_i18n_post('name', $post);
+	
+		return parent::insert($post);
+	
+	}
+	
+	function update($post, $conditions='')
+	{
+	
+		$post=$this->components['name']->add_slugify_i18n_post('name', $post);
+	
+		return parent::update($post, $conditions);
+	
+	}
+	
 }
 
 $model['country_shop']=new country_shop();
@@ -514,6 +532,8 @@ $model['country_shop']=new country_shop();
 
 $model['country_shop']->components['name']=new I18nField(new CharField(255));
 $model['country_shop']->components['name']->required=1;
+
+SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
 
 $model['country_shop']->components['code']=new CharField(25);
 $model['country_shop']->components['code']->required=1;

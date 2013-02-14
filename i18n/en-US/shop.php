@@ -448,8 +448,6 @@ $lang['shop']['see_more']='See more';
 
 $lang['shop']['error_buy_ajax']='Error: Ajax report a buying error';
 
-$lang['shop']['added_europe_discount']='added_europe_discount';
-
 $lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['go_products_to_cart']='Complete order and go to Cart';
@@ -475,6 +473,8 @@ $lang['shop']['paypal_email_variable_no_isset']='Please define the variables nee
 $lang['shop']['paypal_explain']='Clicking on pay order, you will go to paypal payment gateway to make payment.';
 
 $lang['shop']['change_currency']='Change currency';
+
+$lang['shop']['added_europe_discount']='added_europe_discount';
 
 $lang['shop']['explain_conditions_page']='explain_conditions_page';
 

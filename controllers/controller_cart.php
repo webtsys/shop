@@ -195,10 +195,10 @@ function Cart()
 
 					//echo $_POST['zone_transport'];
 					
-					$_POST['country_others']=@form_text($_POST['country_others']);
+					/*$_POST['country_others']=@form_text($_POST['country_others']);
 					
 					if($arr_zone_shop['IdCountry_shop']==0 && $_POST['country_others']!='')
-					{
+					{*/
 					
 						//Show formulary for create a new country
 						
@@ -230,7 +230,7 @@ function Cart()
 						
 						//break;
 					
-					}
+					//}
 					
 
 					if($model['order_shop']->check_all($_POST))
@@ -1320,9 +1320,9 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 	$model['order_shop']->forms['country']->form='SelectModelForm';
 			
-	$model['order_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='');
+	$model['order_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 	
-	$model['order_shop']->forms['country_others']=new ModelForm('shopping', 'country_others', 'TextForm', $lang['shop']['country_others'], new CharField(255), $required=0, $parameters='');
+	//$model['order_shop']->forms['country_others']=new ModelForm('shopping', 'country_others', 'TextForm', $lang['shop']['country_others'], new CharField(255), $required=0, $parameters='');
 
 	$model['order_shop']->forms['country_transport']->form='SelectModelForm';
 			
@@ -1337,7 +1337,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 	<?php
 	set_csrf_key();
 
-	echo load_view(array($model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'country_others', 'phone', 'fax'), ''), 'common/forms/modelform');
+	echo load_view(array($model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
 	
 	if($config_shop['yes_transport']==1)
 	{
@@ -1351,7 +1351,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 		//'zone_transport'
 
-		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'country_others', 'phone_transport'), ''), 'common/forms/modelform');
+		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport',  'phone_transport'), ''), 'common/forms/modelform');
 
 	}
 

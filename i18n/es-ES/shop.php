@@ -448,8 +448,6 @@ $lang['shop']['see_more']='Ver más';
 
 $lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
-$lang['shop']['added_europe_discount']='added_europe_discount';
-
 $lang['shop']['choose_cat']='Elegir categoría';
 
 $lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
@@ -475,6 +473,8 @@ $lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables
 $lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
 
 $lang['shop']['change_currency']='Cambiar moneda';
+
+$lang['shop']['added_europe_discount']='added_europe_discount';
 
 $lang['shop']['explain_conditions_page']='explain_conditions_page';
 
