@@ -1326,7 +1326,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 	$model['order_shop']->forms['country_transport']->form='SelectModelForm';
 			
-	$model['order_shop']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='');
+	$model['order_shop']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 
 	SetValuesForm($post_user, $model['order_shop']->forms, $show_error);
 	SetValuesForm($post_user, $set_user_form, $show_error);
