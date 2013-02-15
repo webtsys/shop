@@ -605,6 +605,7 @@ $model['config_shop']->components['image_bill']=new ImageField('image_bill', $ba
 
 $model['config_shop']->components['bill_data_shop']=new TextField();
 $model['config_shop']->components['bill_data_shop']->form='TextAreaForm';
+$model['config_shop']->components['bill_data_shop']->br=0;
 $model['config_shop']->components['footer_bill']=new TextField();
 $model['config_shop']->components['footer_bill']->form='TextAreaForm';
 
