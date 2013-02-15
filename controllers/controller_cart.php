@@ -1235,7 +1235,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			
 			//Here the discounts...
 			
-			list($yes_discount, $total_sum_final, $text_discount, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($final_price, $sha1_token);
+			list($yes_discount, $total_sum_final, $text_discount, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($final_price, $price_total_transport, $sha1_token);
 			
 			$final_price=$total_sum_final;
 			
@@ -1658,7 +1658,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 }
 
-function obtain_discounts($total_sum, $sha1_token)
+function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 {
 
 	global $user_data, $config_shop, $lang, $model, $base_path;
@@ -1697,7 +1697,7 @@ function obtain_discounts($total_sum, $sha1_token)
 		if(function_exists($func_plugin))
 		{
 			
-			$discount_plugin=$func_plugin($total_sum, $sha1_token);
+			$discount_plugin=$func_plugin($total_sum, $price_total_transport, $sha1_token);
 			
 			$total_sum=$total_sum-$discount_plugin;
 			
