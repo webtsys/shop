@@ -24,9 +24,9 @@ function ViewProduct()
 
 	$idtax=$config_shop['idtax'];
 
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array($model['product']->idmodel, 'title', 'description', 'idcat',  'price', 'special_offer', 'stock', 'about_order', 'weight'), 1);
+	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array($model['product']->idmodel, 'title', 'description', 'idcat',  'price', 'special_offer', 'stock', 'about_order', 'weight', 'referer'), 1);
 
-	list($idproduct, $title, $description, $idcat_product, $price, $offer, $stock, $about_order, $weight)=webtsys_fetch_row($query);
+	list($idproduct, $title, $description, $idcat_product, $price, $offer, $stock, $about_order, $weight, $referer)=webtsys_fetch_row($query);
 	
 	settype($idcat_product, 'integer');
 	
@@ -112,7 +112,7 @@ function ViewProduct()
 		
 		//echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin), 'shop/product');
 		
-		$arr_product_view=array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $about_order, $text_taxes, $weight, $view_only_mode, $arr_plugin);
+		$arr_product_view=array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $about_order, $text_taxes, $weight, $view_only_mode, $arr_plugin, $referer);
 		
 		echo load_view(array($title, $arr_product_view, $idcat_product), 'shop/loadproduct');
 
