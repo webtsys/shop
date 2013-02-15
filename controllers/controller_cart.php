@@ -1235,30 +1235,15 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			
 			//Here the discounts...
 			
-			list($yes_discount, $total_sum_final, $text_discount, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($final_price, $price_total_transport, $sha1_token);
+			//list($yes_discount, $total_sum_final, $text_discount, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($final_price, $price_total_transport, $sha1_token);
 			
-			$final_price=$total_sum_final;
+			//$final_price=$total_sum_final;
 			
 			//Obtain taxes
 			
 			list($text_price_total, $text_taxes_total, $sum_taxes_final)=add_text_taxes_final($final_price, $idtax);
 			
 			//$lang['shop']['total_price_with_all_payments_and_discounts']
-			
-			 $discount_name='';
-			 $discount_principal='';
-
-			if($yes_discount>0)
-			{
-
-			
-				echo $text_discount;
-
-				echo '<h3>'.$lang['shop']['total_price_with_discounts'].'</h3>';
-
-				echo '<p style="font-size:18px;">'.MoneyField::currency_format( $final_price ).'</p>';
-
-			}
 			
 			
 			if($sum_taxes_final>0)
@@ -1291,7 +1276,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 
 	}
 	
-	return array($total_sum_final, $total_weight, $total_sum_tax, $discount_name, $discount_principal, $discount_taxes, $discount_transport, $discount_payment);
+	return array($final_price, $total_weight, $total_sum_tax);
 
 }
 
@@ -1558,13 +1543,18 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 	//obtain products...
 	
-	list($total_sum, $total_weight, $total_taxes, $discount_name, $discount_principal, $discount_taxes, $discount_transport, $discount_payment)=show_cart_simple($sha1_token, 0, $type_cart);
+	list($total_sum, $total_weight, $total_taxes)=show_cart_simple($sha1_token, 0, $type_cart);
+	
+	//, $discount_name, $discount_principal, $discount_taxes, $discount_transport, $discount_payment
+	
+	$discount_name='';
 	
 	$name_transport=0;
 	$price_total_transport=0;
 	$price_total_transport_original=0;
 	
 	//obtain prices for transport...
+	$discount_transport=0;
 					
 	if($config_shop['yes_transport']==1)	
 	{
@@ -1587,16 +1577,6 @@ function show_total_prices($sha1_token, $type_cart=0)
 		//Here discount transport...
 
 		$price_total_transport_original=$price_total_transport;
-
-		if($discount_transport>0)
-		{
-			$substract_transport=$price_total_transport*($discount_transport/100);
-
-			$price_total_transport-=$substract_transport;
-
-			echo '<p><strong>'.$lang['shop']['discount_transport'].':</strong> '.number_format($discount_transport, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_total_transport_original).'</span> &nbsp; -> '.MoneyField::currency_format($price_total_transport).'</p>';
-	
-		}
 		
 		//$total_sum+=$price_total_transport;
 		
@@ -1623,18 +1603,56 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 	$price_payment_original=$price_payment;
 
-	if($discount_payment>0)
+	//Here discount payment...
+	
+	list($yes_discount, $text_discount, $discount_principal, $discount_taxes, $discount_transport, $discount_payment)=obtain_discounts($total_sum, $price_total_transport, $sha1_token);
+
+	if($yes_discount>0)
 	{
+
+		echo '<h3>'.$lang['shop']['total_price_with_discounts'].'</h3>';
 		
-		$substract_payment=$price_payment*($discount_payment/100);
+		echo $text_discount;
+		
+		if($discount_principal>0)
+		{
+		
+			$total_sum_original=$total_sum;
+			
+			$total_sum-=$total_sum*($discount_principal/100);
+		
+			echo '<p><strong>'.$lang['shop']['discounts'].':</strong> '.number_format($discount_principal, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).'</span> &nbsp; -> '.MoneyField::currency_format($total_sum).'</p>';
+		}
+		//Discount transport...
+	
+		if($discount_transport>0)
+		{
+			$substract_transport=$price_total_transport*($discount_transport/100);
 
-		$price_payment-=$substract_payment;
+			$price_total_transport-=$substract_transport;
 
-		echo '<p><strong>'.$lang['shop']['discount_payment'].':</strong> '.number_format($discount_payment, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_payment_original).'</span>&nbsp; -> '.number_format($price_payment, 2).'</p>';
+			echo '<p><strong>'.$lang['shop']['discount_transport'].':</strong> '.number_format($discount_transport, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_total_transport_original).'</span> &nbsp; -> '.MoneyField::currency_format($price_total_transport).'</p>';
+	
+		}
+		
+		//Discount taxes...
+		
+		
+		/*if($discount_payment>0)
+		{
+		
+			$substract_payment=$price_payment*($discount_payment/100);
+
+			$price_payment-=$substract_payment;
+
+			echo '<p><strong>'.$lang['shop']['discount_payment'].':</strong> '.number_format($discount_payment, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_payment_original).'</span>&nbsp; -> '.number_format($price_payment, 2).'</p>';
+
+		}*/
+		
+
+		//echo '<p style="font-size:18px;">'.MoneyField::currency_format( $final_price ).'</p>';
 
 	}
-
-	//Here discount payment...
 
 	echo '<h2>'.$lang['shop']['total_price_with_all_payments_and_discounts'].'</h2>';
 
@@ -1673,6 +1691,7 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 	$no_transport=array();
 	$no_taxes=array();
 	$no_shipping_costs=array();
+	$discount_price=0;
 	$discount_taxes=0;
 	$discount_transport=0;
 	$discount_payment=0;
@@ -1697,13 +1716,15 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 		if(function_exists($func_plugin))
 		{
 			
-			$discount_plugin=$func_plugin($total_sum, $price_total_transport, $sha1_token);
+			list($yes_discount_plugin, $discount_plugin_ret, $discount_transport)=$func_plugin($total_sum, $price_total_transport, $sha1_token);
 			
-			$total_sum=$total_sum-$discount_plugin;
+			//$total_sum=$total_sum-$discount_plugin;
 			
-			if($discount_plugin>0)
+			$discount_price+=$discount_plugin_ret;
+			
+			if($yes_discount_plugin>0)
 			{
-			
+				
 				$yes_discount++;
 			
 			}
@@ -1792,10 +1813,10 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 	}
 	*/
 	$text_return=ob_get_contents();
-
+	
 	ob_end_clean();
-
-	return array($yes_discount, $total_sum, $text_return, $discount_taxes, $discount_transport, $discount_payment);
+	
+	return array($yes_discount, $text_return, $discount_price, $discount_taxes, $discount_transport, $discount_payment);
 
 }
 
