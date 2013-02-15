@@ -891,23 +891,26 @@ function ShopAdmin()
 					}
 				
 					$text_address_client[]=iconv("UTF-8", "CP1252", $lang['shop']['client'].': '.$name_client);
-					$text_address_client[]=iconv("UTF-8", "CP1252", $lang['common']['address'].': '.$order_shop['address'].' '.$order_shop['zip_code'].' ('.$order_shop['city'].')' );
+					$text_address_client[]=iconv("UTF-8", "CP1252", $lang['common']['city'].': '.$order_shop['city']);
 					$text_address_client[]=iconv("UTF-8", "CP1252", $lang['common']['region'].': '.$order_shop['region'] );
+					$text_address_client[]=iconv("UTF-8", "CP1252", $lang['common']['email'].': '.$order_shop['email'] );
 					$text_address_client[]=iconv("UTF-8", "CP1252", $lang['common']['country'].': '.$order_shop['country'] );
+					
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", $lang['common']['address'].': '.$order_shop['address'] );
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", $lang['common']['zip_code'].': '.$order_shop['zip_code'] );
 					$text_address_client_other[]=iconv("UTF-8", "CP1252", $lang['shop']['fiscal_identity'].': '.$order_shop['nif'] );
-					$text_address_client_other[]=iconv("UTF-8", "CP1252", $lang['common']['email'].': '.$order_shop['email'] );
 					$text_address_client_other[]=iconv("UTF-8", "CP1252", $lang['common']['phone'].': '.$order_shop['phone'] );
 					$text_address_client_other[]=iconv("UTF-8", "CP1252", $lang['common']['fax'].': '.$order_shop['fax'] );
 
-					$this->SetFont('Arial','',12);
+					$this->SetFont('Arial','',10);
 
 					$this->SetXY(10, 32);
 
-					$this->MultiCell(90,6,implode("\n", $text_address_client),1,'LR');
+					$this->MultiCell(90,6,implode("\n", $text_address_client),'TB', 'LR');
 					
 					$this->SetXY(100, 32);
 
-					$this->MultiCell(100,6,implode("\n", $text_address_client_other),1,'LR');
+					$this->MultiCell(100,6,implode("\n", $text_address_client_other),'TB','LR');
 
 				}
 
