@@ -47,9 +47,9 @@ function ViewProduct()
 	
 		//Prepare images
 		
-		$arr_image=$model['image_product']->select_to_array('where idproduct='.$idproduct.' order by principal DESC', array('photo'));
+		$arr_product['images']=$model['image_product']->select_to_array('where idproduct='.$idproduct.' order by principal DESC', array('photo'));
 		
-		
+		echo load_view(array('arr_product' => $arr_product), 'shop/viewproduct');
 		
 		//Load product
 		/*
