@@ -1184,6 +1184,8 @@ class MoneyField extends DoubleField{
 
 		}
 		
+		$value=round($value, 2, PHP_ROUND_HALF_UP);
+		
 		$arr_symbol[0]='';
 		$arr_symbol[1]=' '.$symbol_currency;
 		
