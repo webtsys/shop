@@ -93,7 +93,7 @@ default:
 				$division=100/$discounts;
 				$discount_product=($price/$division);
 				
-				$discount_product=MoneyField::currency_format($discount_product, false);
+				//$discount_product=MoneyField::currency_format($discount_product, false);
 				
 				$price-=$discount_product;
 				
@@ -118,7 +118,7 @@ default:
 		{
 		
 			//$discount_price=obtain_discount($price_discount, $arr_item_amount[$idproduct]);
-
+			
 			$tax=calculate_taxes($config_shop['idtax'], $arr_item_amount[$idproduct]);
 			
 			
