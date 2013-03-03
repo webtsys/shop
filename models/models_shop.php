@@ -608,6 +608,7 @@ $model['config_shop']->components['bill_data_shop']->form='TextAreaForm';
 $model['config_shop']->components['bill_data_shop']->br=0;
 $model['config_shop']->components['footer_bill']=new TextField();
 $model['config_shop']->components['footer_bill']->form='TextAreaForm';
+$model['config_shop']->components['footer_bill']->br=0;
 
 $model['config_shop']->components['explain_discounts_page']=new ForeignKeyField('page', 11);
 $model['config_shop']->components['explain_discounts_page']->container_model='pages';
