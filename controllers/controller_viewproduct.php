@@ -24,26 +24,35 @@ function ViewProduct()
 
 	$idtax=$config_shop['idtax'];
 
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array($model['product']->idmodel, 'title', 'description', 'idcat',  'price', 'special_offer', 'stock', 'about_order', 'weight', 'referer'), 1);
-
-	list($idproduct, $title, $description, $idcat_product, $price, $offer, $stock, $about_order, $weight, $referer)=webtsys_fetch_row($query);
+	$arr_product=$model['product']->select_a_row($_GET['IdProduct'], array(), 1);
 	
-	settype($idcat_product, 'integer');
+	$idcat_product=$arr_product['idcat'];
+	$idproduct=$arr_product['IdProduct'];
 	
-	$title=$model['product']->components['title']->show_formatted($title);
-	$description=$model['product']->components['description']->show_formatted($description);
-
-	$query=$model['cat_product']->select('where IdCat_product='.$idcat_product, array('view_only_mode'));
-	
-	list($view_only_mode)=webtsys_fetch_row($query);
-	
-	settype($idproduct, 'integer');
-
 	if($idproduct>0)
 	{
 	
-		//Load product
+		settype($idcat_product, 'integer');
+		settype($idproduct, 'integer');
+		
+		$title=$arr_product['title'];
+		$description=$arr_product['description'];
+		
+		$title=$model['product']->components['title']->show_formatted($title);
+		$description=$model['product']->components['description']->show_formatted($description);
 
+		list($view_only_mode)=$model['cat_product']->select_a_row($idcat_product, array('view_only_mode'), false, true);
+		
+		$arr_product['view_only_mode']=$view_only_mode;
+	
+		//Prepare images
+		
+		$arr_product['images']=$model['image_product']->select_to_array('where idproduct='.$idproduct.' order by principal DESC', array('photo'));
+		
+		echo load_view(array('arr_product' => $arr_product), 'shop/viewproduct');
+		
+		//Load product
+		/*
 		$arr_image=array();
 		$arr_image_mini=array();
 
@@ -51,9 +60,6 @@ function ViewProduct()
 
 		while(list($photo)=webtsys_fetch_row($query))
 		{
-
-			/*$image='mini_'.$photo;
-			$image=$model['image_product']->components['photo']->url_path.'/'.$image;*/
 
 			$arr_image_mini[]=$photo;
 
@@ -63,7 +69,6 @@ function ViewProduct()
 
 		}
 
-		//$add_tax=$price*$arr_taxes[$idtax];
 		$add_tax=calculate_taxes($idtax, $price);
 		
 		if($price>0)
@@ -110,17 +115,16 @@ function ViewProduct()
 		
 		}
 		
-		//echo load_view(array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $text_taxes, $weight, $view_only_mode, $arr_plugin), 'shop/product');
-		
 		$arr_product_view=array($idproduct, $description, $arr_image_mini, $arr_image, $price, $stock, $about_order, $text_taxes, $weight, $view_only_mode, $arr_plugin, $referer);
 		
-		echo load_view(array($title, $arr_product_view, $idcat_product), 'shop/loadproduct');
+		echo load_view(array($title, $arr_product_view, $idcat_product), 'shop/loadproduct'); */
+		
+		
 
 	}
 	else
 	{
 
-		//echo load_view(array($lang['shop']['no_exists_product'], $lang['shop']['this_product_is_not_found']), 'content');
 		$title=$lang['shop']['no_exists_product'];
 		echo $lang['shop']['this_product_is_not_found'];
 

@@ -38,13 +38,13 @@ default:
 	<?php
 
 		//Load discounts
-
-		$discounts=0;
-		$transport_discount=0;
-		$taxes_discount=0;
-		$payment_discount=0;
 		
-		$model['group_shop_users']->components['group_shop']->fields_related_model=$model['group_shop_users']->components['group_shop']->get_all_fields();
+		$discounts=$arr_order_shop['discount_percent'];
+		$transport_discount=$arr_order_shop['transport_discount_percent'];
+		$taxes_discount=$arr_order_shop['tax_discount_percent'];
+		$payment_discount=$arr_order_shop['payment_discount_percent'];
+		
+		/*$model['group_shop_users']->components['group_shop']->fields_related_model=$model['group_shop_users']->components['group_shop']->get_all_fields();
 		
 		$query=$model['group_shop_users']->select('where group_shop_users.iduser='.$user_data['IdUser'].' order by group_shop_discount DESC, group_shop_transport_for_group DESC, group_shop_shipping_costs_for_group DESC limit 1');
 	
@@ -57,7 +57,7 @@ default:
 			$payment_discount+=$arr_group['shipping_costs_for_group'];
 
 			//echo '<p>'.$arr_group['group_shop_name'].'</p>';
-		}
+		}*/
 		
 		$z=1;
 
@@ -84,19 +84,21 @@ default:
 		
 		while( list($idproduct, $title, $price, $weight, $idcart_shop, $ser_details)=webtsys_fetch_row($query) )
 		{
-
+			
 			$total_weight+=$weight;
-
+			
 			if($discounts>0)
 			{
 				
 				$division=100/$discounts;
-				$discounts=($price/$division);
+				$discount_product=($price/$division);
 				
-				$price-=$discounts;
-
+				//$discount_product=MoneyField::currency_format($discount_product, false);
+				
+				$price-=$discount_product;
+				
 			}
-
+			
 			$arr_details=unserialize($ser_details);
 
 			settype($arr_details['ident'], 'string');
@@ -114,19 +116,26 @@ default:
 
 		foreach($arr_item_name as $idproduct => $value)
 		{
-
+		
+			//$discount_price=obtain_discount($price_discount, $arr_item_amount[$idproduct]);
+			
 			$tax=calculate_taxes($config_shop['idtax'], $arr_item_amount[$idproduct]);
-
+			
+			
+			//$arr_item_amount[$idproduct]=$arr_item_amount[$idproduct];
 			$discount_tax=obtain_discount($taxes_discount, $tax);
-
+			
 			$tax-=$discount_tax;
-
+			
 			$arr_item_amount[$idproduct]+=$tax;
 			
+			$total_price_amount=$arr_item_amount[$idproduct]*$arr_item_quantity[$idproduct];
+			
+			//echo MoneyField::currency_format($total_price_amount).'<p>';
 			?>
-			<input type="hidden" name="item_name_<?php echo $z; ?>" value="<?php echo $model['product']->components['title']->show_formatted($arr_item_name[$idproduct]); ?>">
-			<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo MoneyField::currency_format($arr_item_amount[$idproduct], 0); ?>">
-			<input type="hidden" name="quantity_<?php echo $z; ?>" value="<?php echo $arr_item_quantity[$idproduct]; ?>">
+			<input type="hidden" name="item_name_<?php echo $z; ?>" value="<?php echo $arr_item_quantity[$idproduct]; ?> x <?php echo $model['product']->components['title']->show_formatted($arr_item_name[$idproduct]); ?>">
+			<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo MoneyField::currency_format($total_price_amount, 0); ?>">
+			<input type="hidden" name="quantity_<?php echo $z; ?>" value="1<?php //echo $arr_item_quantity[$idproduct]; ?>">
 			<?php
 
 			$total_price+=$arr_item_amount[$idproduct]*$arr_item_quantity[$idproduct];

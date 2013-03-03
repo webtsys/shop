@@ -1203,12 +1203,12 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			$percent_tax=add_taxes($idtax);
 			
 			$sum_tax=$price*($percent_tax/100);
-
+			
 			$price_without_tax=$price;
 			
 			$price+=$sum_tax;
 
-			$total_sum_tax+=$sum_tax;
+			$total_sum_tax+=($sum_tax*$arr_id[$idproduct]);
 			$title.=' ';
 
 			middle_list_cart($idproduct, $arr_id, $referer, $title, $price_without_tax, $price, $offer, $idtax, $sum_tax, 1, $extra_options);
@@ -1620,7 +1620,13 @@ function show_total_prices($sha1_token, $type_cart=0)
 			$total_sum_original=$total_sum;
 			
 			$total_sum-=$total_sum*($discount_principal/100);
-		
+			
+			//Recalculate taxes...
+			
+			$idtax=$config_shop['idtax'];
+			
+			$total_taxes=calculate_taxes($idtax, $total_sum);
+			
 			echo '<p><strong>'.$lang['shop']['discounts'].':</strong> '.number_format($discount_principal, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).'</span> &nbsp; -> '.MoneyField::currency_format($total_sum).'</p>';
 		}
 		//Discount transport...
@@ -1656,7 +1662,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 	echo '<h2>'.$lang['shop']['total_price_with_all_payments_and_discounts'].'</h2>';
 
-	$total_sum_final=$total_sum+$price_total_transport+$price_payment;
+	$total_sum_final=$total_sum+$price_total_transport+$price_payment+$total_taxes;
 	
 	echo '<p style="font-size:18px;">'.MoneyField::currency_format( $total_sum_final  ).'</p>';
 

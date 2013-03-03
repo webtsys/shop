@@ -952,19 +952,20 @@ function ShopAdmin()
 					$this->Cell(40, 8, iconv("UTF-8", "CP1252", MoneyField::currency_format($total_price)), 1);
 
 					$discount=0;
+					$total_price_original=$total_price;
 
 					if($order_shop['discount_percent']>0)
 					{
 
 						$discount=obtain_discount($order_shop['discount_percent'], $total_price);
-
+						
 					}
 					
 					
 					$this->Cell(40, 8, number_format($order_shop['discount_percent'], 2) .' %', 1);
 
 					$total_price-=$discount;
-
+					
 					$this->Cell(40, 8, iconv("UTF-8", "CP1252", MoneyField::currency_format($total_price)),1);
 					$this->Ln();
 
@@ -977,10 +978,12 @@ function ShopAdmin()
 
 						$this->Cell(40,8, $tax_name, 1);
 						//Calculate tax
+							
+						$add_tax_original=calculate_raw_taxes($order_shop['tax_percent'] , $total_price_original);
+						
+						$this->Cell(40,8,iconv("UTF-8", "CP1252", MoneyField::currency_format($add_tax_original) ),1);
 						
 						$add_tax=calculate_raw_taxes($order_shop['tax_percent'] , $total_price);
-
-						$this->Cell(40,8,iconv("UTF-8", "CP1252", MoneyField::currency_format($add_tax) ),1);
 
 						$discount_tax=obtain_discount($order_shop['tax_discount_percent'], $add_tax);
 
@@ -1194,6 +1197,8 @@ function ShopAdmin()
 				ob_end_clean();
 
 				$pdf->Output($num_bill.'.pdf', 'D');
+				
+				die;
 
 			}
 
