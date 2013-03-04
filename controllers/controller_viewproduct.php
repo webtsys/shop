@@ -49,6 +49,25 @@ function ViewProduct()
 		
 		$arr_product['images']=$model['image_product']->select_to_array('where idproduct='.$idproduct.' order by principal DESC', array('photo'));
 		
+		//Obtain plugins...
+		
+		$arr_plugin=array();
+		
+		$query=$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
+		
+		while(list($plugin)=webtsys_fetch_row($query))
+		{
+			
+			/*load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');*/
+		
+			$func_plugin=ucfirst($plugin).'Show';
+			
+			$arr_plugin[$plugin]=$func_plugin;
+		
+		}
+		
+		$arr_product['plugins']=$arr_plugin;
+		
 		echo load_view(array('arr_product' => $arr_product), 'shop/viewproduct');
 		
 		//Load product
