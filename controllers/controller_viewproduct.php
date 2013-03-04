@@ -145,7 +145,8 @@ function ViewProduct()
 	{
 
 		$title=$lang['shop']['no_exists_product'];
-		echo $lang['shop']['this_product_is_not_found'];
+		
+		echo load_view(array($lang['shop']['no_exists_product'], $lang['shop']['this_product_is_not_found']), 'content');
 
 	}
 

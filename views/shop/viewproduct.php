@@ -2,12 +2,13 @@
 
 function ViewProductView($arr_product)
 {
+	global $base_url, $lang, $model, $config_shop, $arr_cache_jscript, $base_path;
+
+	echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');
 
 	ob_start();
 
 	//Prepare images
-	
-	global $base_url, $lang, $model, $config_shop, $arr_cache_jscript, $base_path;
 
 	$idtax=$config_shop['idtax'];
 	
