@@ -1136,8 +1136,8 @@ function ShopAdmin()
 					//Apply discount
 
 					$price_final=apply_discount($arr_order['discount_percent'], $arr_product_total[$arr_product['idproduct']]);
-
-					$arr_product['product_title']=iconv("UTF-8", "CP1252", substr( $model['product']->components['title']->show_formatted( $arr_product['product_title'] ) , 0, 25) );
+					
+					$arr_product['product_title']=iconv("UTF-8", "CP1252", substr( $model['product']->components['title']->show_formatted( $arr_product['product_title'] ) , 0, 20).'[..]' );
 					$price_product=iconv("UTF-8", "CP1252", MoneyField::currency_format($arr_product['price_product']) );
 					$price_final_product=iconv("UTF-8", "CP1252", MoneyField::currency_format($price_final) );
 

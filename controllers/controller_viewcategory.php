@@ -18,6 +18,8 @@ function ViewCategory()
 
 	settype($_GET['IdCat_product'], 'integer');
 	
+	$num_news=$config_shop['num_news'];
+	
 	$arr_cat=$model['cat_product']->select_a_row($_GET['IdCat_product'], array(), 1);
 	
 	settype($arr_cat['IdCat_product'], 'integer');
@@ -41,12 +43,25 @@ function ViewCategory()
 	
 	//Select ids...
 	
-	$arr_id_product=$model['product']->select_to_array($where_sql, array('IdProduct'));
+	$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel), true);
+
+	while(list($idproduct)=webtsys_fetch_row($query))
+	{
+
+		$arr_id[]=$idproduct;
+
+	}
 	
 	//Select images...
 	
-	
-	
+	$query=$model['image_product']->select('where idproduct IN (\''.implode("', '", $arr_id).'\') and principal=1', array('photo', 'idproduct'), true);
+
+	while(list($photo, $idproduct)=webtsys_fetch_row($query))
+	{
+
+		$arr_photo[$idproduct]=$photo;
+
+	}
 	
 	//Load list for objects..
 
