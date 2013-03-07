@@ -18,9 +18,39 @@ function ViewCategory()
 
 	settype($_GET['IdCat_product'], 'integer');
 	
+	$arr_cat=$model['cat_product']->select_a_row($_GET['IdCat_product'], array(), 1);
+	
+	settype($arr_cat['IdCat_product'], 'integer');
+	
+	$where_sql='where idcat='.$arr_cat['IdCat_product'];
+	
+	if($arr_cat['IdCat_product']==0)
+	{
+	
+		$title_category=$lang['shop']['all_products'];
+		$description_cat=$lang['shop']['desc_all_products'];
+		$subcat=0;
+		$view_only_mode=$config_shop['view_only_mode'];
+		$where_sql='';
+	
+	}
+	
+	//Now, set where with searchs...
+	
+	//Now select products...
+	
+	//Select ids...
+	
+	$arr_id_product=$model['product']->select_to_array($where_sql, array('IdProduct'));
+	
+	//Select images...
+	
+	
+	
+	
 	//Load list for objects..
 
-	$query=$model['cat_product']->select('where IdCat_product='.$_GET['IdCat_product'], array('IdCat_product', 'title', 'description', 'subcat', 'view_only_mode'));
+	/*$query=$model['cat_product']->select('where IdCat_product='.$_GET['IdCat_product'], array('IdCat_product', 'title', 'description', 'subcat', 'view_only_mode'));
 
 	list($idcat_product, $title_category, $description_cat, $subcat, $view_only_mode)=webtsys_fetch_row($query);
 	
@@ -42,12 +72,12 @@ function ViewCategory()
 	 
 	}
 	
-	settype($idcat_product, 'integer');
+	settype($idcat_product, 'integer');*/
 	
 	/*if($idcat_product>0)
 	{*/
 		
-		echo load_view(array($title_category, $description_cat, $view_only_mode), 'shop/productshow');
+		//echo load_view(array($title_category, $description_cat, $view_only_mode), 'shop/productshow');
 
 		/*$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['IdCat_product']);
 
