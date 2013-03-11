@@ -63,6 +63,14 @@ function ViewCategory()
 
 	}
 	
+	//$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight'), true);
+	
+	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
+	
+	$arr_product['images']=&$arr_photo;
+	
+	
+	
 	//Load list for objects..
 
 	/*$query=$model['cat_product']->select('where IdCat_product='.$_GET['IdCat_product'], array('IdCat_product', 'title', 'description', 'subcat', 'view_only_mode'));

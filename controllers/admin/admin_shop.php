@@ -1053,7 +1053,7 @@ function ShopAdmin()
 				
 				function ImprovedTable($header, $data)
 				{
-					// Anchuras de las columnas
+					// Width of the columns...
 					$this->SetFont('Arial','',14);
 
 					$w = array(30, 60, 25, 25, 25, 25);
@@ -1144,33 +1144,6 @@ function ShopAdmin()
 					$cart_shop[$arr_product['idproduct']]=array($arr_product['product_referer'], $arr_product['product_title'], $arr_units[$arr_product['idproduct']], $price_product, number_format($arr_order['discount_percent'], 2).' %', $price_final_product);
 
 				}
-
-				//$data=array(0 => array('España', 'Madrid', '120', '100000', '50%', '10000'), 1 => array('España', 'Madrid', '120', '100000', '50%', '10000'));
-
-				/*settype($arr_order['IdOrder_shop'], 'string');
-
-				$num_elements_num_bill=strlen($arr_order['IdOrder_shop']);
-				$num_bill_tmp='';
-
-				if($num_elements_num_bill<$config_shop['elements_num_bill'])
-				{
-
-					$count_elements_num_bill=$config_shop['elements_num_bill']-$num_elements_num_bill;
-
-					for($x=0;$x<$count_elements_num_bill;$x++)
-					{
-
-						$num_bill_tmp.='0';
-
-					}
-
-				}
-
-				$num_bill_tmp.=$arr_order['IdOrder_shop'];
-
-				//echo $count_elements_num_bill;
-
-				$num_bill=$config_shop['head_bill'].$num_bill_tmp;*/
 
 				$num_bill=calculate_num_bill($arr_order['IdOrder_shop']);
 
