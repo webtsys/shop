@@ -703,17 +703,6 @@ function ShopAdmin()
 			$model['order_shop']->forms['transport']->form='SelectForm';
 			$model['order_shop']->forms['transport']->SetParameters($arr_transport);
 
-			/*list($arr_code, $arr_code_check)=obtain_payment_form();
-
-			$model['order_shop']->forms['payment_form']->form='SelectForm';
-			$model['order_shop']->forms['payment_form']->SetParameters($arr_code);*/
-
-			//$model['country_shop']->forms['country']->SetForm($);
-
-			//list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('order_shop', $arr_fields, $where_sql, $url_options);
-	
-			//BasicList('order_shop', $where_sql, $arr_where_sql, $location, $arr_order, $arr_fields, $cell_sizes=array(), $options_func='BasicOptionsListModel', $url_options=1);
-
 			ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql, $arr_fields_edit, 0);
 
 		break;

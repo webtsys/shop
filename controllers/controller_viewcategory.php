@@ -20,6 +20,8 @@ function ViewCategory()
 	
 	$num_news=$config_shop['num_news'];
 	
+	//Obtain category...
+	
 	$arr_cat=$model['cat_product']->select_a_row($_GET['IdCat_product'], array(), 1);
 	
 	settype($arr_cat['IdCat_product'], 'integer');
@@ -37,11 +39,27 @@ function ViewCategory()
 	
 	}
 	
+	$model['product']->create_form();
+	
+	$url_options=make_fancy_url($base_url, 'shop', 'viewcategory', 'viewcategory', array('IdCat_product' => $_GET['IdCat_product']));
+	
+	$arr_fields_orders=array('title_'.$_SESSION['language'], 'date');
+	$arr_fields_search=array('title_'.$_SESSION['language']);
+	
+	$model['product']->forms['title_'.$_SESSION['language']]->label=$lang['common']['title'];
+	$model['product']->forms['date']->label=$lang['common']['date'];
+	
+	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields_orders, $arr_fields_search, $where_sql, $url_options, 0);
+	
+	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
+	
 	//Now, set where with searchs...
 	
 	//Now select products...
 	
 	//Select ids...
+	
+	$arr_id=array(0);
 	
 	$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel), true);
 
@@ -63,13 +81,9 @@ function ViewCategory()
 
 	}
 	
-	//$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight'), true);
-	
 	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
 	
 	$arr_product['images']=&$arr_photo;
-	
-	
 	
 	//Load list for objects..
 

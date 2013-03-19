@@ -50,7 +50,7 @@ if($user_data['IdUser']>0)
 	$model['product']->forms['title']->label=$lang['common']['title'];
 	$model['product']->forms['referer']->label=$lang['shop']['referer'];
 
-	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', array('title', 'referer'), $where_sql, $url_options, false);
+	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', array('title', 'referer'), array('title', 'referer'), $where_sql, $url_options, false);
 
 	?>
 
