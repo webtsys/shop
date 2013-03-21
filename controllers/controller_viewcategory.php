@@ -31,10 +31,10 @@ function ViewCategory()
 	if($arr_cat['IdCat_product']==0)
 	{
 	
-		$title_category=$lang['shop']['all_products'];
-		$description_cat=$lang['shop']['desc_all_products'];
-		$subcat=0;
-		$view_only_mode=$config_shop['view_only_mode'];
+		$arr_cat['title']=$lang['shop']['all_products'];
+		$arr_cat['description']=$lang['shop']['desc_all_products'];
+		$arr_cat['subcat']=0;
+		$arr_cat['view_only_mode']=$config_shop['view_only_mode'];
 		$where_sql='';
 	
 	}
@@ -49,7 +49,13 @@ function ViewCategory()
 	$model['product']->forms['title_'.$_SESSION['language']]->label=$lang['common']['title'];
 	$model['product']->forms['date']->label=$lang['common']['date'];
 	
+	ob_start();
+	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields_orders, $arr_fields_search, $where_sql, $url_options, 0);
+	
+	$cont_search=ob_get_contents();
+	
+	ob_end_clean();
 	
 	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
 	
@@ -83,7 +89,14 @@ function ViewCategory()
 	
 	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
 	
-	$arr_product['images']=&$arr_photo;
+	if(count($arr_product)>0)
+	{
+	
+		$arr_product['images']=&$arr_photo;
+		
+	}
+	
+	echo load_view(array($arr_cat, $arr_product, $cont_search), 'shop/viewcategory');
 	
 	//Load list for objects..
 
@@ -247,7 +260,7 @@ function ViewCategory()
 	ob_end_clean();
 
 	//$arr_block($title_category, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, '');
-	echo load_view(array($title_category, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	echo load_view(array($arr_cat['title'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
 }
 
