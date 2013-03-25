@@ -62,55 +62,58 @@ function ViewProductView($arr_product)
 	}
 
 	?>
-	<p align="center">
-		<?php
-		foreach($arr_product['images'] as $key => $image)
-		{
-		
-			$image_min=$model['image_product']->components['photo']->url_path.'/'.'mini_'.$image['photo'];
+	<div class="product">
+	
+		<p align="center">
+			<?php
+			foreach($arr_product['images'] as $key => $image)
+			{
 			
-		?>
-			<a href="<?php echo $model['image_product']->components['photo']->url_path.'/'.$image['photo']; ?>" id="image<?php echo $key; ?>"><img class="img_desc" src="<?php echo $image_min; ?>" /></a>
-			<script language="javascript"> show_big_image('#image<?php echo $key; ?>'); </script>
+				$image_min=$model['image_product']->components['photo']->url_path.'/'.'mini_'.$image['photo'];
+				
+			?>
+				<a href="<?php echo $model['image_product']->components['photo']->url_path.'/'.$image['photo']; ?>" id="image<?php echo $key; ?>"><img class="img_desc" src="<?php echo $image_min; ?>" /></a>
+				<script language="javascript"> show_big_image('#image<?php echo $key; ?>'); </script>
+			<?php
+
+			}
+
+			?>
+		</p>
+		<p>
+			<?php echo I18nField::show_formatted($arr_product['description']); ?>
+		</p>
+		<p>
+			<strong><?php echo $lang['shop']['pvp']; ?>:</strong> <?php echo MoneyField::currency_format($arr_product['price']); ?>
+		</p>	
+		<p>
+			<?php echo $stock_text; ?>
+		</p>
+		<p>
+			<strong><?php echo $tax; ?></strong> 
+		</p>
+		<p>
+			<?php echo $lang['shop']['weight']; ?>: <?php echo $arr_product['weight']; ?> <?php echo $lang['shop']['kg']; ?>
+		</p>
 		<?php
-
-		}
-
-		?>
-	</p>
-	<p>
-		<?php echo I18nField::show_formatted($arr_product['description']); ?>
-	</p>
-	<p>
-		<strong><?php echo $lang['shop']['pvp']; ?>:</strong> <?php echo MoneyField::currency_format($arr_product['price']); ?>
-	</p>	
-	<p>
-		<?php echo $stock_text; ?>
-	</p>
-	<p>
-		<strong><?php echo $tax; ?></strong> 
-	</p>
-	<p>
-		<?php echo $lang['shop']['weight']; ?>: <?php echo $arr_product['weight']; ?> <?php echo $lang['shop']['kg']; ?>
-	</p>
-	<?php
-	if($config_shop['view_only_mode']==0 && $arr_product['view_only_mode']==0)
-	{
-	
-		if($arr_product['stock']!=0 || $arr_product['about_order']==1)
+		if($config_shop['view_only_mode']==0 && $arr_product['view_only_mode']==0)
 		{
-		?>
-		<a onclick="javascript:buy_product(<?php echo $arr_product['IdProduct']; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $arr_product['IdProduct']) ); ?>" class="ship">
-		<span id="text_buy_<?php echo $arr_product['IdProduct']; ?>"><?php echo $lang['shop']['buy_product']; ?></span>
-		</a><img id="loading_buy_<?php echo $arr_product['IdProduct']; ?>" src="<?php echo $base_url; ?>/media/default/images/loading.gif" alt="<?php echo $lang['shop']['buying_product']; ?>" style="display: none;" />
-
-		<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['buying_product']; ?></span></p><p id="sucess_buy_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p></div>
 		
-		<?php
+			if($arr_product['stock']!=0 || $arr_product['about_order']==1)
+			{
+			?>
+			<a onclick="javascript:buy_product(<?php echo $arr_product['IdProduct']; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $arr_product['IdProduct']) ); ?>" class="ship">
+			<span id="text_buy_<?php echo $arr_product['IdProduct']; ?>"><?php echo $lang['shop']['buy_product']; ?></span>
+			</a><img id="loading_buy_<?php echo $arr_product['IdProduct']; ?>" src="<?php echo $base_url; ?>/media/default/images/loading.gif" alt="<?php echo $lang['shop']['buying_product']; ?>" style="display: none;" />
+
+			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['buying_product']; ?></span></p><p id="sucess_buy_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p></div>
+			
+			<?php
+			}
 		}
-	}
 	?>
-	
+	<br />
+	</div>
 	
 	<?php
 	

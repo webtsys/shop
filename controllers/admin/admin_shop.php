@@ -20,13 +20,13 @@ function ShopAdmin()
 	$arr_link_options[6]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
 	$arr_link_options[7]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
 	$arr_link_options[10]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ), 'text' => $lang['shop']['gateways_payment']);
-	$arr_link_options[11]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ), 'text' => $lang['shop']['discount_groups']);
+	//$arr_link_options[11]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ), 'text' => $lang['shop']['discount_groups']);
 	$arr_link_options[13]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ), 'text' => $lang['shop']['orders']);
 	$arr_link_options[15]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 15) ), 'text' => $lang['shop']['countries']);
 
-	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
+	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'currency', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
 	
-	$arr_link_options[20]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
+	$arr_link_options[20]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
 	
 	menu_selected($_GET['op'], $arr_link_options);
 	
@@ -1349,6 +1349,8 @@ function ShopAdmin()
 			//Now the form...
 			
 			$element_choice=$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			
+			settype($arr_plugin_list[$element_choice], 'array');
 			
 			if($element_choice!='')
 			{

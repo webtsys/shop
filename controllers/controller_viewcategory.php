@@ -76,6 +76,8 @@ function ViewCategory()
 
 	}
 	
+	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
+	
 	//Select images...
 	
 	$query=$model['image_product']->select('where idproduct IN (\''.implode("', '", $arr_id).'\') and principal=1', array('photo', 'idproduct'), true);
@@ -87,14 +89,12 @@ function ViewCategory()
 
 	}
 	
-	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
-	
-	if(count($arr_product)>0)
+	/*if(count($arr_product)>0)
 	{
 	
 		$arr_product['images']=&$arr_photo;
 		
-	}
+	}*/
 	
 	echo load_view(array($arr_cat, $arr_product, $cont_search), 'shop/viewcategory');
 	

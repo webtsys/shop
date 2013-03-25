@@ -3,9 +3,10 @@
 function ViewCategoryView($arr_cat, $arr_product, $search_product)
 {
 
-global $lang, $config_shop;
+global $lang, $config_shop, $base_url;
 
 $idtax=$config_shop['idtax'];
+$title_category=$arr_cat['title'];
 
 ob_start();
 
@@ -30,9 +31,12 @@ echo load_view(array($arr_cat['title'], $arr_cat['description'].$ob_get_search),
 
 echo $search_product;
 
-foreach($arr_product as $product)
+foreach($arr_product as $key_prod => $product)
 {
-
+	
+	$idproduct=$product['IdProduct'];
+	$title_product=I18nField::show_formatted($product['title']);
+	
 	$tax=add_text_taxes($idtax);
 
 	$add_tax=0;
@@ -58,20 +62,21 @@ foreach($arr_product as $product)
 	}
 	
 	$stock=$product['stock'];
-
+	$stock_txt='';
+	
 	$arr_stock[0]=$lang['shop']['no_stock'];
 	$arr_stock[1]=$lang['shop']['in_stock'];
 
 	if($product['about_order']==0)
 	{
 
-		$stock=$arr_stock[$stock];
+		$stock_txt=$arr_stock[$stock];
 
 	}
 	else
 	{
 
-		$stock=$lang['shop']['served_on_request'];
+		$stock_txt=$lang['shop']['served_on_request'];
 
 	}
 	
@@ -88,7 +93,7 @@ foreach($arr_product as $product)
 				<br /><br />
 				<strong><?php echo $lang['shop']['pvp']; ?>:</strong> <?php echo $price; ?>
 				<br />
-				<?php echo $stock; ?>
+				<?php echo $stock_txt; ?>
 				<br />
 				<strong><?php echo $tax; ?></strong> 
 				<br />
@@ -105,6 +110,7 @@ foreach($arr_product as $product)
 			<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship"><span id="text_buy_<?php echo $idproduct; ?>"><?php echo $lang['shop']['buy_product']; ?></span>
 			</a>
 			<img id="loading_buy_<?php echo $idproduct; ?>" src="<?php echo $base_url; ?>/media/default/images/loading.gif" alt="<?php echo $lang['shop']['buying_product']; ?>" style="display: none;" />
+			
 			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['buying_product']; ?></span></p><p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo $lang['shop']['success_buy']; ?></span></p></div>
 			<?php
 			}
