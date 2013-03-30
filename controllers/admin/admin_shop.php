@@ -16,6 +16,7 @@ function ShopAdmin()
 
 	$arr_link_options[1]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), 'text' => $lang['shop']['config_shop']);
 	$arr_link_options[2]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 2) ), 'text' => $lang['shop']['products_categories']);
+	$arr_link_options[3]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 3) ), 'text' => $lang['shop']['products']);
 	$arr_link_options[4]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ), 'text' => $lang['shop']['standard_options_for_products']);
 	$arr_link_options[6]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
 	$arr_link_options[7]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
@@ -233,22 +234,60 @@ function ShopAdmin()
 
 			settype($_GET['idcat'], 'integer');
 
-			$query=$model['cat_product']->select('where IdCat_product='.$_GET['idcat'], array('title', 'subcat'));
+			$query=$model['cat_product']->select('where IdCat_product='.$_GET['idcat'], array('IdCat_product', 'title', 'subcat'));
 
-			list($title, $parent)=webtsys_fetch_row($query);
+			list($idcat, $title, $parent)=webtsys_fetch_row($query);
+			
+			settype($idcat, 'integer');
+			
+			if($idcat>0)
+			{
+			
+				$title=$model['cat_product']->components['title']->show_formatted($title);
+			
+			}
+			else
+			{
+			
+				$title=$lang['shop']['all_categories'];
+			
+			}
 
-			echo '<h3>'.$lang['shop']['edit_products_from_category'].': '.$model['cat_product']->components['title']->show_formatted($title).'</h3>';
+			echo '<h3>'.$lang['shop']['edit_products_from_category'].': '.$title.'</h3>';
+			
+			ob_start();
+			
+			?>
+			<script language="javascript">
+				$(document).ready( function () {
+				
+					$('#idcat').change( function () {
+						
+						location.href='<?php echo make_fancy_url($base_url, 'admin', 'index', $lang['shop']['edit_products_from_category'], array('IdModule' => $_GET['IdModule'], 'op' => 3)); ?>/idcat/'+$('#idcat').val();
+					
+					});
+				
+				});
+			</script>
+			
+			<?php
+			
+			$header.=ob_get_contents();
+			
+			ob_end_clean();
+			
+			echo '<p><strong>'.$lang['shop']['choose_category'].'</strong>: '.SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='').'</p>';
 
 			$arr_fields=array('referer', 'title', 'extra_options');
-			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'idcat', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' ) ;
+			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' ) ;
 			
 			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
 
 			$model['product']->create_form();
 
-			$model['product']->forms['idcat']->form='SelectModelFormByOrder';
+			/*$model['product']->forms['idcat']->form='SelectModelFormByOrder';
 
-			$model['product']->forms['idcat']->parameters=array('idcat', '', $_GET['idcat'], 'cat_product', 'title', 'subcat', $where='');
+			$model['product']->forms['idcat']->parameters=array('idcat', '', $_GET['idcat'], 'cat_product', 'title', 'subcat', $where='');*/
 
 			$arr_options=array('', $lang['common']['any_option'], '');
 			$arr_options_check=array();

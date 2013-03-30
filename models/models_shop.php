@@ -337,6 +337,12 @@ $model['cat_product']->components['position']=new IntegerField();
 
 $model['cat_product']->components['image_cat']=new ImageField('image_cat', $base_path.'application/media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 0);
 
+$model['product_relationship']=new Webmodel('product_relationship');
+
+$model['product_relationship']->components['idproduct']=new ForeignKeyField('product', 11);
+$model['product_relationship']->components['idcat_product']=new ForeignKeyField('cat_product', 11);
+
+
 class taxes extends Webmodel {
 
 	function __construct()
