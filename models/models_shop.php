@@ -19,9 +19,31 @@ class product extends Webmodel {
 	function insert($post)
 	{
 	
+		global $model;
+	
 		$post=$this->components['title']->add_slugify_i18n_post('title', $post);
 	
-		return parent::insert($post);
+		if(parent::insert($post))
+		{
+		
+			settype($_GET['idcat'], 'integer');
+		
+			$idproduct=webtsys_insert_id();
+		
+			if( $model['product_relationship']->insert(array('idproduct' => $idproduct, 'idcat_product' => $_GET['idcat'])) )
+			{
+				return true;
+			}
+			
+			return false;
+		
+		}
+		else
+		{
+		
+			return false;
+		
+		}
 	
 	}
 	
@@ -82,7 +104,7 @@ $model['product']->components['description_short']->required=0;
 
 $model['product']->components['idcat']=new ForeignKeyField('cat_product', 11);
 
-$model['product']->components['idcat']->required=1;
+//$model['product']->components['idcat']->required=1;
 
 $model['product']->components['price']=new MoneyField();
 
@@ -340,7 +362,9 @@ $model['cat_product']->components['image_cat']=new ImageField('image_cat', $base
 $model['product_relationship']=new Webmodel('product_relationship');
 
 $model['product_relationship']->components['idproduct']=new ForeignKeyField('product', 11);
+$model['product_relationship']->components['idproduct']->required=1;
 $model['product_relationship']->components['idcat_product']=new ForeignKeyField('cat_product', 11);
+$model['product_relationship']->components['idcat_product']->required=1;
 
 
 class taxes extends Webmodel {

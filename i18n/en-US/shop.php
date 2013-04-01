@@ -268,11 +268,11 @@ $lang['shop']['description']='Category description';
 
 $lang['shop']['order_cats']='order_cats';
 
-$lang['shop']['all_categories']='all_categories';
+$lang['shop']['no_category_defined']='no_category_defined';
 
 $lang['shop']['edit_products_from_category']='Edit category products';
 
-$lang['shop']['categories']='categories';
+$lang['shop']['choose_category']='Choose category';
 
 $lang['shop']['description_short']='Short description for product lists';
 
@@ -414,8 +414,6 @@ $lang['shop']['desc_all_products']='Here, you will find all products.';
 
 $lang['shop']['select_category_shop']='Select shop category';
 
-$lang['shop']['choose_category']='Choose category';
-
 $lang['shop']['no_products_in_category']='Still there is no product in this category';
 
 $lang['shop']['go_back_cart']='Go back to cart';
@@ -479,6 +477,10 @@ $lang['shop']['this_currency_have_equivalence']='It has applied a value to this 
 $lang['shop']['error_buy_ajax']='Error: Ajax report a buying error';
 
 $lang['shop']['change_currency']='Change currency';
+
+$lang['shop']['all_categories']='all_categories';
+
+$lang['shop']['categories']='categories';
 
 $lang['shop']['added_europe_discount']='added_europe_discount';
 

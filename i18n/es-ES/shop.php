@@ -268,11 +268,11 @@ $lang['shop']['description']='Descripción';
 
 $lang['shop']['order_cats']='order_cats';
 
-$lang['shop']['all_categories']='all_categories';
+$lang['shop']['no_category_defined']='no_category_defined';
 
 $lang['shop']['edit_products_from_category']='Editar productos de la categoría';
 
-$lang['shop']['categories']='categories';
+$lang['shop']['choose_category']='Elegir categoría';
 
 $lang['shop']['description_short']='Descripción breve del producto, útil para listados';
 
@@ -414,8 +414,6 @@ $lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los pr
 
 $lang['shop']['select_category_shop']='Seleccionar categoría';
 
-$lang['shop']['choose_category']='Elegir categoría';
-
 $lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
 
 $lang['shop']['go_back_cart']='Regresar a carro';
@@ -479,6 +477,10 @@ $lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta 
 $lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
 $lang['shop']['change_currency']='Cambiar moneda';
+
+$lang['shop']['all_categories']='all_categories';
+
+$lang['shop']['categories']='categories';
 
 $lang['shop']['added_europe_discount']='added_europe_discount';
 
