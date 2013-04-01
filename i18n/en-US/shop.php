@@ -268,12 +268,6 @@ $lang['shop']['description']='Category description';
 
 $lang['shop']['order_cats']='order_cats';
 
-$lang['shop']['no_category_defined']='no_category_defined';
-
-$lang['shop']['edit_products_from_category']='Edit category products';
-
-$lang['shop']['choose_category']='Choose category';
-
 $lang['shop']['description_short']='Short description for product lists';
 
 $lang['shop']['idcat']='Shop category';
@@ -289,6 +283,12 @@ $lang['shop']['extra_options']='Extra options';
 $lang['shop']['weight']='Weight';
 
 $lang['shop']['num_sold']='Number of times sold';
+
+$lang['shop']['no_category_defined']='no_category_defined';
+
+$lang['shop']['edit_products_from_category']='Edit category products';
+
+$lang['shop']['choose_category']='Choose category';
 
 $lang['shop']['edit_options_for_product']='Edit options for this product';
 
@@ -395,6 +395,8 @@ $lang['shop']['edit_plugin']='Edit plugin';
 $lang['shop']['modify_products']='Modify products';
 
 $lang['shop']['subcat_products']='Products subcategories';
+
+$lang['shop']['edit_cat_product']='edit_cat_product';
 
 $lang['shop']['add__select_options_to_product']='Add options for select for this product';
 

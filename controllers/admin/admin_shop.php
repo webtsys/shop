@@ -1561,7 +1561,7 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 	
 	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $id) ).'">'.$lang['shop']['modify_products'].'</a>';
 
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $id) ).'">'.$lang['shop']['subcat_products'].'</a>';
+	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $id) ).'">'.$lang['shop']['subcat_products'].'</a>';	
 
 	return $arr_options;
 
@@ -1573,6 +1573,8 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 	global $lang, $base_url, $base_path, $arr_plugin_product_list;
 	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	
+	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'subcat' => $id) ).'">'.$lang['shop']['edit_cat_product'].'</a>';
 	
 	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $id) ).'">'.$lang['shop']['edit_image_product'].'</a>';
 
