@@ -392,6 +392,10 @@ $lang['shop']['order_plugins']='Order plugins';
 
 $lang['shop']['edit_plugin']='Edit plugin';
 
+$lang['shop']['change_shop_category']='change_shop_category';
+
+$lang['shop']['category']='category';
+
 $lang['shop']['modify_products']='Modify products';
 
 $lang['shop']['subcat_products']='Products subcategories';
@@ -471,6 +475,8 @@ $lang['shop']['dir_transport']='Mailing address';
 $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Please make your first order so have it.';
 
 $lang['shop']['see_products']='See products';
+
+$lang['shop']['product_is_already_on_category']='product_is_already_on_category';
 
 $lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 

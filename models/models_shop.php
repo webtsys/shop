@@ -359,12 +359,59 @@ $model['cat_product']->components['position']=new IntegerField();
 
 $model['cat_product']->components['image_cat']=new ImageField('image_cat', $base_path.'application/media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 0);
 
-$model['product_relationship']=new Webmodel('product_relationship');
+class product_relationship extends Webmodel {
+
+	function insert($post)
+	{
+	
+		global $lang;
+		
+		if( !$this->select_count('where idproduct='.$post['idproduct'].' and idcat_product='.$post['idcat_product'], 'IdProduct_relationship') )
+		{
+		
+			return parent::insert($post);
+		
+		}
+		else
+		{
+			$this->std_error=$lang['shop']['product_is_already_on_category'];
+		
+			return false;
+		
+		}
+	
+	}
+
+	function update($post, $conditions="")
+	{
+	
+		global $lang;
+		
+		if( !$this->select_count('where idproduct='.$post['idproduct'].' and idcat_product='.$post['idcat_product'], 'IdProduct_relationship') )
+		{
+		
+			return parent::update($post, $conditions);
+		
+		}
+		else
+		{
+			$this->std_error=$lang['shop']['product_is_already_on_category'];
+		
+			return false;
+		
+		}
+	
+	}
+	
+}
+
+$model['product_relationship']=new product_relationship('product_relationship');
 
 $model['product_relationship']->components['idproduct']=new ForeignKeyField('product', 11);
 $model['product_relationship']->components['idproduct']->required=1;
 $model['product_relationship']->components['idcat_product']=new ForeignKeyField('cat_product', 11);
 $model['product_relationship']->components['idcat_product']->required=1;
+$model['product_relationship']->components['idcat_product']->name_field_to_field='title';
 
 
 class taxes extends Webmodel {

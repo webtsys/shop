@@ -392,6 +392,10 @@ $lang['shop']['order_plugins']='Ordenar plugins';
 
 $lang['shop']['edit_plugin']='Edit plugin';
 
+$lang['shop']['change_shop_category']='change_shop_category';
+
+$lang['shop']['category']='category';
+
 $lang['shop']['modify_products']='Modificar productos';
 
 $lang['shop']['subcat_products']='Subcategorías de productos';
@@ -471,6 +475,8 @@ $lang['shop']['dir_transport']='Dirección de envio';
 $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
 
 $lang['shop']['see_products']='Ver productos';
+
+$lang['shop']['product_is_already_on_category']='product_is_already_on_category';
 
 $lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
 

@@ -1533,6 +1533,37 @@ function ShopAdmin()
 			}
 		
 		break;
+		
+		case 24:
+		
+			settype($_GET['idproduct'], 'integer');
+			
+			$product=$model['product']->select_a_row($_GET['idproduct'], array('title'), true);
+		
+			echo '<h3>'.$lang['shop']['change_shop_category'].' - '.I18nField::show_formatted($product['title']).'</h3>';
+			
+			$arr_fields=array('idcat_product');
+			$arr_fields_edit=array();
+			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'idproduct' => $_GET['idproduct']));
+			$url_back=make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3));
+			
+			$model['product_relationship']->components['idproduct']->form='HiddenForm';
+			
+			$model['product_relationship']->create_form();
+			
+			$model['product_relationship']->forms['idproduct']->form='HiddenForm';
+			$model['product_relationship']->forms['idproduct']->SetForm($_GET['idproduct']);
+			$model['product_relationship']->forms['idcat_product']->label=$lang['shop']['category'];
+			$model['product_relationship']->forms['idcat_product']->form='SelectModelFormByOrder';
+			$model['product_relationship']->forms['idcat_product']->parameters=array('idcat_product', '', 0, 'cat_product', 'title', 'subcat', $where='');
+			
+			//SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='')
+			
+			generate_admin_model_ng('product_relationship', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where product_relationship.idproduct='.$_GET['idproduct'], $arr_fields_form=array(), $type_list='Basic');
+			
+			echo '<p><a href="'.$url_back.'">'.$lang['common']['go_back'].'</a></p>';
+		
+		break;
 
 	}
 
@@ -1574,7 +1605,7 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'subcat' => $id) ).'">'.$lang['shop']['edit_cat_product'].'</a>';
+	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'idproduct' => $id) ).'">'.$lang['shop']['edit_cat_product'].'</a>';
 	
 	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $id) ).'">'.$lang['shop']['edit_image_product'].'</a>';
 
