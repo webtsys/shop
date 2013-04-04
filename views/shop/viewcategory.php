@@ -1,12 +1,12 @@
 <?php
 
-function ViewCategoryView($arr_cat, $arr_product, $search_product)
+function ViewCategoryView($arr_cat, $arr_product, $arr_photo, $search_product)
 {
 
-global $lang, $config_shop, $base_url;
+global $lang, $config_shop, $base_url, $model;
 
 $idtax=$config_shop['idtax'];
-$title_category=$arr_cat['title'];
+$title_category=I18nField::show_formatted($arr_cat['title']);
 
 ob_start();
 
@@ -27,7 +27,7 @@ $ob_get_search=ob_get_contents();
 
 ob_end_clean();
 
-echo load_view(array($arr_cat['title'], $arr_cat['description'].$ob_get_search), 'content');
+echo load_view(array($title_category, I18nField::show_formatted($arr_cat['description']).$ob_get_search), 'content');
 
 echo $search_product;
 
@@ -87,7 +87,8 @@ foreach($arr_product as $key_prod => $product)
 		</div>
 		<div class="cont">
 			<div class="image_list_prod">
-				<img src="<?php echo $image; ?>" /></div>
+				<img src="<?php echo $model['image_product']->components['photo']->show_image_url('mini_'.$arr_photo[$key_prod]); ?>" />
+			</div>
 			<div class="description_product">
 				<?php echo I18nField::show_formatted($product['description']); ?>
 				<br /><br />

@@ -96,7 +96,7 @@ function ViewCategory()
 		
 	}*/
 	
-	echo load_view(array($arr_cat, $arr_product, $cont_search), 'shop/viewcategory');
+	echo load_view(array($arr_cat, $arr_product, $arr_photo, $cont_search), 'shop/viewcategory');
 	
 	//Load list for objects..
 
@@ -260,7 +260,7 @@ function ViewCategory()
 	ob_end_clean();
 
 	//$arr_block($title_category, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, '');
-	echo load_view(array($arr_cat['title'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	echo load_view(array(I18nField::show_formatted($arr_cat['title']), $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
 }
 
