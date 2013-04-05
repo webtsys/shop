@@ -87,7 +87,14 @@ foreach($arr_product as $key_prod => $product)
 		</div>
 		<div class="cont">
 			<div class="image_list_prod">
+				<?php
+				if(isset($arr_photo[$key_prod]))
+				{
+				?>
 				<img src="<?php echo $model['image_product']->components['photo']->show_image_url('mini_'.$arr_photo[$key_prod]); ?>" />
+				<?php
+				}
+				?>
 			</div>
 			<div class="description_product">
 				<?php echo I18nField::show_formatted($product['description']); ?>
