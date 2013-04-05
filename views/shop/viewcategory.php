@@ -6,7 +6,7 @@ function ViewCategoryView($arr_cat, $arr_product, $arr_photo, $search_product)
 global $lang, $config_shop, $base_url, $model;
 
 $idtax=$config_shop['idtax'];
-$title_category=I18nField::show_formatted($arr_cat['title']);
+$title_category=$arr_cat['title'];
 
 ob_start();
 
@@ -27,7 +27,7 @@ $ob_get_search=ob_get_contents();
 
 ob_end_clean();
 
-echo load_view(array($title_category, I18nField::show_formatted($arr_cat['description']).$ob_get_search), 'content');
+echo load_view(array($title_category, $arr_cat['description'].$ob_get_search), 'content');
 
 echo $search_product;
 

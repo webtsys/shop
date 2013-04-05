@@ -253,90 +253,6 @@ function ShopAdmin()
 				
 				$where_sql='where IdProduct IN ('.implode(',', $arr_id).')';
 				
-				ob_start();
-				
-				$arr_fields=array('referer', 'title', 'extra_options');
-				$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' );
-				
-				$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
-
-				$model['product']->create_form();
-
-				/*$model['product']->forms['idcat']->form='SelectModelFormByOrder';
-
-				$model['product']->forms['idcat']->parameters=array('idcat', '', $_GET['idcat'], 'cat_product', 'title', 'subcat', $where='');*/
-
-				$arr_options=array('', $lang['common']['any_option'], '');
-				$arr_options_check=array();
-
-				$dir = opendir($base_path.'modules/shop/options');
-
-				while ($file = readdir($dir)) 
-				{
-					if(!preg_match('/^\./', $file))
-					{
-
-						$arr_options[]=ucfirst(str_replace('.php', '', $file));
-						$arr_options[]=$file;
-						$arr_options_check[]=$file;
-
-					}
-				}
-
-				$model['product']->components['extra_options']->arr_values=&$arr_options_check;
-				$model['product']->forms['extra_options']->SetParameters($arr_options);
-
-				$model['product']->forms['description']->parameters=array('description', '', '', 'TextAreaBBForm');
-				$model['product']->forms['description_short']->parameters=array('description_short', '', '', 'TextAreaBBForm');
-				
-				$model['product']->forms['stock']->SetForm(1);
-
-				//Labels for forms..
-
-				$model['product']->forms['referer']->label=$lang['shop']['referer'];
-				$model['product']->forms['title']->label=$lang['common']['title'];
-				$model['product']->forms['description']->label=$lang['common']['description'];
-				$model['product']->forms['description_short']->label=$lang['shop']['description_short'];
-				$model['product']->forms['idcat']->label=$lang['shop']['idcat'];
-				$model['product']->forms['price']->label=$lang['shop']['price'];
-				$model['product']->forms['special_offer']->label=$lang['shop']['special_offer'];
-				$model['product']->forms['stock']->label=$lang['shop']['stock'];
-				$model['product']->forms['date']->label=$lang['common']['date'];
-				$model['product']->forms['about_order']->label=$lang['shop']['about_order'];
-				$model['product']->forms['extra_options']->label=$lang['shop']['extra_options'];
-				$model['product']->forms['weight']->label=$lang['shop']['weight'];
-				$model['product']->forms['num_sold']->label=$lang['shop']['num_sold'];
-				$model['product']->forms['cool']->label=$lang['shop']['cool'];
-
-				//Set enctype for this model...
-
-				$model['product']->set_enctype_binary();
-				
-				//Load plugins for show links to ProductOptionsListModel
-				
-				$arr_plugin_product_list=array();
-				
-				$query=$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
-				
-				while(list($plugin)=webtsys_fetch_row($query))
-				{
-				
-					$arr_plugin_product_list[]=$plugin;
-					
-				}
-
-				generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql, $arr_fields_form=array(), $type_list='Basic');
-
-				if($_GET['IdProduct']==0 || !isset($_GET['op_update']))
-				{
-
-					echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
-
-				}
-				
-				$cont_edit_product=ob_get_contents();
-				
-				ob_end_clean();
 			
 			}
 			else
@@ -374,7 +290,84 @@ function ShopAdmin()
 			
 			echo '<p><strong>'.$lang['shop']['choose_category'].'</strong>: '.SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='').'</p>';
 			
-			echo $cont_edit_product;
+			$arr_fields=array('referer', 'title', 'extra_options');
+			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' );
+			
+			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
+
+			$model['product']->create_form();
+
+			/*$model['product']->forms['idcat']->form='SelectModelFormByOrder';
+
+			$model['product']->forms['idcat']->parameters=array('idcat', '', $_GET['idcat'], 'cat_product', 'title', 'subcat', $where='');*/
+
+			$arr_options=array('', $lang['common']['any_option'], '');
+			$arr_options_check=array();
+
+			$dir = opendir($base_path.'modules/shop/options');
+
+			while ($file = readdir($dir)) 
+			{
+				if(!preg_match('/^\./', $file))
+				{
+
+					$arr_options[]=ucfirst(str_replace('.php', '', $file));
+					$arr_options[]=$file;
+					$arr_options_check[]=$file;
+
+				}
+			}
+
+			$model['product']->components['extra_options']->arr_values=&$arr_options_check;
+			$model['product']->forms['extra_options']->SetParameters($arr_options);
+
+			$model['product']->forms['description']->parameters=array('description', '', '', 'TextAreaBBForm');
+			$model['product']->forms['description_short']->parameters=array('description_short', '', '', 'TextAreaBBForm');
+			
+			$model['product']->forms['stock']->SetForm(1);
+
+			//Labels for forms..
+
+			$model['product']->forms['referer']->label=$lang['shop']['referer'];
+			$model['product']->forms['title']->label=$lang['common']['title'];
+			$model['product']->forms['description']->label=$lang['common']['description'];
+			$model['product']->forms['description_short']->label=$lang['shop']['description_short'];
+			$model['product']->forms['idcat']->label=$lang['shop']['idcat'];
+			$model['product']->forms['price']->label=$lang['shop']['price'];
+			$model['product']->forms['special_offer']->label=$lang['shop']['special_offer'];
+			$model['product']->forms['stock']->label=$lang['shop']['stock'];
+			$model['product']->forms['date']->label=$lang['common']['date'];
+			$model['product']->forms['about_order']->label=$lang['shop']['about_order'];
+			$model['product']->forms['extra_options']->label=$lang['shop']['extra_options'];
+			$model['product']->forms['weight']->label=$lang['shop']['weight'];
+			$model['product']->forms['num_sold']->label=$lang['shop']['num_sold'];
+			$model['product']->forms['cool']->label=$lang['shop']['cool'];
+
+			//Set enctype for this model...
+
+			$model['product']->set_enctype_binary();
+			
+			//Load plugins for show links to ProductOptionsListModel
+			
+			$arr_plugin_product_list=array();
+			
+			$query=$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
+			
+			while(list($plugin)=webtsys_fetch_row($query))
+			{
+			
+				$arr_plugin_product_list[]=$plugin;
+				
+			}
+
+			generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql, $arr_fields_form=array(), $type_list='Basic');
+
+			if($_GET['IdProduct']==0 || !isset($_GET['op_update']))
+			{
+
+				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
+
+			}
 
 			
 

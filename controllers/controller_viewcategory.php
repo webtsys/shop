@@ -38,6 +38,13 @@ function ViewCategory()
 		$where_sql='';
 	
 	}
+	else
+	{
+	
+		$arr_cat['title']=I18nField::show_formatted($arr_cat['title']);
+		$arr_cat['description']=I18nField::show_formatted($arr_cat['description']);
+	
+	}
 	
 	$model['product']->create_form();
 	
@@ -49,7 +56,9 @@ function ViewCategory()
 	$model['product']->forms['title_'.$_SESSION['language']]->label=$lang['common']['title'];
 	$model['product']->forms['date']->label=$lang['common']['date'];
 	
-	ob_start();
+	$cont_search='';
+	
+	/*ob_start();
 	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields_orders, $arr_fields_search, $where_sql, $url_options, 0);
 	
@@ -57,26 +66,19 @@ function ViewCategory()
 	
 	ob_end_clean();
 	
-	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
+	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];*/
 	
 	//Now, set where with searchs...
 	
 	//Now select products...
 	
+	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
+	
 	//Select ids...
 	
-	$arr_id=array(0);
+	$arr_id=array_keys($arr_product);
 	
-	$query=$model['product']->select($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array($model['product']->idmodel), true);
-
-	while(list($idproduct)=webtsys_fetch_row($query))
-	{
-
-		$arr_id[]=$idproduct;
-
-	}
-	
-	$arr_product=$model['product']->select_to_array($where_sql.' limit '.$_GET['begin_page'].', '.$num_news, array());
+	$arr_id[]=0;
 	
 	//Select images...
 	
@@ -90,13 +92,6 @@ function ViewCategory()
 		$arr_photo[$idproduct]=$photo;
 
 	}
-	
-	/*if(count($arr_product)>0)
-	{
-	
-		$arr_product['images']=&$arr_photo;
-		
-	}*/
 	
 	echo load_view(array($arr_cat, $arr_product, $arr_photo, $cont_search), 'shop/viewcategory');
 	
@@ -262,7 +257,7 @@ function ViewCategory()
 	ob_end_clean();
 
 	//$arr_block($title_category, $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, '');
-	echo load_view(array(I18nField::show_formatted($arr_cat['title']), $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	echo load_view(array($arr_cat['title'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
 }
 
