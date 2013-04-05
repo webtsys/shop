@@ -26,7 +26,8 @@ function ViewCategory()
 	
 	settype($arr_cat['IdCat_product'], 'integer');
 	
-	$where_sql='where idcat='.$arr_cat['IdCat_product'];
+	//$where_sql='where idcat='.$arr_cat['IdCat_product'];
+	$where_sql='where product_relationship.idcat_product='.$arr_cat['IdCat_product'];
 	
 	if($arr_cat['IdCat_product']==0)
 	{
@@ -43,8 +44,11 @@ function ViewCategory()
 	
 		$arr_cat['title']=I18nField::show_formatted($arr_cat['title']);
 		$arr_cat['description']=I18nField::show_formatted($arr_cat['description']);
+		//$where_sql='where product_relationship.idcat_product='.$arr_cat['IdCat_product'];
 	
 	}
+	
+	$model['product']->related_models=array('product_relationship' => array('idproduct'));
 	
 	$model['product']->create_form();
 	
@@ -58,7 +62,7 @@ function ViewCategory()
 	
 	$cont_search='';
 	
-	/*ob_start();
+	ob_start();
 	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields_orders, $arr_fields_search, $where_sql, $url_options, 0);
 	
@@ -66,7 +70,7 @@ function ViewCategory()
 	
 	ob_end_clean();
 	
-	$where_sql.=$arr_where_sql.' order by `'.$location.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];*/
+	$where_sql.=$arr_where_sql.' order by '.$location.'`'.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
 	
 	//Now, set where with searchs...
 	

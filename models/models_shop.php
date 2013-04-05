@@ -102,7 +102,7 @@ $model['product']->components['description_short']=new I18nField(new CharField(1
 
 $model['product']->components['description_short']->required=0;
 
-$model['product']->components['idcat']=new ForeignKeyField('cat_product', 11);
+//$model['product']->components['idcat']=new ForeignKeyField('cat_product', 11);
 
 //$model['product']->components['idcat']->required=1;
 
