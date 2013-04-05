@@ -13,9 +13,11 @@ function BuyProduct()
 
 	//Only for buy products without options.
 	
-	$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('IdProduct', 'price', 'special_offer','extra_options', 'idcat', 'stock', 'about_order'));
+	$model['product']->related_models=array('product_relationship' => array('idproduct', 'idcat_product'));
+	
+	$query=$model['product']->select('where product.IdProduct='.$_GET['IdProduct'], array('IdProduct', 'price', 'special_offer','extra_options', 'stock', 'about_order'));
 		
-	list($idproduct, $price, $special_offer, $extra_options, $idcat, $stock, $about_order)=webtsys_fetch_row($query);
+	list($idproduct, $price, $special_offer, $extra_options, $stock, $about_order, $idproduct_ref, $idcat_product)=webtsys_fetch_row($query);
 	
 	if($stock==0 && $about_order==0)
 	{

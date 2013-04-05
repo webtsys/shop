@@ -4,9 +4,9 @@ function ViewProductView($arr_product)
 {
 	global $base_url, $lang, $model, $config_shop, $arr_cache_jscript, $base_path;
 
-	/*$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $arr_product['idcat']);
+	$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $arr_product['product_relationship_idcat_product']);
 
-	echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');*/
+	echo load_view(array($arr_hierarchy_links, 'shop', 'viewcategory', 'IdCat_product', array(), 0), 'common/utilities/hierarchy_links');
 	
 	ob_start();
 

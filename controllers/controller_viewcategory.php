@@ -71,6 +71,8 @@ function ViewCategory()
 	
 	$where_sql.=$arr_where_sql.' order by '.$location.'`'.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
 	
+	$total_elements=$model['product']->select_count($where_sql, 'IdProduct');
+	
 	//Now, set where with searchs...
 	
 	//Now select products...
@@ -96,7 +98,7 @@ function ViewCategory()
 
 	}
 	
-	echo load_view(array($arr_cat, $arr_product, $arr_photo, $cont_search), 'shop/viewcategory');
+	echo load_view(array($arr_cat, $arr_product, $arr_photo, $cont_search, $total_elements), 'shop/viewcategory');
 	
 	//Load list for objects..
 

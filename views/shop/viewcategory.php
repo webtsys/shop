@@ -1,12 +1,13 @@
 <?php
 
-function ViewCategoryView($arr_cat, $arr_product, $arr_photo, $search_product)
+function ViewCategoryView($arr_cat, $arr_product, $arr_photo, $search_product, $total_elements)
 {
 
 global $lang, $config_shop, $base_url, $model;
 
 $idtax=$config_shop['idtax'];
 $title_category=$arr_cat['title'];
+$num_news=$config_shop['num_news'];
 
 ob_start();
 
@@ -30,6 +31,8 @@ ob_end_clean();
 echo load_view(array($title_category, $arr_cat['description'].$ob_get_search), 'content');
 
 echo $search_product;
+
+$z=0;
 
 foreach($arr_product as $key_prod => $product)
 {
@@ -127,10 +130,28 @@ foreach($arr_product as $key_prod => $product)
 		</div>
 	</div>
 	<?php
+	
+		$z++;
+
+	}
+	
+	
+	if($z==0)
+	{
+
+		echo '<p>'.$lang['shop']['no_products_in_category'].'</p>';
+
+	}
+	else
+	{
+
+		
+		$url_next=make_fancy_url($base_url, 'shop', 'viewcategory', $title_category, array('IdCat_product' => $_GET['IdCat_product']) );
+		
+		echo '<p>'.$lang['common']['pages'].': '.pages( $_GET['begin_page'], $total_elements, $num_news, $url_next).'</p>';
 
 	}
 
 }
-
 
 ?>
