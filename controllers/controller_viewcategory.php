@@ -80,6 +80,8 @@ function ViewCategory()
 	
 	//Select images...
 	
+	$arr_photo=array();
+	
 	$query=$model['image_product']->select('where idproduct IN (\''.implode("', '", $arr_id).'\') and principal=1', array('photo', 'idproduct'), true);
 
 	while(list($photo, $idproduct)=webtsys_fetch_row($query))

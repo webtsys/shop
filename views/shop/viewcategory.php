@@ -54,7 +54,7 @@ foreach($arr_product as $key_prod => $product)
 
 		$offer=$product['special_offer'];
 	
-		$add_tax_offer=calculate_taxes($idtax, $product['offer']);
+		$add_tax_offer=calculate_taxes($idtax, $product['special_offer']);
 		$offer+=$add_tax_offer;
 
 		$price= '<strong>'.$lang['shop']['offer'].'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_real).' </span> -> '.MoneyField::currency_format($offer);
