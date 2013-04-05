@@ -44,7 +44,6 @@ function ViewCategory()
 	
 		$arr_cat['title']=I18nField::show_formatted($arr_cat['title']);
 		$arr_cat['description']=I18nField::show_formatted($arr_cat['description']);
-		//$where_sql='where product_relationship.idcat_product='.$arr_cat['IdCat_product'];
 	
 	}
 	

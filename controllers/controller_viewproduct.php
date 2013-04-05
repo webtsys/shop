@@ -23,10 +23,13 @@ function ViewProduct()
 	settype($_GET['img_big'], 'integer');
 
 	$idtax=$config_shop['idtax'];
-
-	$arr_product=$model['product']->select_a_row($_GET['IdProduct'], array(), 1);
 	
-	$idcat_product=$arr_product['idcat'];
+	$model['product']->related_models=array('product_relationship' => array('idproduct', 'idcat_product'));
+	
+	$arr_product=$model['product']->select_a_row($_GET['IdProduct'], array(), 0);
+	
+	$idcat_product=$arr_product['product_relationship_idcat_product'];
+	
 	$idproduct=$arr_product['IdProduct'];
 	
 	if($idproduct>0)

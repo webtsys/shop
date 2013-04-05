@@ -332,7 +332,7 @@ function ShopAdmin()
 			$model['product']->forms['title']->label=$lang['common']['title'];
 			$model['product']->forms['description']->label=$lang['common']['description'];
 			$model['product']->forms['description_short']->label=$lang['shop']['description_short'];
-			$model['product']->forms['idcat']->label=$lang['shop']['idcat'];
+			//$model['product']->forms['idcat']->label=$lang['shop']['idcat'];
 			$model['product']->forms['price']->label=$lang['shop']['price'];
 			$model['product']->forms['special_offer']->label=$lang['shop']['special_offer'];
 			$model['product']->forms['stock']->label=$lang['shop']['stock'];
