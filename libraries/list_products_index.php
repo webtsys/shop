@@ -4,22 +4,26 @@ function list_products_index($where)
 {
 
 	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop, $lang_taxes, $arr_taxes;
+	
+	load_libraries(array('pages'));
 
 	$num_news=$config_shop['num_news'];
-
+	
 	//Get ids for get images...
 
 	$arr_id=array();
 	$arr_photo=array();
 	$arr_idcat=array();
 	
-	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel, 'idcat'), true);
+	$model['product']->related_models=array('product_relationship' => array('idproduct', 'idcat_product'));
+	
+	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel), false);
 
-	while(list($idproduct, $idcat)=webtsys_fetch_row($query))
+	while(list($idproduct, $idproduct_rel, $idcat)=webtsys_fetch_row($query))
 	{
-
+		
 		$arr_id[]=$idproduct;
-		$arr_idcat[$idcat]=1;
+		$arr_idcat[$idcat]=0;
 
 	}
 	
@@ -42,70 +46,21 @@ function list_products_index($where)
 		$arr_idcat[$idcat]=$view_only_mode;
 	
 	}
-	
-	$z=0;
 
 	$image='';
 
 	$idtax=$config_shop['idtax'];
 	
-	$query=$model['product']->select($where.' limit '.$num_news, array($model['product']->idmodel, 'title', 'description', 'price', 'special_offer', 'stock', 'about_order', 'weight', 'idcat'), true);
-
-	while(list($idproduct, $title, $description, $price, $offer, $stock, $about_order, $weight, $idcat)=webtsys_fetch_row($query))
-	{
-		
-		settype($arr_photo[$idproduct], 'string');
-
-		$image=$arr_photo[$idproduct];
-		
-		$add_tax=0;
-
-		$price_real=$price;
-
-		$add_tax=calculate_taxes($idtax, $price_real);
-
-		$text_taxes=add_text_taxes($idtax);
-		
-		$price=MoneyField::currency_format($price+$add_tax);
-
-		if($offer>0)
-		{
-
-			$add_tax_offer=calculate_taxes($idtax, $offer);//$offer*($arr_taxes[$idtax]/100);
-			$offer+=$add_tax_offer;
-
-			$price= '<strong>'.$lang['shop']['offer'].'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_real).'</span> -> '.MoneyField::currency_format($offer);
-
-		}
-
-		$arr_stock[0]=$lang['shop']['no_stock'];
-		$arr_stock[1]=$lang['shop']['in_stock'];
-
-		if($about_order==0)
-		{
-
-			$stock=$arr_stock[$stock];
-
-		}
-		else
-		{
-
-			$stock=$lang['shop']['served_on_request'];
-
-		}
-		
-		echo load_view(array($idproduct, $model['product']->components['title']->show_formatted($title), $model['product']->components['description']->show_formatted($description), $image, $price, $stock, $text_taxes, $weight, $arr_idcat[$idcat]), 'shop/productlist', 'shop');
-
-		$z++;
-
-	}
-
-	if($z==0)
-	{
-
-		echo '<p>'.$lang['shop']['no_new_products'].'</p>';
-
-	}
+	$total_elements=$model['product']->select_count($where, 'IdProduct');
+	
+	//Now, set where with searchs...
+	
+	//Now select products...
+	
+	$arr_product=$model['product']->select_to_array($where.' limit '.$_GET['begin_page'].', '.$num_news, array());
+	
+	echo load_view(array($arr_idcat, $arr_product, $arr_photo, $total_elements), 'shop/viewindex');
+	
 
 }
 
