@@ -721,7 +721,7 @@ function ShopAdmin()
 			while(list($idcountry_shop, $name_country)=webtsys_fetch_row($query))
 			{
 
-				$arr_country[]=$name_country;
+				$arr_country[]=I18nField::show_formatted($name_country);
 				$arr_country[]=$idcountry_shop;
 
 			}
