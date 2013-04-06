@@ -46,7 +46,6 @@ function BuyProduct()
 				$buy_return=add_cart($arr_details=array(), $price, $special_offer, $redirect=0);
 
 				
-				
 
 			}
 
