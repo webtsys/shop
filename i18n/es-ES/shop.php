@@ -236,7 +236,7 @@ $lang['shop']['config_shop']='Configuración de su tienda';
 
 $lang['shop']['products_categories']='Categorías de productos';
 
-$lang['shop']['products']='products';
+$lang['shop']['products']='Productos';
 
 $lang['shop']['standard_options_for_products']='Opciones estandard para productos';
 
@@ -294,9 +294,9 @@ $lang['shop']['subcat']='Elija categoría padre';
 
 $lang['shop']['description']='Descripción';
 
-$lang['shop']['order_cats']='order_cats';
+$lang['shop']['order_cats']='Ordenar categorías';
 
-$lang['shop']['no_category_defined']='no_category_defined';
+$lang['shop']['no_category_defined']='Categoría sin definir';
 
 $lang['shop']['edit_products_from_category']='Editar productos de la categoría';
 
@@ -414,15 +414,15 @@ $lang['shop']['order_plugins']='Ordenar plugins';
 
 $lang['shop']['edit_plugin']='Edit plugin';
 
-$lang['shop']['change_shop_category']='change_shop_category';
+$lang['shop']['change_shop_category']='Cambiar categoría de tienda';
 
-$lang['shop']['category']='category';
+$lang['shop']['category']='Categoría';
 
 $lang['shop']['modify_products']='Modificar productos';
 
 $lang['shop']['subcat_products']='Subcategorías de productos';
 
-$lang['shop']['edit_cat_product']='edit_cat_product';
+$lang['shop']['edit_cat_product']='Editar categorías de producto';
 
 $lang['shop']['add__select_options_to_product']='Añadir opciones para seleccionar para este producto';
 
@@ -432,9 +432,9 @@ $lang['shop']['add__user_to_group_shop']='Añadir usuario a grupo de descuento';
 
 $lang['shop']['obtain_bill']='Obtener factura';
 
-$lang['shop']['admin_external_plugin']='admin_external_plugin';
+$lang['shop']['admin_external_plugin']='Administrar plugin externo';
 
-$lang['shop']['edit_plugin_external']='edit_plugin_external';
+$lang['shop']['edit_plugin_external']='Editar plugin externo';
 
 $lang['shop']['free_product']='Gratuito';
 
@@ -456,7 +456,7 @@ $lang['shop']['buying_product']='Comprando producto';
 
 $lang['shop']['success_buy']='Se añadio este producto al carrito de la compra';
 
-$lang['shop']['no_products_in_index']='no_products_in_index';
+$lang['shop']['no_products_in_index']='No hay productos para mostrar';
 
 $lang['shop']['see_products']='Ver productos';
 
@@ -488,9 +488,9 @@ $lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
 $lang['shop']['change_currency']='Cambiar moneda';
 
-$lang['shop']['all_categories']='all_categories';
+$lang['shop']['all_categories']='Todas las categorías';
 
-$lang['shop']['categories']='categories';
+$lang['shop']['categories']='Categorías';
 
 $lang['shop']['added_europe_discount']='added_europe_discount';
 

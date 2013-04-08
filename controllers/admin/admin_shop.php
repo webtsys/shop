@@ -1428,6 +1428,8 @@ function ShopAdmin()
 				
 				$model['plugin_shop']->forms['plugin']->SetParameters($arr_plugins);
 			
+				$model['plugin_shop']->forms['name']->label=$lang['common']['name'];
+			
 				$arr_fields=array('name', 'plugin');
 				$arr_fields_edit=array('name', 'element', 'plugin');
 				$url_options=make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice));
