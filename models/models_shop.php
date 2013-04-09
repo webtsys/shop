@@ -1095,7 +1095,7 @@ $model['currency_change']->components['idcurrency']->required=1;
 
 $model['currency_change']->components['idcurrency_related']=new ForeignKeyField('currency', 11);
 $model['currency_change']->components['idcurrency_related']->name_field_to_field='name';
-$model['currency_change']->components['idcurrency_related']->fields_related_model=array('name');
+//$model['currency_change']->components['idcurrency_related']->fields_related_model=array('name');
 
 $model['currency_change']->components['idcurrency_related']->required=1;
 

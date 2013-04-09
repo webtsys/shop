@@ -204,7 +204,7 @@ $lang['shop']['symbol']='Símbolo';
 
 $lang['shop']['modify_change_currencies']='Modificar cambios entre monedas';
 
-$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda&lt;br /&gt;elegida en relación a&lt;br /&gt;';
+$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda elegida en relación a';
 
 $lang['shop']['plugin_admin']='Administración de plugins';
 

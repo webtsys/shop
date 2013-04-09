@@ -204,7 +204,7 @@ $lang['shop']['symbol']='Symbol';
 
 $lang['shop']['modify_change_currencies']='Modify currencies changes';
 
-$lang['shop']['explain_change_value']='Indicates that value is 1 unit of currency&lt;br /&gt; used in relation to&lt;br /&gt;';
+$lang['shop']['explain_change_value']='Indicates that value is 1 unit of currency used in relation to';
 
 $lang['shop']['plugin_admin']='Admin plugin';
 

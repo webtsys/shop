@@ -1284,6 +1284,8 @@ function ShopAdmin()
 
 			$arr_fields=array('idcurrency_related');
 			$arr_fields_edit=array();
+			
+			$model['currency_change']->components['idcurrency_related']->name_field_to_field='name';
 
 			$model['currency_change']->create_form();
 
