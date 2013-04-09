@@ -699,6 +699,8 @@ function ShopAdmin()
 		case 13:
 
 			//?order_field=date_order&order_desc=1&search_word=&search_field=IdOrder_shop
+			
+			echo '<h2>'.$lang['shop']['orders'].'</h2>';
 
 			if(!isset($_GET['order_field']))
 			{
@@ -708,11 +710,15 @@ function ShopAdmin()
 
 			}
 
+			settype($_GET['op_payment'], 'integer');
+			
 			$where_sql='';
 
 			$arr_fields=array('name', 'last_name', 'email', 'total_price', 'make_payment', 'date_order');
+			
 			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'make_payment', 'total_price');
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_order', array('IdModule' => $_GET['IdModule'], 'op' => 13) );
+			
+			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_order', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => $_GET['op_payment']) );
 	
 			$arr_country=array('');
 
@@ -755,8 +761,33 @@ function ShopAdmin()
 
 			$model['order_shop']->forms['transport']->form='SelectForm';
 			$model['order_shop']->forms['transport']->SetParameters($arr_transport);
+			
+			$arr_link_orders[0]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => 0) ), 'text' => $lang['shop']['payment_orders']);
+			
+			$arr_link_orders[1]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => 1) ), 'text' => $lang['shop']['no_payment_orders']);
+			
+			menu_selected($_GET['op_payment'], $arr_link_orders, 1);
+			
+			switch($_GET['op_payment'])
+			{
+			
+				default:
+			
+				echo '<h3>'.$lang['shop']['payment_orders'].'</h3>';
 
-			ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql, $arr_fields_edit, 0);
+				ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
+				
+				break;
+				
+				case 1:
+			
+				echo '<h3>'.$lang['shop']['no_payment_orders'].'</h3>';
+
+				ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
+				
+				break;
+				
+			}
 
 		break;
 
