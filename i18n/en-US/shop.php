@@ -48,7 +48,7 @@ $lang['shop']['paypal_explain']='Clicking on pay order, you will go to paypal pa
 
 $lang['shop']['checkout_order']='Pay order';
 
-$lang['shop']['product_is_already_on_category']='product_is_already_on_category';
+$lang['shop']['product_is_already_on_category']='This product is already in category';
 
 $lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 

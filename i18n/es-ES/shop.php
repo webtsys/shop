@@ -48,7 +48,7 @@ $lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pas
 
 $lang['shop']['checkout_order']='Pagar pedido';
 
-$lang['shop']['product_is_already_on_category']='product_is_already_on_category';
+$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
 
 $lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
 
