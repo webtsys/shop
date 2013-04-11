@@ -61,6 +61,13 @@ function ViewCategory()
 	
 	$cont_search='';
 	
+	if(!isset($_GET['order_desc']))
+	{
+	
+		$_GET['order_desc']=1;
+	
+	}
+	
 	ob_start();
 	
 	list($where_sql, $arr_where_sql, $location, $arr_order)=SearchInField('product', $arr_fields_orders, $arr_fields_search, $where_sql, $url_options, 0);
