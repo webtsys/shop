@@ -1,5 +1,9 @@
 <?php
 
+$lang['shop']['cart']='Carrito';
+
+$lang['shop']['change_currency']='Cambiar moneda';
+
 $lang['shop']['config_shop']='Configuración de su tienda';
 
 $lang['shop']['products_categories']='Categorías de productos';
@@ -266,8 +270,6 @@ $lang['shop']['no_exists_product']='No existe este producto';
 
 $lang['shop']['this_product_is_not_found']='No se encuentra este producto';
 
-$lang['shop']['cart']='Carrito';
-
 $lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
 
 $lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
@@ -487,8 +489,6 @@ $lang['shop']['taxes_no_included']='Impuestos no incluidos';
 $lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
 
 $lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
-
-$lang['shop']['change_currency']='Cambiar moneda';
 
 $lang['shop']['no_new_products']='No hay novedades';
 
