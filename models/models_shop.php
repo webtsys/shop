@@ -886,6 +886,8 @@ $model['invoice_num']=new Webmodel('invoice_num');
 
 $model['invoice_num']->change_id_default('invoice_num');
 
+$model['invoice_num']->components['token_shop']=new CharField(255);
+
 class type_product_option extends Webmodel {
 
 	function __construct()
