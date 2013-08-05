@@ -47,7 +47,15 @@ function Paypal_ipn()
 
 		$model['order_shop']->reset_require();
 		
-		$query=$model['order_shop']->update(array('make_payment' => 1), 'where token="'.$cookie_shop.'"');
+		//Set number of invoice of order_shop
+		
+		$model['invoice_num']->insert();
+		
+		$num_order=$model['invoice_num']->insert_id();
+		
+		$num_order+=1;
+		
+		$query=$model['order_shop']->update(array('make_payment' => 1, 'num_order' => $num_order), 'where token="'.$cookie_shop.'"');
 
 		//Send email with result...
 
