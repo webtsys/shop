@@ -65,8 +65,8 @@ function Paypal_ipn()
 
 	ob_end_clean();
 
-	mail('webmaster@web-t-sys.com', "Prueba Paypal", $result."\n\n".$cookie_shop."\n\n".$query );
-	die;
+	/*mail('webmaster@web-t-sys.com', "Prueba Paypal", $result."\n\n".$cookie_shop."\n\n".$query );
+	die;*/
 
 }
 ?>
