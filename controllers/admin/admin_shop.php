@@ -718,12 +718,12 @@ function ShopAdmin()
 			
 			$where_sql='';
 
-			$arr_fields=array('name', 'invoice_num', 'last_name', 'email', 'total_price', 'make_payment', 'date_order');
+			$arr_fields=array('name', 'last_name', 'invoice_num', 'email', 'total_price', 'make_payment', 'date_order');
 			
 			if($_GET['op_payment']==1)
 			{
 			
-				unset($arr_fields[1]);
+				unset($arr_fields[2]);
 			
 			}
 			

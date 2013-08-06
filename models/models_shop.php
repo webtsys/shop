@@ -806,7 +806,8 @@ class order_shop extends Webmodel {
 				//$this->update(array('make_payment' => 1, 'invoice_num' => $num_order), 'where token="'.$token.'"');
 				//Raw update
 				
-				$query=webtsys_query('update order_shop set make_payment=1, invoice_num="'.$num_order.'" where token="'.$token.'"');
+				//$query=webtsys_query('update order_shop set make_payment=1, invoice_num="'.$num_order.'" where token="'.$token.'"');
+				$post['invoice_num']=$num_order;
 			
 			}
 		
@@ -1273,7 +1274,6 @@ class MoneyField extends DoubleField{
 
 	}
 
-	
 	static function currency_format($value, $symbol_view=1)
 	{
 

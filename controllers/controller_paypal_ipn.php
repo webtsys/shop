@@ -51,11 +51,11 @@ function Paypal_ipn()
 		
 		//Set number of invoice of order_shop
 		
-		$model['invoice_num']->insert(array('token_shop' => $cookie_shop));
+		/*$model['invoice_num']->insert(array('token_shop' => $cookie_shop));
 		
-		$num_order=webtsys_insert_id();
+		$num_order=webtsys_insert_id();*/
 		
-		$query=$model['order_shop']->update(array('make_payment' => 1, 'invoice_num' => $num_order), 'where token="'.$cookie_shop.'"');
+		$query=$model['order_shop']->update(array('make_payment' => 1), 'where token="'.$cookie_shop.'"');
 
 		//Send email with result...
 
