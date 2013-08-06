@@ -1544,7 +1544,7 @@ function ShopAdmin()
 				if( in_array($plugin, $arr_plugin_list[$element_choice]) )
 				{
 				
-					load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
+					load_libraries(array($plugin), $base_path.'modules/shop/plugins/'.$element_choice.'/');
 	
 					$var_func=ucfirst($plugin).'AdminExternal';
 					
@@ -1722,7 +1722,7 @@ function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
 		
 		
 		
-		$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $lang['shop']['admin_external_plugin'], array('IdModule' => $_GET['IdModule'], 'op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => 'product') ).'">'.$lang['shop']['edit_plugin_external'].'</a>';
+		$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $lang['shop']['admin_external_plugin'], array('IdModule' => $_GET['IdModule'], 'op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.$lang['shop']['edit_plugin_external'].'</a>';
 		
 		//$func_admin_plugin();
 	

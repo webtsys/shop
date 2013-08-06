@@ -70,12 +70,12 @@ function Cart()
 
 	$num_products=$model['cart_shop']->select_count('where token=\''.$sha1_token.'\'', 'IdProduct');
 
-	$query=$model['order_shop']->select('where token=\''.$sha1_token.'\'');
+	$query=$model['order_shop']->select('where token=\''.$sha1_token.'\'', array(), 1);
 
 	$arr_order_shop=webtsys_fetch_array($query);
 
 	settype($arr_order_shop['IdOrder_shop'], 'integer');
-
+	
 	//Arrays for update models...
 
 	$update_fields=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax');

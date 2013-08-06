@@ -826,6 +826,8 @@ $model['order_shop']->components['payment_discount_percent']=new PercentField();
 
 $model['order_shop']->components['total_price']=new MoneyField();
 
+$model['order_shop']->components['invoice_num']=new ForeignKeyField('invoice_num');
+
 $model['order_shop']->components['name']->required=1;	
 $model['order_shop']->components['last_name']->required=1;
 $model['order_shop']->components['email']->required=1;
@@ -879,6 +881,12 @@ $model['order_shop']->forms['transport']->label=$lang['shop']['transport'];
 $model['order_shop']->forms['make_payment']->label=$lang['shop']['make_payment'];
 $model['order_shop']->forms['observations']->label=$lang['shop']['observations'];
 $model['order_shop']->forms['date_order']->label=$lang['common']['date'];
+
+$model['invoice_num']=new Webmodel('invoice_num');
+
+$model['invoice_num']->change_id_default('invoice_num');
+
+$model['invoice_num']->components['token_shop']=new CharField(255);
 
 class type_product_option extends Webmodel {
 

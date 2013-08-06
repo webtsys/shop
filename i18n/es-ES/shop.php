@@ -1,8 +1,230 @@
 <?php
 
+<<<<<<< HEAD
 $lang['shop']['cart']='Carrito';
 
 $lang['shop']['change_currency']='Cambiar moneda';
+
+$lang['shop']['config_shop']='Configuración de su tienda';
+=======
+$lang['shop']['choose_cat']='Elegir categoría';
+>>>>>>> e806d28d6aec490bb6380aadd5202345547550a0
+
+$lang['shop']['referer']='Referencia';
+
+$lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
+
+$lang['shop']['apply_discounts']='Aplicar descuentos';
+
+$lang['shop']['price']='Precio';
+
+$lang['shop']['buy_product_units']='Unidades';
+
+$lang['shop']['warning_products_with_options']='Cuidado: se han detectado varios productos que tienen opciones para elegir. En este modo usted no puede especificar opciones para sus productos.';
+
+$lang['shop']['included']='Incluido';
+
+$lang['shop']['total_price_with_taxes']='Precio total con impuestos';
+
+$lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='El país seleccionado es diferente al país donde se aplican impuestos por defecto. No hay impuestos añadidos';
+
+$lang['shop']['taxes']='Impuestos';
+
+$lang['shop']['price_with_taxes']='Precio con impuestos';
+
+$lang['shop']['taxes_no_included']='Impuestos no incluidos';
+
+$lang['shop']['empty_cart']='Carro vacio';
+
+$lang['shop']['buy']='Comprar';
+
+$lang['shop']['total']='Total';
+
+$lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
+
+$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
+
+$lang['shop']['checkout_order']='Pagar pedido';
+
+$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
+
+$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
+
+$lang['shop']['zone']='Zona';
+
+$lang['shop']['transport']='Transporte';
+
+$lang['shop']['make_payment']='¿Pagado?';
+
+$lang['shop']['observations']='Observaciones';
+
+$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+
+$lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
+
+$lang['shop']['options_for_product']='Opciones para este producto';
+
+$lang['shop']['add_extra_price']='Se añadirá el siguiente valor al precio original';
+
+$lang['shop']['go_back_cart']='Regresar a carro';
+
+$lang['shop']['product_options']='Opciones de producto';
+
+$lang['shop']['shopping_cart']='Carro de la compra';
+
+$lang['shop']['no_stock']='Sin stock';
+
+$lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
+
+$lang['shop']['all_products']='Todos los productos';
+
+$lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
+
+$lang['shop']['cart']='Carrito';
+
+$lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
+
+$lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
+
+$lang['shop']['login_shop']='Si tiene un usuario y desea identificarse';
+
+$lang['shop']['click_here']='pulse aquí';
+
+$lang['shop']['register_shop_or_buying']='Si desea registrarse durante el proceso de compra';
+
+$lang['shop']['choose_new_country']='choose_new_country';
+
+$lang['shop']['explain_choose_new_country']='explain_choose_new_country';
+
+$lang['shop']['idzone_taxes']='Zona de impuestos';
+
+$lang['shop']['idzone_transport']='Zonas de transporte';
+
+$lang['shop']['choose_more_options']='Elegir más opciones';
+
+$lang['shop']['explain_payment_type_transport_type']='Por favor, elija el medio de pago y el modo de envio de su pedido';
+
+$lang['shop']['payment_type']='Tipo de pago';
+
+$lang['shop']['mode_payment_free_charge']='Modo de pago libre de cargo';
+
+$lang['shop']['error_in_country_no_exists_transport']='Lo sentimos, pero no hay medio de transporte para este país en estos momentos';
+
+$lang['shop']['error_cannot_access_to_next_step']='Error: no puedo acceder al siguiente paso';
+
+$lang['shop']['success_buy_go_to_payment']='Se ha hecho el pedido correctamente. Ahora puede realizar el pago de su pedido.';
+
+$lang['shop']['modify_product_options']='Modificar opciones de este producto.';
+
+$lang['shop']['explain_delete_options']='Para borrar productos del carro de la compra, por favor, marque los productos elegidos y pulse en &quot;Borrar productos seleccionados&quot;';
+
+$lang['shop']['option_selected']='Opción seleccionada';
+
+$lang['shop']['select_product']='Seleccionar producto';
+
+$lang['shop']['delete_products_selected']='Borrar productos seleccionados';
+
+$lang['shop']['explain_delete_options_form']='Para eliminar el producto, ponga a cero &quot;Unidades&quot; y pulse enviar';
+
+$lang['shop']['num_products']='Unidades';
+
+$lang['shop']['you_choose_a_country_that_have_taxes_about_this_products']='Eligió un país como dirección de envío, el cual tiene impuestos añadidos';
+
+$lang['shop']['order_submited_show_order_and_prices']='Pedido procesado. Le presentamos su petición y el precio.';
+
+$lang['shop']['send_order_and_checkout']='Enviar pedido y pagar.';
+
+$lang['shop']['explain_send_order_and_checkout']='Ahora que se ha procesado su pedido, por favor, proceda a su pago.';
+
+$lang['shop']['cancel_order']='Cancelar pedido';
+
+$lang['shop']['error_no_proccess_payment_send_email']='Error: no se pudo procesar el pago ni el envio del email de respuesta';
+
+$lang['shop']['address_billing']='Dirección de facturación';
+
+$lang['shop']['address_transport']='Dirección de envio';
+
+$lang['shop']['order']='Pedido';
+
+$lang['shop']['order_products_options']='Opciones del pedido de productos';
+
+$lang['shop']['order_without_options']='Pedido sin opciones';
+
+$lang['shop']['your_orders']='Su pedido';
+
+$lang['shop']['explain_petition']='En este email, le adjuntamos los datos de su pedido. Por favor, guárdelo por si necesita hacer algún tipo de reclamación sobre este.';
+
+$lang['shop']['if_error_send_email_to']='Si hubo algún error, por favor, envíenos un email a esta dirección';
+
+$lang['shop']['url_bill_for_admin']='Enlace de factura para administrador';
+
+$lang['shop']['click_here_for_download_bill']='Pulse aquí para descargar factura';
+
+$lang['shop']['orders']='Pedidos';
+
+$lang['shop']['new_order']='Nuevo pedido';
+
+$lang['shop']['explain_new_order']='Un cliente ha hecho un nuevo pedido. Le enviamos todos los datos de este para verificación y su gestión.';
+
+$lang['shop']['error_cannot_send_email']='Error: no puedo enviar el email';
+
+$lang['shop']['use_this_id_for_contact_with_us']='Este es su número de pedido, especifíquelo en el email que nos envíe.';
+
+$lang['shop']['order_success_cart_clean']='<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>';
+
+$lang['shop']['cancelling_order']='Cancelando pedido';
+
+$lang['shop']['modify_options']='Opciones de modificación';
+
+$lang['shop']['no_options_product']='Producto sin opciones';
+
+$lang['shop']['cart_empty']='Carrito vacio';
+
+$lang['shop']['total_price_with_all_payments_and_discounts']='Precio total despues de impuestos y descuentos';
+
+$lang['shop']['make_order']='Hacer pedido';
+
+$lang['shop']['explain_order']='Por favor, rellene los datos que se le piden a continuación para poder hacer su pedido.';
+
+$lang['shop']['country_others']='country_others';
+
+$lang['shop']['send_address_equal_shopping_address']='¿Dirección de envío igual a dirección de facturación?';
+
+$lang['shop']['register_user_if_not_register']='Se le creará un usuario, ya que usted no está registrado.';
+
+$lang['shop']['observations_text']='Observaciones';
+
+$lang['shop']['terms_of_sale']='Condiciones de venta';
+
+$lang['shop']['accept_terms_of_sale_push_send_button']='Usted acepta los terminos de venta al pulsar en el botón enviar';
+
+$lang['shop']['conditions']='Terminos de venta';
+
+$lang['shop']['price_transport']='Portes';
+
+$lang['shop']['order_sended_with']='Pedido enviado por';
+
+$lang['shop']['price_total_transport']='Portes totales';
+
+$lang['shop']['shipping_costs']='Cargos en pago';
+
+$lang['shop']['payment_with']='Pagado con';
+
+$lang['shop']['price_payment']='Cargo del modo de pago';
+
+$lang['shop']['total_price_with_discounts']='Precio total con descuentos';
+
+$lang['shop']['discounts']='Descuentos';
+
+$lang['shop']['discount_transport']='Descuentos en los portes';
+
+$lang['shop']['discount_payment']='Descuentos en modo de pago';
+
+$lang['shop']['taxes_calculated_in_new_price']='Impuestos calculados en precio con descuento';
+
+$lang['shop']['new_taxes_calculated']='Nuevos impuestos calculados';
+
+$lang['shop']['discount_taxes']='Descuento en impuestos';
 
 $lang['shop']['config_shop']='Configuración de su tienda';
 
@@ -12,15 +234,9 @@ $lang['shop']['products']='Productos';
 
 $lang['shop']['standard_options_for_products']='Opciones estandard para productos';
 
-$lang['shop']['taxes']='Impuestos';
-
-$lang['shop']['transport']='Transporte';
-
 $lang['shop']['gateways_payment']='Pasarelas de pago';
 
 $lang['shop']['discount_groups']='Grupos de descuento';
-
-$lang['shop']['orders']='Pedidos';
 
 $lang['shop']['countries']='Paises';
 
@@ -47,8 +263,6 @@ $lang['shop']['yes_transport']='¿Necesitan transporte los productos?';
 $lang['shop']['type_index']='Tipo de página principal';
 
 $lang['shop']['explain_discounts_page']='Página donde se definen los descuentos';
-
-$lang['shop']['conditions']='Terminos de venta';
 
 $lang['shop']['ssl_url']='¿Este dominio tiene SSL?. Elija sí, si su url base por defecto no tiene SSL';
 
@@ -82,13 +296,9 @@ $lang['shop']['edit_products_from_category']='Editar productos de la categoría'
 
 $lang['shop']['choose_category']='Elegir categoría';
 
-$lang['shop']['referer']='Referencia';
-
 $lang['shop']['description_short']='Descripción breve del producto, útil para listados';
 
 $lang['shop']['idcat']='Categoría de tienda';
-
-$lang['shop']['price']='Precio';
 
 $lang['shop']['special_offer']='Oferta especial';
 
@@ -120,8 +330,6 @@ $lang['shop']['zones_taxes']='Zonas de impuestos';
 
 $lang['shop']['percent']='Porcentaje';
 
-$lang['shop']['zone']='Zona';
-
 $lang['shop']['edit_transport']='Editar transporte';
 
 $lang['shop']['zones_transport']='Zonas de transporte';
@@ -152,8 +360,6 @@ $lang['shop']['min_price']='Precio total de pedido';
 
 $lang['shop']['code_payment']='Código php';
 
-$lang['shop']['price_payment']='Cargo del modo de pago';
-
 $lang['shop']['group_shop']='Grupo';
 
 $lang['shop']['discount']='Descuento';
@@ -166,8 +372,6 @@ $lang['shop']['shipping_costs_for_group']='Descuento en pasarela de pago';
 
 $lang['shop']['total_price']='Precio total';
 
-$lang['shop']['make_payment']='¿Pagado?';
-
 $lang['shop']['payment_orders']='Pedidos pagados';
 
 $lang['shop']['no_payment_orders']='Pedidos no pagados';
@@ -179,10 +383,6 @@ $lang['shop']['add_new_images']='Añadir nuevas imágenes';
 $lang['shop']['principal_photo']='Imagen principal';
 
 $lang['shop']['code_country']='Código de país';
-
-$lang['shop']['idzone_taxes']='Zona de impuestos';
-
-$lang['shop']['idzone_transport']='Zonas de transporte';
 
 $lang['shop']['name_enterprise']='Nombre de empresa';
 
@@ -197,10 +397,6 @@ $lang['shop']['value']='Valor';
 $lang['shop']['final_value']='Valor final';
 
 $lang['shop']['transport_price']='Portes';
-
-$lang['shop']['shipping_costs']='Cargos en pago';
-
-$lang['shop']['total']='Total';
 
 $lang['shop']['units']='Unidades';
 
@@ -240,29 +436,7 @@ $lang['shop']['admin_external_plugin']='Administrar plugin externo';
 
 $lang['shop']['edit_plugin_external']='Editar plugin externo';
 
-$lang['shop']['go_back_cart']='Regresar a carro';
-
-$lang['shop']['product_options']='Opciones de producto';
-
-$lang['shop']['shopping_cart']='Carro de la compra';
-
-$lang['shop']['no_stock']='Sin stock';
-
-$lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
-
-$lang['shop']['all_products']='Todos los productos';
-
-$lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
-
-$lang['shop']['select_category_shop']='Seleccionar categoría';
-
 $lang['shop']['offer']='Oferta';
-
-$lang['shop']['in_stock']='En stock';
-
-$lang['shop']['served_on_request']='Servido bajo pedido';
-
-$lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
 
 $lang['shop']['free_product']='Gratuito';
 
@@ -270,6 +444,7 @@ $lang['shop']['no_exists_product']='No existe este producto';
 
 $lang['shop']['this_product_is_not_found']='No se encuentra este producto';
 
+<<<<<<< HEAD
 $lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
 
 $lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
@@ -421,12 +596,19 @@ $lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta 
 $lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
 
 $lang['shop']['options_for_product']='Opciones para este producto';
+=======
+$lang['shop']['in_stock']='En stock';
+>>>>>>> e806d28d6aec490bb6380aadd5202345547550a0
 
-$lang['shop']['add_extra_price']='Se añadirá el siguiente valor al precio original';
+$lang['shop']['served_on_request']='Servido bajo pedido';
 
 $lang['shop']['pvp']='PVP';
 
+$lang['shop']['weight_in_kg']='Peso en kilogramos';
+
 $lang['shop']['kg']='Kg';
+
+$lang['shop']['see_product']='Ver detalles';
 
 $lang['shop']['buy_product']='Comprar producto';
 
@@ -434,7 +616,13 @@ $lang['shop']['buying_product']='Comprando producto';
 
 $lang['shop']['success_buy']='Se añadio este producto al carrito de la compra';
 
+$lang['shop']['no_products_in_index']='No hay productos para mostrar';
+
 $lang['shop']['see_products']='Ver productos';
+
+$lang['shop']['select_category_shop']='Seleccionar categoría';
+
+$lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
 
 $lang['shop']['profile_shop']='Perfil de cliente';
 
@@ -458,16 +646,11 @@ $lang['shop']['dir_transport']='Dirección de envio';
 
 $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
 
-$lang['shop']['weight_in_kg']='Peso en kilogramos';
-
-$lang['shop']['see_product']='Ver detalles';
-
 $lang['shop']['see_more']='Ver más';
-
-$lang['shop']['no_products_in_index']='No hay productos para mostrar';
 
 $lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
+<<<<<<< HEAD
 $lang['shop']['choose_cat']='Elegir categoría';
 
 $lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
@@ -489,6 +672,9 @@ $lang['shop']['taxes_no_included']='Impuestos no incluidos';
 $lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
 
 $lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
+=======
+$lang['shop']['change_currency']='Cambiar moneda';
+>>>>>>> e806d28d6aec490bb6380aadd5202345547550a0
 
 $lang['shop']['no_new_products']='No hay novedades';
 

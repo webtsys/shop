@@ -124,7 +124,7 @@ function ViewProductView($arr_product)
 	
 		load_libraries(array($plugin), $base_path.'modules/shop/plugins/product/');
 		
-		$func_plugin($arr_product['IdProduct']);
+		echo $func_plugin($arr_product['IdProduct']);
 	
 	}
 	
