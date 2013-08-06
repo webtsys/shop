@@ -54,8 +54,6 @@ function Paypal_ipn()
 		$model['invoice_num']->insert(array('token_shop' => $cookie_shop));
 		
 		$num_order=webtsys_insert_id();
-
-		$model['order_shop']->reset_require();
 		
 		$query=$model['order_shop']->update(array('make_payment' => 1, 'invoice_num' => $num_order), 'where token="'.$cookie_shop.'"');
 

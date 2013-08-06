@@ -1,230 +1,8 @@
 <?php
 
-<<<<<<< HEAD
 $lang['shop']['cart']='Cart';
 
 $lang['shop']['change_currency']='Change currency';
-
-$lang['shop']['config_shop']='Setting up your shop';
-=======
-$lang['shop']['choose_cat']='Choose products category';
->>>>>>> e806d28d6aec490bb6380aadd5202345547550a0
-
-$lang['shop']['referer']='Referer';
-
-$lang['shop']['go_products_to_cart']='Complete order and go to Cart';
-
-$lang['shop']['apply_discounts']='Apply discounts';
-
-$lang['shop']['price']='Price';
-
-$lang['shop']['buy_product_units']='Units';
-
-$lang['shop']['warning_products_with_options']='Warning: have been detected some products that have multiple options for choose. In this mode, you cannot specify options for the products';
-
-$lang['shop']['included']='Included';
-
-$lang['shop']['total_price_with_taxes']='Total price with taxes';
-
-$lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='The selected country is different from the country where taxes are applied by default. There are no taxes added';
-
-$lang['shop']['taxes']='Taxes';
-
-$lang['shop']['price_with_taxes']='Price with taxes';
-
-$lang['shop']['taxes_no_included']='Taxes not included';
-
-$lang['shop']['empty_cart']='Empty cart';
-
-$lang['shop']['buy']='Buy';
-
-$lang['shop']['total']='Total';
-
-$lang['shop']['paypal_email_variable_no_isset']='Please define the variables needed in your system to use paypal as a method payment';
-
-$lang['shop']['paypal_explain']='Clicking on pay order, you will go to paypal payment gateway to make payment.';
-
-$lang['shop']['checkout_order']='Pay order';
-
-$lang['shop']['product_is_already_on_category']='This product is already in category';
-
-$lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
-
-$lang['shop']['zone']='Zone';
-
-$lang['shop']['transport']='Transport';
-
-$lang['shop']['make_payment']='¿Pagado?';
-
-$lang['shop']['observations']='Observations';
-
-$lang['shop']['this_currency_have_equivalence']='It has applied a value to this currency. Edit the corresponding relationship created earlier, or change the currency to which you want to apply the equivalence';
-
-$lang['shop']['need_minimum_an_option']='Error: you need an option or more';
-
-$lang['shop']['options_for_product']='Product options';
-
-$lang['shop']['add_extra_price']='add_extra_price';
-
-$lang['shop']['go_back_cart']='Go back to cart';
-
-$lang['shop']['product_options']='Product options';
-
-$lang['shop']['shopping_cart']='Shopping cart';
-
-$lang['shop']['no_stock']='No stock';
-
-$lang['shop']['no_stock_for_this_article']='There isn&#39;t stock for this product';
-
-$lang['shop']['all_products']='All products';
-
-$lang['shop']['desc_all_products']='Here, you will find all products.';
-
-$lang['shop']['cart']='Cart';
-
-$lang['shop']['explain_cart_options']='From here you can change the settings of your products or eliminate their purchase.';
-
-$lang['shop']['explain_buying_without_register']='You are not registered. You can choose between register for buying or login if you have an user. When you login, will be redirected to cart for finish the order.';
-
-$lang['shop']['login_shop']='If you have a registered user and you want login';
-
-$lang['shop']['click_here']='Click here';
-
-$lang['shop']['register_shop_or_buying']='If you want register during the checkout process';
-
-$lang['shop']['choose_new_country']='Choose new country';
-
-$lang['shop']['explain_choose_new_country']='explain_choose_new_country';
-
-$lang['shop']['idzone_taxes']='Taxes zone';
-
-$lang['shop']['idzone_transport']='Transport zone';
-
-$lang['shop']['choose_more_options']='Choose more options';
-
-$lang['shop']['explain_payment_type_transport_type']='Please, choose the payment method and mode of delivery of your order';
-
-$lang['shop']['payment_type']='Payment method';
-
-$lang['shop']['mode_payment_free_charge']='Payment method without charge';
-
-$lang['shop']['error_in_country_no_exists_transport']='Sorry, but your country don&#39;t have transport medium for delivery orders in this moment.';
-
-$lang['shop']['error_cannot_access_to_next_step']='Error: Cannot access to next step';
-
-$lang['shop']['success_buy_go_to_payment']='It has become the order correctly. Now you can pay your order.';
-
-$lang['shop']['modify_product_options']='Modify product options';
-
-$lang['shop']['explain_delete_options']='To remove products from shopping cart, please check the item selected and click &quot;Delete Selected Products&quot;';
-
-$lang['shop']['option_selected']='Selected option';
-
-$lang['shop']['select_product']='Select product';
-
-$lang['shop']['delete_products_selected']='Delete selected items';
-
-$lang['shop']['explain_delete_options_form']='To remove the product, select zero &quot;Units&quot; and press send';
-
-$lang['shop']['num_products']='Units';
-
-$lang['shop']['you_choose_a_country_that_have_taxes_about_this_products']='The selected country don&#39;t have added taxes';
-
-$lang['shop']['order_submited_show_order_and_prices']='Order submited. Order and prices are showed.';
-
-$lang['shop']['send_order_and_checkout']='Send order and checkout';
-
-$lang['shop']['explain_send_order_and_checkout']='Now that we have processed your order, please proceed to your payment';
-
-$lang['shop']['cancel_order']='Cancel order';
-
-$lang['shop']['error_no_proccess_payment_send_email']='Error: cannot process the payment method and the email response';
-
-$lang['shop']['address_billing']='Adress billing';
-
-$lang['shop']['address_transport']='Mailing adress';
-
-$lang['shop']['order']='Order';
-
-$lang['shop']['order_products_options']='Order options';
-
-$lang['shop']['order_without_options']='Order without options';
-
-$lang['shop']['your_orders']='Your order';
-
-$lang['shop']['explain_petition']='In this email, I attached the details of your order. Please keep it in case you need to make any complaint about this.';
-
-$lang['shop']['if_error_send_email_to']='Please, if you have any error, send a email here ';
-
-$lang['shop']['url_bill_for_admin']='Link to admin invoice';
-
-$lang['shop']['click_here_for_download_bill']='Press here for download bill';
-
-$lang['shop']['orders']='Orders';
-
-$lang['shop']['new_order']='New order';
-
-$lang['shop']['explain_new_order']='A customer has made a new order. We send all of this data to you for verification and management.';
-
-$lang['shop']['error_cannot_send_email']='Error: can not send email';
-
-$lang['shop']['use_this_id_for_contact_with_us']='This is your order number, enter it in the email you send us if you have problems.';
-
-$lang['shop']['order_success_cart_clean']='<p><strong>The order was submitted successfully.</strong></p><p>You will receive an email with the details of your purchase and the number of reference which may make a claim for this request if there were any problem.</p>';
-
-$lang['shop']['cancelling_order']='Canceling order';
-
-$lang['shop']['modify_options']='Modify options';
-
-$lang['shop']['no_options_product']='Options product';
-
-$lang['shop']['cart_empty']='Empty cart';
-
-$lang['shop']['total_price_with_all_payments_and_discounts']='Total price after taxes and discounts';
-
-$lang['shop']['make_order']='Purchase order';
-
-$lang['shop']['explain_order']='Please, fill the form with your personal data for finish your order.';
-
-$lang['shop']['country_others']='country_others';
-
-$lang['shop']['send_address_equal_shopping_address']='Shipping address same as billing address?';
-
-$lang['shop']['register_user_if_not_register']='If you don&#39;t have registered, a user is created for you.';
-
-$lang['shop']['observations_text']='Observations';
-
-$lang['shop']['terms_of_sale']='Terms of sale';
-
-$lang['shop']['accept_terms_of_sale_push_send_button']='You agree to the terms of sale by clicking the send button';
-
-$lang['shop']['conditions']='Terms of sale';
-
-$lang['shop']['price_transport']='Transport price';
-
-$lang['shop']['order_sended_with']='Order sent by';
-
-$lang['shop']['price_total_transport']='Total transport price';
-
-$lang['shop']['shipping_costs']='Shipping costs';
-
-$lang['shop']['payment_with']='Payment with';
-
-$lang['shop']['price_payment']='Method payment price';
-
-$lang['shop']['total_price_with_discounts']='Total price with discounts';
-
-$lang['shop']['discounts']='Discounts';
-
-$lang['shop']['discount_transport']='Discounts in transport price';
-
-$lang['shop']['discount_payment']='Discounts in payment price';
-
-$lang['shop']['taxes_calculated_in_new_price']='Taxes calculated with added discounts';
-
-$lang['shop']['new_taxes_calculated']='New taxes calculated';
-
-$lang['shop']['discount_taxes']='Discount taxes';
 
 $lang['shop']['config_shop']='Setting up your shop';
 
@@ -234,9 +12,15 @@ $lang['shop']['products']='Products';
 
 $lang['shop']['standard_options_for_products']='Standard options for products';
 
+$lang['shop']['taxes']='Taxes';
+
+$lang['shop']['transport']='Transport';
+
 $lang['shop']['gateways_payment']='Payment gateways';
 
 $lang['shop']['discount_groups']='Discount groups';
+
+$lang['shop']['orders']='Orders';
 
 $lang['shop']['countries']='Countries';
 
@@ -263,6 +47,8 @@ $lang['shop']['yes_transport']='Do you need to transport the products?';
 $lang['shop']['type_index']='Type of home';
 
 $lang['shop']['explain_discounts_page']='Page where the discounts are explained';
+
+$lang['shop']['conditions']='Terms of sale';
 
 $lang['shop']['ssl_url']='Do base domain have SSL?. Choose yes if you default url is not SSL';
 
@@ -296,9 +82,13 @@ $lang['shop']['edit_products_from_category']='Edit category products';
 
 $lang['shop']['choose_category']='Choose category';
 
+$lang['shop']['referer']='Referer';
+
 $lang['shop']['description_short']='Short description for product lists';
 
 $lang['shop']['idcat']='Shop category';
+
+$lang['shop']['price']='Price';
 
 $lang['shop']['special_offer']='Special offer';
 
@@ -330,6 +120,8 @@ $lang['shop']['zones_taxes']='Tax zones';
 
 $lang['shop']['percent']='Percent';
 
+$lang['shop']['zone']='Zone';
+
 $lang['shop']['edit_transport']='Edit transport';
 
 $lang['shop']['zones_transport']='Transport zone';
@@ -360,6 +152,8 @@ $lang['shop']['min_price']='min_price';
 
 $lang['shop']['code_payment']='Php code';
 
+$lang['shop']['price_payment']='Method payment price';
+
 $lang['shop']['group_shop']='Group';
 
 $lang['shop']['discount']='Discount';
@@ -372,6 +166,8 @@ $lang['shop']['shipping_costs_for_group']='Gateways discount';
 
 $lang['shop']['total_price']='Total price';
 
+$lang['shop']['make_payment']='¿Pagado?';
+
 $lang['shop']['payment_orders']='Orders paid';
 
 $lang['shop']['no_payment_orders']='No orders paid';
@@ -383,6 +179,10 @@ $lang['shop']['add_new_images']='Add new images';
 $lang['shop']['principal_photo']='Main image';
 
 $lang['shop']['code_country']='Country code';
+
+$lang['shop']['idzone_taxes']='Taxes zone';
+
+$lang['shop']['idzone_transport']='Transport zone';
 
 $lang['shop']['name_enterprise']='Enterprise name';
 
@@ -397,6 +197,10 @@ $lang['shop']['value']='Value';
 $lang['shop']['final_value']='Final value';
 
 $lang['shop']['transport_price']='Transport price';
+
+$lang['shop']['shipping_costs']='Shipping costs';
+
+$lang['shop']['total']='Total';
 
 $lang['shop']['units']='Units';
 
@@ -436,6 +240,20 @@ $lang['shop']['admin_external_plugin']='admin_external_plugin';
 
 $lang['shop']['edit_plugin_external']='edit_plugin_external';
 
+$lang['shop']['go_back_cart']='Go back to cart';
+
+$lang['shop']['product_options']='Product options';
+
+$lang['shop']['shopping_cart']='Shopping cart';
+
+$lang['shop']['no_stock']='No stock';
+
+$lang['shop']['no_stock_for_this_article']='There isn&#39;t stock for this product';
+
+$lang['shop']['all_products']='All products';
+
+$lang['shop']['desc_all_products']='Here, you will find all products.';
+
 $lang['shop']['offer']='Offer';
 
 $lang['shop']['free_product']='Free';
@@ -444,7 +262,6 @@ $lang['shop']['no_exists_product']='Don&#39;t exists the product';
 
 $lang['shop']['this_product_is_not_found']='The product is not found';
 
-<<<<<<< HEAD
 $lang['shop']['explain_cart_options']='From here you can change the settings of your products or eliminate their purchase.';
 
 $lang['shop']['explain_buying_without_register']='You are not registered. You can choose between register for buying or login if you have an user. When you login, will be redirected to cart for finish the order.';
@@ -591,24 +408,23 @@ $lang['shop']['product_is_already_on_category']='This product is already in cate
 
 $lang['shop']['error_other_countries_is_selected']='Error: is selected that the area covered by the other countries, but has not specified the type of area';
 
+$lang['shop']['invoice_num']='invoice_num';
+
 $lang['shop']['this_currency_have_equivalence']='It has applied a value to this currency. Edit the corresponding relationship created earlier, or change the currency to which you want to apply the equivalence';
 
 $lang['shop']['need_minimum_an_option']='Error: you need an option or more';
 
 $lang['shop']['options_for_product']='Product options';
-=======
+
+$lang['shop']['add_extra_price']='add_extra_price';
+
 $lang['shop']['in_stock']='In stock';
->>>>>>> e806d28d6aec490bb6380aadd5202345547550a0
 
 $lang['shop']['served_on_request']='Served on request';
 
 $lang['shop']['pvp']='Price';
 
-$lang['shop']['weight_in_kg']='Weight in Kg.';
-
 $lang['shop']['kg']='Kg';
-
-$lang['shop']['see_product']='View product details';
 
 $lang['shop']['buy_product']='Buy product';
 
@@ -616,13 +432,7 @@ $lang['shop']['buying_product']='Buying product';
 
 $lang['shop']['success_buy']='This product was added to the shopping cart';
 
-$lang['shop']['no_products_in_index']='No products found on index';
-
 $lang['shop']['see_products']='See products';
-
-$lang['shop']['select_category_shop']='Select shop category';
-
-$lang['shop']['no_products_in_category']='Still there is no product in this category';
 
 $lang['shop']['profile_shop']='Client profile';
 
@@ -646,11 +456,20 @@ $lang['shop']['dir_transport']='Mailing address';
 
 $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Please make your first order so have it.';
 
+$lang['shop']['weight_in_kg']='Weight in Kg.';
+
+$lang['shop']['see_product']='View product details';
+
 $lang['shop']['see_more']='See more';
+
+$lang['shop']['select_category_shop']='Select shop category';
+
+$lang['shop']['no_products_in_category']='Still there is no product in this category';
+
+$lang['shop']['no_products_in_index']='No products found on index';
 
 $lang['shop']['error_buy_ajax']='Error: Ajax report a buying error';
 
-<<<<<<< HEAD
 $lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['go_products_to_cart']='Complete order and go to Cart';
@@ -672,9 +491,6 @@ $lang['shop']['taxes_no_included']='Taxes not included';
 $lang['shop']['paypal_email_variable_no_isset']='Please define the variables needed in your system to use paypal as a method payment';
 
 $lang['shop']['paypal_explain']='Clicking on pay order, you will go to paypal payment gateway to make payment.';
-=======
-$lang['shop']['change_currency']='Change currency';
->>>>>>> e806d28d6aec490bb6380aadd5202345547550a0
 
 $lang['shop']['no_new_products']='No hay novedades';
 

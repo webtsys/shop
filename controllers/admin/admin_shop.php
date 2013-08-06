@@ -710,11 +710,22 @@ function ShopAdmin()
 
 			}
 
+			$model['order_shop']->components['token']->required=0;
+			$model['order_shop']->components['zone_transport']->required=0;
+			$model['order_shop']->components['payment_form']->required=0;
+			
 			settype($_GET['op_payment'], 'integer');
 			
 			$where_sql='';
 
-			$arr_fields=array('name', 'last_name', 'email', 'total_price', 'make_payment', 'date_order');
+			$arr_fields=array('name', 'invoice_num', 'last_name', 'email', 'total_price', 'make_payment', 'date_order');
+			
+			if($_GET['op_payment']==1)
+			{
+			
+				unset($arr_fields[1]);
+			
+			}
 			
 			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'make_payment', 'total_price');
 			
@@ -1218,7 +1229,7 @@ function ShopAdmin()
 
 				}
 
-				$num_bill=calculate_num_bill($arr_order['IdOrder_shop']);
+				$num_bill=calculate_num_bill($arr_order['invoice_num']);
 
 				//Here pdf
 

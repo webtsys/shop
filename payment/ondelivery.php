@@ -24,7 +24,11 @@ $model['order_shop']->components['payment_form']->required=0;
 
 $model['order_shop']->reset_require();
 
-$query=$model['order_shop']->update(array('make_payment' => 1), 'where token="'.sha1($_COOKIE['webtsys_shop']).'"');
+$model['invoice_num']->insert(array('token_shop' => sha1($_COOKIE['webtsys_shop'])));
+
+$num_order=webtsys_insert_id();
+
+$query=$model['order_shop']->update(array('make_payment' => 1, 'invoice_num' => $num_order), 'where token="'.sha1($_COOKIE['webtsys_shop']).'"');
 
 die(header('Location: '.make_fancy_url($base_url, 'shop', 'cart', 'payment_done', array('op' => 1))));
 

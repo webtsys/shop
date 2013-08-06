@@ -767,6 +767,54 @@ class order_shop extends Webmodel {
 
 	}	
 	
+	function update($post, $conditions='')
+	{
+	
+		global $model;
+		
+		if(isset($post['make_payment']))
+		{
+			
+			if($post['make_payment']==1)
+			{
+				
+				//Insert num order if not exists.
+				
+				$query=$this->select($conditions, array('invoice_num', 'token'), 1);
+				
+				list($invoice_num, $token)=webtsys_fetch_row($query);
+						
+				if($invoice_num=='')
+				{
+					
+					//Insert on invoice_num
+					
+					$model['invoice_num']->insert(array('token_shop' => $token));
+					
+					$num_order=webtsys_insert_id();
+
+					$this->reset_require();
+					
+				}
+				else
+				{
+				
+					$num_order=$invoice_num;
+				
+				}
+					
+				//$this->update(array('make_payment' => 1, 'invoice_num' => $num_order), 'where token="'.$token.'"');
+				//Raw update
+				
+				$query=webtsys_query('update order_shop set make_payment=1, invoice_num="'.$num_order.'" where token="'.$token.'"');
+			
+			}
+		
+		}
+	
+		return parent::update($post, $conditions);
+	
+	}
 }
 
 $model['order_shop']=new order_shop();
@@ -827,6 +875,7 @@ $model['order_shop']->components['payment_discount_percent']=new PercentField();
 $model['order_shop']->components['total_price']=new MoneyField();
 
 $model['order_shop']->components['invoice_num']=new ForeignKeyField('invoice_num');
+$model['order_shop']->components['invoice_num']->name_field_to_field='invoice_num';
 
 $model['order_shop']->components['name']->required=1;	
 $model['order_shop']->components['last_name']->required=1;
@@ -881,6 +930,7 @@ $model['order_shop']->forms['transport']->label=$lang['shop']['transport'];
 $model['order_shop']->forms['make_payment']->label=$lang['shop']['make_payment'];
 $model['order_shop']->forms['observations']->label=$lang['shop']['observations'];
 $model['order_shop']->forms['date_order']->label=$lang['common']['date'];
+$model['order_shop']->forms['invoice_num']->label=$lang['shop']['invoice_num'];
 
 $model['invoice_num']=new Webmodel('invoice_num');
 
@@ -1229,7 +1279,18 @@ class MoneyField extends DoubleField{
 
 		global $arr_currency, $arr_change_currency, $config_shop;
 		
-		$idcurrency=$_SESSION['idcurrency'];
+		if(isset($_SESSION['idcurrency']))
+		{
+		
+			$idcurrency=$_SESSION['idcurrency'];
+			
+		}
+		else
+		{
+		
+			$idcurrency=$config_shop['idcurrency'];
+		
+		}
 	
 		$symbol_currency=$arr_currency[$idcurrency];
 		
@@ -1285,7 +1346,7 @@ $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' 
 
 $arr_module_sql['shop']='shop.sql';
 
-$arr_module_remove['shop']=array('product', 'image_product', 'cat_product', 'taxes', 'transport', 'price_transport', 'zone_shop', 'country_shop', 'config_shop', 'dir_transport', 'payment_form', 'cart_shop', 'order_shop', 'type_product_option', 'product_option', 'group_shop', 'group_shop_users', 'currency', 'currency_change', );
+$arr_module_remove['shop']=array('product', 'image_product', 'cat_product', 'taxes', 'transport', 'price_transport', 'zone_shop', 'country_shop', 'config_shop', 'dir_transport', 'payment_form', 'cart_shop', 'order_shop', 'type_product_option', 'product_option', 'group_shop', 'group_shop_users', 'currency', 'currency_change');
 
 ?>
 
