@@ -12,14 +12,14 @@ function Paypal_ipn()
 
 	foreach ($_POST as $key => $value)
 	{ 
-		if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1)
+		/*if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1)
 		{ 
 			$value = urlencode(stripslashes($value));
 		} 
 		else 
-		{
+		{*/
 			$value = urlencode($value);
-		}
+		//}
 		$req .= "&$key=$value";
 	}
 
@@ -42,7 +42,9 @@ function Paypal_ipn()
 	
 	curl_close($ch);
 
-	if($result=='VERIFIED' && $_POST['payment_status']=='Completed')
+	$db_res='';
+
+	if($result=='VERIFIED' && ($_POST['payment_status']=='Completed' || $_POST['payment_status']=='Pending') )
 	{
 
 		$model['order_shop']->reset_require();
@@ -51,22 +53,26 @@ function Paypal_ipn()
 		
 		$model['invoice_num']->insert(array('token_shop' => $cookie_shop));
 		
-		$num_order=$model['invoice_num']->insert_id();
+		$num_order=webtsys_insert_id();
+
+		$model['order_shop']->reset_require();
 		
-		$query=$model['order_shop']->update(array('make_payment' => 1, 'num_order' => $num_order), 'where token="'.$cookie_shop.'"');
+		$query=$model['order_shop']->update(array('make_payment' => 1, 'invoice_num' => $num_order), 'where token="'.$cookie_shop.'"');
 
 		//Send email with result...
 
-		
+		//$db_res=ob_get_contents();		
+
+		$db_res='Orden:'.$num_order;
 
 		//die;
 	
 	}
 
-	ob_end_clean();
+	/*ob_end_clean();
 
-	mail('webmaster@web-t-sys.com', "Prueba Paypal", $result."\n\n".$cookie_shop."\n\n".$query );
-	die;
+	mail('webmaster@web-t-sys.com', "Prueba Paypal", $result." ".$_POST['payment_status']."\n\n".$cookie_shop."\n\n".$db_res );
+	die;*/
 
 }
 ?>
