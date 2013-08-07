@@ -645,7 +645,7 @@ class config_shop extends Webmodel {
 
 		}
 
-		$query=webtsys_query('ALTER TABLE order_shop AUTO_INCREMENT = '.$_POST['num_begin_bill']);
+		$query=webtsys_query('ALTER TABLE invoice_num AUTO_INCREMENT = '.$_POST['num_begin_bill']);
 		
 
 		return Webmodel::update($post, $conditions);
