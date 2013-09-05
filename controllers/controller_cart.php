@@ -3,7 +3,7 @@
 function Cart()
 {
 
-	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop, $arr_taxes, $arr_order_shop, $language, $lang_taxes;
+	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop, $arr_taxes, $arr_order_shop, $language, $lang_taxes, $webtsys_id;
 
 	$arr_block='';
 
@@ -21,6 +21,7 @@ function Cart()
 	load_model('shop');
 	
 	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
+	load_libraries(array('send_email'));
 	
 	if($config_shop['ssl_url']==1)
 	{
@@ -317,7 +318,7 @@ function Cart()
 
 								$user_data['IdUser']=webtsys_insert_id();
 
-								$user_data['key_csrf']=$prefix_key.'_'.$_SESSION['webtsys_id'];
+								$user_data['key_csrf']=$prefix_key.'_'.$webtsys_id;
 
 								setlogin($_POST['email'], $_POST['password'], '', 0, 0);
 
@@ -333,9 +334,9 @@ function Cart()
 
 								$topic_email=$lang['user']['text_confirm'];
 							
-								$body_email=load_view(array($_POST['private_nick'], $_POST['email'], form_text($_POST['password']) ), 'shop/mailregister');
+								$body_email=load_view(array($_POST['private_nick'], $_POST['email'], form_text($_POST['password']) ), 'common/user/mailviews/mailregister');
 								
-								if( !send_mail($email, $topic_email, $body_email, 'html') )
+								if( !send_mail($_POST['email'], $topic_email, $body_email, 'html') )
 								{
 					
 									echo "<p align=\"center\">".$lang['user']['error_email']."</p>";
@@ -924,8 +925,6 @@ function Cart()
 				ob_clean();
 
 				$portal_name=html_entity_decode($config_data['portal_name']);
-
-				load_libraries(array('send_email'));
 
 				$text_explain_user='<h3>'.$lang['shop']['your_orders']." - ".$portal_name.'</h3>';
 				$text_explain_user.=$lang['shop']['explain_petition'].'<p>'.$lang['shop']['if_error_send_email_to'].': '.$config_data['portal_email'].'</p>';
