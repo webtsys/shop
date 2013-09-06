@@ -317,9 +317,9 @@ function Cart()
 								global $prefix_key;
 
 								$user_data['IdUser']=webtsys_insert_id();
-
-								$user_data['key_csrf']=$prefix_key.'_'.$webtsys_id;
-
+								
+								//$user_data['key_csrf']=$prefix_key.'_'.$webtsys_id;
+								
 								setlogin($_POST['email'], $_POST['password'], '', 0, 0);
 
 								$model['country_user_shop']->insert( array('idcountry' => $real_country, 'iduser' => $user_data['IdUser']) );
@@ -327,7 +327,7 @@ function Cart()
 								$post_transport['iduser']=$user_data['IdUser'];
 
 								$model['dir_transport']->insert($post_transport);
-
+								//die;
 								//Send email for registering user...
 
 								$portal_name=html_entity_decode($config_data['portal_name']);
