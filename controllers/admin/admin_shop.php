@@ -806,9 +806,9 @@ function ShopAdmin()
 
 			settype($_GET['IdProduct'], 'integer');
 
-			$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title', 'idcat'));
-
-			list($title, $idcat)=webtsys_fetch_row($query);
+			$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title'));
+			
+			list($title)=webtsys_fetch_row($query);
 			
 			$title=I18nField::show_formatted($title);
 
@@ -850,7 +850,7 @@ function ShopAdmin()
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_product', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $idcat) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_product', array('IdModule' => $_GET['IdModule'], 'op' => 3) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
 

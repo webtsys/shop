@@ -284,10 +284,12 @@ function Cart()
 
 							$arr_fields_form[]='private_nick';
 							$arr_fields_form[]='password';
+							$arr_fields_form[]='rank';
 
 							$post['private_nick']=$_POST['private_nick'];
 							$post['password']=$_POST['password'];
 							$post['repeat_password']=$_POST['repeat_password'];
+							$post['rank']=1;
 							
 							if(!UserInsertModel('user', $arr_fields_form, $post))
 							{
@@ -327,7 +329,7 @@ function Cart()
 								$post_transport['iduser']=$user_data['IdUser'];
 
 								$model['dir_transport']->insert($post_transport);
-								//die;
+								
 								//Send email for registering user...
 
 								$portal_name=html_entity_decode($config_data['portal_name']);

@@ -6,11 +6,14 @@ New features
 
 - I need load all plugins sql in config_shop.php
 - I need define size images on admin.
+- Rewriting users.
+- Rewriting cart with a class.
+- Rewriting products and properties. Now, a product can have different 
+characteristics selectionables.
+- New theme.
 
 New features next versions
 ---------------------------
-
-- Plugin for recommended.
 
 - In install, put array with plugins for shop if shop module is included.
 
