@@ -75,7 +75,9 @@ class product extends Webmodel {
 		}
 		
 		$model['image_product']->delete('where image_product.idproduct IN ('.implode(', ', $arr_id_prod).')');
-	
+		
+		$model['product_relationship']->delete('where product_relationship.idproduct IN ('.implode(', ', $arr_id_prod).')');
+		
 		return parent::delete($conditions);
 	
 	}
