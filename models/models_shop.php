@@ -78,7 +78,20 @@ class product extends Webmodel {
 		
 		$model['product_relationship']->delete('where product_relationship.idproduct IN ('.implode(', ', $arr_id_prod).')');
 		
-		return parent::delete($conditions);
+		if(!parent::delete($conditions))
+		{
+		
+			echo '<p>Este producto está en facturación, por lo tanto se desactivará pero no se borrará</p>';
+			
+			return false;
+		
+		}
+		else
+		{
+		
+			return true;
+		
+		}
 	
 	}
 	
