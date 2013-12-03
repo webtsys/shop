@@ -11,7 +11,7 @@ New features
 - Rewriting products and properties. Now, a product can have different 
 characteristics selectionables.
 - New theme.
-- 
+- Plugins are loading via hooks. A product can have hooks too. All elements have hooks, including prices.
 
 New features next versions
 ---------------------------
