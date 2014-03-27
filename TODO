@@ -55,3 +55,14 @@ New features next versions
 - Plugin for add prices with more options. A table with new prices and option choose.
 
 
+Carro:
+
+- Soporte para:
+
+  - Listado de productos con impuestos añadidos, y sin impuestos añadidos. Se puede regular si deben aparecer siempre los impuestos o no dependiendo de la config general.
+
+  - Añadido de modulos para modificar los precios. Estos pueden ser descuentos o cualquier otra cosa.
+
+  - Crear
+
+Separar usuarios de sistema de usuarios de tienda.
