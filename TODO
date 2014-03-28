@@ -66,3 +66,12 @@ Carro:
   - Crear
 
 Separar usuarios de sistema de usuarios de tienda.
+
+ Mejor separar 
+ Mejores modulos para la página principal.
+ 
+ Añadir configuración externa en fichero config.php a modulos en phango. 
+ 
+ Config class.
+ 
+ Fix bug on modules.
