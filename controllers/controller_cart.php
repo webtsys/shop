@@ -935,7 +935,7 @@ function Cart()
 
 				list($idmodule)=webtsys_fetch_row($query);
 				
-				$send_email_admin='<h3>'.$lang['shop']['url_bill_for_admin'].'</h3><p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'obtain_bill', array('IdModule' => $idmodule, 'op' => 16, 'IdOrder_shop' => $arr_order_shop['IdOrder_shop'])).'">'.$lang['shop']['click_here_for_download_bill'].'</a></p>';
+				$send_email_admin='<h3>'.$lang['shop']['url_bill_for_admin'].'</h3><p><a href="'.set_admin_link( 'obtain_bill', array('IdModule' => $idmodule, 'op' => 16, 'IdOrder_shop' => $arr_order_shop['IdOrder_shop'])).'">'.$lang['shop']['click_here_for_download_bill'].'</a></p>';
 
 				//If no send mail write a message with the reference, for send to mail shop...
 

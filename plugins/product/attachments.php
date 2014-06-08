@@ -25,7 +25,7 @@ function AttachmentsAdmin($idproduct)
 	$arr_fields_edit=array();
 	//http://localhost/phangodev/index.php/admin/show/index/edit_cat_shop/IdModule/8/op/22/IdProduct/10/plugin/attachments/element_choice/product
 	
-	$url_options=make_fancy_url($base_url, 'admin', 'index', $lang['shop_attachments']['add_attachments'], array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $idproduct, 'plugin' => 'attachments', 'element_choice' => 'product') );
+	$url_options=set_admin_link( $lang['shop_attachments']['add_attachments'], array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $idproduct, 'plugin' => 'attachments', 'element_choice' => 'product') );
 	
 	$model['product_attachments']->components['idproduct']->form='HiddenForm';
 	

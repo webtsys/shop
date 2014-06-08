@@ -57,7 +57,7 @@ function HomePageAdminExternal()
 	$arr_fields=array('idproduct');
 	$arr_fields_edit=array();
 	
-	$url_options=make_fancy_url($base_url, 'admin', 'index', 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product'));
+	$url_options=set_admin_link( 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product'));
 	
 	settype($_GET['op_homepage'], 'integer');
 	
@@ -75,7 +75,7 @@ function HomePageAdminExternal()
 			
 			//http://localhost/phangodev/index.php/admin/show/index/admin_external_plugin/IdModule/8/op/23/IdProduct/1/plugin/homepage/element_choice/product
 			
-			echo '<p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product', 'op_homepage' => 1)).'">'.$lang['shop_homepage']['order_product_in_homepage'].'</a></p>';
+			echo '<p><a href="'.set_admin_link( 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product', 'op_homepage' => 1)).'">'.$lang['shop_homepage']['order_product_in_homepage'].'</a></p>';
 		
 		break;
 		
@@ -83,9 +83,9 @@ function HomePageAdminExternal()
 		
 			echo '<h3>'.$lang['shop_homepage']['order_product_in_homepage'].'</h3>';
 			
-			GeneratePositionModel('homepage_shop', 'idproduct', 'position', make_fancy_url($base_url, 'admin', 'index', 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product', 'op_homepage' => 1)), $where='');
+			GeneratePositionModel('homepage_shop', 'idproduct', 'position', set_admin_link( 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product', 'op_homepage' => 1)), $where='');
 				
-			echo '<p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product', 'op_homepage' => 0)).'">'.$lang['common']['go_back'].'</a></p>';
+			echo '<p><a href="'.set_admin_link( 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 23, 'plugin' => 'homepage', 'element_choice' => 'product', 'op_homepage' => 0)).'">'.$lang['common']['go_back'].'</a></p>';
 			
 		break;
 		
@@ -104,7 +104,7 @@ function HomePageAdmin($idproduct)
 	$arr_fields_edit=array();
 	//http://localhost/phangodev/index.php/admin/show/index/edit_cat_shop/IdModule/8/op/22/IdProduct/10/plugin/attachments/element_choice/product
 	
-	$url_options=make_fancy_url($base_url, 'admin', 'index', $lang['shop_attachments']['add_attachments'], array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $idproduct, 'plugin' => 'attachments', 'element_choice' => 'product') );
+	$url_options=set_admin_link( $lang['shop_attachments']['add_attachments'], array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $idproduct, 'plugin' => 'attachments', 'element_choice' => 'product') );
 	
 	$model['product_attachments']->components['idproduct']->form='HiddenForm';
 	
@@ -146,7 +146,7 @@ function HomePageAdmin($idproduct)
 			
 			//http://localhost/phangodev/index.php/admin/show/index/edit_cat_shop/IdModule/8/op/3/idcat/1
 			
-			$url_redirect=make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => 8, 'op' => 3, 'idcat' => $idcat));
+			$url_redirect=set_admin_link( 'edit_cat_shop', array('IdModule' => 8, 'op' => 3, 'idcat' => $idcat));
 			
 			die( redirect_webtsys( $url_redirect, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
 		
@@ -172,7 +172,7 @@ function HomePageAdmin($idproduct)
 			
 			//http://localhost/phangodev/index.php/admin/show/index/edit_cat_shop/IdModule/8/op/3/idcat/1
 			
-			$url_redirect=make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => 8, 'op' => 3, 'idcat' => $idcat));
+			$url_redirect=set_admin_link( 'edit_cat_shop', array('IdModule' => 8, 'op' => 3, 'idcat' => $idcat));
 			
 			die( redirect_webtsys( $url_redirect, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
 		

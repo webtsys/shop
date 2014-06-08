@@ -14,35 +14,35 @@ function ShopAdmin()
 
 	settype($_GET['op'], 'integer');
 
-	$arr_link_options[1]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), 'text' => $lang['shop']['config_shop']);
-	$arr_link_options[2]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 2) ), 'text' => $lang['shop']['products_categories']);
-	$arr_link_options[3]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 3) ), 'text' => $lang['shop']['products']);
-	$arr_link_options[4]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ), 'text' => $lang['shop']['standard_options_for_products']);
-	$arr_link_options[6]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
-	$arr_link_options[7]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
-	$arr_link_options[10]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ), 'text' => $lang['shop']['gateways_payment']);
-	//$arr_link_options[11]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ), 'text' => $lang['shop']['discount_groups']);
-	$arr_link_options[13]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ), 'text' => $lang['shop']['orders']);
-	$arr_link_options[15]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 15) ), 'text' => $lang['shop']['countries']);
+	$arr_link_options[1]=array('link' => set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), 'text' => $lang['shop']['config_shop']);
+	$arr_link_options[2]=array('link' => set_admin_link( 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 2) ), 'text' => $lang['shop']['products_categories']);
+	$arr_link_options[3]=array('link' => set_admin_link( 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 3) ), 'text' => $lang['shop']['products']);
+	$arr_link_options[4]=array('link' => set_admin_link( 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ), 'text' => $lang['shop']['standard_options_for_products']);
+	$arr_link_options[6]=array('link' => set_admin_link( 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
+	$arr_link_options[7]=array('link' => set_admin_link( 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
+	$arr_link_options[10]=array('link' => set_admin_link( 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ), 'text' => $lang['shop']['gateways_payment']);
+	//$arr_link_options[11]=array('link' => set_admin_link( 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ), 'text' => $lang['shop']['discount_groups']);
+	$arr_link_options[13]=array('link' => set_admin_link( 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ), 'text' => $lang['shop']['orders']);
+	$arr_link_options[15]=array('link' => set_admin_link( 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 15) ), 'text' => $lang['shop']['countries']);
 
-	$arr_link_options[17]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'currency', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
+	$arr_link_options[17]=array('link' => set_admin_link( 'currency', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
 	
-	$arr_link_options[20]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
+	$arr_link_options[20]=array('link' => set_admin_link( 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
 	
 	menu_selected($_GET['op'], $arr_link_options);
 	
 	/*
 	?>
 	<ul>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ); ?>"><?php echo $lang['shop']['config_shop']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 2) ); ?>"><?php echo $lang['shop']['products_categories']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ); ?>"><?php echo $lang['shop']['standard_options_for_products']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ); ?>"><?php echo $lang['shop']['taxes']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ); ?>"><?php echo $lang['shop']['transport']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ); ?>"><?php echo $lang['shop']['gateways_payment']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ); ?>"><?php echo $lang['shop']['discount_groups']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ); ?>"><?php echo $lang['shop']['orders']; ?></a></li>
-		<li><a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 15) ); ?>"><?php echo $lang['shop']['countries']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ); ?>"><?php echo $lang['shop']['config_shop']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 2) ); ?>"><?php echo $lang['shop']['products_categories']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ); ?>"><?php echo $lang['shop']['standard_options_for_products']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ); ?>"><?php echo $lang['shop']['taxes']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ); ?>"><?php echo $lang['shop']['transport']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ); ?>"><?php echo $lang['shop']['gateways_payment']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ); ?>"><?php echo $lang['shop']['discount_groups']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ); ?>"><?php echo $lang['shop']['orders']; ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'countries', array('IdModule' => $_GET['IdModule'], 'op' => 15) ); ?>"><?php echo $lang['shop']['countries']; ?></a></li>
 	</ul>
 
 	<?php
@@ -154,7 +154,7 @@ function ShopAdmin()
 			
 			SetValuesForm($result, $model['config_shop']->forms, $show_error=0);
 
-			InsertModelForm('config_shop', make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('title_shop', 'image_bill', 'num_news', 'yes_taxes', 'idtax', 'yes_transport', 'view_only_mode', 'idcurrency', 'type_index', 'explain_discounts_page', 'ssl_url', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
+			InsertModelForm('config_shop', set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('title_shop', 'image_bill', 'num_news', 'yes_taxes', 'idtax', 'yes_transport', 'view_only_mode', 'idcurrency', 'type_index', 'explain_discounts_page', 'ssl_url', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
 
 		break;
 
@@ -204,7 +204,7 @@ function ShopAdmin()
 			$model['cat_product']->forms['image_cat']->label=$lang['common']['image'];
 			$model['cat_product']->forms['image_cat']->parameters=array('image_cat', '', '', 1, $model['cat_product']->components['image_cat']->url_path);
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $_GET['subcat']) );
+			$url_options=set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $_GET['subcat']) );
 
 			$arr_fields=array('title');
 			$arr_fields_edit=array();
@@ -214,7 +214,7 @@ function ShopAdmin()
 			if($_GET['subcat']>0)
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
 			else
@@ -224,7 +224,7 @@ function ShopAdmin()
 				
 				echo '<h3>'.$lang['shop']['order_cats'].'</h3>';
 			
-				GeneratePositionModel('cat_product', 'title', 'position', make_fancy_url($base_url, 'admin', 'index', 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 2)), $where='');
+				GeneratePositionModel('cat_product', 'title', 'position', set_admin_link( 'admin_external_plugin', array('IdModule' => $_GET['IdModule'], 'op' => 2)), $where='');
 			
 			}
 
@@ -275,7 +275,7 @@ function ShopAdmin()
 				
 					$('#idcat').change( function () {
 						
-						location.href='<?php echo make_fancy_url($base_url, 'admin', 'index', $lang['shop']['edit_products_from_category'], array('IdModule' => $_GET['IdModule'], 'op' => 3)); ?>/idcat/'+$('#idcat').val();
+						location.href='<?php echo set_admin_link( $lang['shop']['edit_products_from_category'], array('IdModule' => $_GET['IdModule'], 'op' => 3)); ?>/idcat/'+$('#idcat').val();
 					
 					});
 				
@@ -293,7 +293,7 @@ function ShopAdmin()
 			$arr_fields=array('referer', 'title', 'extra_options');
 			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' );
 			
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
+			$url_options=set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $_GET['idcat']) );
 
 			$model['product']->create_form();
 
@@ -365,7 +365,7 @@ function ShopAdmin()
 			if($_GET['IdProduct']==0 || !isset($_GET['op_update']))
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $parent) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
 
@@ -377,7 +377,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['edit_options_for_product'].'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'config_options_shop', array('IdModule' => $_GET['IdModule'], 'op' => 4) );
+			$url_options=set_admin_link( 'config_options_shop', array('IdModule' => $_GET['IdModule'], 'op' => 4) );
 
 			$arr_fields=array('title');
 			$arr_fields_edit=array();
@@ -404,7 +404,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['add_options_to_product'].': </h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'add_options_to_product', array('IdModule' => $_GET['IdModule'], 'op' => 5, 'IdProduct' => $_GET['IdProduct']) );
+			$url_options=set_admin_link( 'add_options_to_product', array('IdModule' => $_GET['IdModule'], 'op' => 5, 'IdProduct' => $_GET['IdProduct']) );
 
 			$arr_fields=array('idtype');
 			$arr_fields_edit=array('idtype', 'field_required', 'idproduct');
@@ -426,7 +426,7 @@ function ShopAdmin()
 			if(!isset($_GET['op_edit']))
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_product', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $idcat) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'edit_product', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $idcat) ).'">'.$lang['common']['go_back'].'</a></p>';
 		
 			}
 
@@ -438,11 +438,11 @@ function ShopAdmin()
 
 			?>
 			<p>
-			<a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'zones_shop', array('IdModule' => $_GET['IdModule'], 'op' => 8, 'type' => 1) ); ?>"><?php echo $lang['shop']['zones_taxes']; ?></a>
+			<a href="<?php echo set_admin_link( 'zones_shop', array('IdModule' => $_GET['IdModule'], 'op' => 8, 'type' => 1) ); ?>"><?php echo $lang['shop']['zones_taxes']; ?></a>
 			</p>
 			<?php
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) );
+			$url_options=set_admin_link( 'edit_taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -467,11 +467,11 @@ function ShopAdmin()
 
 			?>
 			<p>
-			<a href="<?php echo make_fancy_url($base_url, 'admin', 'index', 'countries_shop', array('IdModule' => $_GET['IdModule'], 'op' => 8, 'type' => 0) ); ?>"><?php echo $lang['shop']['zones_transport']; ?></a>
+			<a href="<?php echo set_admin_link( 'countries_shop', array('IdModule' => $_GET['IdModule'], 'op' => 8, 'type' => 0) ); ?>"><?php echo $lang['shop']['zones_transport']; ?></a>
 			</p>
 			<?php
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_transport', array('IdModule' => $_GET['IdModule'], 'op' =>7) );
+			$url_options=set_admin_link( 'edit_transport', array('IdModule' => $_GET['IdModule'], 'op' =>7) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -512,7 +512,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['countries_zones'].' - '.$arr_type_zone[$_GET['type']].'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_countries', array('IdModule' => $_GET['IdModule'], 'op' => 8, 'type' => $_GET['type']) );
+			$url_options=set_admin_link( 'edit_countries', array('IdModule' => $_GET['IdModule'], 'op' => 8, 'type' => $_GET['type']) );
 
 			$model['zone_shop']->create_form();
 
@@ -546,7 +546,7 @@ function ShopAdmin()
 			$go_back_text[0]=$lang['shop']['go_back_to_transport'];
 			$go_back_text[1]=$lang['shop']['go_back_to_taxes'];
 
-			echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_transport', array('IdModule' => $_GET['IdModule'], 'op' => $back_type_zone[$_GET['type']]) ).'">'.$go_back_text[$_GET['type']].'</a></p>';
+			echo '<p><a href="'. set_admin_link( 'edit_transport', array('IdModule' => $_GET['IdModule'], 'op' => $back_type_zone[$_GET['type']]) ).'">'.$go_back_text[$_GET['type']].'</a></p>';
 
 		break;
 
@@ -560,7 +560,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['price_transport_for'].': '.$name_transport.'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'price_transport', array('IdModule' => $_GET['IdModule'], 'op' => 9, 'IdTransport' => $_GET['IdTransport'] ) );
+			$url_options=set_admin_link( 'price_transport', array('IdModule' => $_GET['IdModule'], 'op' => 9, 'IdTransport' => $_GET['IdTransport'] ) );
 			
 			if($type==0)
 			{
@@ -598,7 +598,7 @@ function ShopAdmin()
 			if(!isset($_GET['op_edit']))
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'edit_transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
 
@@ -608,7 +608,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['gateways_payment'].'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) );
+			$url_options=set_admin_link( 'edit_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -648,7 +648,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['group_shop'].'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 11) );
+			$url_options=set_admin_link( 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 11) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -672,7 +672,7 @@ function ShopAdmin()
 
 			$model['group_shop_users']->create_form();
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 12) );
+			$url_options=set_admin_link( 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 12) );
 
 			$model['group_shop_users']->forms['group_shop']->SetForm($_GET['IdGroup_shop']);
 			$model['group_shop_users']->forms['iduser']->label=$lang['common']['user'];
@@ -683,7 +683,7 @@ function ShopAdmin()
 
 			generate_admin_model_ng('group_shop_users', array('iduser'), array(),  $url_options, $options_func='BasicOptionsListModel', $where_sql='');
 
-			$url_back=make_fancy_url($base_url, 'admin', 'index', 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 11) );
+			$url_back=set_admin_link( 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 11) );
 
 			if($_GET['op_edit']==0)
 			{
@@ -729,7 +729,7 @@ function ShopAdmin()
 			
 			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'make_payment', 'total_price');
 			
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_order', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => $_GET['op_payment']) );
+			$url_options=set_admin_link( 'edit_order', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => $_GET['op_payment']) );
 	
 			$arr_country=array('');
 
@@ -773,9 +773,9 @@ function ShopAdmin()
 			$model['order_shop']->forms['transport']->form='SelectForm';
 			$model['order_shop']->forms['transport']->SetParameters($arr_transport);
 			
-			$arr_link_orders[0]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => 0) ), 'text' => $lang['shop']['payment_orders']);
+			$arr_link_orders[0]=array('link' => set_admin_link( 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => 0) ), 'text' => $lang['shop']['payment_orders']);
 			
-			$arr_link_orders[1]=array('link' => make_fancy_url($base_url, 'admin', 'index', 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => 1) ), 'text' => $lang['shop']['no_payment_orders']);
+			$arr_link_orders[1]=array('link' => set_admin_link( 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 13, 'op_payment' => 1) ), 'text' => $lang['shop']['no_payment_orders']);
 			
 			menu_selected($_GET['op_payment'], $arr_link_orders, 1);
 			
@@ -814,11 +814,11 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['edit_image_product'].' - '.$title.'</h3>';
 			
-			$url_add_images=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
+			$url_add_images=set_admin_link( 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
 			
 			echo '<p><a href="'.$url_add_images.'">'.$lang['shop']['add_new_images'].'</a></h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) );
+			$url_options=set_admin_link( 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) );
 
 			$arr_fields=array('photo', 'principal');
 			$arr_fields_edit=array('photo', 'idproduct', 'principal');
@@ -850,7 +850,7 @@ function ShopAdmin()
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_product', array('IdModule' => $_GET['IdModule'], 'op' => 3) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'edit_product', array('IdModule' => $_GET['IdModule'], 'op' => 3) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
 
@@ -860,7 +860,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['countries'].'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 15) );
+			$url_options=set_admin_link( 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 15) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -1265,7 +1265,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['currency'].'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_currencies', array('IdModule' => $_GET['IdModule'], 'op' => 17) );
+			$url_options=set_admin_link( 'edit_currencies', array('IdModule' => $_GET['IdModule'], 'op' => 17) );
 
 			$arr_fields=array('name', 'symbol');
 			$arr_fields_edit=array('name', 'symbol');
@@ -1291,7 +1291,7 @@ function ShopAdmin()
 
 			echo '<h3>'.$lang['shop']['modify_change_currencies'].': '.$name_currency.'</h3>';
 
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'modify_change_currencies', array('IdModule' => $_GET['IdModule'], 'op' => 18, 'IdCurrency' => $_GET['IdCurrency']) );
+			$url_options=set_admin_link( 'modify_change_currencies', array('IdModule' => $_GET['IdModule'], 'op' => 18, 'IdCurrency' => $_GET['IdCurrency']) );
 
 			$arr_fields=array('idcurrency_related');
 			$arr_fields_edit=array();
@@ -1316,7 +1316,7 @@ function ShopAdmin()
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_currency', array('IdModule' => $_GET['IdModule'], 'op' => 17) ).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'edit_currency', array('IdModule' => $_GET['IdModule'], 'op' => 17) ).'">'.$lang['common']['go_back'].'</a></p>';
 
 			}
 
@@ -1365,7 +1365,7 @@ function ShopAdmin()
 					
 					$title=I18nField::show_formatted($title);
 				
-					$url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct'], 'op_image' => 1) );
+					$url_post=set_admin_link( 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct'], 'op_image' => 1) );
 			
 					echo load_view(array($arr_form, array(), $url_post, 'enctype="multipart/form-data"'), 'common/forms/updatemodelform');
 					
@@ -1375,7 +1375,7 @@ function ShopAdmin()
 					
 					echo load_view(array($lang['shop']['add_new_images'].' - '.$title, $cont_add), 'content');
 					
-					echo '<p><a href="'.$url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ).'">'.$lang['common']['go_back'].'</a></p>';
+					echo '<p><a href="'.$url_post=set_admin_link( 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ).'">'.$lang['common']['go_back'].'</a></p>';
 				
 				break;
 				
@@ -1406,13 +1406,13 @@ function ShopAdmin()
 					
 						ob_end_clean();
 						load_libraries(array('redirect'));
-						die( redirect_webtsys( $url_post=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ), $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+						die( redirect_webtsys( $url_post=set_admin_link( 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $_GET['IdProduct']) ), $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
 						
 					}
 					else
 					{
 						
-						$url_go_back=make_fancy_url($base_url, 'admin', 'index', 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
+						$url_go_back=set_admin_link( 'edit_image_product',array('IdModule' => $_GET['IdModule'], 'op' => 19, 'IdProduct' => $_GET['IdProduct']) );
 						
 						echo '<p>'.$lang['common']['error_cannot_upload_this_image_to_the_server'].'</p>';
 					
@@ -1437,7 +1437,7 @@ function ShopAdmin()
 			
 			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart', 'discounts', 'discounts');
 			
-			echo '<form method="get" action="'.make_fancy_url($base_url, 'admin', 'index', 'element_choice', array('IdModule' => $_GET['IdModule'], 'op' => 20)).'">';
+			echo '<form method="get" action="'.set_admin_link( 'element_choice', array('IdModule' => $_GET['IdModule'], 'op' => 20)).'">';
 			
 			echo '<p>'.$lang['shop']['element_choice'].': '.SelectForm('element_choice', '', $arr_elements_plugin).' <input type="submit" value="'.$lang['common']['send'].'" /></p>';
 			
@@ -1476,14 +1476,14 @@ function ShopAdmin()
 			
 				$arr_fields=array('name', 'plugin');
 				$arr_fields_edit=array('name', 'element', 'plugin');
-				$url_options=make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice));
+				$url_options=set_admin_link( 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice));
 			
 				generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='PluginsOptionsListModel', 
 				$where_sql='where element="'.$element_choice.'"', $arr_fields_form=array(), $type_list='Basic');
 				
 				//Now the order...
 				
-				echo '<p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 21, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)).'">'.$lang['shop']['order_plugins'].'</a></p>';
+				echo '<p><a href="'.set_admin_link( 'plugin_admin', array('op' => 21, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)).'">'.$lang['shop']['order_plugins'].'</a></p>';
 			
 			}
 			
@@ -1500,9 +1500,9 @@ function ShopAdmin()
 			
 				echo '<h3>'.$lang['shop']['order_plugins'].'</h3>';
 				
-				GeneratePositionModel('plugin_shop', 'name', 'position', make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 21, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)), $where='where element="'.$element_choice.'"');
+				GeneratePositionModel('plugin_shop', 'name', 'position', set_admin_link( 'plugin_admin', array('op' => 21, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)), $where='where element="'.$element_choice.'"');
 				
-				echo '<p><a href="'.make_fancy_url($base_url, 'admin', 'index', 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)).'">'.$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'.set_admin_link( 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice)).'">'.$lang['common']['go_back'].'</a></p>';
 			
 			}
 		
@@ -1583,8 +1583,8 @@ function ShopAdmin()
 			
 			$arr_fields=array('idcat_product');
 			$arr_fields_edit=array();
-			$url_options=make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'idproduct' => $_GET['idproduct']));
-			$url_back=make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3));
+			$url_options=set_admin_link( 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'idproduct' => $_GET['idproduct']));
+			$url_back=set_admin_link( 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3));
 			
 			$model['product_relationship']->components['idproduct']->form='HiddenForm';
 			
@@ -1616,7 +1616,7 @@ function CurrencyOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_currencies_change', array('IdModule' => $_GET['IdModule'], 'op' => 18, 'IdCurrency' => $id) ).'">'.$lang['shop']['modify_change_currencies'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'edit_currencies_change', array('IdModule' => $_GET['IdModule'], 'op' => 18, 'IdCurrency' => $id) ).'">'.$lang['shop']['modify_change_currencies'].'</a>';
 
 	return $arr_options;
 
@@ -1629,9 +1629,9 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $id) ).'">'.$lang['shop']['modify_products'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idcat' => $id) ).'">'.$lang['shop']['modify_products'].'</a>';
 
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $id) ).'">'.$lang['shop']['subcat_products'].'</a>';	
+	$arr_options[]='<a href="'. set_admin_link( 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 2, 'subcat' => $id) ).'">'.$lang['shop']['subcat_products'].'</a>';	
 
 	return $arr_options;
 
@@ -1644,14 +1644,14 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'idproduct' => $id) ).'">'.$lang['shop']['edit_cat_product'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'edit_cat_shop', array('IdModule' => $_GET['IdModule'], 'op' => 24, 'idproduct' => $id) ).'">'.$lang['shop']['edit_cat_product'].'</a>';
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $id) ).'">'.$lang['shop']['edit_image_product'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'edit_image_product', array('IdModule' => $_GET['IdModule'], 'op' => 14, 'IdProduct' => $id) ).'">'.$lang['shop']['edit_image_product'].'</a>';
 
 	if($arr_row_raw['extra_options']=='standard_options.php')
 	{
 
-		$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', $lang['shop']['add__select_options_to_product'], array('IdModule' => $_GET['IdModule'], 'op' => 5, 'IdProduct' => $id) ).'">'.$lang['shop']['add__select_options_to_product'].'</a>';
+		$arr_options[]='<a href="'. set_admin_link( $lang['shop']['add__select_options_to_product'], array('IdModule' => $_GET['IdModule'], 'op' => 5, 'IdProduct' => $id) ).'">'.$lang['shop']['add__select_options_to_product'].'</a>';
 
 	}
 	
@@ -1669,7 +1669,7 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 		if(function_exists($var_func))
 		{
 			
-			$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $var_func($id), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func($id).'</a>';
+			$arr_options[]='<a href="'.set_admin_link( $var_func($id), array('IdModule' => $_GET['IdModule'], 'op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func($id).'</a>';
 			
 		}
 	
@@ -1686,7 +1686,7 @@ function TransportOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_price_transport', array('IdModule' => $_GET['IdModule'], 'op' => 9, 'IdTransport' => $id) ).'">'.$lang['shop']['add__select_prices_for_transport'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'edit_price_transport', array('IdModule' => $_GET['IdModule'], 'op' => 9, 'IdTransport' => $id) ).'">'.$lang['shop']['add__select_prices_for_transport'].'</a>';
 
 	return $arr_options;
 
@@ -1699,7 +1699,7 @@ function GroupShopOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 12, 'IdGroup_shop' => $id) ).'">'.$lang['shop']['add__user_to_group_shop'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 12, 'IdGroup_shop' => $id) ).'">'.$lang['shop']['add__user_to_group_shop'].'</a>';
 
 	return $arr_options;
 
@@ -1712,7 +1712,7 @@ function BillOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. make_fancy_url($base_url, 'admin', 'index', 'obtain_bill', array('IdModule' => $_GET['IdModule'], 'op' => 16, 'IdOrder_shop' => $id) ).'">'.$lang['shop']['obtain_bill'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'obtain_bill', array('IdModule' => $_GET['IdModule'], 'op' => 16, 'IdOrder_shop' => $id) ).'">'.$lang['shop']['obtain_bill'].'</a>';
 
 	return $arr_options;
 
@@ -1733,7 +1733,7 @@ function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
 		
 		
 		
-		$arr_options[]='<a href="'.make_fancy_url($base_url, 'admin', 'index', $lang['shop']['admin_external_plugin'], array('IdModule' => $_GET['IdModule'], 'op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.$lang['shop']['edit_plugin_external'].'</a>';
+		$arr_options[]='<a href="'.set_admin_link( $lang['shop']['admin_external_plugin'], array('IdModule' => $_GET['IdModule'], 'op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.$lang['shop']['edit_plugin_external'].'</a>';
 		
 		//$func_admin_plugin();
 	
