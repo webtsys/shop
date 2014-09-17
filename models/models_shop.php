@@ -1356,6 +1356,84 @@ class MoneyField extends DoubleField{
 	}
 
 }
+/*
+function load_plugin($hook_plugin)
+{
+
+	$arr_plugin=array();
+		
+	$query=$model['plugin_shop']->select('where element="'..'" order by position ASC', array('plugin'));
+	
+	while(list($plugin)=webtsys_fetch_row($query))
+	{
+	
+		$func_plugin=ucfirst($plugin).'Show';
+		
+		$arr_plugin[$plugin]=$func_plugin;
+	
+	}
+	
+	$arr_product['plugins']=$arr_plugin;
+
+}
+
+*/
+
+class PluginClass {
+
+	public $hook_plugin;
+	public $plugin;
+	public $arr_plugins;
+	
+	public function __construct($hook_plugin)
+	{
+	
+		$this->hook_plugin=$hook_plugin;
+	
+	}
+	
+	public function obtain_list_plugins()
+	{
+	
+		//$arr_plugin=array();
+		
+		$query=$model['plugin_shop']->select('where element="'.$this->hook_plugin.'" order by position ASC', array('plugin'));
+		
+		while(list($plugin)=webtsys_fetch_row($query))
+		{
+		
+			$func_plugin=ucfirst($plugin).'Show';
+			
+			$this->arr_plugin[$plugin]=$func_plugin;
+		
+		}
+	
+	}
+	
+	public function show_plugin($plugin, $idproduct)
+	{
+	
+		$func_plugin=$this->arr_plugins[$plugin];
+		
+		load_libraries(array($plugin), $base_path.'modules/shop/plugins/'.$plugin.'/'.$this->hook_plugin.'/');
+		
+		return $func_plugin($idproduct);
+	
+	}
+	
+	public function show_all_plugins($iproduct)
+	{
+	
+		foreach($this->arr_plugins as $plugin => $func_plugin)
+		{
+			
+			echo $this->show_plugin($plugin, $idproduct);
+		
+		}
+	
+	}
+
+}
 
 $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1);
 
