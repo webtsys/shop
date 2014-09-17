@@ -20,9 +20,14 @@ function Cart()
 	load_lang('shop');
 	load_model('shop');
 	
-	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
+	load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
 	load_libraries(array('send_email'));
 	
+	$cart=new CartClass($_COOKIE['webtsys_shop']);
+	
+	$cart->show_cart();
+	
+	/*
 	if($config_shop['ssl_url']==1)
 	{
 		
@@ -196,34 +201,11 @@ function Cart()
 
 					//echo $_POST['zone_transport'];
 					
-					/*$_POST['country_others']=@form_text($_POST['country_others']);
 					
-					if($arr_zone_shop['IdCountry_shop']==0 && $_POST['country_others']!='')
-					{*/
 					
-						//Show formulary for create a new country
-						
-						/*load_libraries(array('forms/selectmodelform'));
-						
-						echo '<h2>'.$lang['shop']['choose_new_country'].' - '.$_POST['country_others'].'</h2>';
-						
-						echo '<form method="post" action="">';
-						
-						echo '<p>'.$lang['shop']['explain_choose_new_country'].'</p>';
-						
-						echo '<p><label>'.$lang['shop']['idzone_taxes'].'</label>: '.SelectModelForm('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0').'</p>';
-						
-						echo '<p><label>'.$lang['shop']['idzone_transport'].'</label>: '.SelectModelForm('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1').'</p>';
-						
-						echo '<p><input type="submit" value="'.$lang['common']['send'].'" />';
-						
-						echo '</form>';*/
 			
-						//$model['country_shop']->forms['idzone_transport']->parameters=array('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0');
-
-						/*$model['country_shop']->forms['idzone_taxes']->form='SelectModelForm';
-						
-						$model['country_shop']->forms['idzone_taxes']->parameters=array('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1');*/
+			
+		
 						
 						?>
 						
@@ -560,21 +542,6 @@ function Cart()
 							$total_price+=($price+$sum_tax);
 								
 							$total_weight+=$arr_product['product_weight'];
-
-							/*if($config_shop['yes_taxes']==1)
-							{
-
-								$percent_tax=$config_shop['idtax'];
-
-								$price=$arr_product['product_price'];
-					
-								$sum_tax=$price*($percent_tax/100);
-								
-								$total_price+=($price+$sum_tax);
-								
-								$total_weight+=$arr_product['product_weight'];
-
-							}*/
 
 						}
 						
@@ -1045,9 +1012,6 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			set_csrf_key();
 
 			$fields=array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products'], $lang['shop']['price']);
-		
-			/*$fields[]=$lang['shop']['taxes'];
-			$fields[]=$lang['shop']['price_with_taxes'];*/
 
 			$fields=name_field_taxes($fields);
 
@@ -1079,9 +1043,6 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			$fields=array($referer, $title, $change_num_products, MoneyField::currency_format($price_without_tax));
 
 			$fields=add_field_taxes($fields, $price, $idtax, $sum_tax*$arr_id[$idproduct]);
-			
-			/*if($options==1 && $extra_options!='')
-			{*/
 
 				
 			$url_modify_options=make_fancy_url( $base_url, 'shop', 'cart', 'modify_product_options', array('op' => 4, 'IdProduct' => $idproduct) );
@@ -1090,13 +1051,6 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			$fields[]=CheckBoxForm('idproduct['.$idproduct.']', '', '');
 				//$fields[2]=$arr_id[$idproduct];
 
-			/*}
-			else
-			{
-
-				$fields[]=$lang['shop']['no_options_product'];
-
-			}*/
 
 			middle_table_config($fields);
 
@@ -1500,36 +1454,6 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			//Dividimos y obtenemos el resto...
 
-			/*if($max_min_price==0)
-			{
-
-				$max_min_price=1;
-
-			}*/
-
-			/*$num_packs=($total_price/$max_min_price)-1;
-			
-			for($x=0;$x<$num_packs;$x++)
-			{
-
-				$total_price_transport+=$max_price;
-				$min_price_substract+=$max_min_price;
-
-			}
-
-			$min_price_last=$total_price-$min_price_substract;
-		
-			$query=webtsys_query('select price from price_transport_price where min_price<='.$min_price_last.' and idtransport='.$idtransport.' order by min_price DESC limit 1');
-			
-			list($price_transport)=webtsys_fetch_row($query);
-
-			settype($price_transport, 'double');
-			
-			$total_price_transport+=$price_transport;
-
-			$num_packs=ceil($num_packs+1);
-
-			return array($total_price_transport, $num_packs);*/
 			
 		}
 	
@@ -1644,18 +1568,6 @@ function show_total_prices($sha1_token, $type_cart=0)
 		
 		//Discount taxes...
 		
-		
-		/*if($discount_payment>0)
-		{
-		
-			$substract_payment=$price_payment*($discount_payment/100);
-
-			$price_payment-=$substract_payment;
-
-			echo '<p><strong>'.$lang['shop']['discount_payment'].':</strong> '.number_format($discount_payment, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_payment_original).'</span>&nbsp; -> '.number_format($price_payment, 2).'</p>';
-
-		}*/
-		
 
 		//echo '<p style="font-size:18px;">'.MoneyField::currency_format( $final_price ).'</p>';
 
@@ -1670,14 +1582,6 @@ function show_total_prices($sha1_token, $type_cart=0)
 	//$total_sum+=$price_payment;
 	
 	//Here add discounts...
-	
-	/*list($total_sum_final, $text_discount)=obtain_discounts($total_sum, $total_taxes, $price_total_transport, $price_payment);
-
-	echo $text_discount;
-
-	echo '<h3>'.$lang['shop']['total_price_with_all_payments_and_discounts'].'</h3>';
-
-	echo '<p>'.number_format ( $total_sum_final , 2 ).' &euro;</p>';*/
 
 	return array($total_sum_final, $discount_name, $discount_principal, $discount_taxes, $name_transport, $price_total_transport_original, $discount_transport, $name_payment_form, $price_payment_original, $discount_payment);
 
@@ -1819,6 +1723,8 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 
 	}
 	*/
+	
+	/*
 	$text_return=ob_get_contents();
 	
 	ob_end_clean();
@@ -1889,6 +1795,7 @@ function add_discount_to_element($arr_discount, $price_total_element, $lang_disc
 
 	return $discount_element_final;
 
+*/
 
 }
 

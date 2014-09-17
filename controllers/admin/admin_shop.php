@@ -17,9 +17,9 @@ function ShopAdmin()
 	$arr_link_options[1]=array('link' => set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), 'text' => $lang['shop']['config_shop']);
 	$arr_link_options[2]=array('link' => set_admin_link( 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 2) ), 'text' => $lang['shop']['products_categories']);
 	$arr_link_options[3]=array('link' => set_admin_link( 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 3) ), 'text' => $lang['shop']['products']);
-	$arr_link_options[4]=array('link' => set_admin_link( 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ), 'text' => $lang['shop']['standard_options_for_products']);
-	$arr_link_options[6]=array('link' => set_admin_link( 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
-	$arr_link_options[7]=array('link' => set_admin_link( 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
+	//$arr_link_options[4]=array('link' => set_admin_link( 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ), 'text' => $lang['shop']['standard_options_for_products']);
+	//$arr_link_options[6]=array('link' => set_admin_link( 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
+	//$arr_link_options[7]=array('link' => set_admin_link( 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
 	$arr_link_options[10]=array('link' => set_admin_link( 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ), 'text' => $lang['shop']['gateways_payment']);
 	//$arr_link_options[11]=array('link' => set_admin_link( 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ), 'text' => $lang['shop']['discount_groups']);
 	$arr_link_options[13]=array('link' => set_admin_link( 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ), 'text' => $lang['shop']['orders']);
@@ -103,17 +103,17 @@ function ShopAdmin()
 			
 			$model['config_shop']->forms['type_index']->SetParameters($arr_type_index);
 
-			$model['config_shop']->forms['yes_taxes']->form='SelectForm';
-			$model['config_shop']->forms['yes_transport']->form='SelectForm';
+			/*$model['config_shop']->forms['yes_taxes']->form='SelectForm';
+			$model['config_shop']->forms['yes_transport']->form='SelectForm';*/
 			$model['config_shop']->forms['type_index']->form='SelectForm';
 
-			$model['config_shop']->forms['idtax']->form='SelectModelForm';
+			/*$model['config_shop']->forms['idtax']->form='SelectModelForm';
 			
-			$model['config_shop']->forms['idtax']->parameters=array('idtax', '', '', 'taxes', 'name', $where='');
+			$model['config_shop']->forms['idtax']->parameters=array('idtax', '', '', 'taxes', 'name', $where='');*/
 
-			$model['config_shop']->forms['explain_discounts_page']->form='SelectModelForm';
+			/*$model['config_shop']->forms['explain_discounts_page']->form='SelectModelForm';
 			
-			$model['config_shop']->forms['explain_discounts_page']->parameters=array('explain_discounts_page', '', '', 'pages|page', 'name', $where='order by name ASC');
+			$model['config_shop']->forms['explain_discounts_page']->parameters=array('explain_discounts_page', '', '', 'pages|page', 'name', $where='order by name ASC');*/
 
 			$model['config_shop']->forms['image_bill']->parameters=array('image_bill', '', '', 1, $model['config_shop']->components['image_bill']->url_path);
 
@@ -130,14 +130,14 @@ function ShopAdmin()
 			//labels
 
 			$model['config_shop']->forms['image_bill']->label=$lang['common']['image'];
-			$model['config_shop']->forms['num_news']->label=$lang['shop']['num_news'];
-			$model['config_shop']->forms['yes_taxes']->label=$lang['shop']['yes_taxes'];
-			$model['config_shop']->forms['idtax']->label=$lang['shop']['taxes'];
-			$model['config_shop']->forms['yes_transport']->label=$lang['shop']['yes_transport'];
+			//$model['config_shop']->forms['num_news']->label=$lang['shop']['num_news'];
+			//$model['config_shop']->forms['yes_taxes']->label=$lang['shop']['yes_taxes'];
+			//$model['config_shop']->forms['idtax']->label=$lang['shop']['taxes'];
+			//$model['config_shop']->forms['yes_transport']->label=$lang['shop']['yes_transport'];
 			$model['config_shop']->forms['type_index']->label=$lang['shop']['type_index'];
-			$model['config_shop']->forms['explain_discounts_page']->label=$lang['shop']['explain_discounts_page'];
+			//$model['config_shop']->forms['explain_discounts_page']->label=$lang['shop']['explain_discounts_page'];
 			$model['config_shop']->forms['conditions']->label=$lang['shop']['conditions'];
-			$model['config_shop']->forms['ssl_url']->label=$lang['shop']['ssl_url'];
+			//$model['config_shop']->forms['ssl_url']->label=$lang['shop']['ssl_url'];
 			$model['config_shop']->forms['title_shop']->label=$lang['shop']['title_shop'];
 			$model['config_shop']->forms['description_shop']->label=$lang['shop']['description_shop'];	
 			$model['config_shop']->forms['head_bill']->label=$lang['shop']['head_bill'];
@@ -154,7 +154,7 @@ function ShopAdmin()
 			
 			SetValuesForm($result, $model['config_shop']->forms, $show_error=0);
 
-			InsertModelForm('config_shop', set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('title_shop', 'image_bill', 'num_news', 'yes_taxes', 'idtax', 'yes_transport', 'view_only_mode', 'idcurrency', 'type_index', 'explain_discounts_page', 'ssl_url', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
+			InsertModelForm('config_shop', set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('title_shop', 'image_bill', 'view_only_mode', 'idcurrency', 'type_index', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
 
 		break;
 

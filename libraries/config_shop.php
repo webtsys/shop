@@ -13,15 +13,15 @@ $config_shop=webtsys_fetch_array($query);
 $config_shop['title_shop']=$model['config_shop']->components['title_shop']->show_formatted($config_shop['title_shop']);
 $config_shop['conditions']=$model['config_shop']->components['conditions']->show_formatted($config_shop['conditions']);
 
-if($config_shop['ssl_url']==1)
+/*if($config_shop['ssl_url']==1)
 {
 	
 	$base_url=str_replace('http://', 'https://', $base_url);
 
-}
+}*/
 
 //Load taxes
-
+/*
 $arr_taxes[0]=0;
 $lang_taxes[0]='';
 $arr_currency=array();
@@ -36,7 +36,7 @@ while(list($idtaxes, $name, $percent)=webtsys_fetch_row($query))
 	$lang_taxes[$idtaxes]=$name;
 
 }
-
+*/
 //Load currencies...
 
 $query=$model['currency']->select('', array($model['currency']->idmodel, 'symbol') );
@@ -75,7 +75,7 @@ $arr_func_taxes['add_taxes'][1]='add_taxes';
 
 $arr_func_taxes['add_taxes'][0]='no_add_taxes';
 $arr_func_taxes['add_taxes'][1]='add_taxes';*/
-
+/*
 if($config_shop['idtax']==0)
 {
 
@@ -218,8 +218,6 @@ function no_name_field_taxes($fields)
 function no_add_field_taxes($fields, $price, $idtax, $sum_tax)
 {
 
-	/*$fields[]=$lang_taxes[$idtax].' '.$arr_taxes[$idtax].'%';
-	$fields[]=moneyfield::currency_format($price);*/
 
 	return $fields;
 
@@ -303,8 +301,6 @@ function add_field_taxes($fields, $price, $idtax, $sum_tax)
 
 function apply_discount($group_shop_discount, $total_sum)
 {
-
-	/*$division=100/$group_shop_discount;*/
 	
 	$discounts=obtain_discount($group_shop_discount, $total_sum);//($total_sum/$division);
 
@@ -451,6 +447,6 @@ function add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
 	}
 
 }
-
+*/
 
 ?>

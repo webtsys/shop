@@ -671,15 +671,15 @@ class config_shop extends Webmodel {
 
 $model['config_shop']=new config_shop();
 
-$model['config_shop']->components['num_news']=new IntegerField(11);
-$model['config_shop']->components['num_news']->required=1;
-$model['config_shop']->components['yes_taxes']=new BooleanField();
+/*$model['config_shop']->components['num_news']=new IntegerField(11);
+$model['config_shop']->components['num_news']->required=1;*/
+/*$model['config_shop']->components['yes_taxes']=new BooleanField();*/
 $field_conditions=new TextHTMLField();
 $model['config_shop']->components['conditions']=new I18nField($field_conditions);
 //create_field_multilang('config_shop', 'conditions', $field_conditions, 0);
-$model['config_shop']->components['yes_transport']=new BooleanField();
+//$model['config_shop']->components['yes_transport']=new BooleanField();
 $model['config_shop']->components['type_index']=new CharField(25);
-$model['config_shop']->components['ssl_url']=new BooleanField();
+//$model['config_shop']->components['ssl_url']=new BooleanField();
 
 $field_title_shop=new TextHTMLField();
 $model['config_shop']->components['title_shop']=new I18nField($field_title_shop);
@@ -689,7 +689,7 @@ $field_description_shop=new TextHTMLField();
 $model['config_shop']->components['description_shop']=new I18nField($field_description_shop);
 //create_field_multilang('config_shop', 'description_shop', $field_description_shop, 0);
 //$model['config_shop']->components['cart_style']=new IntegerField(11);
-$model['config_shop']->components['idtax']=new ForeignKeyField('taxes', 11);
+//$model['config_shop']->components['idtax']=new ForeignKeyField('taxes', 11);
 $model['config_shop']->components['head_bill']=new CharField(255);
 $model['config_shop']->components['num_begin_bill']=new IntegerField(11);
 $model['config_shop']->components['elements_num_bill']=new IntegerField(11);
@@ -702,8 +702,8 @@ $model['config_shop']->components['footer_bill']=new TextField();
 $model['config_shop']->components['footer_bill']->form='TextAreaForm';
 $model['config_shop']->components['footer_bill']->br=0;
 
-$model['config_shop']->components['explain_discounts_page']=new ForeignKeyField('page', 11);
-$model['config_shop']->components['explain_discounts_page']->container_model='pages';
+/*$model['config_shop']->components['explain_discounts_page']=new ForeignKeyField('page', 11);
+$model['config_shop']->components['explain_discounts_page']->container_model='pages';*/
 
 $model['config_shop']->components['idcurrency']=new ForeignKeyField('currency', 11);
 $model['config_shop']->components['idcurrency']->required=1;
