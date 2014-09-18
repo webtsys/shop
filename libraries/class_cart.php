@@ -18,11 +18,38 @@ class CartClass {
 		
 		load_lang('shop');
 	
+		load_libraries(array('table_config'));
+	
 		echo '<p>'.$lang['shop']['explain_cart_options'].'</p>';
 	
 		//Add plugins for cart that added money to price, for example, taxes or discounts. You can configure taxes or discounts on its plugins admin.
 	
+		$arr_id=array(0);
+		$arr_price=array();
+
+		$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
+		while(list($idproduct, $price_in_cart)=webtsys_fetch_row($query))
+		{
+			
+			settype($arr_id[$idproduct], 'integer');
+
+			$arr_id[$idproduct]++;
+			$arr_price[$idproduct]=$price_in_cart;
+
+		}
+		
+		?>
+		<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'deleteproduct', 'deleteproduct', array()); ?>">
+		
+		<?php
+		set_csrf_key();
+
+		$fields=array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products'], $lang['shop']['price']);
+
+		$fields[]=$lang['shop']['select_product'];
+
+		up_table_config( $fields );
 		
 	}
 	
