@@ -25,7 +25,17 @@ function Cart()
 	
 	$cart=new CartClass($_COOKIE['webtsys_shop']);
 	
+	ob_start();
+	
 	$cart->show_cart();
+	
+	$cont_index=ob_get_contents();
+	
+	ob_end_clean();
+	
+	echo load_view(array($lang['shop']['cart'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	
+	die;
 	
 	/*
 	if($config_shop['ssl_url']==1)

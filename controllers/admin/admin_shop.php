@@ -1435,7 +1435,7 @@ function ShopAdmin()
 			
 			settype($_GET['element_choice'], 'string');
 			
-			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart', 'discounts', 'discounts');
+			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart');
 			
 			echo '<form method="get" action="'.set_admin_link( 'element_choice', array('IdModule' => $_GET['IdModule'], 'op' => 20)).'">';
 			
@@ -1447,7 +1447,7 @@ function ShopAdmin()
 			
 			$element_choice=$model['plugin_shop']->components['element']->check($_GET['element_choice']);
 			
-			settype($arr_plugin_list[$element_choice], 'array');
+			//settype($arr_plugin_list[$element_choice], 'array');
 			
 			if($element_choice!='')
 			{
@@ -1459,14 +1459,45 @@ function ShopAdmin()
 				
 				$arr_plugins=array('', '', '');
 				
-				foreach($arr_plugin_list[$element_choice] as $plugin)
+				/*foreach($arr_plugin_list[$element_choice] as $plugin)
 				{
 				
 					$arr_plugins[]=$plugin;
 					$arr_plugins[]=$plugin;
 					
 				
+				}*/
+				
+				$dir = opendir( $base_path."modules/shop/plugins" );
+
+				while ( $plugin_dir = readdir( $dir ) )
+				{
+				
+					if(!preg_match('/^\./', $plugin_dir))
+					{
+					
+						$subdir=opendir($base_path."modules/shop/plugins/".$plugin_dir);
+						
+						while ( $plugin_subdir = readdir( $subdir ) )
+						{
+						
+							if($plugin_subdir==$element_choice)
+							{
+								
+								$arr_plugins[]=ucfirst($plugin_dir);
+								$arr_plugins[]=$plugin_dir;
+					
+							}
+						
+						}
+						
+						closedir($subdir);
+					
+					}
+				
 				}
+				
+				closedir($dir);
 				
 				$model['plugin_shop']->components['plugin']->arr_values=&$arr_plugin_list[$element_choice];
 				

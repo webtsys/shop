@@ -1379,16 +1379,21 @@ function load_plugin($hook_plugin)
 
 */
 
-class PluginClass {
+class PreparePluginClass {
 
 	public $hook_plugin;
 	public $plugin;
 	public $arr_plugins;
+	public $arr_plugin_list;
+	public $arr_class_plugin;
 	
 	public function __construct($hook_plugin)
 	{
 	
 		$this->hook_plugin=$hook_plugin;
+		$this->arr_plugin_list=array();
+		$this->arr_plugins=array();
+		$this->arr_class_plugin=array();
 	
 	}
 	
@@ -1402,15 +1407,40 @@ class PluginClass {
 		while(list($plugin)=webtsys_fetch_row($query))
 		{
 		
-			$func_plugin=ucfirst($plugin).'Show';
+			$class_plugin=ucfirst($plugin).ucfirst($this->hook_plugin).'Class';
 			
-			$this->arr_plugin[$plugin]=$func_plugin;
+			$this->arr_plugin[$plugin]=$class_plugin;
 		
 		}
 	
 	}
 	
-	public function show_plugin($plugin, $idproduct)
+	public function load_plugin($plugin, $arguments=array())
+	{
+	
+		load_libraries(array($plugin), $base_path.'modules/shop/plugins/'.$plugin.'/'.$this->hook_plugin.'/');
+	
+		$func_class=$this->arr_plugins[$plugin];
+	
+		$this->arr_class_plugin[$plugin]=new $func_class($arguments);
+	
+		$this->arr_plugin_list[]=$plugin;
+	
+	}
+	
+	public function load_all_plugins($arguments=array())
+	{
+	
+		foreach($this->arr_plugin_list as $plugin => $func_plugin)
+		{
+			
+			$this->load_plugin($plugin);
+		
+		}
+	
+	}
+	
+	/*public function show_plugin($plugin, $idproduct)
 	{
 	
 		$func_plugin=$this->arr_plugins[$plugin];
@@ -1430,6 +1460,32 @@ class PluginClass {
 			echo $this->show_plugin($plugin, $idproduct);
 		
 		}
+	
+	}*/
+
+}
+
+class PluginClass {
+
+	public function __construct()
+	{
+	
+	}
+	
+	//Here prepare the config of the plugin.
+	
+	public function prepare_plugin()
+	{
+	
+	}
+	
+	public function show()
+	{
+	
+	}
+	
+	public function return_value_modified()
+	{
 	
 	}
 

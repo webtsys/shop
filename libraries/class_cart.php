@@ -19,6 +19,14 @@ class CartClass {
 		load_lang('shop');
 	
 		load_libraries(array('table_config'));
+		
+		$plugins=new PreparePluginClass('cart');
+		
+		//Prepare config for this plugins..
+		
+		$plugins->load_all_plugins();
+	
+		$plugin_price=array();
 	
 		echo '<p>'.$lang['shop']['explain_cart_options'].'</p>';
 	
@@ -27,7 +35,9 @@ class CartClass {
 		$arr_id=array(0);
 		$arr_price=array();
 
-		$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
+		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
+		
+		$quert=$model['cart_shop']->select(array('idproduct', 'price_product'), 'where token="'.$this->token.'"');
 		
 		while(list($idproduct, $price_in_cart)=webtsys_fetch_row($query))
 		{
@@ -36,6 +46,15 @@ class CartClass {
 
 			$arr_id[$idproduct]++;
 			$arr_price[$idproduct]=$price_in_cart;
+			
+			//Plugins for add money to value.
+			
+			foreach($plugins->arr_plugins_list as $plugin)
+			{
+			
+				$this->arr_plugins[$plugin]->add_price_to_value($price_in_cart);
+			
+			}
 
 		}
 		
@@ -50,6 +69,10 @@ class CartClass {
 		$fields[]=$lang['shop']['select_product'];
 
 		up_table_config( $fields );
+	
+		down_table_config();
+	
+		//Plugins for added values text.
 		
 	}
 	
@@ -84,5 +107,6 @@ class CartClass {
 	}
 
 }
+
 
 ?>

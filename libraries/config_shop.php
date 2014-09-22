@@ -2,7 +2,7 @@
 
 //Load shop config...
 
-global $model, $config_shop, $lang_taxes, $arr_taxes, $arr_currency, $arr_change_currency, $base_url;
+global $model, $config_shop, $lang_taxes, $arr_taxes, $arr_currency, $arr_change_currency, $base_url, $cookie_path;
 
 load_model('shop');
 
@@ -12,6 +12,17 @@ $config_shop=webtsys_fetch_array($query);
 
 $config_shop['title_shop']=$model['config_shop']->components['title_shop']->show_formatted($config_shop['title_shop']);
 $config_shop['conditions']=$model['config_shop']->components['conditions']->show_formatted($config_shop['conditions']);
+
+//Prepare cookie_shop token
+
+if(!isset($_COOKIE['webtsys_shop']))
+{
+
+	$token=sha1(uniqid(rand(), true));
+
+	setcookie  ( 'webtsys_shop', $token, 0, $cookie_path);
+
+}
 
 /*if($config_shop['ssl_url']==1)
 {
