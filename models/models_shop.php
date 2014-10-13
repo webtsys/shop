@@ -671,6 +671,8 @@ class config_shop extends Webmodel {
 
 $model['config_shop']=new config_shop();
 
+$model['config_shop']->set_component('num_news', 'IntegerField', array(11));
+
 /*$model['config_shop']->components['num_news']=new IntegerField(11);
 $model['config_shop']->components['num_news']->required=1;*/
 /*$model['config_shop']->components['yes_taxes']=new BooleanField();*/

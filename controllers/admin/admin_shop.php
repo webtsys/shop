@@ -130,7 +130,7 @@ function ShopAdmin()
 			//labels
 
 			$model['config_shop']->forms['image_bill']->label=$lang['common']['image'];
-			//$model['config_shop']->forms['num_news']->label=$lang['shop']['num_news'];
+			$model['config_shop']->forms['num_news']->label=$lang['shop']['num_news'];
 			//$model['config_shop']->forms['yes_taxes']->label=$lang['shop']['yes_taxes'];
 			//$model['config_shop']->forms['idtax']->label=$lang['shop']['taxes'];
 			//$model['config_shop']->forms['yes_transport']->label=$lang['shop']['yes_transport'];
@@ -154,7 +154,7 @@ function ShopAdmin()
 			
 			SetValuesForm($result, $model['config_shop']->forms, $show_error=0);
 
-			InsertModelForm('config_shop', set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('title_shop', 'image_bill', 'view_only_mode', 'idcurrency', 'type_index', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
+			InsertModelForm('config_shop', set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), set_admin_link( 'config_shop', array('IdModule' => $_GET['IdModule'], 'op' => 1) ), array('title_shop', 'image_bill', 'view_only_mode', 'idcurrency', 'num_news', 'type_index', 'description_shop', 'conditions', 'head_bill', 'num_begin_bill', 'elements_num_bill', 'bill_data_shop', 'footer_bill'));
 
 		break;
 

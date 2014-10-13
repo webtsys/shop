@@ -5,7 +5,6 @@ function ViewCategoryView($arr_cat, $arr_product, $arr_photo, $search_product, $
 
 global $lang, $config_shop, $base_url, $model;
 
-$idtax=$config_shop['idtax'];
 $title_category=$arr_cat['title'];
 $num_news=$config_shop['num_news'];
 
@@ -39,16 +38,9 @@ foreach($arr_product as $key_prod => $product)
 	
 	$idproduct=$product['IdProduct'];
 	$title_product=I18nField::show_formatted($product['title']);
+
 	
-	$tax=add_text_taxes($idtax);
-
-	$add_tax=0;
-
-	$add_tax=calculate_taxes($idtax, $product['price']);
-
-	$text_taxes=add_text_taxes($idtax);
-	
-	$price_real=number_format($product['price']+$add_tax, 2);
+	$price_real=number_format($product['price'], 2);
 
 	$price=MoneyField::currency_format($price_real);
 
@@ -105,8 +97,6 @@ foreach($arr_product as $key_prod => $product)
 				<strong><?php echo $lang['shop']['pvp']; ?>:</strong> <?php echo $price; ?>
 				<br />
 				<?php echo $stock_txt; ?>
-				<br />
-				<strong><?php echo $tax; ?></strong> 
 				<br />
 				<strong><?php echo $lang['shop']['weight_in_kg']; ?>: </strong> <?php echo $product['weight']; ?> <?php echo $lang['shop']['kg']; ?>.
 				<br />

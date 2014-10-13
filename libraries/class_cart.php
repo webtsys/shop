@@ -86,7 +86,9 @@ class CartClass {
 	public function add_to_cart($idproduct, $arr_details=array(), $price=0, $special_offer=0, $redirect=1)
 	{
 	
-		//Add product to cart, if the product have attributes, config here.
+		//Add product to cart, if the product have attributes, config here. Attributes are plugin. 
+		
+		
 	
 	}
 	
