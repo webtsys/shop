@@ -13,8 +13,7 @@ New features
 - Plugins are loading via hooks. A product can have hooks too. All elements have hooks, including prices.
 - Support for loading products data via sockets, net or files.
 - Support for extra fields on products table.
-- Change to dompdf.
-- Images on db.
+- Change to wkhtmltopdf.
 
 New features next versions
 ---------------------------
