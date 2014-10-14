@@ -15,14 +15,14 @@ $config_shop['conditions']=$model['config_shop']->components['conditions']->show
 
 //Prepare cookie_shop token
 
-if(!isset($_COOKIE['webtsys_shop']))
+/*if(!isset($_COOKIE['webtsys_shop']))
 {
 
 	$token=sha1(uniqid(rand(), true));
 
 	setcookie  ( 'webtsys_shop', $token, 0, $cookie_path);
 
-}
+}*/
 
 /*if($config_shop['ssl_url']==1)
 {

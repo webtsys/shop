@@ -29,15 +29,15 @@ function ObtainCart()
 
 	$jsondata['num_product']=$num_product;
 
-	//Add taxes...
+	//Add here plugins for taxes, etc...
 
-	$idtax=$config_shop['idtax'];
+	/*$idtax=$config_shop['idtax'];
 
 	$total_price_product+=calculate_taxes($idtax, $total_price_product);
 
-	$text_taxes=add_text_taxes($idtax);
+	$text_taxes=add_text_taxes($idtax);*/
 	
-	$jsondata['price_product']=MoneyField::currency_format($total_price_product).' '.$text_taxes;//number_format($total_price_product, 2);
+	$jsondata['price_product']=MoneyField::currency_format($total_price_product);//number_format($total_price_product, 2);
 
 	echo json_encode($jsondata);
 

@@ -23,7 +23,7 @@ function Cart()
 	load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
 	load_libraries(array('send_email'));
 	
-	$cart=new CartClass($_COOKIE['webtsys_shop']);
+	$cart=new CartClass();
 	
 	ob_start();
 	

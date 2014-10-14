@@ -1,6 +1,8 @@
 Knowed bugs
 --------------------
 
+- Fix bug on ajax controllers for ajax carts for show more info if buying fail.
+
 New features
 --------------------
 

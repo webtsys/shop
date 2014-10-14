@@ -4,17 +4,32 @@ class CartClass {
 
 	public $token;
 
-	public function __construct($cookie_token)
+	public function __construct()
 	{
 	
-		$this->token=sha1($cookie_token);
+		if(!isset($_COOKIE['webtsys_shop']))
+		{
+		
+			$token=sha1(uniqid(rand(), true));
+
+			setcookie  ( 'webtsys_shop', $token, 0, $cookie_path);
+		
+		}
+		else
+		{
+		
+			$token=$_COOKIE['webtsys_shop'];
+		
+		}
+	
+		$this->token=sha1($token);
 	
 	}
 	
 	public function show_cart()
 	{
 	
-		global $lang;
+		global $lang, $model;
 		
 		load_lang('shop');
 	
@@ -37,7 +52,7 @@ class CartClass {
 
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$quert=$model['cart_shop']->select(array('idproduct', 'price_product'), 'where token="'.$this->token.'"');
+		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product'));
 		
 		while(list($idproduct, $price_in_cart)=webtsys_fetch_row($query))
 		{
@@ -49,7 +64,7 @@ class CartClass {
 			
 			//Plugins for add money to value.
 			
-			foreach($plugins->arr_plugins_list as $plugin)
+			foreach($plugins->arr_plugin_list as $plugin)
 			{
 			
 				$this->arr_plugins[$plugin]->add_price_to_value($price_in_cart);
@@ -74,6 +89,10 @@ class CartClass {
 	
 		//Plugins for added values text.
 		
+		?>
+		</form>
+		<?php
+		
 	}
 	
 	public function modify_attributes_cart()
@@ -88,7 +107,73 @@ class CartClass {
 	
 		//Add product to cart, if the product have attributes, config here. Attributes are plugin. 
 		
-		
+			global $model, $base_path, $base_url, $arr_block, $cookie_path, $lang;
+	
+			settype($_POST['IdCart_shop'], 'integer');
+
+			$redirect_url=make_fancy_url($base_url, 'shop', 'cart', 'add_cart', array() );
+
+			$query=$model['cart_shop']->select('where token="'.$this->token.'"');
+
+			$arr_cart=webtsys_fetch_array($query);
+
+			settype($arr_cart['IdCart_shop'], 'integer');
+			
+			if($arr_cart['IdCart_shop']==0)
+			{
+
+				$this->token=sha1(uniqid(rand(), true));
+
+				setcookie  ( 'webtsys_shop', $this->token, 0, $cookie_path);
+
+			}
+
+			if($special_offer>0)
+			{
+
+				$price=$special_offer;
+			
+			}
+			
+			if($_POST['IdCart_shop']>0 && $model['cart_shop']->select_count('where cart_shop.IdCart_shop='.$_POST['IdCart_shop'], 'IdCart_shop'))
+			{
+				
+				if(!$model['cart_shop']->update( array('details' => $arr_details, 'time' => time(), 'price_product' => $price) , 'where token = "'.sha1($this->token).'" and IdCart_shop='.$_POST['IdCart_shop'].'  and idproduct ='. $_GET['IdProduct']))
+				{
+
+					return 0;
+
+				}
+				
+
+			}
+			else
+			{
+				
+				if(!$model['cart_shop']->insert( array('token' => sha1($this->token), 'idproduct' => $_GET['IdProduct'], 'details' => $arr_details, 'time' => time(), 'price_product' => $price) ))
+				{
+
+					return 0;
+
+				}
+
+			}
+			
+			if($redirect==1)
+			{
+
+				ob_end_clean();
+				
+				load_libraries(array('redirect'));
+				die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+
+			}
+			else
+			{
+
+				return 1;
+
+			}
 	
 	}
 	

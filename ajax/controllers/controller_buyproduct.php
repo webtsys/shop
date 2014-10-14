@@ -5,7 +5,7 @@ function BuyProduct()
 	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop;
 
 	load_lang('shop');
-	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
+	load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
 
 	load_model('shop');
 
@@ -26,6 +26,8 @@ function BuyProduct()
 	else
 	{
 	
+		$cart=new CartClass();
+	
 		settype($idproduct, 'integer');
 		settype($idcat, 'integer');
 		
@@ -42,8 +44,8 @@ function BuyProduct()
 			{
 
 				//No extra_options, add to cart...
-
-				$buy_return=add_cart($arr_details=array(), $price, $special_offer, $redirect=0);
+				//($idproduct, $arr_details=array(), $price=0, $special_offer=0, $redirect=1)
+				$buy_return=$cart->add_to_cart($idproduct, $arr_details=array(), $price, $special_offer, $redirect=0);
 
 				
 

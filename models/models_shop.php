@@ -770,8 +770,8 @@ $model['cart_shop']->components['token']=new CharField(255);
 $model['cart_shop']->components['idproduct']=new ForeignKeyField('product', 11);
 $model['cart_shop']->components['idproduct']->fields_related_model=array('referer', 'title', 'extra_options');
 $model['cart_shop']->components['price_product']=new MoneyField();
-$model['cart_shop']->components['name_taxes_product']=new DoubleField();
-$model['cart_shop']->components['taxes_product']=new DoubleField();
+/*$model['cart_shop']->components['name_taxes_product']=new DoubleField();
+$model['cart_shop']->components['taxes_product']=new DoubleField();*/
 $model['cart_shop']->components['details']=new SerializeField();
 $model['cart_shop']->components['time']=new IntegerField();
 
