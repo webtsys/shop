@@ -29,7 +29,7 @@ class CartClass {
 	public function show_cart()
 	{
 	
-		global $lang, $model;
+		global $lang, $model, $base_url, $base_path;
 		
 		load_lang('shop');
 	
@@ -48,29 +48,38 @@ class CartClass {
 		//Add plugins for cart that added money to price, for example, taxes or discounts. You can configure taxes or discounts on its plugins admin.
 	
 		$arr_id=array(0);
+		$arr_product_cart=array();
 		$arr_price=array();
-
+		$arr_price_filter=array();
+		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product'));
+		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product'));
 		
-		while(list($idproduct, $price_in_cart)=webtsys_fetch_row($query))
+		while($arr_product=webtsys_fetch_array($query))
 		{
 			
-			settype($arr_id[$idproduct], 'integer');
+			settype($arr_id[$arr_product['idproduct']], 'integer');
 
-			$arr_id[$idproduct]++;
-			$arr_price[$idproduct]=$price_in_cart;
-			
+			$arr_id[$arr_product['idproduct']]++;
+			$arr_price[$arr_product['idproduct']][$arr_product['IdCart_shop']]=$arr_product['price_product'];
+			$arr_product_cart[$arr_product['idproduct']]=$arr_product;
+
 			//Plugins for add money to value.
+			
+			//$arr_product_cart[$arr_product['idproduct']]['price_product_last']=$arr_product['price_product'];
+			
+			$arr_price_filter[$arr_product['idproduct']][$arr_product['IdCart_shop']]=$arr_product['price_product'];
 			
 			foreach($plugins->arr_plugin_list as $plugin)
 			{
 			
-				$this->arr_plugins[$plugin]->add_price_to_value($price_in_cart);
+				//Pass the filter of the plugin
+			
+				$arr_price_filter[$arr_product['idproduct']][$arr_product['IdCart_shop']]=$this->arr_plugins[$plugin]->add_price_to_value($arr_product['price_product']);
 			
 			}
-
+			
 		}
 		
 		?>
@@ -81,15 +90,31 @@ class CartClass {
 
 		$fields=array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products'], $lang['shop']['price']);
 
-		$fields[]=$lang['shop']['select_product'];
+		//$fields[]=$lang['shop']['select_product'];
 
 		up_table_config( $fields );
+	
+		foreach($arr_product_cart as $arr_product)
+		{
+		
+			$arr_product['product_title']=I18nField::show_formatted($arr_product['product_title']);
+		
+			$price_last=array_sum($arr_price_filter[$arr_product['idproduct']]);
+			
+			$arr_product['price_product_last_txt']=MoneyField::currency_format($price_last);
+		
+			$form_num_products=TextForm('num_products', 'units', $arr_id[$arr_product['idproduct']]);
+		
+			middle_table_config(array($arr_product['product_referer'], $arr_product['product_title'], $form_num_products, $arr_product['price_product_last_txt']));
+		
+		}
 	
 		down_table_config();
 	
 		//Plugins for added values text.
 		
 		?>
+		<p><input type="submit" value="<?php echo $lang['shop']['delete_products_selected']; ?>"/></p>
 		</form>
 		<?php
 		
@@ -150,7 +175,7 @@ class CartClass {
 			else
 			{
 				
-				if(!$model['cart_shop']->insert( array('token' => sha1($this->token), 'idproduct' => $_GET['IdProduct'], 'details' => $arr_details, 'time' => time(), 'price_product' => $price) ))
+				if(!$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $_GET['IdProduct'], 'details' => $arr_details, 'time' => time(), 'price_product' => $price) ))
 				{
 
 					return 0;

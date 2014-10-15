@@ -10,7 +10,8 @@ New features
 - I need define size images on admin.
 - Rewriting users.
 - Rewriting cart with a class.
-- Rewriting products and properties. Now, a product can have different characteristics selectionables.
+- Rewriting products and properties. Now, a product can have different characteristics selectionables. Add a table for add new characteristics with added price or not. Is a plugin.
+- A hook plugin on products for add new characteristics for example.
 - New theme.
 - Plugins are loading via hooks. A product can have hooks too. All elements have hooks, including prices.
 - Support for loading products data via sockets, net or files.
