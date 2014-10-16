@@ -3,9 +3,13 @@
 class CartClass {
 
 	public $token;
-
-	public function __construct()
+	public $url_update;
+	public $yes_update;
+	
+	public function __construct($yes_update=1)
 	{
+	
+		global $base_url;
 	
 		if(!isset($_COOKIE['webtsys_shop']))
 		{
@@ -23,6 +27,10 @@ class CartClass {
 		}
 	
 		$this->token=sha1($token);
+	
+		$this->url_update=make_fancy_url($base_url, 'shop', 'cart', 'modify_product', array('action' => 'update'));
+	
+		$this->yes_update=$yes_update;
 	
 	}
 	
@@ -51,6 +59,10 @@ class CartClass {
 		$arr_product_cart=array();
 		$arr_price=array();
 		$arr_price_filter=array();
+		$arr_price_explain_plugin=array();
+		$arr_price_rest=array();
+		
+		$arr_new_field=array();
 		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
@@ -62,61 +74,75 @@ class CartClass {
 			settype($arr_id[$arr_product['IdCart_shop']], 'integer');
 
 			$arr_id[$arr_product['IdCart_shop']]++;
-			$arr_price[$arr_product['IdCart_shop']][$arr_product['IdCart_shop']]=$arr_product['price_product'];
+			
+			//Original price.
+			
+			$arr_price[$arr_product['IdCart_shop']]=$arr_product['price_product'];
 			$arr_product_cart[$arr_product['IdCart_shop']]=$arr_product;
 
 			//Plugins for add money to value.
 			
 			//$arr_product_cart[$arr_product['idproduct']]['price_product_last']=$arr_product['price_product'];
 			
-			$arr_price_filter[$arr_product['IdCart_shop']][$arr_product['idproduct']]=$arr_product['price_product']*$arr_product['units'];
+			//Price filter by plugins how taxes or discounts.
+			
+			$arr_price_filter[$arr_product['IdCart_shop']]=$arr_price[$arr_product['IdCart_shop']]*$arr_product['units'];
+			
+			$arr_price_base[$arr_product['IdCart_shop']]=$arr_price[$arr_product['IdCart_shop']];
+			
+			$arr_price_base_total[$arr_product['IdCart_shop']]=$arr_price[$arr_product['IdCart_shop']]*$arr_product['units'];
 			
 			foreach($plugins->arr_plugin_list as $plugin)
 			{
 			
 				//Pass the filter of the plugin
+				
+				list($add_price, $substract_price)=$this->arr_plugins[$plugin]->add_price_to_value($arr_price_filter[$arr_product['IdCart_shop']][$arr_product['idproduct']]);
 			
-				$arr_price_filter[$arr_product['IdCart_shop']][$arr_product['idproduct']]=$this->arr_plugins[$plugin]->add_price_to_value($arr_product['price_product']);
+				$arr_price_filter[$arr_product['IdCart_shop']]=$add_price;
 			
+				$arr_price_base[$arr_product['IdCart_shop']]=$substract_price;
+			
+				$arr_price_base_total[$arr_product['IdCart_shop']]=$arr_price_base[$arr_product['IdCart_shop']]*$arr_product['units'];
+			
+				//$arr_price_explain_plugin[$arr_product['IdCart_shop']][$plugin]=array('price_after_plugin' => $add_price, 'price_plugin' => $substract_price);
+				
 			}
 			
 		}
 		
+		if($this->yes_update==1)
+		{
+		
+			function show_text_form($idcart_shop, $units)
+			{
+			
+				return TextForm('num_products['.$idcart_shop.']', 'units', $units);
+			
+			}
+		
 		?>
-		<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'modify_product', array('action' => 'update')); ?>">
+		<form method="post" action="<?php echo $this->url_update; ?>">
 		
 		<?php
 		set_csrf_key();
-
-		$fields=array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products'], $lang['shop']['price']);
-
-		//$fields[]=$lang['shop']['select_product'];
-
-		up_table_config( $fields );
-	
-		foreach($arr_product_cart as $arr_product)
+		}
+		else
 		{
 		
-			$arr_product['product_title']=I18nField::show_formatted($arr_product['product_title']);
-		
-			$price_last=array_sum($arr_price_filter[$arr_product['IdCart_shop']]);
+			function show_text_form($idcart_shop, $units)
+			{
 			
-			$arr_product['price_product_last_txt']=MoneyField::currency_format($price_last);
-		
-			$form_num_products=TextForm('num_products['.$arr_product['IdCart_shop'].']', 'units', $arr_product['units']);
-		
-			middle_table_config(array($arr_product['product_referer'], $arr_product['product_title'], $form_num_products, $arr_product['price_product_last_txt']));
+				return $units;
+			
+			}
 		
 		}
-	
-		down_table_config();
-	
-		//Plugins for added values text.
 		
-		?>
-		<p><input type="submit" value="<?php echo $lang['shop']['delete_products_selected']; ?>"/></p>
-		</form>
-		<?php
+		//Go to view...
+		
+		echo load_view(array($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update), 'shop/cartshow');
+		
 		
 	}
 	

@@ -1,9 +1,5 @@
 <?php
 
-$lang['shop']['cart']='Carrito';
-
-$lang['shop']['change_currency']='Cambiar moneda';
-
 $lang['shop']['empty_cart']='Carro vacio';
 
 $lang['shop']['buy']='Comprar';
@@ -254,6 +250,8 @@ $lang['shop']['no_stock']='Sin stock';
 
 $lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
 
+$lang['shop']['cart']='Carrito';
+
 $lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
 
 $lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
@@ -263,10 +261,6 @@ $lang['shop']['login_shop']='Si tiene un usuario y desea identificarse';
 $lang['shop']['click_here']='pulse aquí';
 
 $lang['shop']['register_shop_or_buying']='Si desea registrarse durante el proceso de compra';
-
-$lang['shop']['choose_new_country']='choose_new_country';
-
-$lang['shop']['explain_choose_new_country']='explain_choose_new_country';
 
 $lang['shop']['choose_more_options']='Elegir más opciones';
 
@@ -342,11 +336,7 @@ $lang['shop']['order_success_cart_clean']='<p><strong>Se realizó el pedido con 
 
 $lang['shop']['cancelling_order']='Cancelando pedido';
 
-$lang['shop']['price_with_taxes']='Precio con impuestos';
-
 $lang['shop']['modify_options']='Opciones de modificación';
-
-$lang['shop']['no_options_product']='Producto sin opciones';
 
 $lang['shop']['cart_empty']='Carrito vacio';
 
@@ -384,8 +374,6 @@ $lang['shop']['discounts']='Descuentos';
 
 $lang['shop']['discount_transport']='Descuentos en los portes';
 
-$lang['shop']['discount_payment']='Descuentos en modo de pago';
-
 $lang['shop']['taxes_calculated_in_new_price']='Impuestos calculados en precio con descuento';
 
 $lang['shop']['new_taxes_calculated']='Nuevos impuestos calculados';
@@ -418,7 +406,11 @@ $lang['shop']['total_price_with_taxes']='Precio total con impuestos';
 
 $lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='El país seleccionado es diferente al país donde se aplican impuestos por defecto. No hay impuestos añadidos';
 
+$lang['shop']['price_with_taxes']='Precio con impuestos';
+
 $lang['shop']['taxes_no_included']='Impuestos no incluidos';
+
+$lang['shop']['base_price']='Precio base';
 
 $lang['shop']['choose_cat']='Elegir categoría';
 
@@ -491,6 +483,16 @@ $lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado qu
 $lang['shop']['invoice_num']='Número de factura';
 
 $lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+
+$lang['shop']['change_currency']='Cambiar moneda';
+
+$lang['shop']['choose_new_country']='choose_new_country';
+
+$lang['shop']['explain_choose_new_country']='explain_choose_new_country';
+
+$lang['shop']['no_options_product']='Producto sin opciones';
+
+$lang['shop']['discount_payment']='Descuentos en modo de pago';
 
 $lang['shop']['no_new_products']='No hay novedades';
 

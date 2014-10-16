@@ -42,9 +42,13 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		//print_r($_POST);
 		
-		$arr_block='/none';
+		/*select_view(array('shop'));
+		
+		$arr_block='/none';*/
 		
 		$cart=new CartClass();
+		
+		settype($_POST['num_products'], 'array');
 		
 		foreach($_POST['num_products'] as $cart_id => $units)
 		{
@@ -57,9 +61,8 @@ class CartSwitchClass extends ControllerSwitchClass
 		}
 		
 		//Redirect
-		//redirect_webtsys($direction,$l_text,$text,$ifno, $arr_block)
-		load_libraries(array('redirect'));
-		die( redirect_webtsys( make_fancy_url($this->base_url, 'shop', 'cart', 'checkout', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting'] , $arr_block) );
+	
+		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
 	
 	}
 	
