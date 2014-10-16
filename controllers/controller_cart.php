@@ -1,5 +1,71 @@
 <?php
 
+load_model('shop');
+
+class CartSwitchClass extends ControllerSwitchClass 
+{
+
+	public function index()
+	{
+	
+		$arr_block=select_view(array('shop'));
+	
+		//In cart , blocks showed are none always...
+
+		$arr_block='/none';
+
+		load_lang('shop');
+		
+		load_libraries(array('config_shop', 'class_cart'), $this->base_path.'modules/shop/libraries/');
+		load_libraries(array('send_email'));
+		
+		$cart=new CartClass();
+		
+		ob_start();
+		
+		$cart->show_cart();
+		
+		$cont_index=ob_get_contents();
+		
+		ob_end_clean();
+		
+		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+	
+	}
+	
+	public function update()
+	{
+	
+		global $arr_block;
+	
+		load_libraries(array('class_cart'), $this->base_path.'modules/shop/libraries/');
+	
+		//print_r($_POST);
+		
+		$arr_block='/none';
+		
+		$cart=new CartClass();
+		
+		foreach($_POST['num_products'] as $cart_id => $units)
+		{
+		
+			settype($cart_id, 'integer');
+			settype($units, 'integer');
+			
+			$cart->sum_product_to_cart($cart_id, $units);
+		
+		}
+		
+		//Redirect
+		//redirect_webtsys($direction,$l_text,$text,$ifno, $arr_block)
+		load_libraries(array('redirect'));
+		die( redirect_webtsys( make_fancy_url($this->base_url, 'shop', 'cart', 'checkout', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting'] , $arr_block) );
+	
+	}
+	
+}
+
+/*
 function Cart()
 {
 
@@ -1805,8 +1871,8 @@ function add_discount_to_element($arr_discount, $price_total_element, $lang_disc
 
 	return $discount_element_final;
 
-*/
+
 
 }
-
+*/
 ?>

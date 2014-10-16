@@ -39,11 +39,11 @@ function DeleteProduct()
 
 		$redirect_url=make_fancy_url($base_url, 'shop', 'cart', 'cart', array(''));
 		
-		echo $redirect_url;
+		//echo $redirect_url;
 		
 		$query=$model['cart_shop']->delete('where idproduct IN ('.implode(', ', $arr_del_product).') and token="'.$sha1_token.'"');
 
-		die;
+		//die;
 		
 		load_libraries(array('redirect'));
 		die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );

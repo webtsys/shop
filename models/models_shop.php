@@ -772,6 +772,7 @@ $model['cart_shop']->components['idproduct']->fields_related_model=array('refere
 $model['cart_shop']->components['price_product']=new MoneyField();
 /*$model['cart_shop']->components['name_taxes_product']=new DoubleField();
 $model['cart_shop']->components['taxes_product']=new DoubleField();*/
+$model['cart_shop']->components['units']=new IntegerField();
 $model['cart_shop']->components['details']=new SerializeField();
 $model['cart_shop']->components['time']=new IntegerField();
 

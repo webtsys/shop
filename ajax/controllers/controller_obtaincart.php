@@ -5,10 +5,10 @@ function ObtainCart()
 	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop;
 
 	load_lang('shop');
-	load_libraries(array('config_shop'), $base_path.'modules/shop/libraries/');
+	load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
 
 	load_model('shop');
-
+	/*
 	settype($_COOKIE['webtsys_shop'], 'string');
 
 	$token=sha1($_COOKIE['webtsys_shop']);
@@ -16,16 +16,20 @@ function ObtainCart()
 	$num_product=0;
 	$total_price_product=0;
 	
-	$query=$model['cart_shop']->select('where token="'.$token.'"', array('idproduct', 'price_product'));
+	$query=$model['cart_shop']->select('where token="'.$token.'"', array('idproduct', 'price_product', 'units'));
 	
-	while(list($idproduct, $price_product)=webtsys_fetch_row($query))
+	while(list($idproduct, $price_product, $units)=webtsys_fetch_row($query))
 	{
 		
-		$num_product++;
+		$num_product+=$units;
 
-		$total_price_product+=$price_product;
+		$total_price_product+=$price_product*$units;
 
-	}
+	}*/
+	
+	$cart=new CartClass();
+	
+	list($num_product, $total_price_product)=$cart->obtain_simple_cart();
 
 	$jsondata['num_product']=$num_product;
 
