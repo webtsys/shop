@@ -66,6 +66,43 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	}
 	
+	public function delete()
+	{
+	
+		settype($_GET['IdCart_shop'], 'integer');
+	
+		load_libraries(array('class_cart'), $this->base_path.'modules/shop/libraries/');
+		
+		$cart=new CartClass();
+		
+		$cart->sum_product_to_cart($_GET['IdCart_shop'], 0);
+	
+		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
+	
+	}
+	
+	public function get_address()
+	{
+	
+		
+	
+	}
+	
+	public function set_transport()
+	{
+	
+		
+	
+	}
+	
+	public function checkout()
+	{
+	
+		
+	
+	}
+
+	
 }
 
 /*

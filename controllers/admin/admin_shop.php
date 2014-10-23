@@ -19,7 +19,7 @@ function ShopAdmin()
 	$arr_link_options[3]=array('link' => set_admin_link( 'products_categories', array('IdModule' => $_GET['IdModule'], 'op' => 3) ), 'text' => $lang['shop']['products']);
 	//$arr_link_options[4]=array('link' => set_admin_link( 'standard_options_for_products', array('IdModule' => $_GET['IdModule'], 'op' => 4) ), 'text' => $lang['shop']['standard_options_for_products']);
 	//$arr_link_options[6]=array('link' => set_admin_link( 'taxes', array('IdModule' => $_GET['IdModule'], 'op' => 6) ), 'text' => $lang['shop']['taxes']);
-	//$arr_link_options[7]=array('link' => set_admin_link( 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
+	$arr_link_options[7]=array('link' => set_admin_link( 'transport', array('IdModule' => $_GET['IdModule'], 'op' => 7) ), 'text' => $lang['shop']['transport']);
 	$arr_link_options[10]=array('link' => set_admin_link( 'gateways_payment', array('IdModule' => $_GET['IdModule'], 'op' => 10) ), 'text' => $lang['shop']['gateways_payment']);
 	//$arr_link_options[11]=array('link' => set_admin_link( 'discount_groups', array('IdModule' => $_GET['IdModule'], 'op' => 11) ), 'text' => $lang['shop']['discount_groups']);
 	$arr_link_options[13]=array('link' => set_admin_link( 'orders', array('IdModule' => $_GET['IdModule'], 'op' => 13) ), 'text' => $lang['shop']['orders']);

@@ -3,7 +3,7 @@
 function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $yes_update)
 {
 
-	global $lang;
+	global $lang, $base_url;
 
 	$fields=array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products']);
 
@@ -16,9 +16,12 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		
 		$fields[]=$lang['shop']['total_price'];
 		
+		$fields[]=$lang['common']['options'];
+		
 		//$fields[]=$lang['shop']['select_product'];
 
 		$total=0;
+		$total_units=0;
 		
 		up_table_config( $fields );
 	
@@ -47,12 +50,16 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 			}
 			
 			$arr_row[]=$arr_product['price_product_last_txt'];
+			
+			$arr_row[]='<a href="'.make_fancy_url($base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.$lang['common']['delete'].'</a>';
 		
 			middle_table_config($arr_row);
 		
+			$total_units+=$arr_product['units'];
+		
 		}
 		
-		middle_table_config(array('', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
+		middle_table_config(array('', '', $total_units, '<h2>'.MoneyField::currency_format($total).'</h2>', ''));
 	
 		down_table_config();
 	
@@ -61,7 +68,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		{
 		
 			?>
-			<p><input type="submit" value="<?php echo $lang['shop']['modify_products']; ?>"/></p>
+			<p><input type="submit" value="<?php echo $lang['shop']['modify_products']; ?>"/> <input type="button" value="<?php echo $lang['shop']['checkout_order']; ?>" /> </p>
 			</form>
 			<?php
 		
