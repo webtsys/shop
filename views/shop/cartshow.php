@@ -21,6 +21,8 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		$total=0;
 		
 		up_table_config( $fields );
+		
+		$z=0;
 	
 		foreach($arr_product_cart as $arr_product)
 		{
@@ -50,10 +52,21 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		
 			middle_table_config($arr_row);
 		
+			$z++;
+		
 		}
 		
-		middle_table_config(array('', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
-	
+		if($z>0)
+		{
+			middle_table_config(array('', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
+		}
+		else
+		{
+		
+			middle_table_config(array($lang['shop']['no_products_in_index']), array(' colspan='.count($fields)));
+		
+		}
+		
 		down_table_config();
 	
 		//Plugins for added values text.

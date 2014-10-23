@@ -9,7 +9,7 @@ class CartClass {
 	public function __construct($yes_update=1)
 	{
 	
-		global $base_url;
+		global $base_url, $cookie_path;
 	
 		if(!isset($_COOKIE['webtsys_shop']))
 		{
@@ -61,6 +61,10 @@ class CartClass {
 		$arr_price_filter=array();
 		$arr_price_explain_plugin=array();
 		$arr_price_rest=array();
+		
+		$arr_price_base=array(); 
+		$arr_price_base_total=array();
+
 		
 		$arr_new_field=array();
 		
