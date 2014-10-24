@@ -3,8 +3,27 @@
 load_model('shop');
 load_libraries(array('login'));
 
+$model['user_shop']->create_form();
+
 class CartSwitchClass extends ControllerSwitchClass 
 {
+
+	public $login;
+
+	public function __construct()
+	{
+	
+		global $base_url;
+	
+		$this->login=new LoginClass('user_shop', 'email', 'password', 'token_client', $arr_user_session=array(), $arr_user_insert=array());
+		
+		$this->login->url_insert=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'get_address_save'));
+	
+		$this->login->url_login=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'login'));
+	
+		parent::__construct();
+	
+	}
 
 	public function index()
 	{
@@ -85,7 +104,7 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function get_address()
 	{
 	
-		global $model, $lang;
+		global $model, $lang, $base_url;
 	
 	
 		$arr_block=select_view(array('shop'));
@@ -94,17 +113,12 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		ob_start();
 		
-		$model['user_shop']->create_form();
-			
-		
-		$login=new LoginClass('user_shop', 'email', 'password', 'webtsys_shop_client', $arr_user_session=array(), $arr_user_insert=array());
-		
-		if(!$login->check_login())
+		if(!$this->login->check_login())
 		{
 					
-			echo load_view(array($login), 'shop/forms/registerform');
+			echo load_view(array($this->login), 'shop/forms/registerform');
 			
-			$login->login_form();
+			echo load_view(array($this->login), 'shop/forms/loginshopform');
 	
 		}
 		else
@@ -126,26 +140,32 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function get_address_save()
 	{
-	
+		global $model, $base_url, $lang;
 	
 		$arr_block=select_view(array('shop'));
 	
 		$arr_block='/none';
 		
-		$login=new LoginClass('user_shop', 'email', 'password', 'webtsys_shop_client', $arr_user_session=array(), $arr_user_insert=array());
-		
 		ob_start();
 		
-		if($login->create_account())
+		if($this->login->create_account())
 		{
 		
-			echo 'creado';
+			$iduser=webtsys_insert_id();
+		
+			$this->login->automatic_login($iduser);
+			
+			load_libraries(array('redirect'));
+			
+			$url_return=make_fancy_url($base_url, 'shop', 'cart', 'autologin', array('action' => 'get_address'));
+			
+			simple_redirect($url_return, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'], $content_view='content');
 		
 		}
 		else
 		{
 		
-			
+			echo load_view(array($this->login), 'shop/forms/registerform');
 		
 		}
 	
@@ -175,6 +195,46 @@ class CartSwitchClass extends ControllerSwitchClass
 	{
 	
 		
+	
+	}
+	
+	public function login()
+	{
+	
+		settype($_POST['email'], 'string');
+		settype($_POST['password'], 'string');
+		settype($_POST['no_expire_session'], 'integer');
+		
+		if($this->login->login($_POST['email'], $_POST['password'], $_POST['no_expire_session']))
+		{
+		
+			load_libraries(array('redirect'));
+			
+			$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'autologin', array('action' => 'get_address'));
+			
+			$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']['press_here_redirecting']);
+			
+			//simple_redirect($url_return, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'], $content_view='content');
+		
+		}
+		else
+		{
+		
+			$arr_block=select_view(array('shop'));
+	
+			$arr_block='/none';
+			
+			ob_start();
+		
+			echo load_view(array($this->login), 'shop/forms/loginshopform');
+			
+			$cont_index=ob_get_contents();
+			
+			ob_end_clean();
+			
+			echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		
+		}
 	
 	}
 

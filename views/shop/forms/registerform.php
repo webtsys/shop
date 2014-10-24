@@ -16,16 +16,8 @@ function RegisterFormView($login)
 	
 	echo '<h1>'.$lang['user']['register'].'</h1>';
 	
-	
-			
 	$login->create_account_form();
 	
-	?>
-	<hr />
-	
-	<?php
-	
-	echo '<h1>'.$lang['user']['login'].'</h1>';
 
 }
 
