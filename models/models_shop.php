@@ -1,7 +1,7 @@
 <?php
 global $arr_i18n, $base_url, $arr_plugin_list;
 
-load_libraries(array('i18n_fields', 'fields/moneyfield'));
+load_libraries(array('i18n_fields', 'fields/moneyfield', 'fields/passwordfield'));
 
 load_lang('shop');
 load_lang('common');
@@ -712,30 +712,30 @@ $model['config_shop']->components['idcurrency']->required=1;
 
 $model['config_shop']->components['view_only_mode']=new BooleanField();
 
-class dir_transport extends Webmodel {
+class address_transport extends Webmodel {
 
 	function __construct()
 	{
 
-		parent::__construct("dir_transport");
+		parent::__construct("address_transport");
 
 	}	
 	
 }
 
-$model['dir_transport']=new dir_transport();
+$model['address_transport']=new address_transport();
 
-$model['dir_transport']->components['iduser']=new IntegerField();
-$model['dir_transport']->components['name_transport']=new CharField(255);
-$model['dir_transport']->components['last_name_transport']=new CharField(255);
-$model['dir_transport']->components['enterprise_name_transport']=new CharField(255);
-$model['dir_transport']->components['address_transport']=new CharField(255);
-$model['dir_transport']->components['zip_code_transport']=new CharField(255);
-$model['dir_transport']->components['phone_transport']=new CharField(255);
-$model['dir_transport']->components['city_transport']=new CharField(255);
-$model['dir_transport']->components['region_transport']=new CharField(255);
-$model['dir_transport']->components['country_transport']=new IntegerField(11);
-$model['dir_transport']->components['zone_transport']=new ForeignKeyField('zone_shop', 11);
+$model['address_transport']->components['iduser']=new IntegerField();
+$model['address_transport']->components['name_transport']=new CharField(255);
+$model['address_transport']->components['last_name_transport']=new CharField(255);
+$model['address_transport']->components['enterprise_name_transport']=new CharField(255);
+$model['address_transport']->components['address_transport']=new CharField(255);
+$model['address_transport']->components['zip_code_transport']=new CharField(255);
+$model['address_transport']->components['phone_transport']=new CharField(255);
+$model['address_transport']->components['city_transport']=new CharField(255);
+$model['address_transport']->components['region_transport']=new CharField(255);
+$model['address_transport']->components['country_transport']=new IntegerField(11);
+$model['address_transport']->components['zone_transport']=new ForeignKeyField('zone_shop', 11);
 
 class payment_form extends Webmodel {
 
@@ -1494,11 +1494,37 @@ class PluginClass {
 
 }
 
+//Users shop
+//When delete, don't delete, only leave the data how user deleted.
+
+$model['user_shop']=new Webmodel('user_shop');
+
+$model['user_shop']->set_component('email', 'CharField', array(255), 1);
+
+$model['user_shop']->set_component('password', 'PasswordField', array(255), 1);
+
+$model['user_shop']->set_component('name', 'CharField', array(255));
+$model['user_shop']->set_component('last_name', 'CharField', array(255));
+$model['user_shop']->set_component('address', 'CharField', array(255));
+$model['user_shop']->set_component('zip_code', 'CharField', array(255));
+$model['user_shop']->set_component('region', 'CharField', array(255));
+$model['user_shop']->set_component('city', 'CharField', array(255));
+$model['user_shop']->set_component('country', 'IntegerField', array(255));
+$model['user_shop']->set_component('phone', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('fax', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('nif', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('enterprise_name', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('last_connection', 'IntegerField', array(11));
+$model['user_shop']->set_component('format_date', 'ChoiceField', array(10, 'string', array('d-m-Y', 'Y-m-d')));
+$model['user_shop']->set_component('format_time', 'IntegerField', array(11));
+$model['user_shop']->set_component('timezone', 'ChoiceField', array(35, 'string', array(), MY_TIMEZONE));
+$model['user_shop']->set_component('ampm', 'ChoiceField', array(10, 'string', array('H:i:s', 'h:i:s A'), MY_TIMEZONE));
+
 $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1);
 
 $arr_module_sql['shop']='shop.sql';
 
-$arr_module_remove['shop']=array('product', 'image_product', 'cat_product', 'taxes', 'transport', 'price_transport', 'zone_shop', 'country_shop', 'config_shop', 'dir_transport', 'payment_form', 'cart_shop', 'order_shop', 'type_product_option', 'product_option', 'group_shop', 'group_shop_users', 'currency', 'currency_change');
+$arr_module_remove['shop']=array('product', 'image_product', 'cat_product', 'taxes', 'transport', 'price_transport', 'zone_shop', 'country_shop', 'config_shop', 'address_transport', 'payment_form', 'cart_shop', 'order_shop', 'type_product_option', 'product_option', 'group_shop', 'group_shop_users', 'currency', 'currency_change');
 
 ?>
 

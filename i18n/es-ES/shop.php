@@ -294,7 +294,7 @@ $lang['shop']['you_choose_a_country_that_have_taxes_about_this_products']='Eligi
 
 $lang['shop']['order_submited_show_order_and_prices']='Pedido procesado. Le presentamos su petición y el precio.';
 
-$lang['shop']['send_order_and_checkout']='Enviar pedido y pagar.';
+$lang['shop']['send_order_and_checkout']='Enviar pedido y pagar';
 
 $lang['shop']['explain_send_order_and_checkout']='Ahora que se ha procesado su pedido, por favor, proceda a su pago.';
 

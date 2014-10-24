@@ -362,12 +362,6 @@ class CartClass {
 	
 	}
 	
-	public function remove_from_cart()
-	{
-	
-		
-	
-	}
 	
 	public function execute_plugins_payment()
 	{

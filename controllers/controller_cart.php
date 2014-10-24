@@ -1,6 +1,7 @@
 <?php
 
 load_model('shop');
+load_libraries(array('login'));
 
 class CartSwitchClass extends ControllerSwitchClass 
 {
@@ -65,6 +66,118 @@ class CartSwitchClass extends ControllerSwitchClass
 		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
 	
 	}
+	
+	public function delete()
+	{
+	
+		settype($_GET['IdCart_shop'], 'integer');
+	
+		load_libraries(array('class_cart'), $this->base_path.'modules/shop/libraries/');
+		
+		$cart=new CartClass();
+		
+		$cart->sum_product_to_cart($_GET['IdCart_shop'], 0);
+	
+		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
+	
+	}
+	
+	public function get_address()
+	{
+	
+		global $model, $lang;
+	
+	
+		$arr_block=select_view(array('shop'));
+	
+		$arr_block='/none';
+	
+		ob_start();
+		
+		$model['user_shop']->create_form();
+			
+		
+		$login=new LoginClass('user_shop', 'email', 'password', 'webtsys_shop_client', $arr_user_session=array(), $arr_user_insert=array());
+		
+		if(!$login->check_login())
+		{
+					
+			echo load_view(array($login), 'shop/forms/registerform');
+			
+			$login->login_form();
+	
+		}
+		else
+		{
+		
+			//Put address. 
+			
+			
+		
+		}
+		
+		$cont_index=ob_get_contents();
+			
+			ob_end_clean();
+			
+			echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+	}
+	
+	
+	public function get_address_save()
+	{
+	
+	
+		$arr_block=select_view(array('shop'));
+	
+		$arr_block='/none';
+		
+		$login=new LoginClass('user_shop', 'email', 'password', 'webtsys_shop_client', $arr_user_session=array(), $arr_user_insert=array());
+		
+		ob_start();
+		
+		if($login->create_account())
+		{
+		
+			echo 'creado';
+		
+		}
+		else
+		{
+		
+			
+		
+		}
+	
+		$cont_index=ob_get_contents();
+			
+		ob_end_clean();
+		
+		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+	
+	}
+	
+	public function set_transport()
+	{
+	
+		
+	
+	}
+	
+	public function set_transport_save()
+	{
+	
+		
+	
+	}
+	
+	public function checkout()
+	{
+	
+		
+	
+	}
+
 	
 }
 
