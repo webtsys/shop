@@ -1505,6 +1505,8 @@ $model['user_shop']->set_component('password', 'PasswordField', array(255), 1);
 
 $model['user_shop']->set_component('token_client', 'CharField', array(255), 1);
 
+$model['user_shop']->set_component('token_recovery', 'CharField', array(255), 1);
+
 $model['user_shop']->set_component('name', 'CharField', array(255));
 $model['user_shop']->set_component('last_name', 'CharField', array(255));
 $model['user_shop']->set_component('address', 'CharField', array(255));

@@ -242,8 +242,19 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function recovery_password()
 	{
+		$arr_block=select_view(array('shop'));
+	
+		$arr_block='/none';
+			
+		ob_start();
 	
 		$this->login->recovery_password_form();
+		
+		$cont_index=ob_get_contents();
+			
+		ob_end_clean();
+		
+		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
 	
 	}
 
