@@ -24,6 +24,8 @@ class CartSwitchClass extends ControllerSwitchClass
 		$this->login->url_login=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'login'));
 	
 		$this->login->url_recovery=$this->get_method_url('recovery_password', 'recovery_password', array());
+		
+		$this->login->url_recovery_send=$this->get_method_url('recovery_password_send', 'recovery_password_send', array());
 	
 	}
 
@@ -255,6 +257,13 @@ class CartSwitchClass extends ControllerSwitchClass
 		ob_end_clean();
 		
 		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+	
+	}
+	
+	public function recovery_password_send()
+	{
+	
+		$this->login->recovery_password();
 	
 	}
 
