@@ -1,244 +1,66 @@
 <?php
 
+$lang['shop']['choose_cat']='Elegir categoría';
+
+$lang['shop']['referer']='Referencia';
+
+$lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
+
+$lang['shop']['apply_discounts']='Aplicar descuentos';
+
+$lang['shop']['price']='Precio';
+
+$lang['shop']['buy_product_units']='Unidades';
+
+$lang['shop']['warning_products_with_options']='Cuidado: se han detectado varios productos que tienen opciones para elegir. En este modo usted no puede especificar opciones para sus productos.';
+
+$lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
+
+$lang['shop']['included']='Incluido';
+
+$lang['shop']['total_price_with_taxes']='Precio total con impuestos';
+
+$lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='El país seleccionado es diferente al país donde se aplican impuestos por defecto. No hay impuestos añadidos';
+
+$lang['shop']['taxes']='Impuestos';
+
+$lang['shop']['price_with_taxes']='Precio con impuestos';
+
+$lang['shop']['taxes_no_included']='Impuestos no incluidos';
+
 $lang['shop']['empty_cart']='Carro vacio';
 
 $lang['shop']['buy']='Comprar';
 
 $lang['shop']['total']='Total';
 
-$lang['shop']['config_shop']='Configuración de su tienda';
+$lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
 
-$lang['shop']['products_categories']='Categorías de productos';
+$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
 
-$lang['shop']['products']='Productos';
+$lang['shop']['checkout_order']='Pagar pedido';
 
-$lang['shop']['standard_options_for_products']='Opciones estandard para productos';
+$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
 
-$lang['shop']['taxes']='Impuestos';
-
-$lang['shop']['transport']='Transporte';
-
-$lang['shop']['gateways_payment']='Pasarelas de pago';
-
-$lang['shop']['discount_groups']='Grupos de descuento';
-
-$lang['shop']['orders']='Pedidos';
-
-$lang['shop']['countries']='Paises';
-
-$lang['shop']['currency']='Moneda';
-
-$lang['shop']['plugins_shop']='Plugins de tienda';
-
-$lang['shop']['edit_config_shop']='Editar configuración de tienda';
-
-$lang['shop']['new_products']='Nuevos productos';
-
-$lang['shop']['listing']='Listados';
-
-$lang['shop']['bestsellers']='Más vendidos';
-
-$lang['shop']['cool']='Recomendado';
-
-$lang['shop']['num_news']='Novedades';
-
-$lang['shop']['yes_taxes']='¿Con impuestos incluidos?';
-
-$lang['shop']['yes_transport']='¿Necesitan transporte los productos?';
-
-$lang['shop']['type_index']='Tipo de página principal';
-
-$lang['shop']['explain_discounts_page']='Página donde se definen los descuentos';
-
-$lang['shop']['conditions']='Terminos de venta';
-
-$lang['shop']['ssl_url']='¿Este dominio tiene SSL?. Elija sí, si su url base por defecto no tiene SSL';
-
-$lang['shop']['title_shop']='Titulo de la tienda';
-
-$lang['shop']['description_shop']='Descripción de la tienda';
-
-$lang['shop']['head_bill']='Cabecera de las facturas';
-
-$lang['shop']['num_begin_bill']='Número de comienzo de factura';
-
-$lang['shop']['elements_num_bill']='Número de elementos de la fáctura (si el número de factura sobrepasa estos elementos, tendrá un número de elementos de acuerdo a la cifra)';
-
-$lang['shop']['bill_data_shop']='Datos de su empresa que aparecerá en la fáctura';
-
-$lang['shop']['footer_bill']='Pie de la factura';
-
-$lang['shop']['view_only_mode']='Modo mostrador';
-
-$lang['shop']['edit_categories_shop']='Editar categorias de tienda';
-
-$lang['shop']['subcat']='Elija categoría padre';
-
-$lang['shop']['description']='Descripción';
-
-$lang['shop']['order_cats']='Ordenar categorías';
-
-$lang['shop']['no_category_defined']='Categoría sin definir';
-
-$lang['shop']['edit_products_from_category']='Editar productos de la categoría';
-
-$lang['shop']['choose_category']='Elegir categoría';
-
-$lang['shop']['referer']='Referencia';
-
-$lang['shop']['description_short']='Descripción breve del producto, útil para listados';
-
-$lang['shop']['idcat']='Categoría de tienda';
-
-$lang['shop']['price']='Precio';
-
-$lang['shop']['special_offer']='Oferta especial';
-
-$lang['shop']['stock']='Stock';
-
-$lang['shop']['about_order']='Bajo pedido';
-
-$lang['shop']['extra_options']='Opciones extra';
-
-$lang['shop']['weight']='Peso';
-
-$lang['shop']['num_sold']='Número de veces vendido';
-
-$lang['shop']['edit_options_for_product']='Editar opciones para el producto';
-
-$lang['shop']['question']='Pregunta para hacer al cliente sobre las opciones';
-
-$lang['shop']['options_product']='Opciones (separadas por |)';
-
-$lang['shop']['add_options_to_product']='Añadir opciones al producto';
-
-$lang['shop']['option_type']='Tipo de opción';
-
-$lang['shop']['option_required']='Opción requerida';
-
-$lang['shop']['edit_taxes']='Editar impuestos';
-
-$lang['shop']['zones_taxes']='Zonas de impuestos';
-
-$lang['shop']['percent']='Porcentaje';
+$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
 
 $lang['shop']['zone']='Zona';
 
-$lang['shop']['edit_transport']='Editar transporte';
-
-$lang['shop']['zones_transport']='Zonas de transporte';
-
-$lang['shop']['type_transport']='Tipo de transporte';
-
-$lang['shop']['type_by_weight']='Por peso';
-
-$lang['shop']['type_by_price']='Por precio';
-
-$lang['shop']['countries_zones_transport']='Areas de transporte';
-
-$lang['shop']['countries_zones_taxes']='Areas de impuestos';
-
-$lang['shop']['countries_zones']='Zonas';
-
-$lang['shop']['country_code']='Código de zona';
-
-$lang['shop']['other_countries']='Abarcar todos los países que no estén en ninguna otra zona';
-
-$lang['shop']['go_back_to_transport']='Regresar a transporte';
-
-$lang['shop']['go_back_to_taxes']='Regresar a impuestos';
-
-$lang['shop']['price_transport_for']='Precio de transporte para';
-
-$lang['shop']['min_price']='Precio total de pedido';
-
-$lang['shop']['code_payment']='Código php';
-
-$lang['shop']['price_payment']='Cargo del modo de pago';
-
-$lang['shop']['group_shop']='Grupo';
-
-$lang['shop']['discount']='Descuento';
-
-$lang['shop']['taxes_for_group']='Descuentos en impuestos';
-
-$lang['shop']['transport_for_group']='Descuento en portes';
-
-$lang['shop']['shipping_costs_for_group']='Descuento en pasarela de pago';
-
-$lang['shop']['total_price']='Precio total';
+$lang['shop']['transport']='Transporte';
 
 $lang['shop']['make_payment']='¿Pagado?';
 
-$lang['shop']['payment_orders']='Pedidos pagados';
+$lang['shop']['observations']='Observaciones';
 
-$lang['shop']['no_payment_orders']='Pedidos no pagados';
+$lang['shop']['invoice_num']='Número de factura';
 
-$lang['shop']['edit_image_product']='Editar imagen de producto';
+$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
 
-$lang['shop']['add_new_images']='Añadir nuevas imágenes';
+$lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
 
-$lang['shop']['principal_photo']='Imagen principal';
+$lang['shop']['options_for_product']='Opciones para este producto';
 
-$lang['shop']['code_country']='Código de país';
-
-$lang['shop']['idzone_taxes']='Zona de impuestos';
-
-$lang['shop']['idzone_transport']='Zonas de transporte';
-
-$lang['shop']['name_enterprise']='Nombre de empresa';
-
-$lang['shop']['fiscal_identity']='Identidad fiscal';
-
-$lang['shop']['client']='Cliente';
-
-$lang['shop']['num_bill']='Número de factura';
-
-$lang['shop']['value']='Valor';
-
-$lang['shop']['final_value']='Valor final';
-
-$lang['shop']['transport_price']='Portes';
-
-$lang['shop']['shipping_costs']='Cargos en pago';
-
-$lang['shop']['units']='Unidades';
-
-$lang['shop']['symbol']='Símbolo';
-
-$lang['shop']['modify_change_currencies']='Modificar cambios entre monedas';
-
-$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda elegida en relación a';
-
-$lang['shop']['plugin_admin']='Administración de plugins';
-
-$lang['shop']['element_choice']='Elegir elemento';
-
-$lang['shop']['order_plugins']='Ordenar plugins';
-
-$lang['shop']['edit_plugin']='Edit plugin';
-
-$lang['shop']['change_shop_category']='Cambiar categoría de tienda';
-
-$lang['shop']['category']='Categoría';
-
-$lang['shop']['modify_products']='Modificar productos';
-
-$lang['shop']['subcat_products']='Subcategorías de productos';
-
-$lang['shop']['edit_cat_product']='Editar categorías de producto';
-
-$lang['shop']['add__select_options_to_product']='Añadir opciones para seleccionar para este producto';
-
-$lang['shop']['add__select_prices_for_transport']='Añadir tabla de precios para el transporte';
-
-$lang['shop']['add__user_to_group_shop']='Añadir usuario a grupo de descuento';
-
-$lang['shop']['obtain_bill']='Obtener factura';
-
-$lang['shop']['admin_external_plugin']='Administrar plugin externo';
-
-$lang['shop']['edit_plugin_external']='Editar plugin externo';
+$lang['shop']['add_extra_price']='Se añadirá el siguiente valor al precio original';
 
 $lang['shop']['go_back_cart']='Regresar a carro';
 
@@ -250,9 +72,11 @@ $lang['shop']['no_stock']='Sin stock';
 
 $lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
 
-$lang['shop']['cart']='Carrito';
+$lang['shop']['all_products']='Todos los productos';
 
-$lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
+$lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
+
+$lang['shop']['cart']='Carrito';
 
 $lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
 
@@ -298,8 +122,6 @@ $lang['shop']['send_order_and_checkout']='Enviar pedido y pagar';
 
 $lang['shop']['explain_send_order_and_checkout']='Ahora que se ha procesado su pedido, por favor, proceda a su pago.';
 
-$lang['shop']['checkout_order']='Pagar pedido';
-
 $lang['shop']['cancel_order']='Cancelar pedido';
 
 $lang['shop']['error_no_proccess_payment_send_email']='Error: no se pudo procesar el pago ni el envio del email de respuesta';
@@ -323,6 +145,8 @@ $lang['shop']['if_error_send_email_to']='Si hubo algún error, por favor, envíe
 $lang['shop']['url_bill_for_admin']='Enlace de factura para administrador';
 
 $lang['shop']['click_here_for_download_bill']='Pulse aquí para descargar factura';
+
+$lang['shop']['orders']='Pedidos';
 
 $lang['shop']['new_order']='Nuevo pedido';
 
@@ -352,13 +176,13 @@ $lang['shop']['send_address_equal_shopping_address']='¿Dirección de envío igu
 
 $lang['shop']['register_user_if_not_register']='Se le creará un usuario, ya que usted no está registrado.';
 
-$lang['shop']['observations']='Observaciones';
-
 $lang['shop']['observations_text']='Observaciones';
 
 $lang['shop']['terms_of_sale']='Condiciones de venta';
 
 $lang['shop']['accept_terms_of_sale_push_send_button']='Usted acepta los terminos de venta al pulsar en el botón enviar';
+
+$lang['shop']['conditions']='Terminos de venta';
 
 $lang['shop']['price_transport']='Portes';
 
@@ -366,7 +190,11 @@ $lang['shop']['order_sended_with']='Pedido enviado por';
 
 $lang['shop']['price_total_transport']='Portes totales';
 
+$lang['shop']['shipping_costs']='Cargos en pago';
+
 $lang['shop']['payment_with']='Pagado con';
+
+$lang['shop']['price_payment']='Cargo del modo de pago';
 
 $lang['shop']['total_price_with_discounts']='Precio total con descuentos';
 
@@ -380,9 +208,219 @@ $lang['shop']['new_taxes_calculated']='Nuevos impuestos calculados';
 
 $lang['shop']['discount_taxes']='Descuento en impuestos';
 
-$lang['shop']['all_products']='Todos los productos';
+$lang['shop']['config_shop']='Configuración de su tienda';
 
-$lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
+$lang['shop']['products_categories']='Categorías de productos';
+
+$lang['shop']['products']='Productos';
+
+$lang['shop']['standard_options_for_products']='Opciones estandard para productos';
+
+$lang['shop']['gateways_payment']='Pasarelas de pago';
+
+$lang['shop']['discount_groups']='Grupos de descuento';
+
+$lang['shop']['countries']='Paises';
+
+$lang['shop']['currency']='Moneda';
+
+$lang['shop']['plugins_shop']='Plugins de tienda';
+
+$lang['shop']['edit_config_shop']='Editar configuración de tienda';
+
+$lang['shop']['new_products']='Nuevos productos';
+
+$lang['shop']['listing']='Listados';
+
+$lang['shop']['bestsellers']='Más vendidos';
+
+$lang['shop']['cool']='Recomendado';
+
+$lang['shop']['num_news']='Novedades';
+
+$lang['shop']['yes_taxes']='¿Con impuestos incluidos?';
+
+$lang['shop']['yes_transport']='¿Necesitan transporte los productos?';
+
+$lang['shop']['type_index']='Tipo de página principal';
+
+$lang['shop']['explain_discounts_page']='Página donde se definen los descuentos';
+
+$lang['shop']['ssl_url']='¿Este dominio tiene SSL?. Elija sí, si su url base por defecto no tiene SSL';
+
+$lang['shop']['title_shop']='Titulo de la tienda';
+
+$lang['shop']['description_shop']='Descripción de la tienda';
+
+$lang['shop']['head_bill']='Cabecera de las facturas';
+
+$lang['shop']['num_begin_bill']='Número de comienzo de factura';
+
+$lang['shop']['elements_num_bill']='Número de elementos de la fáctura (si el número de factura sobrepasa estos elementos, tendrá un número de elementos de acuerdo a la cifra)';
+
+$lang['shop']['bill_data_shop']='Datos de su empresa que aparecerá en la fáctura';
+
+$lang['shop']['footer_bill']='Pie de la factura';
+
+$lang['shop']['view_only_mode']='Modo mostrador';
+
+$lang['shop']['edit_categories_shop']='Editar categorias de tienda';
+
+$lang['shop']['subcat']='Elija categoría padre';
+
+$lang['shop']['description']='Descripción';
+
+$lang['shop']['order_cats']='Ordenar categorías';
+
+$lang['shop']['no_category_defined']='Categoría sin definir';
+
+$lang['shop']['edit_products_from_category']='Editar productos de la categoría';
+
+$lang['shop']['choose_category']='Elegir categoría';
+
+$lang['shop']['description_short']='Descripción breve del producto, útil para listados';
+
+$lang['shop']['idcat']='Categoría de tienda';
+
+$lang['shop']['special_offer']='Oferta especial';
+
+$lang['shop']['stock']='Stock';
+
+$lang['shop']['about_order']='Bajo pedido';
+
+$lang['shop']['extra_options']='Opciones extra';
+
+$lang['shop']['weight']='Peso';
+
+$lang['shop']['num_sold']='Número de veces vendido';
+
+$lang['shop']['edit_options_for_product']='Editar opciones para el producto';
+
+$lang['shop']['question']='Pregunta para hacer al cliente sobre las opciones';
+
+$lang['shop']['options_product']='Opciones (separadas por |)';
+
+$lang['shop']['add_options_to_product']='Añadir opciones al producto';
+
+$lang['shop']['option_type']='Tipo de opción';
+
+$lang['shop']['option_required']='Opción requerida';
+
+$lang['shop']['edit_taxes']='Editar impuestos';
+
+$lang['shop']['zones_taxes']='Zonas de impuestos';
+
+$lang['shop']['percent']='Porcentaje';
+
+$lang['shop']['edit_transport']='Editar transporte';
+
+$lang['shop']['zones_transport']='Zonas de transporte';
+
+$lang['shop']['type_transport']='Tipo de transporte';
+
+$lang['shop']['type_by_weight']='Por peso';
+
+$lang['shop']['type_by_price']='Por precio';
+
+$lang['shop']['countries_zones_transport']='Areas de transporte';
+
+$lang['shop']['countries_zones_taxes']='Areas de impuestos';
+
+$lang['shop']['countries_zones']='Zonas';
+
+$lang['shop']['country_code']='Código de zona';
+
+$lang['shop']['other_countries']='Abarcar todos los países que no estén en ninguna otra zona';
+
+$lang['shop']['go_back_to_transport']='Regresar a transporte';
+
+$lang['shop']['go_back_to_taxes']='Regresar a impuestos';
+
+$lang['shop']['price_transport_for']='Precio de transporte para';
+
+$lang['shop']['min_price']='Precio total de pedido';
+
+$lang['shop']['code_payment']='Código php';
+
+$lang['shop']['group_shop']='Grupo';
+
+$lang['shop']['discount']='Descuento';
+
+$lang['shop']['taxes_for_group']='Descuentos en impuestos';
+
+$lang['shop']['transport_for_group']='Descuento en portes';
+
+$lang['shop']['shipping_costs_for_group']='Descuento en pasarela de pago';
+
+$lang['shop']['total_price']='Precio total';
+
+$lang['shop']['payment_orders']='Pedidos pagados';
+
+$lang['shop']['no_payment_orders']='Pedidos no pagados';
+
+$lang['shop']['edit_image_product']='Editar imagen de producto';
+
+$lang['shop']['add_new_images']='Añadir nuevas imágenes';
+
+$lang['shop']['principal_photo']='Imagen principal';
+
+$lang['shop']['code_country']='Código de país';
+
+$lang['shop']['idzone_taxes']='Zona de impuestos';
+
+$lang['shop']['idzone_transport']='Zonas de transporte';
+
+$lang['shop']['name_enterprise']='Nombre de empresa';
+
+$lang['shop']['fiscal_identity']='Identidad fiscal';
+
+$lang['shop']['client']='Cliente';
+
+$lang['shop']['num_bill']='Número de factura';
+
+$lang['shop']['value']='Valor';
+
+$lang['shop']['final_value']='Valor final';
+
+$lang['shop']['transport_price']='Portes';
+
+$lang['shop']['units']='Unidades';
+
+$lang['shop']['symbol']='Símbolo';
+
+$lang['shop']['modify_change_currencies']='Modificar cambios entre monedas';
+
+$lang['shop']['explain_change_value']='Indique que valor es 1 unidad de la moneda elegida en relación a';
+
+$lang['shop']['plugin_admin']='Administración de plugins';
+
+$lang['shop']['element_choice']='Elegir elemento';
+
+$lang['shop']['order_plugins']='Ordenar plugins';
+
+$lang['shop']['edit_plugin']='Edit plugin';
+
+$lang['shop']['change_shop_category']='Cambiar categoría de tienda';
+
+$lang['shop']['category']='Categoría';
+
+$lang['shop']['modify_products']='Modificar productos';
+
+$lang['shop']['subcat_products']='Subcategorías de productos';
+
+$lang['shop']['edit_cat_product']='Editar categorías de producto';
+
+$lang['shop']['add__select_options_to_product']='Añadir opciones para seleccionar para este producto';
+
+$lang['shop']['add__select_prices_for_transport']='Añadir tabla de precios para el transporte';
+
+$lang['shop']['add__user_to_group_shop']='Añadir usuario a grupo de descuento';
+
+$lang['shop']['obtain_bill']='Obtener factura';
+
+$lang['shop']['admin_external_plugin']='Administrar plugin externo';
+
+$lang['shop']['edit_plugin_external']='Editar plugin externo';
 
 $lang['shop']['offer']='Oferta';
 
@@ -392,35 +430,7 @@ $lang['shop']['no_exists_product']='No existe este producto';
 
 $lang['shop']['this_product_is_not_found']='No se encuentra este producto';
 
-$lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
-
-$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
-
-$lang['shop']['success_buy']='Se añadio este producto al carrito de la compra';
-
-$lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
-
-$lang['shop']['included']='Incluido';
-
-$lang['shop']['total_price_with_taxes']='Precio total con impuestos';
-
-$lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='El país seleccionado es diferente al país donde se aplican impuestos por defecto. No hay impuestos añadidos';
-
-$lang['shop']['price_with_taxes']='Precio con impuestos';
-
-$lang['shop']['taxes_no_included']='Impuestos no incluidos';
-
-$lang['shop']['base_price']='Precio base';
-
-$lang['shop']['choose_cat']='Elegir categoría';
-
-$lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
-
-$lang['shop']['apply_discounts']='Aplicar descuentos';
-
-$lang['shop']['buy_product_units']='Unidades';
-
-$lang['shop']['warning_products_with_options']='Cuidado: se han detectado varios productos que tienen opciones para elegir. En este modo usted no puede especificar opciones para sus productos.';
+$lang['shop']['no_exists_address']='no_exists_address';
 
 $lang['shop']['in_stock']='En stock';
 
@@ -428,25 +438,25 @@ $lang['shop']['served_on_request']='Servido bajo pedido';
 
 $lang['shop']['pvp']='PVP';
 
+$lang['shop']['weight_in_kg']='Peso en kilogramos';
+
 $lang['shop']['kg']='Kg';
+
+$lang['shop']['see_product']='Ver detalles';
 
 $lang['shop']['buy_product']='Comprar producto';
 
 $lang['shop']['buying_product']='Comprando producto';
 
-$lang['shop']['weight_in_kg']='Peso en kilogramos';
-
-$lang['shop']['see_product']='Ver detalles';
+$lang['shop']['success_buy']='Se añadio este producto al carrito de la compra';
 
 $lang['shop']['no_products_in_index']='No hay productos para mostrar';
+
+$lang['shop']['see_products']='Ver productos';
 
 $lang['shop']['select_category_shop']='Seleccionar categoría';
 
 $lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
-
-$lang['shop']['see_products']='Ver productos';
-
-$lang['shop']['see_more']='Ver más';
 
 $lang['shop']['profile_shop']='Perfil de cliente';
 
@@ -470,19 +480,11 @@ $lang['shop']['dir_transport']='Dirección de envio';
 
 $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
 
-$lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
+$lang['shop']['see_more']='Ver más';
 
-$lang['shop']['options_for_product']='Opciones para este producto';
+$lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
-$lang['shop']['add_extra_price']='Se añadirá el siguiente valor al precio original';
-
-$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
-
-$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
-
-$lang['shop']['invoice_num']='Número de factura';
-
-$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+$lang['shop']['base_price']='Precio base';
 
 $lang['shop']['change_currency']='Cambiar moneda';
 

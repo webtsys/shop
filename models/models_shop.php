@@ -734,7 +734,7 @@ $model['address_transport']->components['zip_code_transport']=new CharField(255)
 $model['address_transport']->components['phone_transport']=new CharField(255);
 $model['address_transport']->components['city_transport']=new CharField(255);
 $model['address_transport']->components['region_transport']=new CharField(255);
-$model['address_transport']->components['country_transport']=new IntegerField(11);
+$model['address_transport']->components['country_transport']=new ForeignKeyField('country_shop', 11);
 $model['address_transport']->components['zone_transport']=new ForeignKeyField('zone_shop', 11);
 
 class payment_form extends Webmodel {
@@ -879,10 +879,10 @@ $model['order_shop']->components['iduser']=new IntegerField(11);
 $model['order_shop']->components['discount']=new CharField(255);
 $model['order_shop']->components['discount_percent']=new PercentField();
 
-$model['order_shop']->components['tax']=new CharField(255);
+/*$model['order_shop']->components['tax']=new CharField(255);
 $model['order_shop']->components['tax_percent']=new PercentField();
 
-$model['order_shop']->components['tax_discount_percent']=new PercentField();
+$model['order_shop']->components['tax_discount_percent']=new PercentField();*/
 
 $model['order_shop']->components['price_transport']=new MoneyField();
 $model['order_shop']->components['transport_discount_percent']=new PercentField();
@@ -1031,7 +1031,7 @@ $model['group_shop']=new group_shop();
 $model['group_shop']->components['name']=new I18nField(new CharField(255));
 $model['group_shop']->components['name']->required=1;
 $model['group_shop']->components['discount']=new PercentField(11);
-$model['group_shop']->components['taxes_for_group']=new PercentField(11);
+//$model['group_shop']->components['taxes_for_group']=new PercentField(11);
 $model['group_shop']->components['transport_for_group']=new PercentField(11);
 $model['group_shop']->components['shipping_costs_for_group']=new PercentField(11);
 
@@ -1524,9 +1524,15 @@ $model['user_shop']->set_component('format_time', 'IntegerField', array(11));
 $model['user_shop']->set_component('timezone', 'ChoiceField', array(35, 'string', array(), MY_TIMEZONE));
 $model['user_shop']->set_component('ampm', 'ChoiceField', array(10, 'string', array('H:i:s', 'h:i:s A'), MY_TIMEZONE));
 
-$arr_fields_edit[]='fax';
+class ConfigShop {
 
-$arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1);
+	static public $arr_fields_address=array('name', 'last_name', 'nif', 'address', 'city', 'region', 'country', 'zip_code', 'phone', 'fax');
+	static public $arr_fields_transport=array('name_transport', 'last_name_transport', 'address_transport', 'city_transport', 'region_transport', 'country_transport', 'zip_code_transport', 'phone_transport');
+	static public $num_address_transport=5;
+
+}
+
+$arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1, 'yes_config' => 1);
 
 $arr_module_sql['shop']='shop.sql';
 

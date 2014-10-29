@@ -1,6 +1,7 @@
 <?php
 
 load_model('shop');
+load_config('shop');
 load_libraries(array('login'));
 
 $model['user_shop']->create_form();
@@ -8,6 +9,8 @@ $model['user_shop']->create_form();
 $model['user_shop']->forms['country']->form='SelectModelForm';
 
 $model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+
+$model['address_transport']->create_form();
 
 class CartSwitchClass extends ControllerSwitchClass 
 {
@@ -143,9 +146,9 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		$cont_index=ob_get_contents();
 			
-			ob_end_clean();
+		ob_end_clean();
 			
-			echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
 	}
 	
 	public function save_address()
@@ -161,6 +164,10 @@ class CartSwitchClass extends ControllerSwitchClass
 			$model['user_shop']->components['password']->required=0;
 			$model['user_shop']->components['token_client']->required=0;
 			$model['user_shop']->components['token_recovery']->required=0;
+			
+			//$model['user_shop']->unset_components(ConfigShop::$arr_fields_address);
+			
+			$model['user_shop']->arr_fields_updated=&ConfigShop::$arr_fields_address;
 		
 			if($model['user_shop']->update($_POST, 'where IdUser_shop='.$_SESSION['IdUser_shop']))
 			{
@@ -231,12 +238,16 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function set_transport()
 	{
 	
-		global $config_shop, $base_url;
+		global $config_shop, $base_url, $model;
 		
 		if($config_shop['no_transport']==0)
 		{
 		
 			ob_start();
+			
+			$arr_transport=$model['address_transport']->select_to_array('limit '.ConfigShop::$num_address_transport, array());
+			
+			echo load_view(array($arr_transport), 'shop/forms/transportform');
 			
 			$cont_index=ob_get_contents();
 			
