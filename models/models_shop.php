@@ -630,7 +630,7 @@ SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
 $model['country_shop']->components['code']=new CharField(25);
 $model['country_shop']->components['code']->required=1;
 
-$model['country_shop']->components['idzone_taxes']=new ForeignKeyField('zone_shop');
+//$model['country_shop']->components['idzone_taxes']=new ForeignKeyField('zone_shop');
 $model['country_shop']->components['idzone_transport']=new ForeignKeyField('zone_shop');
 
 $model['country_user_shop']=new Webmodel('country_user_shop');
@@ -679,7 +679,7 @@ $model['config_shop']->components['num_news']->required=1;*/
 $field_conditions=new TextHTMLField();
 $model['config_shop']->components['conditions']=new I18nField($field_conditions);
 //create_field_multilang('config_shop', 'conditions', $field_conditions, 0);
-//$model['config_shop']->components['yes_transport']=new BooleanField();
+$model['config_shop']->components['no_transport']=new BooleanField();
 $model['config_shop']->components['type_index']=new CharField(25);
 //$model['config_shop']->components['ssl_url']=new BooleanField();
 
@@ -1507,22 +1507,24 @@ $model['user_shop']->set_component('token_client', 'CharField', array(255), 1);
 
 $model['user_shop']->set_component('token_recovery', 'CharField', array(255), 1);
 
-$model['user_shop']->set_component('name', 'CharField', array(255));
-$model['user_shop']->set_component('last_name', 'CharField', array(255));
-$model['user_shop']->set_component('address', 'CharField', array(255));
-$model['user_shop']->set_component('zip_code', 'CharField', array(255));
-$model['user_shop']->set_component('region', 'CharField', array(255));
-$model['user_shop']->set_component('city', 'CharField', array(255));
-$model['user_shop']->set_component('country', 'IntegerField', array(255));
-$model['user_shop']->set_component('phone', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('name', 'CharField', array(255), 1);
+$model['user_shop']->set_component('last_name', 'CharField', array(255), 1);
+$model['user_shop']->set_component('address', 'CharField', array(255), 1);
+$model['user_shop']->set_component('zip_code', 'CharField', array(255), 1);
+$model['user_shop']->set_component('region', 'CharField', array(255), 1);
+$model['user_shop']->set_component('city', 'CharField', array(255), 1);
+$model['user_shop']->set_component('country', 'IntegerField', array(), 1);
+$model['user_shop']->set_component('phone', 'CharField', array(255), 1);//Only for special effects...
 $model['user_shop']->set_component('fax', 'CharField', array(255));//Only for special effects...
-$model['user_shop']->set_component('nif', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('nif', 'CharField', array(255), 1);//Only for special effects...
 $model['user_shop']->set_component('enterprise_name', 'CharField', array(255));//Only for special effects...
 $model['user_shop']->set_component('last_connection', 'IntegerField', array(11));
 $model['user_shop']->set_component('format_date', 'ChoiceField', array(10, 'string', array('d-m-Y', 'Y-m-d')));
 $model['user_shop']->set_component('format_time', 'IntegerField', array(11));
 $model['user_shop']->set_component('timezone', 'ChoiceField', array(35, 'string', array(), MY_TIMEZONE));
 $model['user_shop']->set_component('ampm', 'ChoiceField', array(10, 'string', array('H:i:s', 'h:i:s A'), MY_TIMEZONE));
+
+$arr_fields_edit[]='fax';
 
 $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1);
 

@@ -5,6 +5,10 @@ load_libraries(array('login'));
 
 $model['user_shop']->create_form();
 
+$model['user_shop']->forms['country']->form='SelectModelForm';
+
+$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+
 class CartSwitchClass extends ControllerSwitchClass 
 {
 
@@ -19,7 +23,7 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		$this->login=new LoginClass('user_shop', 'email', 'password', 'token_client', $arr_user_session=array(), $arr_user_insert=array());
 		
-		$this->login->url_insert=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'get_address_save'));
+		$this->login->url_insert=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'get_user_save'));
 	
 		$this->login->url_login=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'login'));
 	
@@ -128,8 +132,11 @@ class CartSwitchClass extends ControllerSwitchClass
 		else
 		{
 		
-			//Put address. 
+			$arr_user=$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
+		
+			SetValuesForm($arr_user, $model['user_shop']->forms, $show_error=1);
 			
+			echo load_view(array(), 'shop/forms/addressform');
 			
 		
 		}
@@ -141,8 +148,48 @@ class CartSwitchClass extends ControllerSwitchClass
 			echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
 	}
 	
+	public function save_address()
+	{
+		global $model;
+		
+		if($this->login->check_login())
+		{
 	
-	public function get_address_save()
+			ob_start();
+			
+			$model['user_shop']->components['email']->required=0;
+			$model['user_shop']->components['password']->required=0;
+			$model['user_shop']->components['token_client']->required=0;
+			$model['user_shop']->components['token_recovery']->required=0;
+		
+			if($model['user_shop']->update($_POST, 'where IdUser_shop='.$_SESSION['IdUser_shop']))
+			{
+			
+				$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'transport', array('action' => 'set_transport'));
+			
+				$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']	['press_here_redirecting']);
+			
+			}
+			else
+			{
+			
+				SetValuesForm($_POST, $model['user_shop']->forms, $show_error=1);
+			
+				echo load_view(array(), 'shop/forms/addressform');
+			
+			}
+			
+			$cont_index=ob_get_contents();
+				
+			ob_end_clean();
+			
+			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			
+		}
+	
+	}
+	
+	public function get_user_save()
 	{
 		global $model, $base_url, $lang;
 	
@@ -184,7 +231,26 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function set_transport()
 	{
 	
+		global $config_shop, $base_url;
 		
+		if($config_shop['no_transport']==0)
+		{
+		
+			ob_start();
+			
+			$cont_index=ob_get_contents();
+			
+			ob_end_clean();
+		
+			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+		
+		}
+		else
+		{
+		
+			$this->simple_redirect(make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('action' => 'checkout')));
+		
+		}
 	
 	}
 	
@@ -223,10 +289,6 @@ class CartSwitchClass extends ControllerSwitchClass
 		}
 		else
 		{
-		
-			$arr_block=select_view(array('shop'));
-	
-			$arr_block='/none';
 			
 			ob_start();
 		
@@ -236,7 +298,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			ob_end_clean();
 			
-			echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
 		
 		}
 	
@@ -244,9 +306,6 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function recovery_password()
 	{
-		$arr_block=select_view(array('shop'));
-	
-		$arr_block='/none';
 			
 		ob_start();
 	
@@ -256,14 +315,22 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 		
-		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
 	
 	}
 	
 	public function recovery_password_send()
 	{
 	
+		ob_start();
+	
 		$this->login->recovery_password();
+		
+		$cont_index=ob_get_contents();
+		
+		ob_end_clean();
+		
+		$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
 	
 	}
 
