@@ -7,6 +7,36 @@ load_lang('shop');
 load_lang('common');
 load_lang('user');
 
+//Users shop
+//When delete, don't delete, only leave the data how user deleted.
+
+$model['user_shop']=new Webmodel('user_shop');
+
+$model['user_shop']->set_component('email', 'CharField', array(255), 1);
+
+$model['user_shop']->set_component('password', 'PasswordField', array(255), 1);
+
+$model['user_shop']->set_component('token_client', 'CharField', array(255), 1);
+
+$model['user_shop']->set_component('token_recovery', 'CharField', array(255), 1);
+
+$model['user_shop']->set_component('name', 'CharField', array(255), 1);
+$model['user_shop']->set_component('last_name', 'CharField', array(255), 1);
+$model['user_shop']->set_component('address', 'CharField', array(255), 1);
+$model['user_shop']->set_component('zip_code', 'CharField', array(255), 1);
+$model['user_shop']->set_component('region', 'CharField', array(255), 1);
+$model['user_shop']->set_component('city', 'CharField', array(255), 1);
+$model['user_shop']->set_component('country', 'IntegerField', array(), 1);
+$model['user_shop']->set_component('phone', 'CharField', array(255), 1);//Only for special effects...
+$model['user_shop']->set_component('fax', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('nif', 'CharField', array(255), 1);//Only for special effects...
+$model['user_shop']->set_component('enterprise_name', 'CharField', array(255));//Only for special effects...
+$model['user_shop']->set_component('last_connection', 'IntegerField', array(11));
+$model['user_shop']->set_component('format_date', 'ChoiceField', array(10, 'string', array('d-m-Y', 'Y-m-d')));
+$model['user_shop']->set_component('format_time', 'IntegerField', array(11));
+$model['user_shop']->set_component('timezone', 'ChoiceField', array(35, 'string', array(), MY_TIMEZONE));
+$model['user_shop']->set_component('ampm', 'ChoiceField', array(10, 'string', array('H:i:s', 'h:i:s A'), MY_TIMEZONE));
+
 class product extends Webmodel {
 
 	function __construct()
@@ -469,7 +499,7 @@ $model['transport']->components['name']->required=1;
 $model['transport']->components['country']=new ForeignKeyField('zone_shop');
 $model['transport']->components['country']->required=1;
 
-$model['transport']->components['type']=new ChoiceField($size=255, $type='integer', $arr_values=array(0, 1), $default_value=0);
+$model['transport']->components['type']=new ChoiceField($size=11, $type='integer', $arr_values=array(0, 1), $default_value=0);
 $model['transport']->components['type']->required=0;
 
 class price_transport extends Webmodel {
@@ -725,17 +755,17 @@ class address_transport extends Webmodel {
 
 $model['address_transport']=new address_transport();
 
-$model['address_transport']->components['iduser']=new IntegerField();
-$model['address_transport']->components['name_transport']=new CharField(255);
-$model['address_transport']->components['last_name_transport']=new CharField(255);
-$model['address_transport']->components['enterprise_name_transport']=new CharField(255);
-$model['address_transport']->components['address_transport']=new CharField(255);
-$model['address_transport']->components['zip_code_transport']=new CharField(255);
-$model['address_transport']->components['phone_transport']=new CharField(255);
-$model['address_transport']->components['city_transport']=new CharField(255);
-$model['address_transport']->components['region_transport']=new CharField(255);
-$model['address_transport']->components['country_transport']=new ForeignKeyField('country_shop', 11);
-$model['address_transport']->components['zone_transport']=new ForeignKeyField('zone_shop', 11);
+$model['address_transport']->set_component('iduser', 'ForeignKeyField', array('user_shop'), 1);
+$model['address_transport']->set_component('name_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('last_name_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('enterprise_name_transport', 'CharField', array(255));
+$model['address_transport']->set_component('address_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('zip_code_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('phone_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('city_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('region_transport', 'CharField', array(255), 1);
+$model['address_transport']->set_component('country_transport', 'ForeignKeyField', array('country_shop', 11), 1);
+$model['address_transport']->set_component('zone_transport', 'ForeignKeyField', array('zone_shop', 11));
 
 class payment_form extends Webmodel {
 
@@ -1493,36 +1523,6 @@ class PluginClass {
 	}
 
 }
-
-//Users shop
-//When delete, don't delete, only leave the data how user deleted.
-
-$model['user_shop']=new Webmodel('user_shop');
-
-$model['user_shop']->set_component('email', 'CharField', array(255), 1);
-
-$model['user_shop']->set_component('password', 'PasswordField', array(255), 1);
-
-$model['user_shop']->set_component('token_client', 'CharField', array(255), 1);
-
-$model['user_shop']->set_component('token_recovery', 'CharField', array(255), 1);
-
-$model['user_shop']->set_component('name', 'CharField', array(255), 1);
-$model['user_shop']->set_component('last_name', 'CharField', array(255), 1);
-$model['user_shop']->set_component('address', 'CharField', array(255), 1);
-$model['user_shop']->set_component('zip_code', 'CharField', array(255), 1);
-$model['user_shop']->set_component('region', 'CharField', array(255), 1);
-$model['user_shop']->set_component('city', 'CharField', array(255), 1);
-$model['user_shop']->set_component('country', 'IntegerField', array(), 1);
-$model['user_shop']->set_component('phone', 'CharField', array(255), 1);//Only for special effects...
-$model['user_shop']->set_component('fax', 'CharField', array(255));//Only for special effects...
-$model['user_shop']->set_component('nif', 'CharField', array(255), 1);//Only for special effects...
-$model['user_shop']->set_component('enterprise_name', 'CharField', array(255));//Only for special effects...
-$model['user_shop']->set_component('last_connection', 'IntegerField', array(11));
-$model['user_shop']->set_component('format_date', 'ChoiceField', array(10, 'string', array('d-m-Y', 'Y-m-d')));
-$model['user_shop']->set_component('format_time', 'IntegerField', array(11));
-$model['user_shop']->set_component('timezone', 'ChoiceField', array(35, 'string', array(), MY_TIMEZONE));
-$model['user_shop']->set_component('ampm', 'ChoiceField', array(10, 'string', array('H:i:s', 'h:i:s A'), MY_TIMEZONE));
 
 class ConfigShop {
 

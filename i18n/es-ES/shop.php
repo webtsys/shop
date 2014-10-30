@@ -76,6 +76,8 @@ $lang['shop']['all_products']='Todos los productos';
 
 $lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
 
+$lang['shop']['cannot_add_more_address']='cannot_add_more_address';
+
 $lang['shop']['cart']='Carrito';
 
 $lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
@@ -430,7 +432,13 @@ $lang['shop']['no_exists_product']='No existe este producto';
 
 $lang['shop']['this_product_is_not_found']='No se encuentra este producto';
 
+$lang['shop']['choose_address_transport']='choose_address_transport';
+
+$lang['shop']['explain_address_transport']='explain_address_transport';
+
 $lang['shop']['no_exists_address']='no_exists_address';
+
+$lang['shop']['add_new_address']='add_new_address';
 
 $lang['shop']['in_stock']='En stock';
 
@@ -483,6 +491,8 @@ $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna direc
 $lang['shop']['see_more']='Ver más';
 
 $lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
+
+$lang['shop']['add_new_cart']='add_new_cart';
 
 $lang['shop']['base_price']='Precio base';
 

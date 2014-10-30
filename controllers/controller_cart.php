@@ -12,6 +12,10 @@ $model['user_shop']->forms['country']->parameters=array('country', '', '', 'coun
 
 $model['address_transport']->create_form();
 
+$model['address_transport']->forms['country_transport']->form='SelectModelForm';
+
+$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+
 class CartSwitchClass extends ControllerSwitchClass 
 {
 
@@ -240,35 +244,178 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		global $config_shop, $base_url, $model;
 		
-		if($config_shop['no_transport']==0)
+		if($this->login->check_login())
 		{
 		
-			ob_start();
+			if($config_shop['no_transport']==0)
+			{
 			
-			$arr_transport=$model['address_transport']->select_to_array('limit '.ConfigShop::$num_address_transport, array());
+				ob_start();
+				
+				$arr_transport=$model['address_transport']->select_to_array('where iduser='.$_SESSION['IdUser_shop'].' limit '.ConfigShop::$num_address_transport, array('IdAddress_transport', 'address_transport', 'region_transport'));
+				
+				echo load_view(array($arr_transport), 'shop/forms/transportform');
+				
+				$cont_index=ob_get_contents();
+				
+				ob_end_clean();
 			
-			echo load_view(array($arr_transport), 'shop/forms/transportform');
+				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
 			
-			$cont_index=ob_get_contents();
+			}
+			else
+			{
 			
-			ob_end_clean();
-		
-			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
-		
-		}
-		else
-		{
-		
-			$this->simple_redirect(make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('action' => 'checkout')));
-		
+				$this->simple_redirect(make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('action' => 'checkout')));
+			
+			}
+			
 		}
 	
 	}
 	
-	public function set_transport_save()
+	public function save_transport_address()
 	{
 	
+		global $model;
 		
+		if($this->login->check_login())
+		{
+	
+			ob_start();
+			
+			$model['address_transport']->arr_fields_updated=&ConfigShop::$arr_fields_transport;
+			
+			ConfigShop::$arr_fields_transport[]='iduser';
+		
+			$_POST['iduser']=$_SESSION['IdUser_shop'];
+		
+			if($model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'])<5)
+			{
+				if($model['address_transport']->insert($_POST))
+				{
+				
+					$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'transport', array('action' => 'set_transport'));
+				
+					$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']	['press_here_redirecting']);
+				
+				}
+				else
+				{
+					
+					ModelForm::SetValuesForm($_POST, $model['address_transport']->forms, $show_error=1);
+				
+					echo load_view(array($arr_transport=array(), 1), 'shop/forms/transportform');
+				
+				}
+				
+			}
+			else
+			{
+			
+				echo '<p>'.$lang['shop']['cannot_add_more_address'].'</p>';
+			
+			}
+			
+			$cont_index=ob_get_contents();
+				
+			ob_end_clean();
+			
+			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			
+		}
+	
+	}
+	
+	public function save_choose_address_transport()
+	{
+	
+		if($this->login->check_login())
+		{
+	
+			global $model;
+		
+			settype($_GET['idaddress'], 'integer');
+			
+			if($model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
+			{
+			
+				$_SESSION['idaddress']=$_GET['idaddress'];
+				
+				//ob_start();
+				
+				//Now, select transport
+				
+				$this->simple_redirect($this->get_method_url('set_method_transport', 'cart', array()));
+				
+				/*$cont_index=ob_get_contents();
+					
+				ob_end_clean();
+				
+				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);*/
+				
+				
+			
+			}
+			else
+			{
+			
+				$this->simple_redirect($this->get_method_url('index', 'cart', array()));
+			
+			}
+			
+		}
+	}
+	
+	public function set_method_transport()
+	{
+	
+		global $model;
+	
+		if($this->login->check_login() && isset($_SESSION['idaddress']))
+		{
+	
+			ob_start();
+				
+			//Now, load country_shop and zone_shop.
+			
+			/*
+			$this->fields_related_model=array();
+			//Representative field for related model...
+			$this->name_field_to_field='';
+			*/
+			
+			//$model['address_transport']->components['country_transport']->name_field_to_field='name';
+			$model['address_transport']->components['country_transport']->fields_related_model=array('idzone_transport');
+			
+			$address_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], array('country_transport'));
+			
+			settype($address_transport['country_transport'], 'integer');
+			
+			if($address_transport['country_transport']>0)
+			{
+			
+				//Choose zone..
+				
+				//$zone_transport=$model['zone_shop']->select_a_row('where IdZone_shop='.$address_transport['country_shop_idzone_transport'], array('));
+				
+				$arr_transport=$model['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
+			
+				print_r($arr_transport);
+			
+			}
+			
+			//Load zone_transport
+			
+			//$zone_transport=$model['zone_transport']->
+			
+			$cont_index=ob_get_contents();
+				
+			ob_end_clean();
+			
+			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			
+		}
 	
 	}
 	

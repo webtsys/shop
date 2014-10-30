@@ -76,6 +76,8 @@ $lang['shop']['all_products']='All products';
 
 $lang['shop']['desc_all_products']='Here, you will find all products.';
 
+$lang['shop']['cannot_add_more_address']='cannot_add_more_address';
+
 $lang['shop']['cart']='Cart';
 
 $lang['shop']['explain_buying_without_register']='You are not registered. You can choose between register for buying or login if you have an user. When you login, will be redirected to cart for finish the order.';
@@ -430,7 +432,13 @@ $lang['shop']['no_exists_product']='Don&#39;t exists the product';
 
 $lang['shop']['this_product_is_not_found']='The product is not found';
 
+$lang['shop']['choose_address_transport']='choose_address_transport';
+
+$lang['shop']['explain_address_transport']='explain_address_transport';
+
 $lang['shop']['no_exists_address']='no_exists_address';
+
+$lang['shop']['add_new_address']='add_new_address';
 
 $lang['shop']['in_stock']='In stock';
 
@@ -483,6 +491,8 @@ $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Pl
 $lang['shop']['see_more']='See more';
 
 $lang['shop']['error_buy_ajax']='Error: Ajax report a buying error';
+
+$lang['shop']['add_new_cart']='add_new_cart';
 
 $lang['shop']['base_price']='base_price';
 
