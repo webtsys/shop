@@ -401,7 +401,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 				$arr_transport=$model['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
 			
-				print_r($arr_transport);
+				//print_r($arr_transport);
 			
 			}
 			

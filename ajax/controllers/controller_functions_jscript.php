@@ -140,7 +140,7 @@ function buy_product(idproduct)
 						else
 						{
 
-							alert('<?php echo $lang['shop']['error_buy_ajax']; ?>');
+							alert('<?php echo $lang['shop']['error_buy_ajax']; ?> '+JSON.stringify(data));
 
 							$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo $lang['shop']['error_buy_ajax']; ?></span>');
 
