@@ -3,6 +3,8 @@
 load_model('shop');
 load_config('shop');
 load_libraries(array('login'));
+load_lang('shop');
+load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
 
 $model['user_shop']->create_form();
 
@@ -49,9 +51,6 @@ class CartSwitchClass extends ControllerSwitchClass
 
 		$arr_block='/none';
 
-		load_lang('shop');
-		
-		load_libraries(array('config_shop', 'class_cart'), $this->base_path.'modules/shop/libraries/');
 		load_libraries(array('send_email'));
 		
 		$cart=new CartClass();
@@ -395,6 +394,10 @@ class CartSwitchClass extends ControllerSwitchClass
 			if($address_transport['country_transport']>0)
 			{
 			
+				$cart=new CartClass(0);
+				
+				list($num_product, $total_price_product, $total_weight_product)=$cart->obtain_simple_cart();
+			
 				//Choose zone..
 				
 				//$zone_transport=$model['zone_shop']->select_a_row('where IdZone_shop='.$address_transport['country_shop_idzone_transport'], array('));
@@ -402,6 +405,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				$arr_transport=$model['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
 			
 				//print_r($arr_transport);
+				echo load_view(array($arr_transport, $total_price_product, $total_weight_product), 'shop/forms/choosetransport'); 
 			
 			}
 			
@@ -419,10 +423,102 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	}
 	
+	public function save_choose_transport()
+	{
+	
+		if($this->login->check_login())
+		{
+	
+			global $model;
+		
+			settype($_GET['idtransport'], 'integer');
+			
+			if($model['transport']->select_count('where IdTransport='.$_GET['idtransport'])==1)
+			{
+			
+				$_SESSION['idtransport']=$_GET['idtransport'];
+				
+				//ob_start();
+				
+				//Now, select transport
+				
+				$this->simple_redirect($this->get_method_url('checkout', 'cart', array()));
+				
+				/*$cont_index=ob_get_contents();
+					
+				ob_end_clean();
+				
+				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);*/
+				
+				
+			
+			}
+			else
+			{
+			
+				$this->simple_redirect($this->get_method_url('index', 'cart', array()));
+			
+			}
+			
+		}
+	
+	}
+	
 	public function checkout()
 	{
 	
+		global $config_shop;
 		
+		ob_start();
+		
+		$yes_use_transport=1;
+		
+		if($this->login->check_login())
+		{
+		
+			if($config_shop['no_transport']==0)
+			{
+			
+				if(!isset($_SESSION['idtransport']) || !isset($_SESSION['idaddress']))
+				{
+				
+					$yes_use_transport=0;
+				
+				}
+			
+			}
+			
+			if($yes_use_transport==1)
+			{
+				$cart=new CartClass();
+				
+				$cart->yes_update=0;
+				
+				list($arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter)=$cart->show_cart();
+				
+				echo load_view(array(), 'shop/checkoutcart');
+			
+			}
+			else
+			{
+			
+				$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+			
+			}
+			
+			$cont_index=ob_get_contents();
+						
+			ob_end_clean();
+			
+			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+	
+		}
+		else
+		{
+		
+			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+		
+		}
 	
 	}
 	
@@ -493,6 +589,118 @@ class CartSwitchClass extends ControllerSwitchClass
 	}
 
 	
+}
+
+function obtain_transport_price($total_weight, $total_price, $idtransport)
+{
+
+	global $model;
+
+	$query=$model['transport']->select('where IdTransport='.$idtransport, array('type'));
+	
+	list($type)=webtsys_fetch_row($query);
+	
+	if($type==0)
+	{
+
+		$query=webtsys_query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			
+		list($price_transport)=webtsys_fetch_row($query);
+
+		settype($price_transport, 'double');
+		
+		if($price_transport>0)
+		{
+
+			return array($price_transport, 1);
+
+		}
+		else
+		{
+
+			$weight_substract=0;
+			$price_transport=0;
+			$total_price_transport=0;
+
+			$query=webtsys_query('select weight, price from price_transport order by price DESC limit 1');
+
+			list($max_weight, $max_price)=webtsys_fetch_row($query);
+
+			//Tenemos que ver en cuanto supera los kilos...
+
+			//Dividimos y obtenemos el resto...
+
+			if($max_weight==0)
+			{
+
+				$max_weight=1;
+
+			}
+
+			$num_packs=($total_weight/$max_weight)-1;
+			
+			for($x=0;$x<$num_packs;$x++)
+			{
+
+				$total_price_transport+=$max_price;
+				$weight_substract+=$max_weight;
+
+			}
+
+			$weight_last=$total_weight-$weight_substract;
+		
+			$query=webtsys_query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			
+			list($price_transport)=webtsys_fetch_row($query);
+
+			settype($price_transport, 'double');
+			
+			$total_price_transport+=$price_transport;
+
+			$num_packs=ceil($num_packs+1);
+
+			return array($total_price_transport, $num_packs);
+			
+		}
+		
+	}
+	else
+	{
+	
+		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
+		
+		list($price_transport)=webtsys_fetch_row($query);
+
+		//settype($price_transport, 'double');
+		
+		if($price_transport!='')
+		{
+
+			return array($price_transport, 1);
+
+		}
+		else
+		{
+
+			$min_price_substract=0;
+			$price_transport=0;
+			$total_price_transport=0;
+
+			$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
+
+			list($max_min_price, $max_price)=webtsys_fetch_row($query);
+			
+			return array($max_price, 1);
+
+			//Tenemos que ver en cuanto supera los kilos...
+
+			//Dividimos y obtenemos el resto...
+
+			
+		}
+	
+	}
+
 }
 
 /*

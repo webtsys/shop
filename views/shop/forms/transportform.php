@@ -54,7 +54,7 @@ function TransportFormView($arr_transport, $only_form=0)
 	else
 	{
 		?>
-		<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'choose_transport', array('action' => 'save_choose_address_transport/')); ?>">
+		<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'choose_address_transport', array('action' => 'save_choose_address_transport/')); ?>">
 		<?php
 	
 		$arr_choose_transport=array(0);

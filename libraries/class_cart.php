@@ -50,9 +50,12 @@ class CartClass {
 		$plugins->load_all_plugins();
 	
 		$plugin_price=array();
-	
-		echo '<p>'.$lang['shop']['explain_cart_options'].'</p>';
-	
+		
+		if($this->yes_update==1)
+		{
+			echo '<p>'.$lang['shop']['explain_cart_options'].'</p>';
+		}
+		
 		//Add plugins for cart that added money to price, for example, taxes or discounts. You can configure taxes or discounts on its plugins admin.
 	
 		$arr_id=array(0);
@@ -147,6 +150,7 @@ class CartClass {
 		
 		echo load_view(array($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update), 'shop/cartshow');
 		
+		return array( $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter);
 		
 	}
 	
@@ -200,59 +204,75 @@ class CartClass {
 			
 			}
 			
-			$where_sql='where cart_shop.idproduct='.$idproduct.' and token="'.$this->token.'" and details="'.addslashes(serialize($arr_details)).'"';
+			//obtain product
 			
-			if($model['cart_shop']->select_count($where_sql)==0)
+			$arr_product=$model['product']->select_a_row($idproduct, array('IdProduct', 'price', 'weight'));
+			
+			settype($arr_product['IdProduct'], 'integer');
+			
+			if($arr_product['IdProduct']>0)
 			{
-			
-				if($_POST['units']<=0)
+				$where_sql='where cart_shop.idproduct='.$idproduct.' and token="'.$this->token.'" and details="'.addslashes(serialize($arr_details)).'"';
+				
+				if($model['cart_shop']->select_count($where_sql)==0)
 				{
 				
-					$_POST['units']=1;
+					if($_POST['units']<=0)
+					{
+					
+						$_POST['units']=1;
+					
+					}
+				
+					if(!$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']) ))
+					{
+
+						return 0;
+
+					}
 				
 				}
-			
-				if(!$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price) ))
+				else
 				{
-
-					return 0;
-
+				
+					$arr_cart=$model['cart_shop']->select_a_row_where($where_sql);
+					
+					if($_POST['units']<=0 && $defined_post==1)
+					{
+					
+						$model['cart_shop']->delete($where_sql);
+					
+					}
+					else
+					{
+					
+						if($defined_post==1)
+						{
+						
+							$arr_cart['units']=$_POST['units'];
+					
+						}
+						else
+						{
+						
+							$arr_cart['units']++;
+						
+						}
+						
+						$arr_cart['details']=SerializeField::unserialize($arr_cart['details']);
+						
+						$model['cart_shop']->update($arr_cart, $where_sql);
+					
+					}
+					
+				
 				}
 			
 			}
 			else
 			{
 			
-				$arr_cart=$model['cart_shop']->select_a_row_where($where_sql);
-				
-				if($_POST['units']<=0 && $defined_post==1)
-				{
-				
-					$model['cart_shop']->delete($where_sql);
-				
-				}
-				else
-				{
-				
-					if($defined_post==1)
-					{
-					
-						$arr_cart['units']=$_POST['units'];
-				
-					}
-					else
-					{
-					
-						$arr_cart['units']++;
-					
-					}
-					
-					$arr_cart['details']=SerializeField::unserialize($arr_cart['details']);
-					
-					$model['cart_shop']->update($arr_cart, $where_sql);
-				
-				}
-				
+				return 0;
 			
 			}
 			
@@ -328,6 +348,7 @@ class CartClass {
 	
 		$num_product=0;
 		$total_price_product=0;
+		$total_weight_product=0;
 		
 		$plugins=new PreparePluginClass('cart');
 		
@@ -337,14 +358,16 @@ class CartClass {
 	
 		$plugin_price=array();
 		
-		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units'));
+		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units', 'weight'));
 		
-		while(list($idproduct, $price_product, $units)=webtsys_fetch_row($query))
+		while(list($idproduct, $price_product, $units, $weight)=webtsys_fetch_row($query))
 		{
 			
 			$num_product+=$units;
 
 			$total_price_product+=$price_product*$units;
+			
+			$total_weight_product+=$weight*$units;
 
 			foreach($plugins->arr_plugin_list as $plugin)
 			{
@@ -358,7 +381,7 @@ class CartClass {
 		}
 		
 		
-		return array($num_product, $total_price_product);
+		return array($num_product, $total_price_product, $total_weight_product);
 	
 	}
 	

@@ -805,6 +805,7 @@ $model['cart_shop']->components['taxes_product']=new DoubleField();*/
 $model['cart_shop']->components['units']=new IntegerField();
 $model['cart_shop']->components['details']=new SerializeField();
 $model['cart_shop']->components['time']=new IntegerField();
+$model['cart_shop']->set_component('weight', 'DoubleField', array());
 
 class order_shop extends Webmodel {
 

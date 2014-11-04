@@ -38,7 +38,32 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	$fields[]=$lang['shop']['total_price'];
 	
-	$fields[]=$lang['common']['options'];
+	if($yes_update==1)
+	{
+		$fields[]=$lang['common']['options'];
+		
+		function set_options($arr_product, $arr_options)
+		{
+		
+			global $base_url, $lang;
+		
+			$arr_options[]= '<a href="'.make_fancy_url($base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.$lang['common']['delete'].'</a>';
+			
+			return $arr_options;
+		
+		}
+	}
+	else
+	{
+	
+		function set_options($arr_product, $arr_options)
+		{
+		
+			return $arr_options;
+		
+		}
+	
+	}
 	
 	//$fields[]=$lang['shop']['select_product'];
 
@@ -75,7 +100,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		
 		$arr_row[]=$arr_product['price_product_last_txt'];
 		
-		$arr_row[]='<a href="'.make_fancy_url($base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.$lang['common']['delete'].'</a>';
+		set_options($arr_product, $arr_row);
 	
 		middle_table_config($arr_row);
 		
