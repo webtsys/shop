@@ -765,7 +765,7 @@ $model['address_transport']->set_component('phone_transport', 'CharField', array
 $model['address_transport']->set_component('city_transport', 'CharField', array(255), 1);
 $model['address_transport']->set_component('region_transport', 'CharField', array(255), 1);
 $model['address_transport']->set_component('country_transport', 'ForeignKeyField', array('country_shop', 11), 1);
-$model['address_transport']->set_component('zone_transport', 'ForeignKeyField', array('zone_shop', 11));
+//$model['address_transport']->set_component('zone_transport', 'ForeignKeyField', array('zone_shop', 11));
 
 class payment_form extends Webmodel {
 

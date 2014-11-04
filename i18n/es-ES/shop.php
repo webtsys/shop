@@ -266,7 +266,7 @@ $lang['shop']['register_shop_or_buying']='Si desea registrarse durante el proces
 
 $lang['shop']['choose_more_options']='Elegir más opciones';
 
-$lang['shop']['explain_payment_type_transport_type']='Por favor, elija el medio de pago y el modo de envio de su pedido';
+$lang['shop']['explain_payment_type_transport_type']='Por favor, elija el medio de pago para terminar la transacción';
 
 $lang['shop']['payment_type']='Tipo de pago';
 

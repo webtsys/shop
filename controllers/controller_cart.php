@@ -467,11 +467,15 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function checkout()
 	{
 	
-		global $config_shop;
+		global $config_shop, $model;
 		
 		ob_start();
 		
 		$yes_use_transport=1;
+		
+		$arr_address=array();
+		
+		$arr_address_transport=array();
 		
 		if($this->login->check_login())
 		{
@@ -481,22 +485,34 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 				if(!isset($_SESSION['idtransport']) || !isset($_SESSION['idaddress']))
 				{
-				
+					
 					$yes_use_transport=0;
+				
+				}
+				else
+				{
+
+					
+					$arr_address_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], array(), 0);
+					
+					$arr_country=$model['country_shop']->select_a_row($arr_address_transport['country_transport'], array('name'));
+					
+					$arr_address_transport['country_transport']=I18nField::show_formatted($arr_country['name']);
 				
 				}
 			
 			}
 			
+			$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
+					
+			$arr_country=$model['country_shop']->select_a_row($arr_address['country'], array('name'));
+			
+			$arr_address['country']=I18nField::show_formatted($arr_country['name']);
+			
 			if($yes_use_transport==1)
 			{
-				$cart=new CartClass();
 				
-				$cart->yes_update=0;
-				
-				list($arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter)=$cart->show_cart();
-				
-				echo load_view(array(), 'shop/checkoutcart');
+				echo load_view(array($arr_address, $arr_address_transport), 'shop/checkoutcart');
 			
 			}
 			else
@@ -519,6 +535,59 @@ class CartSwitchClass extends ControllerSwitchClass
 			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
 		
 		}
+	
+	}
+	
+	public function finish_checkout()
+	{
+		global $model;
+	
+		ob_start();
+	
+		?>	
+		<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 3));?>">
+		<?php set_csrf_key(); ?>
+		<h2><?php echo $this->lang['shop']['gateways_payment']; ?></h2>
+		<p><?php echo $this->lang['shop']['explain_payment_type_transport_type']; ?></p>
+		<h3><?php echo $this->lang['shop']['payment_type']; ?></h3>
+		<?php
+
+		$arr_payment=array(0);
+
+		$query=$model['payment_form']->select('', array($model['payment_form']->idmodel, 'name', 'price_payment'));
+		
+		while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
+		{
+		
+			$name=I18nField::show_formatted($name);
+
+			if($price>0)
+			{
+				$price=MoneyField::currency_format( $price );
+			}
+			else
+			{
+
+				$price=$this->lang['shop']['mode_payment_free_charge'];
+
+			}
+
+			$arr_payment[]=$name.' - '.$price;
+			$arr_payment[]=$idpayment;
+
+		}
+
+		echo SelectForm('payment_form', '', $arr_payment );
+		
+		?>
+		</form>
+		<?php
+	
+		$cont_index=ob_get_contents();
+					
+		ob_end_clean();
+		
+		$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
 	
 	}
 	
@@ -596,9 +665,9 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 	global $model;
 
-	$query=$model['transport']->select('where IdTransport='.$idtransport, array('type'));
+	$query=$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
 	
-	list($type)=webtsys_fetch_row($query);
+	list($name, $type)=webtsys_fetch_row($query);
 	
 	if($type==0)
 	{
@@ -612,7 +681,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 		if($price_transport>0)
 		{
 
-			return array($price_transport, 1);
+			return array($price_transport, 1, $name);
 
 		}
 		else
@@ -659,7 +728,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			$num_packs=ceil($num_packs+1);
 
-			return array($total_price_transport, $num_packs);
+			return array($total_price_transport, $num_packs, $name);
 			
 		}
 		
@@ -676,7 +745,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 		if($price_transport!='')
 		{
 
-			return array($price_transport, 1);
+			return array($price_transport, 1, $name);
 
 		}
 		else
@@ -690,7 +759,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 
 			list($max_min_price, $max_price)=webtsys_fetch_row($query);
 			
-			return array($max_price, 1);
+			return array($max_price, 1, $name);
 
 			//Tenemos que ver en cuanto supera los kilos...
 

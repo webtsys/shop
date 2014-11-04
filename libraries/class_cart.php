@@ -61,19 +61,23 @@ class CartClass {
 		$arr_id=array(0);
 		$arr_product_cart=array();
 		$arr_price=array();
+		//Final price with plugins.
 		$arr_price_filter=array();
 		$arr_price_explain_plugin=array();
 		$arr_price_rest=array();
 		
+		//Base price without applied plugins how taxes or discounts.
 		$arr_price_base=array(); 
+		//Total price of all units without applied plugins.
 		$arr_price_base_total=array();
 
+		$arr_weight_total=array();
 		
 		$arr_new_field=array();
 		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units'));
+		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight'));
 		
 		while($arr_product=webtsys_fetch_array($query))
 		{
@@ -116,6 +120,8 @@ class CartClass {
 				
 			}
 			
+			$arr_weight_total[$arr_product['IdCart_shop']]=$arr_product['weight']*$arr_product['units'];
+			
 		}
 		
 		if($this->yes_update==1)
@@ -150,7 +156,7 @@ class CartClass {
 		
 		echo load_view(array($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update), 'shop/cartshow');
 		
-		return array( $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter);
+		return array( $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $arr_weight_total);
 		
 	}
 	
