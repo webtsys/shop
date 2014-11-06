@@ -401,11 +401,210 @@ class CartClass {
 	
 	}
 	
-	public function payment_gateway()
+	public function payment_gateway($idpayment)
 	{
 	
-		//Here define the payment and notify that the product was paid.
+		global $model, $lang, $base_path, $config_shop;
 	
+		$cart=new CartClass();
+	
+		//Here define the payment and notify that the product was paid. Also fill order_shop and delete cart.
+		
+		$arr_payment=$model['payment_form']->select_a_row($idpayment);
+				
+		settype($arr_payment['IdPayment_form'], 'integer');
+		
+		if($arr_payment['IdPayment_form']>0)
+		{
+	
+			if(!include($base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
+			{
+		
+				echo $lang['shop']['error_no_proccess_payment_send_email'].': '.$config_data['portal_email'];
+
+			}
+			else
+			{
+			
+				$post['token']=$this->token;
+				
+				$model['user_shop']->components['country']->name_field_to_field='name';
+				$model['user_shop']->components['country']->fields_related_model=array('name');
+				
+				$model['address_transport']->components['country_transport']->name_field_to_field='name';
+				$model['address_transport']->components['country_transport']->fields_related_model=array('name');
+				
+				$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
+				
+				if($config_shop['no_transport']==0)
+				{
+				
+					$arr_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
+			
+					$post=array_merge($post, $arr_address, $arr_transport);
+				
+					$arr_transport=$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+					
+					$post['transport']=$arr_transport['name'];
+			
+				}
+				
+				$post['payment_form']=unserialize($arr_payment['name']);
+				
+				$post['make_payment']=1;
+				
+				$post['date_order']=DateTimeNow::$today;
+				
+				$post['iduser']=$_SESSION['IdUser_shop'];
+				
+				list($num_product, $total_price_product, $total_weight_product)=$this->obtain_simple_cart();
+				
+				$post['total_price']=$total_price_product;
+				
+				list($total_price_transport, $num_packs, $name)=$this->obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
+				
+				$post['price_transport']=$total_price_transport;
+				
+				//print_r($post);
+				
+				/*
+				
+				$model['order_shop']->components['transport']=new CharField(255);
+
+				$model['order_shop']->components['payment_form']=new CharField(255);
+
+				$model['order_shop']->components['make_payment']=new BooleanField();
+
+				$model['order_shop']->components['observations']=new TextHTMLField();
+
+				$model['order_shop']->components['date_order']=new DateField();
+
+				$model['order_shop']->components['iduser']=new IntegerField(11);
+
+				$model['order_shop']->components['price_transport']=new MoneyField();
+								
+				$model['order_shop']->components['total_price']=new MoneyField();
+			
+				*/
+			
+				echo $lang['shop']['order_success_cart_clean'];
+			
+			}
+	
+		}
+	
+	}
+	
+	public function obtain_transport_price($total_weight, $total_price, $idtransport)
+	{
+
+		global $model;
+
+		$query=$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
+		
+		list($name, $type)=webtsys_fetch_row($query);
+		
+		if($type==0)
+		{
+
+			$query=webtsys_query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
+				
+			list($price_transport)=webtsys_fetch_row($query);
+
+			settype($price_transport, 'double');
+			
+			if($price_transport>0)
+			{
+
+				return array($price_transport, 1, $name);
+
+			}
+			else
+			{
+
+				$weight_substract=0;
+				$price_transport=0;
+				$total_price_transport=0;
+
+				$query=webtsys_query('select weight, price from price_transport order by price DESC limit 1');
+
+				list($max_weight, $max_price)=webtsys_fetch_row($query);
+
+				//Tenemos que ver en cuanto supera los kilos...
+
+				//Dividimos y obtenemos el resto...
+
+				if($max_weight==0)
+				{
+
+					$max_weight=1;
+
+				}
+
+				$num_packs=($total_weight/$max_weight)-1;
+				
+				for($x=0;$x<$num_packs;$x++)
+				{
+
+					$total_price_transport+=$max_price;
+					$weight_substract+=$max_weight;
+
+				}
+
+				$weight_last=$total_weight-$weight_substract;
+			
+				$query=webtsys_query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
+				
+				list($price_transport)=webtsys_fetch_row($query);
+
+				settype($price_transport, 'double');
+				
+				$total_price_transport+=$price_transport;
+
+				$num_packs=ceil($num_packs+1);
+
+				return array($total_price_transport, $num_packs, $name);
+				
+			}
+			
+		}
+		else
+		{
+		
+			$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
+			
+			list($price_transport)=webtsys_fetch_row($query);
+
+			//settype($price_transport, 'double');
+			
+			if($price_transport!='')
+			{
+
+				return array($price_transport, 1, $name);
+
+			}
+			else
+			{
+
+				$min_price_substract=0;
+				$price_transport=0;
+				$total_price_transport=0;
+
+				$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
+
+				list($max_min_price, $max_price)=webtsys_fetch_row($query);
+				
+				return array($max_price, 1, $name);
+
+				//Tenemos que ver en cuanto supera los kilos...
+
+				//Dividimos y obtenemos el resto...
+
+				
+			}
+		
+		}
+
 	}
 
 }

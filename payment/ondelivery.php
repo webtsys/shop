@@ -1,5 +1,5 @@
 <?php
-
+/*
 $model['order_shop']->components['name']->required=0;	
 $model['order_shop']->components['last_name']->required=0;
 $model['order_shop']->components['email']->required=0;
@@ -28,8 +28,15 @@ $model['order_shop']->reset_require();
 
 $num_order=webtsys_insert_id();*/
 
-$query=$model['order_shop']->update(array('make_payment' => 1), 'where token="'.sha1($_COOKIE['webtsys_shop']).'"');
+/*$query=$model['order_shop']->update(array('make_payment' => 1), 'where token="'.sha1($_COOKIE['webtsys_shop']).'"');
 
-die(header('Location: '.make_fancy_url($base_url, 'shop', 'cart', 'payment_done', array('op' => 1))));
+die(header('Location: '.make_fancy_url($base_url, 'shop', 'cart', 'payment_done', array('action' => 'payment_done'))));*/
+
+function set_payment($cart)
+{
+
+	return 1;
+
+}
 
 ?>

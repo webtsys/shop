@@ -7,6 +7,63 @@ load_lang('shop');
 load_lang('common');
 load_lang('user');
 
+//Countries. A Country is from a zone_shop
+
+class country_shop extends Webmodel {
+
+	function __construct()
+	{
+
+		parent::__construct("country_shop");
+
+	}	
+	
+	function insert($post)
+	{
+	
+		$post=$this->components['name']->add_slugify_i18n_post('name', $post);
+	
+		return parent::insert($post);
+	
+	}
+	
+	function update($post, $conditions='')
+	{
+	
+		$post=$this->components['name']->add_slugify_i18n_post('name', $post);
+	
+		return parent::update($post, $conditions);
+	
+	}
+	
+}
+
+$model['country_shop']=new country_shop();
+
+/*foreach($arr_i18n as $lang_field)
+{
+
+	$model['country_shop']->components['name_'.$lang_field]=new CharField(255);
+	$model['country_shop']->components['name_'.$lang_field]->required=1;
+
+}*/
+
+$model['country_shop']->components['name']=new I18nField(new CharField(255));
+$model['country_shop']->components['name']->required=1;
+
+SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
+
+$model['country_shop']->components['code']=new CharField(25);
+$model['country_shop']->components['code']->required=1;
+
+//$model['country_shop']->components['idzone_taxes']=new ForeignKeyField('zone_shop');
+$model['country_shop']->components['idzone_transport']=new ForeignKeyField('zone_shop');
+
+$model['country_user_shop']=new Webmodel('country_user_shop');
+
+$model['country_user_shop']->components['iduser']=new IntegerField(11);
+$model['country_user_shop']->components['idcountry']=new IntegerField(11);
+
 //Users shop
 //When delete, don't delete, only leave the data how user deleted.
 
@@ -26,7 +83,7 @@ $model['user_shop']->set_component('address', 'CharField', array(255), 1);
 $model['user_shop']->set_component('zip_code', 'CharField', array(255), 1);
 $model['user_shop']->set_component('region', 'CharField', array(255), 1);
 $model['user_shop']->set_component('city', 'CharField', array(255), 1);
-$model['user_shop']->set_component('country', 'IntegerField', array(), 1);
+$model['user_shop']->set_component('country', 'ForeignKeyField', array('country_shop'), 1);
 $model['user_shop']->set_component('phone', 'CharField', array(255), 1);//Only for special effects...
 $model['user_shop']->set_component('fax', 'CharField', array(255));//Only for special effects...
 $model['user_shop']->set_component('nif', 'CharField', array(255), 1);//Only for special effects...
@@ -611,63 +668,6 @@ $model['zone_shop']->components['type']->form='HiddenForm';
 
 $model['zone_shop']->components['other_countries']=new BooleanField();
 
-//Countries. A Country is from a zone_shop
-
-class country_shop extends Webmodel {
-
-	function __construct()
-	{
-
-		parent::__construct("country_shop");
-
-	}	
-	
-	function insert($post)
-	{
-	
-		$post=$this->components['name']->add_slugify_i18n_post('name', $post);
-	
-		return parent::insert($post);
-	
-	}
-	
-	function update($post, $conditions='')
-	{
-	
-		$post=$this->components['name']->add_slugify_i18n_post('name', $post);
-	
-		return parent::update($post, $conditions);
-	
-	}
-	
-}
-
-$model['country_shop']=new country_shop();
-
-/*foreach($arr_i18n as $lang_field)
-{
-
-	$model['country_shop']->components['name_'.$lang_field]=new CharField(255);
-	$model['country_shop']->components['name_'.$lang_field]->required=1;
-
-}*/
-
-$model['country_shop']->components['name']=new I18nField(new CharField(255));
-$model['country_shop']->components['name']->required=1;
-
-SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
-
-$model['country_shop']->components['code']=new CharField(25);
-$model['country_shop']->components['code']->required=1;
-
-//$model['country_shop']->components['idzone_taxes']=new ForeignKeyField('zone_shop');
-$model['country_shop']->components['idzone_transport']=new ForeignKeyField('zone_shop');
-
-$model['country_user_shop']=new Webmodel('country_user_shop');
-
-$model['country_user_shop']->components['iduser']=new IntegerField(11);
-$model['country_user_shop']->components['idcountry']=new IntegerField(11);
-
 
 class config_shop extends Webmodel {
 
@@ -815,7 +815,7 @@ class order_shop extends Webmodel {
 		parent::__construct("order_shop");
 
 	}	
-	
+	/*
 	function update($post, $conditions='')
 	{
 	
@@ -864,7 +864,7 @@ class order_shop extends Webmodel {
 	
 		return parent::update($post, $conditions);
 	
-	}
+	}*/
 }
 
 $model['order_shop']=new order_shop();
@@ -880,7 +880,7 @@ $model['order_shop']->components['address']=new CharField(255);
 $model['order_shop']->components['zip_code']=new CharField(255);
 $model['order_shop']->components['city']=new CharField(255);
 $model['order_shop']->components['region']=new CharField(255);
-$model['order_shop']->components['country']=new IntegerField(11);
+$model['order_shop']->components['country']=new I18nField(new TextField());
 $model['order_shop']->components['phone']=new CharField(255);
 $model['order_shop']->components['fax']=new CharField(255);
 
@@ -891,13 +891,13 @@ $model['order_shop']->components['address_transport']=new CharField(255);
 $model['order_shop']->components['zip_code_transport']=new CharField(255);
 $model['order_shop']->components['city_transport']=new CharField(255);
 $model['order_shop']->components['region_transport']=new CharField(255);
-$model['order_shop']->components['country_transport']=new IntegerField(11);
+$model['order_shop']->components['country_transport']=new I18nField(new TextField());
 $model['order_shop']->components['phone_transport']=new CharField(255);
-$model['order_shop']->components['zone_transport']=new IntegerField(11);
+//$model['order_shop']->components['zone_transport']=new IntegerField(11);
 
 $model['order_shop']->components['transport']=new CharField(255);
 
-$model['order_shop']->components['payment_form']=new CharField(255);
+$model['order_shop']->components['payment_form']=new I18nField(new TextField());
 
 $model['order_shop']->components['make_payment']=new BooleanField();
 
@@ -907,8 +907,10 @@ $model['order_shop']->components['date_order']=new DateField();
 
 $model['order_shop']->components['iduser']=new IntegerField(11);
 
-$model['order_shop']->components['discount']=new CharField(255);
-$model['order_shop']->components['discount_percent']=new PercentField();
+//Add new table for plugins, the name, and the money.
+
+/*$model['order_shop']->components['discount']=new CharField(255);
+$model['order_shop']->components['discount_percent']=new PercentField();*/
 
 /*$model['order_shop']->components['tax']=new CharField(255);
 $model['order_shop']->components['tax_percent']=new PercentField();
@@ -916,16 +918,17 @@ $model['order_shop']->components['tax_percent']=new PercentField();
 $model['order_shop']->components['tax_discount_percent']=new PercentField();*/
 
 $model['order_shop']->components['price_transport']=new MoneyField();
-$model['order_shop']->components['transport_discount_percent']=new PercentField();
+//$model['order_shop']->components['transport_discount_percent']=new PercentField();
 
-$model['order_shop']->components['name_payment']=new CharField(255);
-$model['order_shop']->components['price_payment']=new MoneyField();
-$model['order_shop']->components['payment_discount_percent']=new PercentField();
+//$model['order_shop']->components['name_payment']=new CharField(255);
+//$model['order_shop']->components['price_payment']=new MoneyField();
+//$model['order_shop']->components['payment_discount_percent']=new PercentField();
 
 $model['order_shop']->components['total_price']=new MoneyField();
 
-$model['order_shop']->components['invoice_num']=new ForeignKeyField('invoice_num');
+/*$model['order_shop']->components['invoice_num']=new ForeignKeyField('invoice_num');
 $model['order_shop']->components['invoice_num']->name_field_to_field='invoice_num';
+*/
 
 $model['order_shop']->components['name']->required=1;	
 $model['order_shop']->components['last_name']->required=1;
@@ -944,7 +947,7 @@ $model['order_shop']->components['zip_code_transport']->required=1;
 $model['order_shop']->components['city_transport']->required=1;
 $model['order_shop']->components['region_transport']->required=1;
 $model['order_shop']->components['country_transport']->required=1;
-$model['order_shop']->components['zone_transport']->required=1;
+//$model['order_shop']->components['zone_transport']->required=1;
 $model['order_shop']->components['phone_transport']->required=1;
 
 $model['order_shop']->components['token']->required=1;
@@ -975,12 +978,19 @@ $model['order_shop']->forms['city_transport']->label=$lang['common']['city'];
 $model['order_shop']->forms['region_transport']->label=$lang['common']['region'];
 $model['order_shop']->forms['country_transport']->label=$lang['common']['country'];
 $model['order_shop']->forms['phone_transport']->label=$lang['common']['phone'];
-$model['order_shop']->forms['zone_transport']->label=$lang['shop']['zone'];
+//$model['order_shop']->forms['zone_transport']->label=$lang['shop']['zone'];
 $model['order_shop']->forms['transport']->label=$lang['shop']['transport'];
 $model['order_shop']->forms['make_payment']->label=$lang['shop']['make_payment'];
 $model['order_shop']->forms['observations']->label=$lang['shop']['observations'];
 $model['order_shop']->forms['date_order']->label=$lang['common']['date'];
-$model['order_shop']->forms['invoice_num']->label=$lang['shop']['invoice_num'];
+//$model['order_shop']->forms['invoice_num']->label=$lang['shop']['invoice_num'];
+
+$model['order_shop_plugins']=new Webmodel('order_shop_plugins');
+
+$model['order_shop_plugins']->set_component('idorder_shop', 'ForeignKeyField', array('order_shop'));
+$model['order_shop_plugins']->set_component('name', 'I18nField', array('order_shop'));
+
+$model['order_shop_plugins']->set_component('add_price', 'MoneyField', array());
 
 $model['invoice_num']=new Webmodel('invoice_num');
 

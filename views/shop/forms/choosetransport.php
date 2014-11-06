@@ -1,6 +1,6 @@
 <?php
 
-function ChooseTransportView($arr_transport, $total_price_product, $total_weight_product)
+function ChooseTransportView($arr_transport, $total_price_product, $total_weight_product, $cart)
 {
 
 	global $lang, $base_url;
@@ -18,7 +18,7 @@ function ChooseTransportView($arr_transport, $total_price_product, $total_weight
 		
 			$arr_transport_id[]=$transport['IdTransport'];
 		
-			list($price_transport, $num_packages)=obtain_transport_price($total_weight_product, $total_price_product, $transport['IdTransport']);
+			list($price_transport, $num_packages)=$cart->obtain_transport_price($total_weight_product, $total_price_product, $transport['IdTransport']);
 			
 			$arr_choose_transport[]=$transport['name'].' ('.MoneyField::currency_format($price_transport).')';
 			$arr_choose_transport[]=$transport['IdTransport'];

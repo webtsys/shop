@@ -1,13 +1,11 @@
 <?php
 
-function CheckOutCartView($arr_address, $arr_address_transport)
+function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_button_checkout=1)
 {
 
 	global $lang, $config_shop, $model, $base_url;
 	
 	load_libraries(array('forms/textplainform'));
-
-	$cart=new CartClass();
 				
 	$cart->yes_update=0;
 	
@@ -28,7 +26,7 @@ function CheckOutCartView($arr_address, $arr_address_transport)
 	
 		$total_weight_product=array_sum($arr_weight_product);
 	
-		list($price_transport, $num_packages, $name_transport)=obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
+		list($price_transport, $num_packages, $name_transport)=$cart->obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
 		
 		?>
 		
@@ -73,12 +71,15 @@ function CheckOutCartView($arr_address, $arr_address_transport)
 	
 	echo load_view(array($model['address_transport']->forms, ConfigShop::$arr_fields_transport), 'common/forms/modelform');
 	
+	if($yes_button_checkout==1)
+	{
 	?>
 	<br />
-	<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('action' => 'finish_checkout')); ?>">
+	<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('action' => 'finish_checkout')); ?>">
 	<p><input type="submit" value="<?php echo $lang['shop']['send_order_and_checkout']; ?>" /></p>
 	</form>
 	<?php
+	}
 }
 
 ?>

@@ -405,7 +405,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				$arr_transport=$model['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
 			
 				//print_r($arr_transport);
-				echo load_view(array($arr_transport, $total_price_product, $total_weight_product), 'shop/forms/choosetransport'); 
+				echo load_view(array($arr_transport, $total_price_product, $total_weight_product, $cart), 'shop/forms/choosetransport'); 
 			
 			}
 			
@@ -483,7 +483,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			if($config_shop['no_transport']==0)
 			{
 			
-				if(!isset($_SESSION['idtransport']) || !isset($_SESSION['idaddress']))
+				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
 				{
 					
 					$yes_use_transport=0;
@@ -512,7 +512,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			if($yes_use_transport==1)
 			{
 				
-				echo load_view(array($arr_address, $arr_address_transport), 'shop/checkoutcart');
+				$cart=new CartClass();
+				
+				echo load_view(array($arr_address, $arr_address_transport, $cart), 'shop/checkoutcart');
 			
 			}
 			else
@@ -540,54 +542,98 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function finish_checkout()
 	{
-		global $model;
-	
-		ob_start();
-	
-		?>	
-		<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 3));?>">
-		<?php set_csrf_key(); ?>
-		<h2><?php echo $this->lang['shop']['gateways_payment']; ?></h2>
-		<p><?php echo $this->lang['shop']['explain_payment_type_transport_type']; ?></p>
-		<h3><?php echo $this->lang['shop']['payment_type']; ?></h3>
-		<?php
-
-		$arr_payment=array(0);
-
-		$query=$model['payment_form']->select('', array($model['payment_form']->idmodel, 'name', 'price_payment'));
+		global $model, $config_shop, $lang;
 		
-		while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
+		settype($_GET['op'], 'integer');
+		
+		$yes_use_transport=1;
+	
+		if($this->login->check_login())
 		{
 		
-			$name=I18nField::show_formatted($name);
-
-			if($price>0)
+			if($config_shop['no_transport']==0)
 			{
-				$price=MoneyField::currency_format( $price );
-			}
-			else
-			{
-
-				$price=$this->lang['shop']['mode_payment_free_charge'];
-
-			}
-
-			$arr_payment[]=$name.' - '.$price;
-			$arr_payment[]=$idpayment;
-
-		}
-
-		echo SelectForm('payment_form', '', $arr_payment );
-		
-		?>
-		</form>
-		<?php
-	
-		$cont_index=ob_get_contents();
+			
+				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
+				{
 					
-		ob_end_clean();
-		
-		$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+					$yes_use_transport=0;
+				
+				}
+			
+			}
+			
+			if($yes_use_transport==1)
+			{
+	
+				ob_start();
+				
+				switch($_GET['op'])
+				{
+			
+				default:
+			
+					?>	
+					<form method="post" action="<?php echo make_fancy_url($this->base_url, 'shop', 'cart', 'checkout', array('action' => 'finish_checkout', 'op' => 1));?>">
+					<?php set_csrf_key(); ?>
+					<h2><?php echo $this->lang['shop']['payment_form']; ?></h2>
+					<p><?php echo $this->lang['shop']['explain_payment_type_transport_type']; ?></p>
+					<h3><?php echo $this->lang['shop']['payment_type']; ?></h3>
+					<?php
+
+					$arr_payment=array(0);
+
+					$query=$model['payment_form']->select('', array($model['payment_form']->idmodel, 'name', 'price_payment'));
+					
+					while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
+					{
+					
+						$name=I18nField::show_formatted($name);
+
+						if($price>0)
+						{
+							$price=MoneyField::currency_format( $price );
+						}
+						else
+						{
+
+							$price=$this->lang['shop']['mode_payment_free_charge'];
+
+						}
+
+						$arr_payment[]=$name.' - '.$price;
+						$arr_payment[]=$idpayment;
+
+					}
+
+					echo SelectForm('payment_form', '', $arr_payment );
+					
+					?>
+					<p><input type="submit" value="<?php echo $this->lang['shop']['send_order_and_checkout']; ?>" /></p>
+					</form>
+					<?php
+				
+				break;
+				
+				case 1:
+				
+					settype($_POST['payment_form'], 'integer');
+					
+					$cart=new CartClass();
+					
+					$cart->payment_gateway($_POST['payment_form']);
+				
+				break;
+				
+				}
+			
+				$cont_index=ob_get_contents();
+							
+				ob_end_clean();
+				
+				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			}
+		}
 	
 	}
 	
@@ -658,118 +704,6 @@ class CartSwitchClass extends ControllerSwitchClass
 	}
 
 	
-}
-
-function obtain_transport_price($total_weight, $total_price, $idtransport)
-{
-
-	global $model;
-
-	$query=$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
-	
-	list($name, $type)=webtsys_fetch_row($query);
-	
-	if($type==0)
-	{
-
-		$query=webtsys_query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
-			
-		list($price_transport)=webtsys_fetch_row($query);
-
-		settype($price_transport, 'double');
-		
-		if($price_transport>0)
-		{
-
-			return array($price_transport, 1, $name);
-
-		}
-		else
-		{
-
-			$weight_substract=0;
-			$price_transport=0;
-			$total_price_transport=0;
-
-			$query=webtsys_query('select weight, price from price_transport order by price DESC limit 1');
-
-			list($max_weight, $max_price)=webtsys_fetch_row($query);
-
-			//Tenemos que ver en cuanto supera los kilos...
-
-			//Dividimos y obtenemos el resto...
-
-			if($max_weight==0)
-			{
-
-				$max_weight=1;
-
-			}
-
-			$num_packs=($total_weight/$max_weight)-1;
-			
-			for($x=0;$x<$num_packs;$x++)
-			{
-
-				$total_price_transport+=$max_price;
-				$weight_substract+=$max_weight;
-
-			}
-
-			$weight_last=$total_weight-$weight_substract;
-		
-			$query=webtsys_query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
-			
-			list($price_transport)=webtsys_fetch_row($query);
-
-			settype($price_transport, 'double');
-			
-			$total_price_transport+=$price_transport;
-
-			$num_packs=ceil($num_packs+1);
-
-			return array($total_price_transport, $num_packs, $name);
-			
-		}
-		
-	}
-	else
-	{
-	
-		$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
-		
-		list($price_transport)=webtsys_fetch_row($query);
-
-		//settype($price_transport, 'double');
-		
-		if($price_transport!='')
-		{
-
-			return array($price_transport, 1, $name);
-
-		}
-		else
-		{
-
-			$min_price_substract=0;
-			$price_transport=0;
-			$total_price_transport=0;
-
-			$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
-
-			list($max_min_price, $max_price)=webtsys_fetch_row($query);
-			
-			return array($max_price, 1, $name);
-
-			//Tenemos que ver en cuanto supera los kilos...
-
-			//Dividimos y obtenemos el resto...
-
-			
-		}
-	
-	}
-
 }
 
 /*

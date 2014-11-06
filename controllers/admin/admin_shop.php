@@ -863,7 +863,7 @@ function ShopAdmin()
 			$url_options=set_admin_link( 'edit_group_shop', array('IdModule' => $_GET['IdModule'], 'op' => 15) );
 
 			$arr_fields=array('name');
-			$arr_fields_edit=array();
+			$arr_fields_edit=array('name', 'code', 'idzone_transport');
 
 			$model['country_shop']->create_form();
 
@@ -871,9 +871,9 @@ function ShopAdmin()
 			
 			$model['country_shop']->forms['idzone_transport']->parameters=array('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0');
 
-			$model['country_shop']->forms['idzone_taxes']->form='SelectModelForm';
+			/*$model['country_shop']->forms['idzone_taxes']->form='SelectModelForm';
 			
-			$model['country_shop']->forms['idzone_taxes']->parameters=array('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1');
+			$model['country_shop']->forms['idzone_taxes']->parameters=array('idzone_taxes', '', '', 'zone_shop', 'name', $where='where type=1');*/
 
 			/*foreach($arr_i18n as $lang_i18n)
 			{
@@ -885,7 +885,7 @@ function ShopAdmin()
 			$model['country_shop']->forms['name']->label=$lang['common']['name'];
 
 			$model['country_shop']->forms['code']->label=$lang['shop']['code_country'];
-			$model['country_shop']->forms['idzone_taxes']->label=$lang['shop']['idzone_taxes'];
+			//$model['country_shop']->forms['idzone_taxes']->label=$lang['shop']['idzone_taxes'];
 			$model['country_shop']->forms['idzone_transport']->label=$lang['shop']['idzone_transport'];
 
 			generate_admin_model_ng('country_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
