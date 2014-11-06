@@ -416,6 +416,8 @@ class CartClass {
 					$model['address_transport']->components['country_transport']->name_field_to_field='name';
 					$model['address_transport']->components['country_transport']->fields_related_model=array('name');
 					
+					ConfigShop::$arr_fields_address[]='email';
+					
 					$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
 					
 					$arr_address['country']=unserialize($arr_address['country']);
@@ -453,6 +455,7 @@ class CartClass {
 					
 					if($model['order_shop']->insert($post))
 					{
+						
 						echo $lang['shop']['order_success_cart_clean'];
 					}
 					else
@@ -596,6 +599,13 @@ class CartClass {
 		
 		}
 
+	}
+	
+	public function clean_cart()
+	{
+	
+		
+	
 	}
 
 }
