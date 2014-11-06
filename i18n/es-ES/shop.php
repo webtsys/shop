@@ -412,6 +412,10 @@ $lang['shop']['price_with_taxes']='Precio con impuestos';
 
 $lang['shop']['taxes_no_included']='Impuestos no incluidos';
 
+$lang['shop']['cancel_checkout_success']='cancel_checkout_success';
+
+$lang['shop']['no_cancel_checkout_success']='no_cancel_checkout_success';
+
 $lang['shop']['choose_cat']='Elegir categoría';
 
 $lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
@@ -481,6 +485,10 @@ $lang['shop']['no_in_discount_group']='Usted aún no está en un grupo de descue
 $lang['shop']['dir_transport']='Dirección de envio';
 
 $lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
+
+$lang['shop']['final_order']='Pedido final';
+
+$lang['shop']['shopping_list']='Lista de la compra';
 
 $lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
 
@@ -571,10 +579,6 @@ $lang['shop']['checkout']='Terminar pedido';
 $lang['shop']['press_for_checkout']='Presione para finalizar pedido';
 
 $lang['shop']['push_here_for_change_order']='Pulse aquí para cambiar pedido';
-
-$lang['shop']['shopping_list']='Lista de la compra';
-
-$lang['shop']['final_order']='Pedido final';
 
 $lang['shop']['fill_form_data']='Datos de formulario';
 

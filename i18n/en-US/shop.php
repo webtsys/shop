@@ -412,6 +412,10 @@ $lang['shop']['price_with_taxes']='Price with taxes';
 
 $lang['shop']['taxes_no_included']='Taxes not included';
 
+$lang['shop']['cancel_checkout_success']='cancel_checkout_success';
+
+$lang['shop']['no_cancel_checkout_success']='no_cancel_checkout_success';
+
 $lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['go_products_to_cart']='Complete order and go to Cart';
@@ -481,6 +485,10 @@ $lang['shop']['no_in_discount_group']='You are not already in a group discount';
 $lang['shop']['dir_transport']='Mailing address';
 
 $lang['shop']['no_dir_transport_for_now']='You still have no mailing address. Please make your first order so have it.';
+
+$lang['shop']['final_order']='Final order';
+
+$lang['shop']['shopping_list']='Shopping list';
 
 $lang['shop']['need_minimum_an_option']='Error: you need an option or more';
 
@@ -571,10 +579,6 @@ $lang['shop']['checkout']='Checkout order';
 $lang['shop']['press_for_checkout']='Press here for checkout order';
 
 $lang['shop']['push_here_for_change_order']='Press here for change your order';
-
-$lang['shop']['shopping_list']='Shopping list';
-
-$lang['shop']['final_order']='Final order';
 
 $lang['shop']['fill_form_data']='Form data';
 

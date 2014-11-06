@@ -32,11 +32,21 @@ $num_order=webtsys_insert_id();*/
 
 die(header('Location: '.make_fancy_url($base_url, 'shop', 'cart', 'payment_done', array('action' => 'payment_done'))));*/
 
-function set_payment($cart)
+class OnDeliveryPaymentClass extends PaymentClass
 {
 
-	return 1;
-
+	public function checkout()
+	{
+		return 1;
+	}
+	
+	public function cancel_checkout()
+	{
+	
+		return 1;
+	
+	}
+	
 }
 
 ?>

@@ -282,30 +282,6 @@ class CartClass {
 			
 			}
 			
-			/*if($_POST['IdCart_shop']>0 && $model['cart_shop']->select_count('where cart_shop.IdCart_shop='.$_POST['IdCart_shop'], 'IdCart_shop'))
-			{
-				
-				if(!$model['cart_shop']->update( array('details' => $arr_details, 'time' => time(), 'price_product' => $price) , 'where token = "'.sha1($this->token).'" and IdCart_shop='.$_POST['IdCart_shop'].'  and idproduct ='. $_GET['IdProduct']))
-				{
-
-					return 0;
-
-				}
-				
-
-			}
-			else
-			{
-				
-				if(!$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $_GET['IdProduct'], 'details' => $arr_details, 'time' => time(), 'price_product' => $price) ))
-				{
-
-					return 0;
-
-				}
-
-			}*/
-			
 			if($redirect==1)
 			{
 
@@ -426,68 +402,83 @@ class CartClass {
 			else
 			{
 			
-				$post['token']=$this->token;
+				$name_class=str_replace('.php', '', $arr_payment['code']).'PaymentClass';
 				
-				$model['user_shop']->components['country']->name_field_to_field='name';
-				$model['user_shop']->components['country']->fields_related_model=array('name');
+				$payment_class=new $name_class($cart);
 				
-				$model['address_transport']->components['country_transport']->name_field_to_field='name';
-				$model['address_transport']->components['country_transport']->fields_related_model=array('name');
+				if($payment_class->checkout())
+				{
+					$post['token']=$this->token;
+					
+					$model['user_shop']->components['country']->name_field_to_field='name';
+					$model['user_shop']->components['country']->fields_related_model=array('name');
+					
+					$model['address_transport']->components['country_transport']->name_field_to_field='name';
+					$model['address_transport']->components['country_transport']->fields_related_model=array('name');
+					
+					$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
+					
+					$arr_address['country']=unserialize($arr_address['country']);
+					
+					if($config_shop['no_transport']==0)
+					{
+					
+						$arr_address_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
+					
+						$arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
+					
+						$arr_transport=$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+						
+						$post['transport']=$arr_transport['name'];
 				
-				$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
-				
-				if($config_shop['no_transport']==0)
+					}
+					
+					$post=array_merge($post, $arr_address, $arr_address_transport);
+					
+					$post['payment_form']=unserialize($arr_payment['name']);
+					
+					$post['make_payment']=1;
+					
+					$post['date_order']=DateTimeNow::$today;
+					
+					$post['iduser']=$_SESSION['IdUser_shop'];
+					
+					list($num_product, $total_price_product, $total_weight_product)=$this->obtain_simple_cart();
+					
+					$post['total_price']=$total_price_product;
+					
+					list($total_price_transport, $num_packs, $name)=$this->obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
+					
+					$post['price_transport']=$total_price_transport;
+					
+					if($model['order_shop']->insert($post))
+					{
+						echo $lang['shop']['order_success_cart_clean'];
+					}
+					else
+					{
+					
+						if($payment_class->cancel_checkout())
+						{
+						
+							echo $lang['shop']['cancel_checkout_success'];
+						
+						}
+						else
+						{
+						
+							echo $lang['shop']['no_cancel_checkout_success'];
+						
+						}
+					
+					}
+				}
+				else
 				{
 				
-					$arr_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
-			
-					$post=array_merge($post, $arr_address, $arr_transport);
-				
-					$arr_transport=$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
 					
-					$post['transport']=$arr_transport['name'];
-			
+				
 				}
-				
-				$post['payment_form']=unserialize($arr_payment['name']);
-				
-				$post['make_payment']=1;
-				
-				$post['date_order']=DateTimeNow::$today;
-				
-				$post['iduser']=$_SESSION['IdUser_shop'];
-				
-				list($num_product, $total_price_product, $total_weight_product)=$this->obtain_simple_cart();
-				
-				$post['total_price']=$total_price_product;
-				
-				list($total_price_transport, $num_packs, $name)=$this->obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
-				
-				$post['price_transport']=$total_price_transport;
-				
-				//print_r($post);
-				
-				/*
-				
-				$model['order_shop']->components['transport']=new CharField(255);
-
-				$model['order_shop']->components['payment_form']=new CharField(255);
-
-				$model['order_shop']->components['make_payment']=new BooleanField();
-
-				$model['order_shop']->components['observations']=new TextHTMLField();
-
-				$model['order_shop']->components['date_order']=new DateField();
-
-				$model['order_shop']->components['iduser']=new IntegerField(11);
-
-				$model['order_shop']->components['price_transport']=new MoneyField();
-								
-				$model['order_shop']->components['total_price']=new MoneyField();
-			
-				*/
-			
-				echo $lang['shop']['order_success_cart_clean'];
 			
 			}
 	

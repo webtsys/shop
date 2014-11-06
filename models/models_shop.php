@@ -1543,6 +1543,31 @@ class ConfigShop {
 
 }
 
+class PaymentClass {
+
+	public $cart;
+
+	function __construct()
+	{
+	
+		$this->cart=new CartClass();
+	
+	}
+	
+	public function checkout()
+	{
+		return 1;
+	}
+	
+	public function cancel_checkout()
+	{
+	
+		
+	
+	}
+
+}
+
 $arr_module_insert['shop']=array('name' => 'shop', 'admin' => 1, 'admin_script' => array('shop', 'shop'), 'load_module' => '', 'app_index' => 1, 'yes_config' => 1);
 
 $arr_module_sql['shop']='shop.sql';
