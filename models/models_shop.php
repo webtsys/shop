@@ -815,6 +815,39 @@ class order_shop extends Webmodel {
 		parent::__construct("order_shop");
 
 	}	
+	
+	static public function calculate_num_bill($idorder_shop)
+	{
+
+		global $config_shop;
+
+		settype($idorder_shop, 'string');
+
+		$num_elements_num_bill=strlen($idorder_shop);
+		$num_bill_tmp='';
+
+		if($num_elements_num_bill<$config_shop['elements_num_bill'])
+		{
+
+			$count_elements_num_bill=$config_shop['elements_num_bill']-$num_elements_num_bill;
+
+			for($x=0;$x<$count_elements_num_bill;$x++)
+			{
+
+				$num_bill_tmp.='0';
+
+			}
+
+		}
+
+		$num_bill_tmp.=$idorder_shop;
+
+		$num_bill=$config_shop['head_bill'].$num_bill_tmp;
+
+		return $num_bill;
+
+	}
+	
 	/*
 	function update($post, $conditions='')
 	{

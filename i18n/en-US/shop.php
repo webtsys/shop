@@ -416,6 +416,8 @@ $lang['shop']['cancel_checkout_success']='cancel_checkout_success';
 
 $lang['shop']['no_cancel_checkout_success']='no_cancel_checkout_success';
 
+$lang['shop']['num_order']='num_order';
+
 $lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['go_products_to_cart']='Complete order and go to Cart';

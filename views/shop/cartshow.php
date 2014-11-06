@@ -1,6 +1,6 @@
 <?php
 
-function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $yes_update)
+function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $yes_update, $method_text_form)
 {
 
 	global $lang, $base_url, $arr_cache_header;
@@ -38,31 +38,14 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	$fields[]=$lang['shop']['total_price'];
 	
+	$set_options_func='no_set_options';
+	
 	if($yes_update==1)
 	{
 		$fields[]=$lang['common']['options'];
 		
-		function set_options($arr_product, $arr_options)
-		{
+		$set_options_func='set_options';
 		
-			global $base_url, $lang;
-		
-			$arr_options[]= '<a href="'.make_fancy_url($base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.$lang['common']['delete'].'</a>';
-			
-			return $arr_options;
-		
-		}
-	}
-	else
-	{
-	
-		function set_options($arr_product, $arr_options)
-		{
-		
-			return $arr_options;
-		
-		}
-	
 	}
 	
 	//$fields[]=$lang['shop']['select_product'];
@@ -87,7 +70,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 		$total+=$price_last;
 	
-		$form_num_products=show_text_form($arr_product['IdCart_shop'], $arr_product['units']);
+		$form_num_products=$method_text_form($arr_product['IdCart_shop'], $arr_product['units']);
 	
 		$arr_row=array($arr_product['product_referer'], $arr_product['product_title'], $form_num_products);
 		
@@ -100,7 +83,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		
 		$arr_row[]=$arr_product['price_product_last_txt'];
 		
-		set_options($arr_product, $arr_row);
+		$set_options_func($arr_product, $arr_row);
 	
 		middle_table_config($arr_row);
 		
@@ -146,6 +129,24 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		echo $this->arr_plugins[$plugin]->plugin_applied();
 	
 	}
+
+}
+
+function set_options($arr_product, $arr_options)
+{
+
+	global $base_url, $lang;
+
+	$arr_options[]= '<a href="'.make_fancy_url($base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.$lang['common']['delete'].'</a>';
+	
+	return $arr_options;
+
+}
+
+function no_set_options($arr_product, $arr_options)
+{
+
+	return $arr_options;
 
 }
 

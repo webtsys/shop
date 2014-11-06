@@ -125,15 +125,23 @@ class CartClass {
 			
 		}
 		
+		$method_text_form='';
+		
+		$close_form='';
+		
 		if($this->yes_update==1)
 		{
 		
-			function show_text_form($idcart_shop, $units)
+			/*function show_text_form($idcart_shop, $units)
 			{
 			
 				return TextForm('num_products['.$idcart_shop.']', 'units', $units);
 			
-			}
+			}*/
+			
+			$method_text_form='show_text_form';
+			
+			$close_form='</form>';
 		
 		?>
 		<form method="post" action="<?php echo $this->url_update; ?>">
@@ -144,18 +152,22 @@ class CartClass {
 		else
 		{
 		
-			function show_text_form($idcart_shop, $units)
+			/*function show_text_form($idcart_shop, $units)
 			{
 			
 				return $units;
 			
-			}
+			}*/
+			
+			$method_text_form='no_show_text_form';
 		
 		}
 		
 		//Go to view...
 		
-		echo load_view(array($this->plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update), 'shop/cartshow');
+		echo load_view(array($this->plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update, $method_text_form), 'shop/cartshow');
+		
+		echo $close_form;
 		
 		return array( $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $arr_weight_total);
 		
@@ -468,6 +480,14 @@ class CartClass {
 						
 						}
 						
+						//Send emails...
+						
+						$post['IdOrder_shop']=Webmodel::insert_id();
+						
+						$this->send_mail_order($post, $arr_address, $arr_address_transport);
+						
+						//$this->clean_cart();
+						
 						echo $lang['shop']['order_success_cart_clean'];
 					
 					}
@@ -619,10 +639,62 @@ class CartClass {
 	public function clean_cart()
 	{
 	
+		global $cookie_path;
+	
+		setcookie ( "webtsys_shop", FALSE, 0, $cookie_path);
+	
+	}
+	
+	public function send_mail_order($arr_order_shop, $arr_address, $arr_address_transport)
+	{
+	
+		global $model, $config_data, $config_shop, $lang;
+	
+		load_libraries(array('utilities/set_admin_link', 'send_email'));
 		
+		$arr_address['country']=I18nField::show_formatted(serialize($arr_address['country']));
+		
+		$arr_address_transport['country_transport']=I18nField::show_formatted(serialize($arr_address_transport['country_transport']));
+		
+		//Prepare email
+		
+		$arr_user=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], array('email'));
+		
+		//$num_order=order_shop::calculate_num_bill($arr_order_shop['IdOrder_shop']);
+
+		$content_mail_user=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailcart');
+		
+		$query=$model['module']->select('where name="shop"', array('IdModule'));
+
+		list($idmodule)=webtsys_fetch_row($query);
+
+		$content_mail_admin=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, $idmodule, 0), 'shop/mailadmincart');
+		
+		//If no send mail write a message with the reference, for send to mail shop...
+
+		if( !send_mail($arr_user['email'], $lang['shop']['your_orders'], $content_mail_user, 'html') || !send_mail($config_data['portal_email'], $lang['shop']['orders'], $content_mail_admin, 'html') )
+		{
+
+			echo '<p>'.$lang['shop']['error_cannot_send_email'].', '.$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
+
+		}
 	
 	}
 
+}
+
+function show_text_form($idcart_shop, $units)
+{
+	
+	return TextForm('num_products['.$idcart_shop.']', 'units', $units);
+	
+}
+	
+function no_show_text_form($idcart_shop, $units)
+{
+	
+	return $units;
+	
 }
 
 
