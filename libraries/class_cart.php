@@ -486,7 +486,7 @@ class CartClass {
 						
 						$this->send_mail_order($post, $arr_address, $arr_address_transport);
 						
-						//$this->clean_cart();
+						$this->clean_cart();
 						
 						echo $lang['shop']['order_success_cart_clean'];
 					
