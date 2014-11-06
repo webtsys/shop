@@ -896,8 +896,10 @@ $model['order_shop']->components['phone_transport']=new CharField(255);
 //$model['order_shop']->components['zone_transport']=new IntegerField(11);
 
 $model['order_shop']->components['transport']=new CharField(255);
+$model['order_shop']->components['price_transport']=new MoneyField();
 
-$model['order_shop']->components['payment_form']=new I18nField(new TextField());
+$model['order_shop']->components['name_payment']=new CharField(255);
+$model['order_shop']->components['price_payment']=new MoneyField();
 
 $model['order_shop']->components['make_payment']=new BooleanField();
 
@@ -907,21 +909,6 @@ $model['order_shop']->components['date_order']=new DateField();
 
 $model['order_shop']->components['iduser']=new IntegerField(11);
 
-//Add new table for plugins, the name, and the money.
-
-/*$model['order_shop']->components['discount']=new CharField(255);
-$model['order_shop']->components['discount_percent']=new PercentField();*/
-
-/*$model['order_shop']->components['tax']=new CharField(255);
-$model['order_shop']->components['tax_percent']=new PercentField();
-
-$model['order_shop']->components['tax_discount_percent']=new PercentField();*/
-
-$model['order_shop']->components['price_transport']=new MoneyField();
-//$model['order_shop']->components['transport_discount_percent']=new PercentField();
-
-//$model['order_shop']->components['name_payment']=new CharField(255);
-//$model['order_shop']->components['price_payment']=new MoneyField();
 //$model['order_shop']->components['payment_discount_percent']=new PercentField();
 
 $model['order_shop']->components['total_price']=new MoneyField();
@@ -952,7 +939,8 @@ $model['order_shop']->components['phone_transport']->required=1;
 
 $model['order_shop']->components['token']->required=1;
 $model['order_shop']->components['transport']->required=1;
-$model['order_shop']->components['payment_form']->required=1;
+$model['order_shop']->components['name_payment']->required=1;
+$model['order_shop']->components['price_payment']->required=1;
 
 $model['order_shop']->create_form();
 
@@ -989,8 +977,8 @@ $model['order_shop_plugins']=new Webmodel('order_shop_plugins');
 
 $model['order_shop_plugins']->set_component('idorder_shop', 'ForeignKeyField', array('order_shop'));
 $model['order_shop_plugins']->set_component('name', 'I18nField', array('order_shop'));
-
 $model['order_shop_plugins']->set_component('add_price', 'MoneyField', array());
+$model['order_shop_plugins']->set_component('idcart_shop', 'ForeignKeyField', array('cart_shop'));
 
 $model['invoice_num']=new Webmodel('invoice_num');
 

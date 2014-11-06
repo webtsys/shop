@@ -5,6 +5,7 @@ class CartClass {
 	public $token;
 	public $url_update;
 	public $yes_update;
+	public $plugins;
 	
 	public function __construct($yes_update=1)
 	{
@@ -32,6 +33,12 @@ class CartClass {
 	
 		$this->yes_update=$yes_update;
 	
+		$this->plugins=new PreparePluginClass('cart');
+	
+		//Prepare config for this plugins..
+		
+		$this->plugins->load_all_plugins();
+	
 	}
 	
 	public function show_cart()
@@ -42,12 +49,6 @@ class CartClass {
 		load_lang('shop');
 	
 		load_libraries(array('table_config'));
-		
-		$plugins=new PreparePluginClass('cart');
-		
-		//Prepare config for this plugins..
-		
-		$plugins->load_all_plugins();
 	
 		$plugin_price=array();
 		
@@ -103,7 +104,7 @@ class CartClass {
 			
 			$arr_price_base_total[$arr_product['IdCart_shop']]=$arr_price[$arr_product['IdCart_shop']]*$arr_product['units'];
 			
-			foreach($plugins->arr_plugin_list as $plugin)
+			foreach($this->plugins->arr_plugin_list as $plugin)
 			{
 			
 				//Pass the filter of the plugin
@@ -154,7 +155,7 @@ class CartClass {
 		
 		//Go to view...
 		
-		echo load_view(array($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update), 'shop/cartshow');
+		echo load_view(array($this->plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update), 'shop/cartshow');
 		
 		return array( $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $arr_weight_total);
 		
@@ -332,11 +333,11 @@ class CartClass {
 		$total_price_product=0;
 		$total_weight_product=0;
 		
-		$plugins=new PreparePluginClass('cart');
+		/*$plugins=new PreparePluginClass('cart');
 		
 		//Prepare config for this plugins..
 		
-		$plugins->load_all_plugins();
+		$plugins->load_all_plugins();*/
 	
 		$plugin_price=array();
 		
@@ -351,7 +352,7 @@ class CartClass {
 			
 			$total_weight_product+=$weight*$units;
 
-			foreach($plugins->arr_plugin_list as $plugin)
+			foreach($this->plugins->arr_plugin_list as $plugin)
 			{
 			
 				//Pass the filter of the plugin
@@ -437,7 +438,7 @@ class CartClass {
 					
 					$post=array_merge($post, $arr_address, $arr_address_transport);
 					
-					$post['payment_form']=unserialize($arr_payment['name']);
+					$post['name_payment']=$arr_payment['name'];
 					
 					$post['make_payment']=1;
 					
@@ -453,13 +454,27 @@ class CartClass {
 					
 					$post['price_transport']=$total_price_transport;
 					
+					$post['price_payment']=$arr_payment['price_payment'];
+					
 					if($model['order_shop']->insert($post))
 					{
+					
+						foreach($this->plugins->arr_plugin_list as $plugin)
+						{
+						
+							//Pass the filter of the plugin
+						
+							$this->arr_plugins[$plugin]->insert_price_to_order_shop($this);
+						
+						}
 						
 						echo $lang['shop']['order_success_cart_clean'];
+					
 					}
 					else
 					{
+					
+						echo '<p>'.$model['order_shop']->std_error.'</p>';
 					
 						if($payment_class->cancel_checkout())
 						{

@@ -634,6 +634,12 @@ class CartSwitchClass extends ControllerSwitchClass
 				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
 			}
 		}
+		else
+		{
+		
+			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+		
+		}
 	
 	}
 	
