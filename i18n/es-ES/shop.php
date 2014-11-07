@@ -222,9 +222,9 @@ $lang['shop']['change_shop_category']='Cambiar categoría de tienda';
 
 $lang['shop']['category']='Categoría';
 
-$lang['shop']['admin_address_users']='admin_address_users';
+$lang['shop']['admin_address_users']='Administrar direcciones de usuario';
 
-$lang['shop']['modify_address_transport_user']='modify_address_transport_user';
+$lang['shop']['modify_address_transport_user']='Modificar direcciones de transporte de usuario';
 
 $lang['shop']['modify_products']='Modificar productos';
 
@@ -416,9 +416,9 @@ $lang['shop']['price_with_taxes']='Precio con impuestos';
 
 $lang['shop']['taxes_no_included']='Impuestos no incluidos';
 
-$lang['shop']['cancel_checkout_success']='cancel_checkout_success';
+$lang['shop']['cancel_checkout_success']='Se ha producido un error y hemos cancelado su pago, por favor, póngase en contacto con nosotros';
 
-$lang['shop']['no_cancel_checkout_success']='no_cancel_checkout_success';
+$lang['shop']['no_cancel_checkout_success']='Se produjo un error al registrar su pedido, pero no se ha podido guardar el pago, por favor, envíenos la referencia dada en el modo de pago. En caso de contrareembolso, no se preocupe, simplemente infórmenos del fallo para poder subsanarlo';
 
 $lang['shop']['choose_cat']='Elegir categoría';
 
@@ -458,7 +458,7 @@ $lang['shop']['see_products']='Ver productos';
 
 $lang['shop']['payment_form']='Forma de pago';
 
-$lang['shop']['choose_transport']='Elegir transport';
+$lang['shop']['choose_transport']='Elegir transporte';
 
 $lang['shop']['explain_choose_transport']='Por favor, eliga su método de transporte';
 

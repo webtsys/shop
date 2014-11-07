@@ -1668,7 +1668,12 @@ function ShopAdmin()
 			
 			$admin->set_url_post($url_post);
 			
-			$admin->options_func='UserOptionsListModel';
+			if($config_shop['no_transport']==0)
+			{
+			
+				$admin->options_func='UserOptionsListModel';
+			
+			}
 			
 			$admin->show();
 		
@@ -1676,15 +1681,33 @@ function ShopAdmin()
 		
 		case 26:
 		
-			$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => $lang['user']['admin_users'], 'name_op' => 'op', 'params' => array('op' => 25));
+			settype($_GET['IdUser_shop'], 'integer');
 		
-			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => $lang['shop']['admin_address_users'], 'name_op' => 'op', 'params' => array('op' => 26));
+			echo '<h2>'.$lang['shop']['modify_address_transport_user'].'</h2>';
+		
+			$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => $lang['user']['admin_users'], 'name_op' => 'op', 'params' => array('op' => 25, 'IdModule' => $_GET['IdModule'], 'IdOrder_shop' => $_GET['IdUser_shop']));
+		
+			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => $lang['shop']['admin_address_users'], 'name_op' => 'op', 'params' => array('op' => 26, 'IdModule' => $_GET['IdModule'], 'IdOrder_shop' => $_GET['IdUser_shop']));
 		
 			echo menu_barr_hierarchy_control($arr_menu);
 		
 			settype($_GET['IdUser_shop'], 'integer');
+			
+			$model['address_transport']->create_form();
 		
-			$admin=new GenerateAdminClass('user_shop');
+			$model['address_transport']->forms['country_transport']->form='SelectModelForm';
+			
+			$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='');
+		
+			$admin=new GenerateAdminClass('address_transport');
+			
+			$url_post=set_admin_link('users', array('op' => 26));
+			
+			$admin->set_url_post($url_post);
+			
+			$admin->arr_fields=array('address_transport', 'city_transport');
+			
+			$admin->arr_fields_edit=ConfigShop::$arr_fields_transport;
 			
 			$admin->where_sql='where iduser='.$_GET['IdUser_shop'];
 		
