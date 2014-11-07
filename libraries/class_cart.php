@@ -419,7 +419,7 @@ class CartClass {
 				
 				$payment_class=new $name_class($cart);
 				
-				if($payment_class->checkout())
+				if($payment_class->checkout($this))
 				{
 					$post['token']=$this->token;
 					
@@ -514,7 +514,7 @@ class CartClass {
 				else
 				{
 				
-					
+					echo $lang['shop']['no_cancel_checkout_success'];
 				
 				}
 			
@@ -641,7 +641,29 @@ class CartClass {
 	
 		global $cookie_path;
 	
+		if(isset($_SESSION['idaddress']))
+		{
+		
+			unset($_SESSION['idaddress']);
+		
+		}
+		
+		if(isset($_SESSION['idaddress']))
+		{
+		
+			unset($_SESSION['idtransport']);
+	
+		}
+	
 		setcookie ( "webtsys_shop", FALSE, 0, $cookie_path);
+	
+	}
+	
+	public function num_items_cart()
+	{
+		global $model;
+	
+		return $model['cart_shop']->select_count('where token="'.$this->token.'"');
 	
 	}
 	

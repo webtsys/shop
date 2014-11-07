@@ -99,7 +99,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	{
 		middle_table_config(array('', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
 		
-		$text_submit='<input type="button" value="'.$lang['shop']['checkout_order'].'" id="checkout_order" />';
+		$text_submit='<input type="submit" value="'.$lang['shop']['modify_products'].'"/> <input type="button" value="'.$lang['shop']['checkout_order'].'" id="checkout_order" />';
 	}
 	else
 	{
@@ -115,7 +115,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	{
 	
 		?>
-		<p><input type="submit" value="<?php echo $lang['shop']['modify_products']; ?>"/>  <?php echo $text_submit; ?></p>
+		<p><?php echo $text_submit; ?></p>
 		</form>
 		<?php
 	

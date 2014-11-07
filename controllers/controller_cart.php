@@ -572,15 +572,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				{
 			
 				default:
-			
-					?>	
-					<form method="post" action="<?php echo make_fancy_url($this->base_url, 'shop', 'cart', 'checkout', array('action' => 'finish_checkout', 'op' => 1));?>">
-					<?php set_csrf_key(); ?>
-					<h2><?php echo $this->lang['shop']['payment_form']; ?></h2>
-					<p><?php echo $this->lang['shop']['explain_payment_type_transport_type']; ?></p>
-					<h3><?php echo $this->lang['shop']['payment_type']; ?></h3>
-					<?php
-
+				
 					$arr_payment=array(0);
 
 					$query=$model['payment_form']->select('', array($model['payment_form']->idmodel, 'name', 'price_payment'));
@@ -605,13 +597,8 @@ class CartSwitchClass extends ControllerSwitchClass
 						$arr_payment[]=$idpayment;
 
 					}
-
-					echo SelectForm('payment_form', '', $arr_payment );
-					
-					?>
-					<p><input type="submit" value="<?php echo $this->lang['shop']['send_order_and_checkout']; ?>" /></p>
-					</form>
-					<?php
+			
+					echo load_view(array($arr_payment), 'shop/forms/methodpayment');
 				
 				break;
 				
@@ -621,7 +608,18 @@ class CartSwitchClass extends ControllerSwitchClass
 					
 					$cart=new CartClass();
 					
-					$cart->payment_gateway($_POST['payment_form']);
+					if($cart->num_items_cart()>0)
+					{
+					
+						$cart->payment_gateway($_POST['payment_form']);
+				
+					}
+					else
+					{
+					
+						$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+					
+					}
 				
 				break;
 				
