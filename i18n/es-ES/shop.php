@@ -222,6 +222,10 @@ $lang['shop']['change_shop_category']='Cambiar categoría de tienda';
 
 $lang['shop']['category']='Categoría';
 
+$lang['shop']['admin_address_users']='admin_address_users';
+
+$lang['shop']['modify_address_transport_user']='modify_address_transport_user';
+
 $lang['shop']['modify_products']='Modificar productos';
 
 $lang['shop']['subcat_products']='Subcategorías de productos';
@@ -416,8 +420,6 @@ $lang['shop']['cancel_checkout_success']='cancel_checkout_success';
 
 $lang['shop']['no_cancel_checkout_success']='no_cancel_checkout_success';
 
-$lang['shop']['num_order']='Número de pedido';
-
 $lang['shop']['choose_cat']='Elegir categoría';
 
 $lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
@@ -427,6 +429,8 @@ $lang['shop']['apply_discounts']='Aplicar descuentos';
 $lang['shop']['buy_product_units']='Unidades';
 
 $lang['shop']['warning_products_with_options']='Cuidado: se han detectado varios productos que tienen opciones para elegir. En este modo usted no puede especificar opciones para sus productos.';
+
+$lang['shop']['num_order']='Número de pedido';
 
 $lang['shop']['no_products_in_index']='No hay productos para mostrar';
 
@@ -451,6 +455,8 @@ $lang['shop']['select_category_shop']='Seleccionar categoría';
 $lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
 
 $lang['shop']['see_products']='Ver productos';
+
+$lang['shop']['payment_form']='Forma de pago';
 
 $lang['shop']['choose_transport']='Elegir transport';
 
@@ -531,8 +537,6 @@ $lang['shop']['added_europe_discount']='added_europe_discount';
 $lang['shop']['explain_conditions_page']='explain_conditions_page';
 
 $lang['shop']['num_options_unspecified']='Opciones no especificadas';
-
-$lang['shop']['payment_form']='Forma de pago';
 
 $lang['shop']['normal_style']='Estilo normal';
 

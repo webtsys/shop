@@ -7,8 +7,9 @@ function ShopAdmin()
 
 	load_lang('shop');
 	load_model('shop');
-
-	load_libraries(array('generate_admin_ng', 'forms/selectmodelformbyorder', 'forms/selectmodelform', 'forms/textareabb', 'utilities/menu_selected'));
+	load_config('shop');
+	
+	load_libraries(array('generate_admin_ng', 'admin/generate_admin_class', 'forms/selectmodelformbyorder', 'forms/selectmodelform', 'forms/textareabb', 'utilities/menu_selected', 'utilities/menu_barr_hierarchy'));
 
 	$header='<script language="Javascript" src="'.make_fancy_url($base_url, 'jscript', 'load_jscript', 'script', array('input_script' => 'jquery.min.js')).'"></script>';
 
@@ -28,6 +29,8 @@ function ShopAdmin()
 	$arr_link_options[17]=array('link' => set_admin_link( 'currency', array('IdModule' => $_GET['IdModule'], 'op' => 17) ), 'text' => $lang['shop']['currency']);
 	
 	$arr_link_options[20]=array('link' => set_admin_link( 'plugins', array('IdModule' => $_GET['IdModule'], 'op' => 20) ), 'text' => $lang['shop']['plugins_shop']);
+	
+	$arr_link_options[25]=array('link' => set_admin_link( 'users', array('IdModule' => $_GET['IdModule'], 'op' => 25) ), 'text' => $lang['user']['admin_users']);
 	
 	menu_selected($_GET['op'], $arr_link_options);
 	
@@ -1634,11 +1637,77 @@ function ShopAdmin()
 			echo '<p><a href="'.$url_back.'">'.$lang['common']['go_back'].'</a></p>';
 		
 		break;
+		
+		case 25:
+		
+			echo '<h2>'.$lang['user']['admin_users'].'</h2>';
+		
+			$model['user_shop']->components['token_client']->required=0;
+			
+			$model['user_shop']->components['token_recovery']->required=0;
+			
+			$model['user_shop']->components['password']->required=0;
+		
+			$model['user_shop']->create_form();
+		
+			$model['user_shop']->forms['country']->form='SelectModelForm';
+			
+			$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='');
+			
+			$admin=new GenerateAdminClass('user_shop');
+			
+			$admin->arr_fields=array('email', 'name', 'last_name', 'region');
+			
+			$admin->arr_fields_edit=ConfigShop::$arr_fields_address;
+			
+			$admin->arr_fields_edit[]='email';
+			
+			$admin->arr_fields_edit[]='password';
+			
+			$url_post=set_admin_link('users', array('op' => 25));
+			
+			$admin->set_url_post($url_post);
+			
+			$admin->options_func='UserOptionsListModel';
+			
+			$admin->show();
+		
+		break;
+		
+		case 26:
+		
+			$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => $lang['user']['admin_users'], 'name_op' => 'op', 'params' => array('op' => 25));
+		
+			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => $lang['shop']['admin_address_users'], 'name_op' => 'op', 'params' => array('op' => 26));
+		
+			echo menu_barr_hierarchy_control($arr_menu);
+		
+			settype($_GET['IdUser_shop'], 'integer');
+		
+			$admin=new GenerateAdminClass('user_shop');
+			
+			$admin->where_sql='where iduser='.$_GET['IdUser_shop'];
+		
+			$admin->show();
+		
+		break;
 
 	}
 
 }
 
+function UserOptionsListModel($url_options, $model_name, $id)
+{
+
+	global $lang, $base_url;
+
+	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	
+	$arr_options[]='<a href="'. set_admin_link( 'edit_address_transport_user', array('IdModule' => $_GET['IdModule'], 'op' => 26, 'IdUser_shop' => $id) ).'">'.$lang['shop']['modify_address_transport_user'].'</a>';
+
+	return $arr_options;
+
+}
 
 function CurrencyOptionsListModel($url_options, $model_name, $id)
 {

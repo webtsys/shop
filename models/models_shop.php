@@ -67,7 +67,33 @@ $model['country_user_shop']->components['idcountry']=new IntegerField(11);
 //Users shop
 //When delete, don't delete, only leave the data how user deleted.
 
-$model['user_shop']=new Webmodel('user_shop');
+class user_shop extends Webmodel {
+
+	public function update($post, $conditions="")
+	{
+	
+		if(isset($post['password']))
+		{
+		
+			if($this->components['password']->check($post['password'])=='')
+			{
+			
+				$this->components['password']->required=0;
+				unset($post['password']);
+			
+			}
+		
+		}
+	
+		return parent::update($post, $conditions);
+	
+	}
+
+}
+
+//$model['user_shop']=new Webmodel('user_shop');
+
+$model['user_shop']=new user_shop('user_shop');
 
 $model['user_shop']->set_component('email', 'CharField', array(255), 1);
 
@@ -93,6 +119,8 @@ $model['user_shop']->set_component('format_date', 'ChoiceField', array(10, 'stri
 $model['user_shop']->set_component('format_time', 'IntegerField', array(11));
 $model['user_shop']->set_component('timezone', 'ChoiceField', array(35, 'string', array(), MY_TIMEZONE));
 $model['user_shop']->set_component('ampm', 'ChoiceField', array(10, 'string', array('H:i:s', 'h:i:s A'), MY_TIMEZONE));
+
+$model['user_shop']->set_component('disabled', 'BooleanField', array());
 
 class product extends Webmodel {
 
@@ -940,7 +968,7 @@ $model['order_shop']->components['observations']=new TextHTMLField();
 
 $model['order_shop']->components['date_order']=new DateField();
 
-$model['order_shop']->components['iduser']=new IntegerField(11);
+//$model['order_shop']->components['iduser']=new ForeignKeyField('user_shop');
 
 //$model['order_shop']->components['payment_discount_percent']=new PercentField();
 

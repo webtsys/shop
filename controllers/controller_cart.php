@@ -468,7 +468,7 @@ class CartSwitchClass extends ControllerSwitchClass
 	{
 	
 		global $config_shop, $model;
-		
+// 		
 		ob_start();
 		
 		$yes_use_transport=1;

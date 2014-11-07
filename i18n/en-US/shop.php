@@ -222,6 +222,10 @@ $lang['shop']['change_shop_category']='Change shop category';
 
 $lang['shop']['category']='category';
 
+$lang['shop']['admin_address_users']='admin_address_users';
+
+$lang['shop']['modify_address_transport_user']='modify_address_transport_user';
+
 $lang['shop']['modify_products']='Modify products';
 
 $lang['shop']['subcat_products']='Products subcategories';
@@ -416,8 +420,6 @@ $lang['shop']['cancel_checkout_success']='cancel_checkout_success';
 
 $lang['shop']['no_cancel_checkout_success']='no_cancel_checkout_success';
 
-$lang['shop']['num_order']='num_order';
-
 $lang['shop']['choose_cat']='Choose products category';
 
 $lang['shop']['go_products_to_cart']='Complete order and go to Cart';
@@ -427,6 +429,8 @@ $lang['shop']['apply_discounts']='Apply discounts';
 $lang['shop']['buy_product_units']='Units';
 
 $lang['shop']['warning_products_with_options']='Warning: have been detected some products that have multiple options for choose. In this mode, you cannot specify options for the products';
+
+$lang['shop']['num_order']='num_order';
 
 $lang['shop']['no_products_in_index']='No products found on index';
 
@@ -451,6 +455,8 @@ $lang['shop']['select_category_shop']='Select shop category';
 $lang['shop']['no_products_in_category']='Still there is no product in this category';
 
 $lang['shop']['see_products']='See products';
+
+$lang['shop']['payment_form']='Payment method';
 
 $lang['shop']['choose_transport']='choose_transport';
 
@@ -531,8 +537,6 @@ $lang['shop']['added_europe_discount']='Added europe discount';
 $lang['shop']['explain_conditions_page']='explain_conditions_page';
 
 $lang['shop']['num_options_unspecified']='Unspecified options';
-
-$lang['shop']['payment_form']='Payment method';
 
 $lang['shop']['normal_style']='Normal style';
 
