@@ -714,14 +714,13 @@ function ShopAdmin()
 			}
 
 			$model['order_shop']->components['token']->required=0;
-			$model['order_shop']->components['zone_transport']->required=0;
-			$model['order_shop']->components['payment_form']->required=0;
+			//$model['order_shop']->components['payment_form']->required=0;
 			
 			settype($_GET['op_payment'], 'integer');
 			
 			$where_sql='';
 
-			$arr_fields=array('name', 'last_name', 'invoice_num', 'email', 'total_price', 'make_payment', 'date_order');
+			$arr_fields=array('name', 'last_name', 'email', 'total_price', 'make_payment', 'date_order');
 			
 			if($_GET['op_payment']==1)
 			{
@@ -1470,6 +1469,8 @@ function ShopAdmin()
 					
 				
 				}*/
+
+				$arr_plugin_choice=array();
 				
 				$dir = opendir( $base_path."modules/shop/plugins" );
 
@@ -1489,6 +1490,8 @@ function ShopAdmin()
 								
 								$arr_plugins[]=ucfirst($plugin_dir);
 								$arr_plugins[]=$plugin_dir;
+								
+								$arr_plugin_choice[]=$plugin_dir;
 					
 							}
 						
@@ -1502,9 +1505,11 @@ function ShopAdmin()
 				
 				closedir($dir);
 				
-				$model['plugin_shop']->components['plugin']->arr_values=&$arr_plugin_list[$element_choice];
+				$model['plugin_shop']->components['plugin']->arr_values=&$arr_plugin_choice;
 				
-				$model['plugin_shop']->forms['plugin']->SetParameters($arr_plugins);
+				$model['plugin_shop']->components['plugin']->restart_formatted();
+				
+				$model['plugin_shop']->forms['plugin']->parameters=array('plugin', '', $arr_plugins);
 			
 				$model['plugin_shop']->forms['name']->label=$lang['common']['name'];
 			
@@ -1512,8 +1517,24 @@ function ShopAdmin()
 				$arr_fields_edit=array('name', 'element', 'plugin');
 				$url_options=set_admin_link( 'plugin_admin', array('op' => 20, 'IdModule' => $_GET['IdModule'], 'element_choice' => $element_choice));
 			
-				generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='PluginsOptionsListModel', 
-				$where_sql='where element="'.$element_choice.'"', $arr_fields_form=array(), $type_list='Basic');
+				//generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='PluginsOptionsListModel', 
+				
+				$where_sql='where element="'.$element_choice.'"';
+				//, $arr_fields_form=array(), $type_list='Basic');
+				
+				$admin=new GenerateAdminClass('plugin_shop');
+				
+				$admin->arr_fields=&$arr_fields;
+				
+				$admin->arr_fields_edit=&$arr_fields_edit;
+				
+				$admin->set_url_post($url_options);
+				
+				$admin->where_sql=$where_sql;
+				
+				$admin->options_func='PluginsOptionsListModel';
+				
+				$admin->show();
 				
 				//Now the order...
 				
