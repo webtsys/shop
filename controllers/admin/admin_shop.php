@@ -896,7 +896,16 @@ function ShopAdmin()
 		break;
 
 		case 16:
-
+		
+			ob_end_clean();
+			
+			settype($_GET['IdOrder_shop'], 'integer');
+			
+			echo load_view(array(), 'shop/ordershop', 'shop');
+			
+			die;
+		
+			/*
 			//Load pdf class...
 
 			load_libraries(array('config_shop', 'fpdf/fpdf'), $base_path.'/modules/shop/libraries/');
@@ -957,11 +966,6 @@ function ShopAdmin()
 					$this->SetFont('Arial','',10);
 
 					$this->SetXY(105,5);
-
-					/*$text_address_enterprise[]=$lang['shop']['name_enterprise'].': ';
-					$text_address_enterprise[]=$lang['common']['address'].': ';
-					$text_address_enterprise[]=$lang['common']['city'].': ';
-					$text_address_enterprise[]=$lang['shop']['fiscal_identity'].': ';*/
 
 					$this->MultiCell(95,4, iconv("UTF-8", "CP1252", $config_shop['bill_data_shop'] ),0,'LR');
 
@@ -1259,7 +1263,7 @@ function ShopAdmin()
 				
 				die;
 
-			}
+			}*/
 
 		break;
 
