@@ -11,7 +11,7 @@ function ShopAdmin()
 	
 	load_libraries(array('generate_admin_ng', 'admin/generate_admin_class', 'forms/selectmodelformbyorder', 'forms/selectmodelform', 'forms/textareabb', 'utilities/menu_selected', 'utilities/menu_barr_hierarchy'));
 
-	settype($_GET['op'], 'integer');
+	settype($_GET['op'], 'string');
 
 	$arr_link_options[1]=array('link' => set_admin_link( 'shop', array('op' => 1) ), 'text' => PhangoVar::$lang['shop']['config_shop']);
 	$arr_link_options[2]=array('link' => set_admin_link( 'shop', array('op' => 2) ), 'text' => PhangoVar::$lang['shop']['products_categories']);
@@ -197,24 +197,33 @@ function ShopAdmin()
 			$admin->where_sql='where subcat='.$_GET['subcat'];
 			
 			$admin->show();
-
-			if($_GET['subcat']>0)
+			
+			/*if($_GET['op_edit']>0)
 			{
 
 				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 2, 'subcat' => $parent) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
 
 			}
-			else
-			{
+			else*/
 			
-				//Order principal categories, util for various things.
-				
-				echo '<h3>'.PhangoVar::$lang['shop']['order_cats'].'</h3>';
-			
-				GeneratePositionModel('cat_product', 'title', 'position', set_admin_link( 'admin_external_plugin', array('op' => 2)), $where='');
-			
-			}
 
+		//break;
+		
+		case '2_5':
+		
+		if($_GET['op_edit']==0 && $_GET['op_action']==0)
+		{
+		
+			//Order principal categories, util for various things.
+			
+			echo '<h3>'.PhangoVar::$lang['shop']['order_cats'].'</h3>';
+		
+			//GeneratePositionModel('cat_product', 'title', 'position', set_admin_link( 'shop', array('op' => 2)), $where='');
+			
+			$admin->generate_position_model('title', 'position', set_admin_link( 'shop', array('op' => '2_5')), $where='');
+		
+		}
+		
 		break;
 
 		case 3:
