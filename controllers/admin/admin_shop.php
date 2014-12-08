@@ -229,6 +229,7 @@ function ShopAdmin()
 		case 3:
 
 			settype($_GET['idcat'], 'integer');
+			settype($_GET['IdProduct'], 'integer');
 
 			$query=PhangoVar::$model['cat_product']->select('where IdCat_product='.$_GET['idcat'], array('IdCat_product', 'title', 'subcat'));
 
@@ -269,9 +270,9 @@ function ShopAdmin()
 			<script language="javascript">
 				$(document).ready( function () {
 				
-					$('#idcat').change( function () {
+					$('#idcat_field_form').change( function () {
 						
-						location.href='<?php echo set_admin_link( PhangoVar::$lang['shop']['edit_products_from_category'], array('op' => 3)); ?>/idcat/'+$('#idcat').val();
+						location.href='<?php echo set_admin_link( 'shop', array('op' => 3)); ?>/idcat/'+$('#idcat_field_form').val();
 					
 					});
 				
@@ -280,16 +281,16 @@ function ShopAdmin()
 			
 			<?php
 			
-			$header.=ob_get_contents();
+			PhangoVar::$arr_cache_header[]=ob_get_contents();
 			
 			ob_end_clean();
 			
 			echo '<p><strong>'.PhangoVar::$lang['shop']['choose_category'].'</strong>: '.SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='').'</p>';
 			
-			$arr_fields=array('referer', 'title', 'extra_options');
-			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'extra_options', 'weight', 'num_sold', 'cool' );
+			$arr_fields=array('referer', 'title');
+			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'weight', 'num_sold', 'cool' );
 			
-			$url_options=set_admin_link( 'config_shop', array('op' => 3, 'idcat' => $_GET['idcat']) );
+			$url_options=set_admin_link( 'shop', array('op' => 3, 'idcat' => $_GET['idcat']) );
 
 			PhangoVar::$model['product']->create_form();
 
@@ -314,13 +315,13 @@ function ShopAdmin()
 				}
 			}
 
-			PhangoVar::$model['product']->components['extra_options']->arr_values=&$arr_options_check;
-			PhangoVar::$model['product']->forms['extra_options']->SetParameters($arr_options);
+			/*PhangoVar::$model['product']->components['extra_options']->arr_values=&$arr_options_check;
+			PhangoVar::$model['product']->forms['extra_options']->SetParameters($arr_options);*/
 
 			PhangoVar::$model['product']->forms['description']->parameters=array('description', '', '', 'TextAreaBBForm');
 			PhangoVar::$model['product']->forms['description_short']->parameters=array('description_short', '', '', 'TextAreaBBForm');
 			
-			PhangoVar::$model['product']->forms['stock']->SetForm(1);
+			PhangoVar::$model['product']->forms['stock']->set_param_value_form(1);
 
 			//Labels for forms..
 
@@ -334,7 +335,7 @@ function ShopAdmin()
 			PhangoVar::$model['product']->forms['stock']->label=PhangoVar::$lang['shop']['stock'];
 			PhangoVar::$model['product']->forms['date']->label=PhangoVar::$lang['common']['date'];
 			PhangoVar::$model['product']->forms['about_order']->label=PhangoVar::$lang['shop']['about_order'];
-			PhangoVar::$model['product']->forms['extra_options']->label=PhangoVar::$lang['shop']['extra_options'];
+			//PhangoVar::$model['product']->forms['extra_options']->label=PhangoVar::$lang['shop']['extra_options'];
 			PhangoVar::$model['product']->forms['weight']->label=PhangoVar::$lang['shop']['weight'];
 			PhangoVar::$model['product']->forms['num_sold']->label=PhangoVar::$lang['shop']['num_sold'];
 			PhangoVar::$model['product']->forms['cool']->label=PhangoVar::$lang['shop']['cool'];
@@ -355,10 +356,23 @@ function ShopAdmin()
 				$arr_plugin_product_list[]=$plugin;
 				
 			}
+			
+			$admin=new GenerateAdminClass('product');
+			
+			$admin->arr_fields=&$arr_fields;
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			$admin->set_url_post($url_options);
+			$admin->options_func='ProductOptionsListModel';
+			$admin->where_sql=&$where_sql;
+			
+			$admin->show();
+			
 
-			generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql, $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql, $arr_fields_form=array(), $type_list='Basic');
+			
+			
 
-			if($_GET['IdProduct']==0 || !isset($_GET['op_update']))
+			if($_GET['IdProduct']==0 && !isset($_GET['op_update']))
 			{
 
 				echo '<p><a href="'. set_admin_link( 'config_shop', array('op' => 2, 'subcat' => $parent) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
@@ -463,11 +477,11 @@ function ShopAdmin()
 
 			?>
 			<p>
-			<a href="<?php echo set_admin_link( 'countries_shop', array('op' => 8, 'type' => 0) ); ?>"><?php echo PhangoVar::$lang['shop']['zones_transport']; ?></a>
+			<a href="<?php echo set_admin_link( 'shop', array('op' => 8, 'type' => 0) ); ?>"><?php echo PhangoVar::$lang['shop']['zones_transport']; ?></a>
 			</p>
 			<?php
 
-			$url_options=set_admin_link( 'edit_transport', array('op' =>7) );
+			$url_options=set_admin_link( 'shop', array('op' =>7) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -484,9 +498,19 @@ function ShopAdmin()
 			
 			$arr_type_transport=array(0, PhangoVar::$lang['shop']['type_by_weight'], 0, PhangoVar::$lang['shop']['type_by_price'], 1);
 			
-			PhangoVar::$model['transport']->forms['type']->SetParameters($arr_type_transport);
+			PhangoVar::$model['transport']->forms['type']->set_parameter_value($arr_type_transport);
+			
+			$admin= new GenerateAdminClass('transport');
+			
+			$admin->arr_fields=&$arr_fields;
+			
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			
+			$admin->set_url_post($url_options);
+			
+			$admin->show();
 
-			generate_admin_model_ng('transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='TransportOptionsListModel', $where_sql='where IdTransport>0', $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='TransportOptionsListModel', $where_sql='where IdTransport>0', $arr_fields_form=array(), $type_list='Basic');
 
 		break;
 
@@ -508,11 +532,11 @@ function ShopAdmin()
 
 			echo '<h3>'.PhangoVar::$lang['shop']['countries_zones'].' - '.$arr_type_zone[$_GET['type']].'</h3>';
 
-			$url_options=set_admin_link( 'edit_countries', array('op' => 8, 'type' => $_GET['type']) );
+			$url_options=set_admin_link( 'shop', array('op' => 8, 'type' => $_GET['type']) );
 
 			PhangoVar::$model['zone_shop']->create_form();
 
-			PhangoVar::$model['zone_shop']->forms['type']->SetForm($_GET['type']);
+			PhangoVar::$model['zone_shop']->forms['type']->set_parameter_value($_GET['type']);
 
 			/*foreach(PhangoVar::$arr_i18n as $lang_i18n)
 			{
@@ -537,12 +561,22 @@ function ShopAdmin()
 
 			}
 
-			generate_admin_model_ng('zone_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql=$sql_type_zone[$_GET['type']], $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('zone_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql=$sql_type_zone[$_GET['type']], $arr_fields_form=array(), $type_list='Basic');
+			
+			$admin=new GenerateAdminClass('zone_shop');
+			
+			$admin->set_url_post($url_options);
+			
+			$admin->arr_fields=&$arr_fields;
+			
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			
+			$admin->show();
 
 			$go_back_text[0]=PhangoVar::$lang['shop']['go_back_to_transport'];
 			$go_back_text[1]=PhangoVar::$lang['shop']['go_back_to_taxes'];
 
-			echo '<p><a href="'. set_admin_link( 'edit_transport', array('op' => $back_type_zone[$_GET['type']]) ).'">'.$go_back_text[$_GET['type']].'</a></p>';
+			echo '<p><a href="'. set_admin_link( 'shop', array('op' => $back_type_zone[$_GET['type']]) ).'">'.$go_back_text[$_GET['type']].'</a></p>';
 
 		break;
 
@@ -604,7 +638,7 @@ function ShopAdmin()
 
 			echo '<h3>'.PhangoVar::$lang['shop']['gateways_payment'].'</h3>';
 
-			$url_options=set_admin_link( 'edit_payment', array('op' => 10) );
+			$url_options=set_admin_link( 'shop', array('op' => 10) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
@@ -630,13 +664,21 @@ function ShopAdmin()
 			//$this->arr_values=$arr_values;
 			PhangoVar::$model['payment_form']->components['code']->arr_values=&$arr_code_check;
 
-			PhangoVar::$model['payment_form']->forms['code']->SetParameters($arr_code);
+			PhangoVar::$model['payment_form']->forms['code']->set_parameter_value($arr_code);
 
 			PhangoVar::$model['payment_form']->forms['name']->label=PhangoVar::$lang['common']['name'];
 			PhangoVar::$model['payment_form']->forms['code']->label=PhangoVar::$lang['shop']['code_payment'];
 			PhangoVar::$model['payment_form']->forms['price_payment']->label=PhangoVar::$lang['shop']['price_payment'];
 
-			generate_admin_model_ng('payment_form', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('payment_form', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
+			
+			$admin=new GenerateAdminClass('payment_form');
+			
+			$admin->arr_fields=&$arr_fields;
+			
+			$admin->set_url_post($url_options);
+			
+			$admin->show();
 
 		break;
 
@@ -724,7 +766,7 @@ function ShopAdmin()
 			
 			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'make_payment', 'total_price');
 			
-			$url_options=set_admin_link( 'edit_order', array('op' => 13, 'op_payment' => $_GET['op_payment']) );
+			$url_options=set_admin_link( 'shop', array('op' => 13, 'op_payment' => $_GET['op_payment']) );
 	
 			$arr_country=array('');
 
@@ -739,10 +781,10 @@ function ShopAdmin()
 			}
 
 			PhangoVar::$model['order_shop']->forms['country']->form='SelectForm';
-			PhangoVar::$model['order_shop']->forms['country']->SetParameters($arr_country);
+			PhangoVar::$model['order_shop']->forms['country']->set_parameter_value($arr_country);
 
 			PhangoVar::$model['order_shop']->forms['country_transport']->form='SelectForm';
-			PhangoVar::$model['order_shop']->forms['country_transport']->SetParameters($arr_country);
+			PhangoVar::$model['order_shop']->forms['country_transport']->set_parameter_value($arr_country);
 
 			PhangoVar::$model['order_shop']->forms['name']->label=PhangoVar::$lang['common']['name'];
 			PhangoVar::$model['order_shop']->forms['last_name']->label=PhangoVar::$lang['common']['last_name'];
@@ -766,11 +808,11 @@ function ShopAdmin()
 			}
 
 			PhangoVar::$model['order_shop']->forms['transport']->form='SelectForm';
-			PhangoVar::$model['order_shop']->forms['transport']->SetParameters($arr_transport);
+			PhangoVar::$model['order_shop']->forms['transport']->set_parameter_value($arr_transport);
 			
-			$arr_link_orders[0]=array('link' => set_admin_link( 'plugins', array('op' => 13, 'op_payment' => 0) ), 'text' => PhangoVar::$lang['shop']['payment_orders']);
+			$arr_link_orders[0]=array('link' => set_admin_link( 'shop', array('op' => 13, 'op_payment' => 0) ), 'text' => PhangoVar::$lang['shop']['payment_orders']);
 			
-			$arr_link_orders[1]=array('link' => set_admin_link( 'plugins', array('op' => 13, 'op_payment' => 1) ), 'text' => PhangoVar::$lang['shop']['no_payment_orders']);
+			$arr_link_orders[1]=array('link' => set_admin_link( 'shop', array('op' => 13, 'op_payment' => 1) ), 'text' => PhangoVar::$lang['shop']['no_payment_orders']);
 			
 			menu_selected($_GET['op_payment'], $arr_link_orders, 1);
 			
@@ -781,7 +823,11 @@ function ShopAdmin()
 			
 				echo '<h3>'.PhangoVar::$lang['shop']['payment_orders'].'</h3>';
 
-				ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
+				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
+				
+				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
+				
+				$list->show();
 				
 				break;
 				
@@ -789,7 +835,11 @@ function ShopAdmin()
 			
 				echo '<h3>'.PhangoVar::$lang['shop']['no_payment_orders'].'</h3>';
 
-				ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
+				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
+				
+				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
+				
+				$list->show();
 				
 				break;
 				
@@ -813,7 +863,7 @@ function ShopAdmin()
 			
 			echo '<p><a href="'.$url_add_images.'">'.PhangoVar::$lang['shop']['add_new_images'].'</a></h3>';
 
-			$url_options=set_admin_link( 'edit_image_product', array('op' => 14, 'IdProduct' => $_GET['IdProduct']) );
+			$url_options=set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $_GET['IdProduct']) );
 
 			$arr_fields=array('photo', 'principal');
 			$arr_fields_edit=array('photo', 'idproduct', 'principal');
@@ -824,7 +874,7 @@ function ShopAdmin()
 
 			PhangoVar::$model['image_product']->forms['idproduct']->form='HiddenForm';
 
-			PhangoVar::$model['image_product']->forms['idproduct']->SetForm($_GET['IdProduct']);
+			PhangoVar::$model['image_product']->forms['idproduct']->set_param_value_form($_GET['IdProduct']);
 
 			PhangoVar::$model['image_product']->forms['photo']->label=PhangoVar::$lang['common']['image'];
 			PhangoVar::$model['image_product']->forms['principal']->label=PhangoVar::$lang['shop']['principal_photo'];
@@ -840,12 +890,21 @@ function ShopAdmin()
 			}
 			PhangoVar::$model['image_product']->set_enctype_binary();
 			
-			generate_admin_model_ng('image_product', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where IdProduct='.$_GET['IdProduct'], $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('image_product', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where IdProduct='.$_GET['IdProduct'], $arr_fields_form=array(), $type_list='Basic');
+			
+			$admin=new GenerateAdminClass('image_product');
+			
+			$admin->arr_fields=&$arr_fields;
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			
+			$admin->set_url_post($url_options);
+			
+			$admin->show();
 
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'edit_product', array('op' => 3) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
 
 			}
 
@@ -855,7 +914,7 @@ function ShopAdmin()
 
 			echo '<h3>'.PhangoVar::$lang['shop']['countries'].'</h3>';
 
-			$url_options=set_admin_link( 'edit_group_shop', array('op' => 15) );
+			$url_options=set_admin_link( 'shop', array('op' => 15) );
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array('name', 'code', 'idzone_transport');
@@ -883,7 +942,16 @@ function ShopAdmin()
 			//PhangoVar::$model['country_shop']->forms['idzone_taxes']->label=PhangoVar::$lang['shop']['idzone_taxes'];
 			PhangoVar::$model['country_shop']->forms['idzone_transport']->label=PhangoVar::$lang['shop']['idzone_transport'];
 
-			generate_admin_model_ng('country_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('country_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
+			
+			$admin=new GenerateAdminClass('country_shop');
+			
+			$admin->arr_fields=&$arr_fields;
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			
+			$admin->set_url_post($url_options);
+			
+			$admin->show();
 
 
 		break;
@@ -1264,7 +1332,7 @@ function ShopAdmin()
 
 			echo '<h3>'.PhangoVar::$lang['shop']['currency'].'</h3>';
 
-			$url_options=set_admin_link( 'edit_currencies', array('op' => 17) );
+			$url_options=set_admin_link( 'shop', array('op' => 17) );
 
 			$arr_fields=array('name', 'symbol');
 			$arr_fields_edit=array('name', 'symbol');
@@ -1274,7 +1342,16 @@ function ShopAdmin()
 			PhangoVar::$model['currency']->forms['name']->label=PhangoVar::$lang['common']['name'];
 			PhangoVar::$model['currency']->forms['symbol']->label=PhangoVar::$lang['shop']['symbol'];
 		
-			generate_admin_model_ng('currency', $arr_fields, $arr_fields_edit, $url_options, $options_func='CurrencyOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
+			//generate_admin_model_ng('currency', $arr_fields, $arr_fields_edit, $url_options, $options_func='CurrencyOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
+			$admin=new GenerateAdminClass('currency');
+			
+			$admin->arr_fields=&$arr_fields;
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			
+			$admin->set_url_post($url_options);
+			
+			$admin->show();
+			
 
 		break;
 	
@@ -1436,7 +1513,7 @@ function ShopAdmin()
 			
 			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart');
 			
-			echo '<form method="get" action="'.set_admin_link( 'element_choice', array('op' => 20)).'">';
+			echo '<form method="get" action="'.set_admin_link( 'shop', array('op' => 20)).'">';
 			
 			echo '<p>'.PhangoVar::$lang['shop']['element_choice'].': '.SelectForm('element_choice', '', $arr_elements_plugin).' <input type="submit" value="'.PhangoVar::$lang['common']['send'].'" /></p>';
 			
@@ -1454,7 +1531,7 @@ function ShopAdmin()
 				PhangoVar::$model['plugin_shop']->create_form();
 				
 				PhangoVar::$model['plugin_shop']->forms['element']->form='HiddenForm';
-				PhangoVar::$model['plugin_shop']->forms['element']->SetForm($element_choice);
+				PhangoVar::$model['plugin_shop']->forms['element']->set_parameter_value($element_choice);
 				
 				$arr_plugins=array('', '', '');
 				
@@ -1512,7 +1589,7 @@ function ShopAdmin()
 			
 				$arr_fields=array('name', 'plugin');
 				$arr_fields_edit=array('name', 'element', 'plugin');
-				$url_options=set_admin_link( 'plugin_admin', array('op' => 20, 'element_choice' => $element_choice));
+				$url_options=set_admin_link( 'shop', array('op' => 20, 'element_choice' => $element_choice));
 			
 				//generate_admin_model_ng('plugin_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='PluginsOptionsListModel', 
 				
@@ -1535,7 +1612,7 @@ function ShopAdmin()
 				
 				//Now the order...
 				
-				echo '<p><a href="'.set_admin_link( 'plugin_admin', array('op' => 21, 'element_choice' => $element_choice)).'">'.PhangoVar::$lang['shop']['order_plugins'].'</a></p>';
+				echo '<p><a href="'.set_admin_link( 'shop', array('op' => 21, 'element_choice' => $element_choice)).'">'.PhangoVar::$lang['shop']['order_plugins'].'</a></p>';
 			
 			}
 			
@@ -1635,30 +1712,46 @@ function ShopAdmin()
 			
 			$arr_fields=array('idcat_product');
 			$arr_fields_edit=array();
-			$url_options=set_admin_link( 'edit_cat_shop', array('op' => 24, 'idproduct' => $_GET['idproduct']));
-			$url_back=set_admin_link( 'edit_cat_shop', array('op' => 3));
+			$url_options=set_admin_link( 'shop', array('op' => 24, 'idproduct' => $_GET['idproduct']));
+			$url_back=set_admin_link( 'shop', array('op' => 3));
 			
 			PhangoVar::$model['product_relationship']->components['idproduct']->form='HiddenForm';
 			
 			PhangoVar::$model['product_relationship']->create_form();
 			
 			PhangoVar::$model['product_relationship']->forms['idproduct']->form='HiddenForm';
-			PhangoVar::$model['product_relationship']->forms['idproduct']->SetForm($_GET['idproduct']);
+			PhangoVar::$model['product_relationship']->forms['idproduct']->set_param_value_form($_GET['idproduct']);
+			
 			PhangoVar::$model['product_relationship']->forms['idcat_product']->label=PhangoVar::$lang['shop']['category'];
 			PhangoVar::$model['product_relationship']->forms['idcat_product']->form='SelectModelFormByOrder';
 			PhangoVar::$model['product_relationship']->forms['idcat_product']->parameters=array('idcat_product', '', 0, 'cat_product', 'title', 'subcat', $where='');
 			
 			//SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='')
 			
-			generate_admin_model_ng('product_relationship', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where product_relationship.idproduct='.$_GET['idproduct'], $arr_fields_form=array(), $type_list='Basic');
+			$admin=new GenerateAdminClass('product_relationship');
 			
-			echo '<p><a href="'.$url_back.'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
+			$admin->arr_fields=&$arr_fields;
+			$admin->arr_fields_edit=&$arr_fields_edit;
+			$admin->set_url_post($url_options);
+			//$admin->set_url_back($url_back);
+			$admin->where_sql='where product_relationship.idproduct='.$_GET['idproduct'];
+			
+			$admin->show();
+			
+			//generate_admin_model_ng('product_relationship', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where product_relationship.idproduct='.$_GET['idproduct'], $arr_fields_form=array(), $type_list='Basic');
+			
+			if($_GET['op_edit']==0 && $_GET['op_action']==0)
+			{
+			
+				echo '<p><a href="'.$url_back.'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
+				
+			}
 		
 		break;
 		
 		case 25:
 		
-			echo '<h2>'.PhangoVar::$lang['user']['admin_users'].'</h2>';
+			echo '<h2>'.PhangoVar::$lang['shop']['admin_users'].'</h2>';
 		
 			PhangoVar::$model['user_shop']->components['token_client']->required=0;
 			
@@ -1682,7 +1775,7 @@ function ShopAdmin()
 			
 			$admin->arr_fields_edit[]='password';
 			
-			$url_post=set_admin_link('users', array('op' => 25));
+			$url_post=set_admin_link('shop', array('op' => 25));
 			
 			$admin->set_url_post($url_post);
 			
@@ -1777,20 +1870,20 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_cat_shop', array('op' => 24, 'idproduct' => $id) ).'">'.PhangoVar::$lang['shop']['edit_cat_product'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 24, 'idproduct' => $id) ).'">'.PhangoVar::$lang['shop']['edit_cat_product'].'</a>';
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_image_product', array('op' => 14, 'IdProduct' => $id) ).'">'.PhangoVar::$lang['shop']['edit_image_product'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $id) ).'">'.PhangoVar::$lang['shop']['edit_image_product'].'</a>';
 
-	if($arr_row_raw['extra_options']=='standard_options.php')
+	/*if($arr_row_raw['extra_options']=='standard_options.php')
 	{
 
 		$arr_options[]='<a href="'. set_admin_link( PhangoVar::$lang['shop']['add__select_options_to_product'], array('op' => 5, 'IdProduct' => $id) ).'">'.PhangoVar::$lang['shop']['add__select_options_to_product'].'</a>';
 
-	}
+	}*/
 	
 	//Add plugin options
 	
-	foreach($arr_plugin_product_list as $plugin)
+	/*foreach($arr_plugin_product_list as $plugin)
 	{
 	
 		//include($);
@@ -1806,7 +1899,7 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 			
 		}
 	
-	}
+	}*/
 
 	return $arr_options;
 

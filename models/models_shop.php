@@ -1,5 +1,4 @@
 <?php
-global $arr_i18n, $base_url, $arr_plugin_list;
 
 load_libraries(array('i18n_fields', 'fields/moneyfield', 'fields/passwordfield'));
 
@@ -38,6 +37,65 @@ class country_shop extends Webmodel {
 	
 }
 
+class zone_shop extends Webmodel {
+
+	function __construct()
+	{
+
+		parent::__construct("zone_shop");
+
+	}
+
+	function update($post, $conditions="")
+	{
+
+		settype($post['other_countries'], 'integer');
+		settype($post['type'], 'integer');
+		
+		if($post['other_countries']==1 && isset($post['type']))
+		{
+
+			$num_count=parent::select_count('where other_countries=1 and type='.$post['type'], 'IdZone_shop');
+
+			if($num_count>0)
+			{
+
+				$this->components['other_countries']->std_error=PhangoVar::$lang['shop']['error_other_countries_is_selected'];
+
+				return 0;
+
+			}
+
+		}
+		
+		return parent::update($post, $conditions);
+
+	}
+	
+}
+
+PhangoVar::$model['zone_shop']=new zone_shop();
+
+PhangoVar::$model['zone_shop']->set_component('name', 'I18nField', array(new CharField(255)), 1);
+
+/*foreach($arr_i18n as PhangoVar::$lang_field)
+{
+
+	PhangoVar::$model['zone_shop']->components['name_'.PhangoVar::$lang_field]=new CharField(255);
+	PhangoVar::$model['zone_shop']->components['name_'.PhangoVar::$lang_field]->required=1;
+
+}*/
+
+PhangoVar::$model['zone_shop']->set_component('code', 'CharField', array(25), 1);
+
+//Code 0 is for transport
+//Code 1 is for taxes
+
+PhangoVar::$model['zone_shop']->set_component('type', 'IntegerField', array(11));
+PhangoVar::$model['zone_shop']->components['type']->form='HiddenForm';
+
+PhangoVar::$model['zone_shop']->set_component('other_countries', 'BooleanField', array());
+
 PhangoVar::$model['country_shop']=new country_shop();
 
 /*foreach($arr_i18n as PhangoVar::$lang_field)
@@ -48,16 +106,14 @@ PhangoVar::$model['country_shop']=new country_shop();
 
 }*/
 
-PhangoVar::$model['country_shop']->components['name']=new I18nField(new CharField(255));
-PhangoVar::$model['country_shop']->components['name']->required=1;
+PhangoVar::$model['country_shop']->set_component('name', 'I18nField', array(new CharField(255)) , 1);
 
 SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
 
-PhangoVar::$model['country_shop']->components['code']=new CharField(25);
-PhangoVar::$model['country_shop']->components['code']->required=1;
+PhangoVar::$model['country_shop']->set_component('code', 'CharField', array(25), 1);
 
 //PhangoVar::$model['country_shop']->components['idzone_taxes']=new ForeignKeyField('zone_shop');
-PhangoVar::$model['country_shop']->components['idzone_transport']=new ForeignKeyField('zone_shop');
+PhangoVar::$model['country_shop']->set_component('idzone_transport', 'ForeignKeyField', array('zone_shop'));
 
 //Users shop
 //When delete, don't delete, only leave the data how user deleted.
@@ -210,45 +266,37 @@ class product extends Webmodel {
 
 PhangoVar::$model['product']=new product();
 
-PhangoVar::$model['product']->components['referer']=new CharField(255);
+PhangoVar::$model['product']->set_component('referer', 'CharField', array(255), 1);
 
-PhangoVar::$model['product']->components['referer']->required=1;
-
-PhangoVar::$model['product']->components['title']=new I18nField(new CharField(255));
-
-PhangoVar::$model['product']->components['title']->required=1;
+PhangoVar::$model['product']->set_component('title', 'I18nField', array(new CharField(255)), 1);
 
 SlugifyField::add_slugify_i18n_fields('product', 'title');
 
-PhangoVar::$model['product']->components['description']=new I18nField(new TextHTMLField());
+PhangoVar::$model['product']->set_component('description', 'I18nField', array(new TextHTMLField()), 1);
 
-PhangoVar::$model['product']->components['description']->required=1;
-
-PhangoVar::$model['product']->components['description_short']=new I18nField(new CharField(1000));
-
-PhangoVar::$model['product']->components['description_short']->required=0;
+PhangoVar::$model['product']->set_component('description_short', 'I18nField', array(new CharField(1000)));
 
 //PhangoVar::$model['product']->components['idcat']=new ForeignKeyField('cat_product', 11);
 
 //PhangoVar::$model['product']->components['idcat']->required=1;
 
-PhangoVar::$model['product']->components['price']=new MoneyField();
+PhangoVar::$model['product']->set_component('price', 'MoneyField', array());
 
-PhangoVar::$model['product']->components['special_offer']=new DoubleField();
+PhangoVar::$model['product']->set_component('special_offer', 'DoubleField', array());
 
-PhangoVar::$model['product']->components['stock']=new BooleanField();
+PhangoVar::$model['product']->set_component('stock', 'BooleanField', array());
 
-PhangoVar::$model['product']->components['date']=new DateField();
+PhangoVar::$model['product']->set_component('date', 'DateField', array());
 
-PhangoVar::$model['product']->components['about_order']=new BooleanField();
+PhangoVar::$model['product']->set_component('about_order', 'BooleanField', array());
 
-PhangoVar::$model['product']->components['extra_options']=new ChoiceField(255, 'string');
+//PhangoVar::$model['product']->components['extra_options']=new ChoiceField(255, 'string');
 
-PhangoVar::$model['product']->components['weight']=new DoubleField();
+PhangoVar::$model['product']->set_component('weight', 'DoubleField', array());
 
-PhangoVar::$model['product']->components['num_sold']=new IntegerField();
+PhangoVar::$model['product']->set_component('num_sold', 'IntegerField', array());
 
-PhangoVar::$model['product']->components['cool']=new BooleanField();
+PhangoVar::$model['product']->set_component('cool', 'BooleanField', array());
 
 class image_product extends Webmodel {
 
@@ -432,11 +480,9 @@ class image_product extends Webmodel {
 
 PhangoVar::$model['image_product']=new image_product();
 
-PhangoVar::$model['image_product']->components['principal']=new BooleanField();
-PhangoVar::$model['image_product']->components['photo']=new ImageField('photo', PhangoVar::$application_path.'media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600));
-PhangoVar::$model['image_product']->components['photo']->required=1;
-PhangoVar::$model['image_product']->components['idproduct']=new ForeignKeyField('product', 11);
-PhangoVar::$model['image_product']->components['idproduct']->required=1;
+PhangoVar::$model['image_product']->set_component('principal', 'BooleanField', array());
+PhangoVar::$model['image_product']->set_component('photo', 'ImageField', array('photo', PhangoVar::$application_path.'media/shop/images/products/', PhangoVar::$base_url.'/media/shop/images/products', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
+PhangoVar::$model['image_product']->set_component('idproduct', 'ForeignKeyField', array('product', 11), 1);
 
 
 class cat_product extends Webmodel {
@@ -480,7 +526,7 @@ PhangoVar::$model['cat_product']->set_component('view_only_mode', 'BooleanField'
 
 PhangoVar::$model['cat_product']->set_component('position', 'IntegerField', array());
 
-PhangoVar::$model['cat_product']->set_component('image_cat', 'ImageField', array('image_cat', PhangoVar::$application_path.'media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 0) );
+PhangoVar::$model['cat_product']->set_component('image_cat', 'ImageField', array('image_cat', PhangoVar::$application_path.'media/shop/images/products/', PhangoVar::$base_url.'/media/shop/images/products', 'image', 0) );
 
 class product_relationship extends Webmodel {
 
@@ -526,10 +572,9 @@ class product_relationship extends Webmodel {
 
 PhangoVar::$model['product_relationship']=new product_relationship('product_relationship');
 
-PhangoVar::$model['product_relationship']->components['idproduct']=new ForeignKeyField('product', 11);
-PhangoVar::$model['product_relationship']->components['idproduct']->required=1;
-PhangoVar::$model['product_relationship']->components['idcat_product']=new ForeignKeyField('cat_product', 11);
-PhangoVar::$model['product_relationship']->components['idcat_product']->required=1;
+PhangoVar::$model['product_relationship']->set_component('idproduct', 'ForeignKeyField', array('product', 11), 1);
+
+PhangoVar::$model['product_relationship']->set_component('idcat_product', 'ForeignKeyField', array('cat_product', 11), 1);
 PhangoVar::$model['product_relationship']->components['idcat_product']->name_field_to_field='title';
 
 
@@ -567,14 +612,11 @@ class transport extends Webmodel {
 
 PhangoVar::$model['transport']=new transport();
 
-PhangoVar::$model['transport']->components['name']=new CharField(255);
-PhangoVar::$model['transport']->components['name']->required=1;
+PhangoVar::$model['transport']->set_component('name', 'CharField', array(255), 1);
 
-PhangoVar::$model['transport']->components['country']=new ForeignKeyField('zone_shop');
-PhangoVar::$model['transport']->components['country']->required=1;
+PhangoVar::$model['transport']->set_component('country', 'ForeignKeyField', array('zone_shop'), 1);
 
-PhangoVar::$model['transport']->components['type']=new ChoiceField($size=11, $type='integer', $arr_values=array(0, 1), $default_value=0);
-PhangoVar::$model['transport']->components['type']->required=0;
+PhangoVar::$model['transport']->set_component('type', 'ChoiceField', array($size=11, $type='integer', $arr_values=array(0, 1), $default_value=0));
 
 class price_transport extends Webmodel {
 
@@ -621,67 +663,6 @@ PhangoVar::$model['price_transport_price']->components['min_price']->required=0;
 PhangoVar::$model['price_transport_price']->components['idtransport']=new ForeignKeyField('transport');
 PhangoVar::$model['price_transport_price']->components['idtransport']->form='HiddenForm';
 PhangoVar::$model['price_transport_price']->components['idtransport']->required=1;
-
-class zone_shop extends Webmodel {
-
-	function __construct()
-	{
-
-		parent::__construct("zone_shop");
-
-	}
-
-	function update($post, $conditions="")
-	{
-
-		settype($post['other_countries'], 'integer');
-		settype($post['type'], 'integer');
-		
-		if($post['other_countries']==1 && isset($post['type']))
-		{
-
-			$num_count=parent::select_count('where other_countries=1 and type='.$post['type'], 'IdZone_shop');
-
-			if($num_count>0)
-			{
-
-				$this->components['other_countries']->std_error=PhangoVar::$lang['shop']['error_other_countries_is_selected'];
-
-				return 0;
-
-			}
-
-		}
-		
-		return parent::update($post, $conditions);
-
-	}
-	
-}
-
-PhangoVar::$model['zone_shop']=new zone_shop();
-
-PhangoVar::$model['zone_shop']->components['name']=new I18nField(new CharField(255));
-PhangoVar::$model['zone_shop']->components['name']->required=1;
-
-/*foreach($arr_i18n as PhangoVar::$lang_field)
-{
-
-	PhangoVar::$model['zone_shop']->components['name_'.PhangoVar::$lang_field]=new CharField(255);
-	PhangoVar::$model['zone_shop']->components['name_'.PhangoVar::$lang_field]->required=1;
-
-}*/
-
-PhangoVar::$model['zone_shop']->components['code']=new CharField(25);
-PhangoVar::$model['zone_shop']->components['code']->required=1;
-
-//Code 0 is for transport
-//Code 1 is for taxes
-
-PhangoVar::$model['zone_shop']->components['type']=new IntegerField(11);
-PhangoVar::$model['zone_shop']->components['type']->form='HiddenForm';
-
-PhangoVar::$model['zone_shop']->components['other_countries']=new BooleanField();
 
 
 class config_shop extends Webmodel {
@@ -740,7 +721,7 @@ PhangoVar::$model['config_shop']->components['description_shop']=new I18nField($
 PhangoVar::$model['config_shop']->components['head_bill']=new CharField(255);
 PhangoVar::$model['config_shop']->components['num_begin_bill']=new IntegerField(11);
 PhangoVar::$model['config_shop']->components['elements_num_bill']=new IntegerField(11);
-PhangoVar::$model['config_shop']->components['image_bill']=new ImageField('image_bill', PhangoVar::$application_path.'media/shop/images/products/', $base_url.'/media/shop/images/products', 'image', 0);
+PhangoVar::$model['config_shop']->components['image_bill']=new ImageField('image_bill', PhangoVar::$application_path.'media/shop/images/products/', PhangoVar::$base_url.'/media/shop/images/products', 'image', 0);
 
 PhangoVar::$model['config_shop']->components['bill_data_shop']=new TextField();
 PhangoVar::$model['config_shop']->components['bill_data_shop']->form='TextAreaForm';
@@ -794,10 +775,9 @@ class payment_form extends Webmodel {
 }
 
 PhangoVar::$model['payment_form']=new payment_form();
-PhangoVar::$model['payment_form']->components['name']=new I18nField(new TextField());;
-PhangoVar::$model['payment_form']->components['name']->required=1;
-PhangoVar::$model['payment_form']->components['code']=new ChoiceField(255, 'string');
-PhangoVar::$model['payment_form']->components['price_payment']=new MoneyField();
+PhangoVar::$model['payment_form']->set_component('name', 'I18nField', array(new TextField()) , 1);
+PhangoVar::$model['payment_form']->set_component('code', 'ChoiceField', array(255, 'string'));
+PhangoVar::$model['payment_form']->set_component('price_payment', 'MoneyField', array() );
 
 class cart_shop extends Webmodel {
 
@@ -818,7 +798,8 @@ PhangoVar::$model['cart_shop']->components['price_product']=new MoneyField();
 /*PhangoVar::$model['cart_shop']->components['name_taxes_product']=new DoubleField();
 PhangoVar::$model['cart_shop']->components['taxes_product']=new DoubleField();*/
 PhangoVar::$model['cart_shop']->components['units']=new IntegerField();
-PhangoVar::$model['cart_shop']->components['details']=new SerializeField();
+PhangoVar::$model['cart_shop']->components['details']=new ArrayField(new CharField(255));
+PhangoVar::$model['cart_shop']->components['alter_price_elements']=new ArrayField(new MoneyField());
 PhangoVar::$model['cart_shop']->components['time']=new IntegerField();
 PhangoVar::$model['cart_shop']->set_component('weight', 'DoubleField', array());
 
@@ -1179,9 +1160,9 @@ class currency extends Webmodel {
 
 PhangoVar::$model['currency']=new currency('currency');
 
-PhangoVar::$model['currency']->components['name']=new I18nField(new TextField());
+PhangoVar::$model['currency']->set_component('name', 'I18nField', array(new TextField()) , 1);
 
-PhangoVar::$model['currency']->components['symbol']=new CharField(25);
+PhangoVar::$model['currency']->set_component('symbol', 'CharField', array(25), 1);
 
 class currency_change extends Webmodel {
 
@@ -1241,38 +1222,29 @@ class currency_change extends Webmodel {
 
 PhangoVar::$model['currency_change']=new currency_change('currency_change');
 
-PhangoVar::$model['currency_change']->components['idcurrency']=new ParentField('currency', 11);
+PhangoVar::$model['currency_change']->set_component('idcurrency', 'ParentField', array('currency', 11), 1);
 
-PhangoVar::$model['currency_change']->components['idcurrency']->required=1;
-
-PhangoVar::$model['currency_change']->components['idcurrency_related']=new ForeignKeyField('currency', 11);
+PhangoVar::$model['currency_change']->set_component('idcurrency_related', 'ForeignKeyField', array('currency', 11), 1);
 PhangoVar::$model['currency_change']->components['idcurrency_related']->name_field_to_field='name';
 //PhangoVar::$model['currency_change']->components['idcurrency_related']->fields_related_model=array('name');
 
-PhangoVar::$model['currency_change']->components['idcurrency_related']->required=1;
-
-PhangoVar::$model['currency_change']->components['change_value']=new MoneyField();
-
-PhangoVar::$model['currency_change']->components['change_value']->required=1;
+PhangoVar::$model['currency_change']->set_component('change_value', 'MoneyField', array(), 1);
 
 //Class plugin_shop
 
 PhangoVar::$model['plugin_shop']=new Webmodel('plugin_shop');
 
-PhangoVar::$model['plugin_shop']->components['name']=new CharField(255);
-PhangoVar::$model['plugin_shop']->components['name']->required=1;
+PhangoVar::$model['plugin_shop']->set_component('name', 'CharField', array(255), 1);
 
-PhangoVar::$model['plugin_shop']->components['element']=new ChoiceField($size=255, $type='string', $arr_values=array('product', 'cart', 'discounts'), $default_value='');
-PhangoVar::$model['plugin_shop']->components['element']->required=1;
+PhangoVar::$model['plugin_shop']->set_component('element', 'ChoiceField', array($size=255, $type='string', $arr_values=array('product', 'cart', 'discounts'), $default_value=''), 1);
 
-PhangoVar::$model['plugin_shop']->components['plugin']=new ChoiceField($size=255, $type='string', $arr_values=array(''), $default_value='');
-PhangoVar::$model['plugin_shop']->components['plugin']->required=1;
+PhangoVar::$model['plugin_shop']->set_component('plugin', 'ChoiceField', array($size=255, $type='string', $arr_values=array(''), $default_value=''), 1);
 
-PhangoVar::$model['plugin_shop']->components['position']=new IntegerField();
+PhangoVar::$model['plugin_shop']->set_component('position', 'IntegerField', array() );
 
 //$arr_plugin_list=array();
 
-$arr_plugin_list['product'][]='attachments';
+//$arr_plugin_list['product'][]='attachments';
 
 //Standard plugins. The user can create her plugins in other files.
 class product_attachments extends Webmodel {
@@ -1351,7 +1323,7 @@ PhangoVar::$model['product_attachments']=new product_attachments();
 PhangoVar::$model['product_attachments']->components['name']=new CharField(255);
 PhangoVar::$model['product_attachments']->components['name']->required=1;
 
-PhangoVar::$model['product_attachments']->components['file']=new FileField('file', PhangoVar::$application_path.'media/shop/files/', $base_url.'/media/shop/files', $type);
+PhangoVar::$model['product_attachments']->components['file']=new FileField('file', PhangoVar::$application_path.'media/shop/files/', PhangoVar::$base_url.'/media/shop/files', $type);
 PhangoVar::$model['product_attachments']->components['file']->required=1;
 
 PhangoVar::$model['product_attachments']->components['idproduct']=new ForeignKeyField('product', 11);
@@ -1502,7 +1474,7 @@ class PreparePluginClass {
 	
 		$this->arr_class_plugin[$plugin]=new $func_class($arguments);
 	
-		$this->arr_plugin_list[]=$plugin;
+		$this->arr_plugin_list[$plugin]=$plugin;
 	
 	}
 	

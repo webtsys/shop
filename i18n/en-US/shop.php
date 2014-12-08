@@ -1,8 +1,8 @@
 <?php
 
-PhangoVar::$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
-
 PhangoVar::$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
+
+PhangoVar::$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
 
 PhangoVar::$lang['shop']['referer']='Referencia';
 
@@ -43,14 +43,6 @@ PhangoVar::$lang['shop']['plugins_shop']='Plugins de tienda';
 PhangoVar::$lang['shop']['admin_users']='admin_users';
 
 PhangoVar::$lang['shop']['edit_config_shop']='Editar configuración de tienda';
-
-PhangoVar::$lang['shop']['new_products']='Nuevos productos';
-
-PhangoVar::$lang['shop']['listing']='Listados';
-
-PhangoVar::$lang['shop']['bestsellers']='Más vendidos';
-
-PhangoVar::$lang['shop']['cool']='Recomendado';
 
 PhangoVar::$lang['shop']['num_news']='Novedades';
 
@@ -113,6 +105,8 @@ PhangoVar::$lang['shop']['extra_options']='Opciones extra';
 PhangoVar::$lang['shop']['weight']='Peso';
 
 PhangoVar::$lang['shop']['num_sold']='Número de veces vendido';
+
+PhangoVar::$lang['shop']['cool']='Recomendado';
 
 PhangoVar::$lang['shop']['edit_options_for_product']='Editar opciones para el producto';
 
@@ -249,6 +243,12 @@ PhangoVar::$lang['shop']['obtain_bill']='Obtener factura';
 PhangoVar::$lang['shop']['admin_external_plugin']='Administrar plugin externo';
 
 PhangoVar::$lang['shop']['edit_plugin_external']='Editar plugin externo';
+
+PhangoVar::$lang['shop']['new_products']='Nuevos productos';
+
+PhangoVar::$lang['shop']['listing']='Listados';
+
+PhangoVar::$lang['shop']['bestsellers']='Más vendidos';
 
 PhangoVar::$lang['shop']['empty_cart']='Carro vacio';
 
