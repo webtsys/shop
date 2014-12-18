@@ -1835,7 +1835,7 @@ function UserOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_address_transport_user', array('op' => 26, 'IdUser_shop' => $id) ).'">'.PhangoVar::$lang['shop']['modify_address_transport_user'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 26, 'IdUser_shop' => $id) ).'">'.PhangoVar::$lang['shop']['modify_address_transport_user'].'</a>';
 
 	return $arr_options;
 
@@ -1846,7 +1846,7 @@ function CurrencyOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_currencies_change', array('op' => 18, 'IdCurrency' => $id) ).'">'.PhangoVar::$lang['shop']['modify_change_currencies'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 18, 'IdCurrency' => $id) ).'">'.PhangoVar::$lang['shop']['modify_change_currencies'].'</a>';
 
 	return $arr_options;
 
@@ -1857,9 +1857,9 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_cat_shop', array('op' => 3, 'idcat' => $id) ).'">'.PhangoVar::$lang['shop']['modify_products'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $id) ).'">'.PhangoVar::$lang['shop']['modify_products'].'</a>';
 
-	$arr_options[]='<a href="'. set_admin_link( 'edit_cat_shop', array('op' => 2, 'subcat' => $id) ).'">'.PhangoVar::$lang['shop']['subcat_products'].'</a>';	
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 2, 'subcat' => $id) ).'">'.PhangoVar::$lang['shop']['subcat_products'].'</a>';	
 
 	return $arr_options;
 
@@ -1910,7 +1910,7 @@ function TransportOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_price_transport', array('op' => 9, 'IdTransport' => $id) ).'">'.PhangoVar::$lang['shop']['add__select_prices_for_transport'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 9, 'IdTransport' => $id) ).'">'.PhangoVar::$lang['shop']['add__select_prices_for_transport'].'</a>';
 
 	return $arr_options;
 
@@ -1921,7 +1921,7 @@ function GroupShopOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'edit_group_shop', array('op' => 12, 'IdGroup_shop' => $id) ).'">'.PhangoVar::$lang['shop']['add__user_to_group_shop'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 12, 'IdGroup_shop' => $id) ).'">'.PhangoVar::$lang['shop']['add__user_to_group_shop'].'</a>';
 
 	return $arr_options;
 
@@ -1932,7 +1932,7 @@ function BillOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'obtain_bill', array('op' => 16, 'IdOrder_shop' => $id) ).'">'.PhangoVar::$lang['shop']['obtain_bill'].'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 16, 'IdOrder_shop' => $id) ).'">'.PhangoVar::$lang['shop']['obtain_bill'].'</a>';
 
 	return $arr_options;
 
@@ -1953,7 +1953,7 @@ function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
 		
 		
 		
-		$arr_options[]='<a href="'.set_admin_link( PhangoVar::$lang['shop']['admin_external_plugin'], array('op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.PhangoVar::$lang['shop']['edit_plugin_external'].'</a>';
+		$arr_options[]='<a href="'.set_admin_link( 'shop', array('op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.PhangoVar::$lang['shop']['edit_plugin_external'].'</a>';
 		
 		//$func_admin_plugin();
 	

@@ -180,14 +180,14 @@ PhangoVar::$model['country_user_shop']->components['idcountry']=new IntegerField
 
 class product extends Webmodel {
 
-	function __construct()
+	public function __construct()
 	{
 
 		parent::__construct("product");
 
 	}
 	
-	function insert($post)
+	public function insert($post)
 	{
 	
 		$post=$this->components['title']->add_slugify_i18n_post('title', $post);
@@ -216,7 +216,7 @@ class product extends Webmodel {
 	
 	}
 	
-	function update($post, $conditions='')
+	public function update($post, $conditions='')
 	{
 	
 		$post=$this->components['title']->add_slugify_i18n_post('title', $post);
@@ -225,7 +225,7 @@ class product extends Webmodel {
 	
 	}
 	
-	function delete($conditions="")
+	public function delete($conditions="")
 	{
 	
 		//Obtain ids for this product for delete images of product.
