@@ -201,10 +201,10 @@ class product extends Webmodel {
 		
 			if( PhangoVar::$model['product_relationship']->insert(array('idproduct' => $idproduct, 'idcat_product' => $_GET['idcat'])) )
 			{
-				return true;
+				$this->std_error='Cannot insert a new relationship';
 			}
 			
-			return false;
+			return true;
 		
 		}
 		else
@@ -481,7 +481,7 @@ class image_product extends Webmodel {
 PhangoVar::$model['image_product']=new image_product();
 
 PhangoVar::$model['image_product']->set_component('principal', 'BooleanField', array());
-PhangoVar::$model['image_product']->set_component('photo', 'ImageField', array('photo', PhangoVar::$application_path.'media/shop/images/products/', PhangoVar::$base_url.'/media/shop/images/products', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
+PhangoVar::$model['image_product']->set_component('photo', 'ImageField', array('photo', PhangoVar::$media_path.'/modules/shop/media/images/products/', get_base_url_media('shop', 'images/products'), 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
 PhangoVar::$model['image_product']->set_component('idproduct', 'ForeignKeyField', array('product', 11), 1);
 
 
@@ -815,17 +815,15 @@ class order_shop extends Webmodel {
 	static public function calculate_num_bill($idorder_shop)
 	{
 
-		global $config_shop;
-
 		settype($idorder_shop, 'string');
 
 		$num_elements_num_bill=strlen($idorder_shop);
 		$num_bill_tmp='';
 
-		if($num_elements_num_bill<$config_shop['elements_num_bill'])
+		if($num_elements_num_bill<ConfigShop::$config_shop['elements_num_bill'])
 		{
 
-			$count_elements_num_bill=$config_shop['elements_num_bill']-$num_elements_num_bill;
+			$count_elements_num_bill=ConfigShop::$config_shop['elements_num_bill']-$num_elements_num_bill;
 
 			for($x=0;$x<$count_elements_num_bill;$x++)
 			{
@@ -838,7 +836,7 @@ class order_shop extends Webmodel {
 
 		$num_bill_tmp.=$idorder_shop;
 
-		$num_bill=$config_shop['head_bill'].$num_bill_tmp;
+		$num_bill=ConfigShop::$config_shop['head_bill'].$num_bill_tmp;
 
 		return $num_bill;
 
@@ -1130,8 +1128,6 @@ class currency extends Webmodel {
 
 		//Cannot delete all and cannot delete currency selected...
 
-		global $config_shop;
-
 		$arr_id=array(0);
 
 		$query=$this->select($conditions, array('IdCurrency'));
@@ -1141,7 +1137,7 @@ class currency extends Webmodel {
 
 			$arr_id[]=$idcurrency;
 
-			if($config_shop['idcurrency']==$idcurrency)
+			if(ConfigShop::$config_shop['idcurrency']==$idcurrency)
 			{
 
 				return 0;
@@ -1342,7 +1338,7 @@ class MoneyField extends DoubleField{
 	static function currency_format($value, $symbol_view=1)
 	{
 
-		global $arr_currency, $arr_change_currency, $config_shop;
+		//global $arr_currency, $arr_change_currency;
 		
 		if(isset($_SESSION['idcurrency']))
 		{
@@ -1353,18 +1349,18 @@ class MoneyField extends DoubleField{
 		else
 		{
 		
-			$idcurrency=$config_shop['idcurrency'];
+			$idcurrency=ConfigShop::$config_shop['idcurrency'];
 		
 		}
 	
-		$symbol_currency=$arr_currency[$idcurrency];
+		$symbol_currency=ConfigShop::$arr_currency[$idcurrency];
 		
-		if($config_shop['idcurrency']!=$idcurrency)
+		if(ConfigShop::$config_shop['idcurrency']!=$idcurrency)
 		{
 
 			//Make conversion
 
-			$change_value=@$arr_change_currency[$config_shop['idcurrency']][$idcurrency];
+			$change_value=@ConfigShop::$arr_change_currency[ConfigShop::$config_shop['idcurrency']][$idcurrency];
 
 			if($change_value>0)
 			{
@@ -1376,18 +1372,18 @@ class MoneyField extends DoubleField{
 			{
 				//Obtain $change_value for inverse arr_change_currency
 
-				if( isset($arr_change_currency[$idcurrency][$config_shop['idcurrency']]) )
+				if( isset(ConfigShop::$arr_change_currency[$idcurrency][ConfigShop::$config_shop['idcurrency']]) )
 				{
 
-					/*$change_value=1/$arr_change_currency[$idcurrency][ $config_shop['idcurrency'] ];
+					/*$change_value=1/$arr_change_currency[$idcurrency][ ConfigShop::$config_shop['idcurrency'] ];
 					$value=$value*$change_value;*/
-					$value=$value/$arr_change_currency[$idcurrency][ $config_shop['idcurrency'] ];
+					$value=$value/ConfigShop::$arr_change_currency[$idcurrency][ ConfigShop::$config_shop['idcurrency'] ];
 
 				}
 				else
 				{
 
-					$symbol_currency=$arr_currency[$config_shop['idcurrency']];
+					$symbol_currency=ConfigShop::$arr_currency[ConfigShop::$config_shop['idcurrency']];
 
 				}
 
@@ -1546,6 +1542,9 @@ class ConfigShop {
 	static public $arr_fields_address=array('name', 'last_name', 'nif', 'address', 'city', 'region', 'country', 'zip_code', 'phone', 'fax');
 	static public $arr_fields_transport=array('name_transport', 'last_name_transport', 'address_transport', 'city_transport', 'region_transport', 'country_transport', 'zip_code_transport', 'phone_transport');
 	static public $num_address_transport=5;
+	static public $config_shop=array();
+	static public $arr_currency=array(); 
+	static public $arr_change_currency=array();
 
 }
 

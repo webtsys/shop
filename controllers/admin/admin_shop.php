@@ -129,6 +129,8 @@ function ShopAdmin()
 			
 			$admin=new GenerateAdminClass('config_shop');
 			
+			$admin->set_url_post(set_admin_link('shop', array('op' => 1)));
+			
 			$admin->show_config_mode();
 
 		break;
@@ -851,6 +853,8 @@ function ShopAdmin()
 
 			settype($_GET['IdProduct'], 'integer');
 
+			$arr_relationship=PhangoVar::$model['product_relationship']->select_a_row_where('where idproduct='.$_GET['IdProduct'].' limit 1', array('idcat_product'));
+			
 			$query=PhangoVar::$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title'));
 			
 			list($title)=webtsys_fetch_row($query);
@@ -899,12 +903,14 @@ function ShopAdmin()
 			
 			$admin->set_url_post($url_options);
 			
+			$admin->where_sql='where idproduct='.$_GET['IdProduct'];
+			
 			$admin->show();
 
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $arr_relationship['idcat_product']) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
 
 			}
 

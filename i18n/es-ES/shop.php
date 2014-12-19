@@ -1,23 +1,5 @@
 <?php
 
-PhangoVar::$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
-
-PhangoVar::$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
-
-PhangoVar::$lang['shop']['referer']='Referencia';
-
-PhangoVar::$lang['shop']['zone']='Zona';
-
-PhangoVar::$lang['shop']['transport']='Transporte';
-
-PhangoVar::$lang['shop']['make_payment']='¿Pagado?';
-
-PhangoVar::$lang['shop']['observations']='Observaciones';
-
-PhangoVar::$lang['shop']['invoice_num']='Número de factura';
-
-PhangoVar::$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
-
 PhangoVar::$lang['shop']['config_shop']='Configuración de su tienda';
 
 PhangoVar::$lang['shop']['products_categories']='Categorías de productos';
@@ -27,6 +9,8 @@ PhangoVar::$lang['shop']['products']='Productos';
 PhangoVar::$lang['shop']['standard_options_for_products']='Opciones estandard para productos';
 
 PhangoVar::$lang['shop']['taxes']='Impuestos';
+
+PhangoVar::$lang['shop']['transport']='Transporte';
 
 PhangoVar::$lang['shop']['gateways_payment']='Pasarelas de pago';
 
@@ -88,6 +72,8 @@ PhangoVar::$lang['shop']['edit_products_from_category']='Editar productos de la 
 
 PhangoVar::$lang['shop']['choose_category']='Elegir categoría';
 
+PhangoVar::$lang['shop']['referer']='Referencia';
+
 PhangoVar::$lang['shop']['description_short']='Descripción breve del producto, útil para listados';
 
 PhangoVar::$lang['shop']['idcat']='Categoría de tienda';
@@ -125,6 +111,8 @@ PhangoVar::$lang['shop']['edit_taxes']='Editar impuestos';
 PhangoVar::$lang['shop']['zones_taxes']='Zonas de impuestos';
 
 PhangoVar::$lang['shop']['percent']='Porcentaje';
+
+PhangoVar::$lang['shop']['zone']='Zona';
 
 PhangoVar::$lang['shop']['edit_transport']='Editar transporte';
 
@@ -169,6 +157,8 @@ PhangoVar::$lang['shop']['transport_for_group']='Descuento en portes';
 PhangoVar::$lang['shop']['shipping_costs_for_group']='Descuento en pasarela de pago';
 
 PhangoVar::$lang['shop']['total_price']='Precio total';
+
+PhangoVar::$lang['shop']['make_payment']='¿Pagado?';
 
 PhangoVar::$lang['shop']['payment_orders']='Pedidos pagados';
 
@@ -240,9 +230,19 @@ PhangoVar::$lang['shop']['add__user_to_group_shop']='Añadir usuario a grupo de 
 
 PhangoVar::$lang['shop']['obtain_bill']='Obtener factura';
 
-PhangoVar::$lang['shop']['admin_external_plugin']='Administrar plugin externo';
-
 PhangoVar::$lang['shop']['edit_plugin_external']='Editar plugin externo';
+
+PhangoVar::$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
+
+PhangoVar::$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
+
+PhangoVar::$lang['shop']['observations']='Observaciones';
+
+PhangoVar::$lang['shop']['invoice_num']='Número de factura';
+
+PhangoVar::$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+
+PhangoVar::$lang['shop']['admin_external_plugin']='Administrar plugin externo';
 
 PhangoVar::$lang['shop']['new_products']='Nuevos productos';
 
