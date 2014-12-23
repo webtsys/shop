@@ -4,19 +4,19 @@ load_model('shop');
 load_config('shop');
 load_libraries(array('login'));
 load_lang('shop');
-load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
+load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
 
-$model['user_shop']->create_form();
+PhangoVar::$model['user_shop']->create_form();
 
-$model['user_shop']->forms['country']->form='SelectModelForm';
+PhangoVar::$model['user_shop']->forms['country']->form='SelectModelForm';
 
-$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+PhangoVar::$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 
-$model['address_transport']->create_form();
+PhangoVar::$model['address_transport']->create_form();
 
-$model['address_transport']->forms['country_transport']->form='SelectModelForm';
+PhangoVar::$model['address_transport']->forms['country_transport']->form='SelectModelForm';
 
-$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+PhangoVar::$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 
 class CartSwitchClass extends ControllerSwitchClass 
 {
@@ -25,16 +25,14 @@ class CartSwitchClass extends ControllerSwitchClass
 
 	public function __construct()
 	{
-	
-		global $base_url;
 		
 		parent::__construct();
 	
 		$this->login=new LoginClass('user_shop', 'email', 'password', 'token_client', $arr_user_session=array(), $arr_user_insert=array());
 		
-		$this->login->url_insert=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'get_user_save'));
+		$this->login->url_insert=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'register', array('action' => 'get_user_save'));
 	
-		$this->login->url_login=make_fancy_url($base_url, 'shop', 'cart', 'register', array('action' => 'login'));
+		$this->login->url_login=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'register', array('action' => 'login'));
 	
 		$this->login->url_recovery=$this->get_method_url('recovery_password', 'recovery_password', array());
 		
@@ -45,11 +43,11 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function index()
 	{
 	
-		$arr_block=select_view(array('shop'));
+		/*$arr_block=select_view(array('shop'));
 	
 		//In cart , blocks showed are none always...
 
-		$arr_block='/none';
+		$arr_block='/none';*/
 
 		load_libraries(array('send_email'));
 		
@@ -63,14 +61,12 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		ob_end_clean();
 		
-		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		echo load_view(array($this->lang['shop']['cart'], $cont_index), 'home');
 	
 	}
 	
 	public function update()
 	{
-	
-		global $arr_block;
 	
 		load_libraries(array('class_cart'), $this->base_path.'modules/shop/libraries/');
 	
@@ -118,7 +114,7 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function get_address()
 	{
 	
-		global $model, $lang, $base_url;
+		//global $model, PhangoVar::$lang, PhangoVar::$base_url;
 	
 	
 		$arr_block=select_view(array('shop'));
@@ -138,9 +134,9 @@ class CartSwitchClass extends ControllerSwitchClass
 		else
 		{
 		
-			$arr_user=$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
+			$arr_user=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
 		
-			SetValuesForm($arr_user, $model['user_shop']->forms, $show_error=1);
+			SetValuesForm($arr_user, PhangoVar::$model['user_shop']->forms, $show_error=1);
 			
 			echo load_view(array(), 'shop/forms/addressform');
 			
@@ -156,23 +152,23 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function save_address()
 	{
-		global $model;
+		//
 		
 		if($this->login->check_login())
 		{
 	
 			ob_start();
 			
-			$model['user_shop']->components['email']->required=0;
-			$model['user_shop']->components['password']->required=0;
-			$model['user_shop']->components['token_client']->required=0;
-			$model['user_shop']->components['token_recovery']->required=0;
+			PhangoVar::$model['user_shop']->components['email']->required=0;
+			PhangoVar::$model['user_shop']->components['password']->required=0;
+			PhangoVar::$model['user_shop']->components['token_client']->required=0;
+			PhangoVar::$model['user_shop']->components['token_recovery']->required=0;
 			
-			//$model['user_shop']->unset_components(ConfigShop::$arr_fields_address);
+			//PhangoVar::$model['user_shop']->unset_components(ConfigShop::$arr_fields_address);
 			
-			$model['user_shop']->arr_fields_updated=&ConfigShop::$arr_fields_address;
+			PhangoVar::$model['user_shop']->arr_fields_updated=&ConfigShop::$arr_fields_address;
 		
-			if($model['user_shop']->update($_POST, 'where IdUser_shop='.$_SESSION['IdUser_shop']))
+			if(PhangoVar::$model['user_shop']->update($_POST, 'where IdUser_shop='.$_SESSION['IdUser_shop']))
 			{
 			
 				$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'transport', array('action' => 'set_transport'));
@@ -183,7 +179,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				SetValuesForm($_POST, $model['user_shop']->forms, $show_error=1);
+				SetValuesForm($_POST, PhangoVar::$model['user_shop']->forms, $show_error=1);
 			
 				echo load_view(array(), 'shop/forms/addressform');
 			
@@ -201,11 +197,10 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function get_user_save()
 	{
-		global $model, $base_url, $lang;
 	
-		$arr_block=select_view(array('shop'));
+		/*$arr_block=select_view(array('shop'));
 	
-		$arr_block='/none';
+		$arr_block='/none';*/
 		
 		ob_start();
 		
@@ -218,9 +213,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			load_libraries(array('redirect'));
 			
-			$url_return=make_fancy_url($base_url, 'shop', 'cart', 'autologin', array('action' => 'get_address'));
+			$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'autologin', array('action' => 'get_address'));
 			
-			simple_redirect($url_return, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'], $content_view='content');
+			simple_redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'], $content_view='content');
 		
 		}
 		else
@@ -241,17 +236,16 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function set_transport()
 	{
 	
-		global $config_shop, $base_url, $model;
 		
 		if($this->login->check_login())
 		{
 		
-			if($config_shop['no_transport']==0)
+			if(PhangoVar::$config_shop['no_transport']==0)
 			{
 			
 				ob_start();
 				
-				$arr_transport=$model['address_transport']->select_to_array('where iduser='.$_SESSION['IdUser_shop'].' limit '.ConfigShop::$num_address_transport, array('IdAddress_transport', 'address_transport', 'region_transport'));
+				$arr_transport=PhangoVar::$model['address_transport']->select_to_array('where iduser='.$_SESSION['IdUser_shop'].' limit '.ConfigShop::$num_address_transport, array('IdAddress_transport', 'address_transport', 'region_transport'));
 				
 				echo load_view(array($arr_transport), 'shop/forms/transportform');
 				
@@ -265,7 +259,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				$this->simple_redirect(make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('action' => 'checkout')));
+				$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('action' => 'checkout')));
 			
 			}
 			
@@ -275,23 +269,21 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function save_transport_address()
 	{
-	
-		global $model;
 		
 		if($this->login->check_login())
 		{
 	
 			ob_start();
 			
-			$model['address_transport']->arr_fields_updated=&ConfigShop::$arr_fields_transport;
+			PhangoVar::$model['address_transport']->arr_fields_updated=&ConfigShop::$arr_fields_transport;
 			
 			ConfigShop::$arr_fields_transport[]='iduser';
 		
 			$_POST['iduser']=$_SESSION['IdUser_shop'];
 		
-			if($model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'])<5)
+			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'])<5)
 			{
-				if($model['address_transport']->insert($_POST))
+				if(PhangoVar::$model['address_transport']->insert($_POST))
 				{
 				
 					$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'transport', array('action' => 'set_transport'));
@@ -302,7 +294,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				else
 				{
 					
-					ModelForm::SetValuesForm($_POST, $model['address_transport']->forms, $show_error=1);
+					ModelForm::SetValuesForm($_POST, PhangoVar::$model['address_transport']->forms, $show_error=1);
 				
 					echo load_view(array($arr_transport=array(), 1), 'shop/forms/transportform');
 				
@@ -312,7 +304,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				echo '<p>'.$lang['shop']['cannot_add_more_address'].'</p>';
+				echo '<p>'.PhangoVar::$lang['shop']['cannot_add_more_address'].'</p>';
 			
 			}
 			
@@ -331,12 +323,10 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		if($this->login->check_login())
 		{
-	
-			global $model;
 		
 			settype($_GET['idaddress'], 'integer');
 			
-			if($model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
+			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
 			{
 			
 				$_SESSION['idaddress']=$_GET['idaddress'];
@@ -369,8 +359,6 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function set_method_transport()
 	{
 	
-		global $model;
-	
 		if($this->login->check_login() && isset($_SESSION['idaddress']))
 		{
 	
@@ -384,10 +372,10 @@ class CartSwitchClass extends ControllerSwitchClass
 			$this->name_field_to_field='';
 			*/
 			
-			//$model['address_transport']->components['country_transport']->name_field_to_field='name';
-			$model['address_transport']->components['country_transport']->fields_related_model=array('idzone_transport');
+			//PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field='name';
+			PhangoVar::$model['address_transport']->components['country_transport']->fields_related_model=array('idzone_transport');
 			
-			$address_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], array('country_transport'));
+			$address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], array('country_transport'));
 			
 			settype($address_transport['country_transport'], 'integer');
 			
@@ -400,9 +388,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 				//Choose zone..
 				
-				//$zone_transport=$model['zone_shop']->select_a_row('where IdZone_shop='.$address_transport['country_shop_idzone_transport'], array('));
+				//$zone_transport=PhangoVar::$model['zone_shop']->select_a_row('where IdZone_shop='.$address_transport['country_shop_idzone_transport'], array('));
 				
-				$arr_transport=$model['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
+				$arr_transport=PhangoVar::$model['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
 			
 				//print_r($arr_transport);
 				echo load_view(array($arr_transport, $total_price_product, $total_weight_product, $cart), 'shop/forms/choosetransport'); 
@@ -411,7 +399,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			//Load zone_transport
 			
-			//$zone_transport=$model['zone_transport']->
+			//$zone_transport=PhangoVar::$model['zone_transport']->
 			
 			$cont_index=ob_get_contents();
 				
@@ -429,11 +417,11 @@ class CartSwitchClass extends ControllerSwitchClass
 		if($this->login->check_login())
 		{
 	
-			global $model;
+			
 		
 			settype($_GET['idtransport'], 'integer');
 			
-			if($model['transport']->select_count('where IdTransport='.$_GET['idtransport'])==1)
+			if(PhangoVar::$model['transport']->select_count('where IdTransport='.$_GET['idtransport'])==1)
 			{
 			
 				$_SESSION['idtransport']=$_GET['idtransport'];
@@ -467,7 +455,6 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function checkout()
 	{
 	
-		global $config_shop, $model;
 // 		
 		ob_start();
 		
@@ -480,7 +467,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		if($this->login->check_login())
 		{
 		
-			if($config_shop['no_transport']==0)
+			if(PhangoVar::$config_shop['no_transport']==0)
 			{
 			
 				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
@@ -493,9 +480,9 @@ class CartSwitchClass extends ControllerSwitchClass
 				{
 
 					
-					$arr_address_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], array(), 0);
+					$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], array(), 0);
 					
-					$arr_country=$model['country_shop']->select_a_row($arr_address_transport['country_transport'], array('name'));
+					$arr_country=PhangoVar::$model['country_shop']->select_a_row($arr_address_transport['country_transport'], array('name'));
 					
 					$arr_address_transport['country_transport']=I18nField::show_formatted($arr_country['name']);
 				
@@ -503,9 +490,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			}
 			
-			$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
+			$arr_address=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
 					
-			$arr_country=$model['country_shop']->select_a_row($arr_address['country'], array('name'));
+			$arr_country=PhangoVar::$model['country_shop']->select_a_row($arr_address['country'], array('name'));
 			
 			$arr_address['country']=I18nField::show_formatted($arr_country['name']);
 			
@@ -542,7 +529,6 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function finish_checkout()
 	{
-		global $model, $config_shop, $lang;
 		
 		settype($_GET['op'], 'integer');
 		
@@ -551,7 +537,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		if($this->login->check_login())
 		{
 		
-			if($config_shop['no_transport']==0)
+			if(PhangoVar::$config_shop['no_transport']==0)
 			{
 			
 				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
@@ -575,7 +561,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 					$arr_payment=array(0);
 
-					$query=$model['payment_form']->select('', array($model['payment_form']->idmodel, 'name', 'price_payment'));
+					$query=PhangoVar::$model['payment_form']->select('', array(PhangoVar::$model['payment_form']->idmodel, 'name', 'price_payment'));
 					
 					while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
 					{
@@ -657,7 +643,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']['press_here_redirecting']);
 			
-			//simple_redirect($url_return, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'], $content_view='content');
+			//simple_redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'], $content_view='content');
 		
 		}
 		else
@@ -714,7 +700,7 @@ class CartSwitchClass extends ControllerSwitchClass
 function Cart()
 {
 
-	global $user_data, $model, $ip, $lang, $config_data, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop, $arr_taxes, $arr_order_shop, $language, $lang_taxes, $webtsys_id;
+	global $user_data, $model, $ip, PhangoVar::$lang, $config_data, PhangoVar::$base_path, PhangoVar::$base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, PhangoVar::$config_shop, $arr_taxes, $arr_order_shop, PhangoVar::$language, PhangoVar::$lang_taxes, $webtsys_id;
 
 	$arr_block='';
 
@@ -731,7 +717,7 @@ function Cart()
 	load_lang('shop');
 	load_model('shop');
 	
-	load_libraries(array('config_shop', 'class_cart'), $base_path.'modules/shop/libraries/');
+	load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
 	load_libraries(array('send_email'));
 	
 	$cart=new CartClass();
@@ -744,12 +730,12 @@ function Cart()
 	
 	ob_end_clean();
 	
-	echo load_view(array($lang['shop']['cart'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	echo load_view(array(PhangoVar::$lang['shop']['cart'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 	
 	die;
 	
 	/*
-	if($config_shop['ssl_url']==1)
+	if(PhangoVar::$config_shop['ssl_url']==1)
 	{
 		
 		if(!isset($_SERVER['HTTPS']))
@@ -759,23 +745,23 @@ function Cart()
 			
 			unset($_GET['']);
 			
-			die(header('Location:'.make_fancy_url($base_url, 'shop', 'cart', $lang['shop']['cart'], $_GET ) ) );
+			die(header('Location:'.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', PhangoVar::$lang['shop']['cart'], $_GET ) ) );
 			
 		}
 	
 	}
-	//If exists idtax and $config_shop['yes_taxes']==0, we need show the taxes to the client in the cart, yes_taxes is valid only for show products.
+	//If exists idtax and PhangoVar::$config_shop['yes_taxes']==0, we need show the taxes to the client in the cart, yes_taxes is valid only for show products.
 
-	if($config_shop['yes_taxes']==0 && $config_shop['idtax']>0)
+	if(PhangoVar::$config_shop['yes_taxes']==0 && PhangoVar::$config_shop['idtax']>0)
 	{
 
-		$config_shop['yes_taxes']=1;
+		PhangoVar::$config_shop['yes_taxes']=1;
 	
 	}
 	
 	//If no yes_transport don't need transport_fields in order shop
 					
-	if($config_shop['yes_transport']==0)
+	if(PhangoVar::$config_shop['yes_transport']==0)
 	{
 	
 		$arr_fields_trans=array('name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'zone_transport', 'transport');
@@ -783,7 +769,7 @@ function Cart()
 		foreach($arr_fields_trans as $name_trans)
 		{
 		
-			$model['order_shop']->components[$name_trans]->required=0;
+			PhangoVar::$model['order_shop']->components[$name_trans]->required=0;
 		
 		}
 		
@@ -795,9 +781,9 @@ function Cart()
 
 	$sha1_token=@sha1($_COOKIE['webtsys_shop']);
 
-	$num_products=$model['cart_shop']->select_count('where token=\''.$sha1_token.'\'', 'IdProduct');
+	$num_products=PhangoVar::$model['cart_shop']->select_count('where token=\''.$sha1_token.'\'', 'IdProduct');
 
-	$query=$model['order_shop']->select('where token=\''.$sha1_token.'\'', array(), 1);
+	$query=PhangoVar::$model['order_shop']->select('where token=\''.$sha1_token.'\'', array(), 1);
 
 	$arr_order_shop=webtsys_fetch_array($query);
 
@@ -811,7 +797,7 @@ function Cart()
 
 	//If order is send, then go to payment gateway
 
-	if($num_products>0 && $config_shop['view_only_mode']==0)
+	if($num_products>0 && PhangoVar::$config_shop['view_only_mode']==0)
 	{
 
 		if($arr_order_shop['IdOrder_shop']==0)
@@ -822,7 +808,7 @@ function Cart()
 
 				default:
 
-					echo '<p>'.$lang['shop']['explain_cart_options'].'</p>';
+					echo '<p>'.PhangoVar::$lang['shop']['explain_cart_options'].'</p>';
 
 					show_cart_simple($sha1_token, 1, 1);
 
@@ -837,17 +823,17 @@ function Cart()
 					
 					settype($_GET['go_buy'], 'integer');
 					
-					$url_login=make_fancy_url($base_url, 'shop', 'cart', 'buy_products', array('op' => 1, 'go_buy' => 1));
+					$url_login=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'buy_products', array('op' => 1, 'go_buy' => 1));
 					
 					if($user_data['IdUser']<=0 && $_GET['go_buy']==0)
 					{
 					
-						echo '<p>'.$lang['shop']['explain_buying_without_register'].'</p>';
+						echo '<p>'.PhangoVar::$lang['shop']['explain_buying_without_register'].'</p>';
 					
-						echo '<p>'.$lang['shop']['login_shop'].', <a href="'.make_fancy_url($base_url, 'user',
-						'index', 'login', array('register_page' => urlencode_redirect($url_login)) ).'">'.$lang['shop']['click_here'].'</a></p>';
+						echo '<p>'.PhangoVar::$lang['shop']['login_shop'].', <a href="'.make_fancy_url(PhangoVar::$base_url, 'user',
+						'index', 'login', array('register_page' => urlencode_redirect($url_login)) ).'">'.PhangoVar::$lang['shop']['click_here'].'</a></p>';
 						
-						echo '<p>'.$lang['shop']['register_shop_or_buying'].', <a href="'.$url_login.'">'.$lang['shop']['click_here'].'</a></p>';
+						echo '<p>'.PhangoVar::$lang['shop']['register_shop_or_buying'].', <a href="'.$url_login.'">'.PhangoVar::$lang['shop']['click_here'].'</a></p>';
 					
 					}
 					else if($user_data['IdUser']>0 && $_GET['go_buy']==0)
@@ -864,7 +850,7 @@ function Cart()
 
 							$post_user=&$user_data;
 
-							$query=$model['dir_transport']->select('where iduser='.$user_data['IdUser'], array(), 1);
+							$query=PhangoVar::$model['dir_transport']->select('where iduser='.$user_data['IdUser'], array(), 1);
 
 							$post_transport=webtsys_fetch_array($query);
 
@@ -872,7 +858,7 @@ function Cart()
 
 						}
 
-						$query=$model['country_user_shop']->select('where IdUser='.$user_data['IdUser'], array('idcountry'));
+						$query=PhangoVar::$model['country_user_shop']->select('where IdUser='.$user_data['IdUser'], array('idcountry'));
 
 						list($idcountry_user)=webtsys_fetch_row($query);
 
@@ -889,15 +875,15 @@ function Cart()
 
 					//Choose payment and transport type.
 
-					$model['order_shop']->components['token']->required=0;
-					$model['order_shop']->components['transport']->required=0;
-					$model['order_shop']->components['payment_form']->required=0;
+					PhangoVar::$model['order_shop']->components['token']->required=0;
+					PhangoVar::$model['order_shop']->components['transport']->required=0;
+					PhangoVar::$model['order_shop']->components['payment_form']->required=0;
 					
 					$_POST['zone_transport']=0;
 
 					settype($_POST['country_transport'], 'integer');
 
-					$query=$model['country_shop']->select('where IdCountry_shop='.$_POST['country_transport'], array(), 1);
+					$query=PhangoVar::$model['country_shop']->select('where IdCountry_shop='.$_POST['country_transport'], array(), 1);
 
 					$arr_zone_shop=webtsys_fetch_array($query);
 
@@ -908,7 +894,7 @@ function Cart()
 					if($arr_zone_shop['idzone_transport']==0)
 					{
 
-						$query=$model['zone_shop']->select('where type=0 and other_countries=1', array('IdZone_shop'));
+						$query=PhangoVar::$model['zone_shop']->select('where type=0 and other_countries=1', array('IdZone_shop'));
 
 						list($arr_zone_shop['idzone_transport'])=webtsys_fetch_row($query);
 						
@@ -916,9 +902,9 @@ function Cart()
 
 					$_POST['zone_transport']=$arr_zone_shop['idzone_transport'];
 
-					$model['user']->forms['password']->type->required=1;
+					PhangoVar::$model['user']->forms['password']->type->required=1;
 									
-					$model['user']->check_all($_POST);
+					PhangoVar::$model['user']->check_all($_POST);
 
 					//echo $_POST['zone_transport'];
 					
@@ -937,7 +923,7 @@ function Cart()
 					//}
 					
 
-					if($model['order_shop']->check_all($_POST))
+					if(PhangoVar::$model['order_shop']->check_all($_POST))
 					{
 					
 						//Prepare post...
@@ -953,7 +939,7 @@ function Cart()
 						
 						$post_transport=array();
 						
-						if($config_shop['yes_transport'])
+						if(PhangoVar::$config_shop['yes_transport'])
 						{
 
 							foreach($update_transport as $field)
@@ -969,7 +955,7 @@ function Cart()
 
 						$real_country=$post['country'];
 
-						$query=$model['country_shop']->select('where IdCountry_shop='.$real_country, array('name'));
+						$query=PhangoVar::$model['country_shop']->select('where IdCountry_shop='.$real_country, array('name'));
 
 						list($country_name)=webtsys_fetch_row($query);
 
@@ -981,7 +967,7 @@ function Cart()
 						{
 
 							load_libraries(array('timestamp_zone', 'generate_admin_ng'));
-							load_libraries(array('func_users'), $base_path.'modules/user/libraries/');
+							load_libraries(array('func_users'), PhangoVar::$base_path.'modules/user/libraries/');
 
 							$arr_fields_form=array_keys($post);
 
@@ -1000,10 +986,10 @@ function Cart()
 								$post_user=&$_POST;
 								$post_transport=&$_POST;
 
-								if($model['user']->forms['email']->std_error!='')
+								if(PhangoVar::$model['user']->forms['email']->std_error!='')
 								{
 
-									$model['order_shop']->forms['email']->std_error=$model['user']->forms['email']->std_error;
+									PhangoVar::$model['order_shop']->forms['email']->std_error=PhangoVar::$model['user']->forms['email']->std_error;
 
 								}
 
@@ -1027,24 +1013,24 @@ function Cart()
 								
 								setlogin($_POST['email'], $_POST['password'], '', 0, 0);
 
-								$model['country_user_shop']->insert( array('idcountry' => $real_country, 'iduser' => $user_data['IdUser']) );
+								PhangoVar::$model['country_user_shop']->insert( array('idcountry' => $real_country, 'iduser' => $user_data['IdUser']) );
 
 								$post_transport['iduser']=$user_data['IdUser'];
 
-								$model['dir_transport']->insert($post_transport);
+								PhangoVar::$model['dir_transport']->insert($post_transport);
 								
 								//Send email for registering user...
 
 								$portal_name=html_entity_decode($config_data['portal_name']);
 
-								$topic_email=$lang['user']['text_confirm'];
+								$topic_email=PhangoVar::$lang['user']['text_confirm'];
 							
 								$body_email=load_view(array($_POST['private_nick'], $_POST['email'], form_text($_POST['password']) ), 'common/user/mailviews/mailregister');
 								
 								if( !send_mail($_POST['email'], $topic_email, $body_email, 'html') )
 								{
 					
-									echo "<p align=\"center\">".$lang['user']['error_email']."</p>";
+									echo "<p align=\"center\">".PhangoVar::$lang['user']['error_email']."</p>";
 
 								}
 
@@ -1056,41 +1042,41 @@ function Cart()
 
 							//Update user and dir_transport
 
-							$model['user']->components['private_nick']->required=0;
-							$model['user']->components['password']->required=0;
+							PhangoVar::$model['user']->components['private_nick']->required=0;
+							PhangoVar::$model['user']->components['password']->required=0;
 							
-							$result_update=$model['user']->update($post, 'where IdUser='.$user_data['IdUser']);
+							$result_update=PhangoVar::$model['user']->update($post, 'where IdUser='.$user_data['IdUser']);
 
 							//Create backup for country for user.
 
-							$num_count_country=$model['country_user_shop']->select_count('where IdUser='.$user_data['IdUser'], 'IdCountry_user_shop');
+							$num_count_country=PhangoVar::$model['country_user_shop']->select_count('where IdUser='.$user_data['IdUser'], 'IdCountry_user_shop');
 
 							if($num_count_country>0)
 							{
 
-								$model['country_user_shop']->update(array('idcountry' => $real_country), 'where iduser='.$user_data['IdUser']);
+								PhangoVar::$model['country_user_shop']->update(array('idcountry' => $real_country), 'where iduser='.$user_data['IdUser']);
 
 							}
 							else
 							{
 
-								$model['country_user_shop']->insert( array('idcountry' => $real_country, 'iduser' => $user_data['IdUser']) );
+								PhangoVar::$model['country_user_shop']->insert( array('idcountry' => $real_country, 'iduser' => $user_data['IdUser']) );
 
 							}
 
-							if($config_shop['yes_transport'])
+							if(PhangoVar::$config_shop['yes_transport'])
 							{
 							
 								$post['country']=$real_country;
 
-								$num_dir_transport=$model['dir_transport']->select_count('where iduser='.$user_data['IdUser'], 'IdDir_transport');
+								$num_dir_transport=PhangoVar::$model['dir_transport']->select_count('where iduser='.$user_data['IdUser'], 'IdDir_transport');
 
 								settype($num_dir_transport, 'integer');
 								
 								if($num_dir_transport>0)
 								{
 
-									$model['dir_transport']->update($post_transport, 'where iduser='.$user_data['IdUser']);
+									PhangoVar::$model['dir_transport']->update($post_transport, 'where iduser='.$user_data['IdUser']);
 
 								}
 								else
@@ -1098,7 +1084,7 @@ function Cart()
 
 									$post_transport['iduser']=$user_data['IdUser'];
 
-									$model['dir_transport']->insert($post_transport);
+									PhangoVar::$model['dir_transport']->insert($post_transport);
 
 								}
 								
@@ -1108,16 +1094,16 @@ function Cart()
 
 						//Choose payment and transport...
 						?>	
-						<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 3));?>">
+						<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('op' => 3));?>">
 						<?php set_csrf_key(); ?>
-						<h2><?php echo $lang['shop']['choose_more_options']; ?></h2>
-						<p><?php echo $lang['shop']['explain_payment_type_transport_type']; ?></p>
-						<h3><?php echo $lang['shop']['payment_type']; ?></h3>
+						<h2><?php echo PhangoVar::$lang['shop']['choose_more_options']; ?></h2>
+						<p><?php echo PhangoVar::$lang['shop']['explain_payment_type_transport_type']; ?></p>
+						<h3><?php echo PhangoVar::$lang['shop']['payment_type']; ?></h3>
 						<?php
 				
 						$arr_payment=array(0);
 				
-						$query=$model['payment_form']->select('', array($model['payment_form']->idmodel, 'name', 'price_payment'));
+						$query=PhangoVar::$model['payment_form']->select('', array(PhangoVar::$model['payment_form']->idmodel, 'name', 'price_payment'));
 						
 						while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
 						{
@@ -1131,7 +1117,7 @@ function Cart()
 							else
 							{
 
-								$price=$lang['shop']['mode_payment_free_charge'];
+								$price=PhangoVar::$lang['shop']['mode_payment_free_charge'];
 
 							}
 
@@ -1143,17 +1129,17 @@ function Cart()
 						echo SelectForm('payment_form', '', $arr_payment );
 
 
-						if($config_shop['yes_transport']==1)
+						if(PhangoVar::$config_shop['yes_transport']==1)
 						{
 							?>
-							<h3><?php echo $lang['shop']['transport']; ?></h3>
+							<h3><?php echo PhangoVar::$lang['shop']['transport']; ?></h3>
 							<?php
 
 							settype($_POST['zone_transport'], 'integer');
 					
 							$arr_transport=array('');
 							
-							$query=$model['transport']->select('where IdTransport>0 and country='.$_POST['zone_transport'], array($model['transport']->idmodel, 'name'));
+							$query=PhangoVar::$model['transport']->select('where IdTransport>0 and country='.$_POST['zone_transport'], array(PhangoVar::$model['transport']->idmodel, 'name'));
 							
 							while(list($idtransport, $name)=webtsys_fetch_row($query))
 							{
@@ -1171,7 +1157,7 @@ function Cart()
 							else
 							{
 
-								echo '<p>'.$lang['shop']['error_in_country_no_exists_transport'].'</p>';
+								echo '<p>'.PhangoVar::$lang['shop']['error_in_country_no_exists_transport'].'</p>';
 
 							}
 
@@ -1179,8 +1165,8 @@ function Cart()
 
 						?>
 						<?php echo HiddenForm('observations', '', str_replace('"', '&quot;', $_POST['observations'])); ?>
-						<p><input type="submit" value="<?php echo $lang['common']['send']; ?>"/></p>
-						<p><a href="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 1) ); ?>"><?php echo $lang['common']['go_back']; ?></a>
+						<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>"/></p>
+						<p><a href="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('op' => 1) ); ?>"><?php echo PhangoVar::$lang['common']['go_back']; ?></a>
 						</form>
 						<?php
 
@@ -1205,7 +1191,7 @@ function Cart()
 					if($user_data['IdUser']==0)
 					{
 
-						echo '<p><span class="error">'.$lang['shop']['error_cannot_access_to_next_step'].'</span></p>';
+						echo '<p><span class="error">'.PhangoVar::$lang['shop']['error_cannot_access_to_next_step'].'</span></p>';
 
 					}
 					else
@@ -1228,7 +1214,7 @@ function Cart()
 						$post['payment_form']=$_POST['payment_form'];
 						$post['observations']=$_POST['observations'];
 
-						$query=$model['country_user_shop']->select('where IdUser='.$user_data['IdUser'], array('idcountry'));
+						$query=PhangoVar::$model['country_user_shop']->select('where IdUser='.$user_data['IdUser'], array('idcountry'));
 
 						list($idcountry_user)=webtsys_fetch_row($query);
 
@@ -1245,9 +1231,9 @@ function Cart()
 
 						$arr_products=array();
 
-						$model['cart_shop']->components['idproduct']->fields_related_model=array('referer', 'title', 'price', 'special_offer', 'weight', 'extra_options');
+						PhangoVar::$model['cart_shop']->components['idproduct']->fields_related_model=array('referer', 'title', 'price', 'special_offer', 'weight', 'extra_options');
 
-						$query=$model['cart_shop']->select('where token="'.$sha1_token.'"', array('IdCart_shop', 'idproduct'), 0);
+						$query=PhangoVar::$model['cart_shop']->select('where token="'.$sha1_token.'"', array('IdCart_shop', 'idproduct'), 0);
 
 						while($arr_product=webtsys_fetch_array($query))
 						{
@@ -1258,7 +1244,7 @@ function Cart()
 							
 							$arr_products[$arr_product['idproduct']]['units']++;
 							
-							$sum_tax=calculate_taxes($config_shop['idtax'], $price);
+							$sum_tax=calculate_taxes(PhangoVar::$config_shop['idtax'], $price);
 		
 							$total_price+=($price+$sum_tax);
 								
@@ -1266,12 +1252,12 @@ function Cart()
 
 						}
 						
-						if($config_shop['yes_transport']==1)
+						if(PhangoVar::$config_shop['yes_transport']==1)
 						{
 
 							$post['transport']=$_POST['transport'];
 							
-							$query=$model['dir_transport']->select('where iduser='.$user_data['IdUser'], array(), 1);
+							$query=PhangoVar::$model['dir_transport']->select('where iduser='.$user_data['IdUser'], array(), 1);
 
 							$post_transport=webtsys_fetch_array($query);
 
@@ -1287,20 +1273,20 @@ function Cart()
 
 						$post['date_order']=TODAY;
 						
-						$query=$model['order_shop']->insert($post);
+						$query=PhangoVar::$model['order_shop']->insert($post);
 				
-						if($model['order_shop']->std_error=='')
+						if(PhangoVar::$model['order_shop']->std_error=='')
 						{
 							ob_end_clean();
 
 							load_libraries(array('redirect'));
-							die( redirect_webtsys( make_fancy_url($base_url, 'shop', 'cart', 'checkout', array()), $lang['common']['redirect'], $lang['shop']['success_buy_go_to_payment'], $lang['common']['press_here_redirecting'] , $arr_block) );
+							die( redirect_webtsys( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array()), PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['shop']['success_buy_go_to_payment'], PhangoVar::$lang['common']['press_here_redirecting'] , $arr_block) );
 
 						}
 						else
 						{
 
-							echo $model['order_shop']->std_error;
+							echo PhangoVar::$model['order_shop']->std_error;
 
 						}
 
@@ -1313,34 +1299,34 @@ function Cart()
 
 					load_libraries(array('table_config'));
 
-					echo '<h3>'.$lang['shop']['modify_product_options'].'</h3>';
+					echo '<h3>'.PhangoVar::$lang['shop']['modify_product_options'].'</h3>';
 
 					settype($_GET['IdProduct'], 'integer');
 
 					//Load product...
 
-					$query=$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title', 'referer', 'extra_options'));
+					$query=PhangoVar::$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title', 'referer', 'extra_options'));
 
 					list($title_product, $ref_product, $extra_options)=webtsys_fetch_row($query);
 
-					$title_product=$model['product']->components['title']->show_formatted($title_product);
+					$title_product=PhangoVar::$model['product']->components['title']->show_formatted($title_product);
 					
 					if($extra_options!='')
 					{
-						echo '<p>'.$lang['shop']['explain_delete_options'].'</p>';
+						echo '<p>'.PhangoVar::$lang['shop']['explain_delete_options'].'</p>';
 						?>
-						<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'modify_product_options', array('IdProduct' => $_GET['IdProduct'], 'delete_products' => 1)); ?>">
+						<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'buy', 'modify_product_options', array('IdProduct' => $_GET['IdProduct'], 'delete_products' => 1)); ?>">
 						<?php
 						set_csrf_key();
-						$query=$model['cart_shop']->select('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"', array('IdCart_shop', 'details'), 1);
+						$query=PhangoVar::$model['cart_shop']->select('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"', array('IdCart_shop', 'details'), 1);
 
-						up_table_config(array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['option_selected'], $lang['common']['options'], $lang['shop']['select_product']));
+						up_table_config(array(PhangoVar::$lang['shop']['referer'], PhangoVar::$lang['common']['name'], PhangoVar::$lang['shop']['option_selected'], PhangoVar::$lang['common']['options'], PhangoVar::$lang['shop']['select_product']));
 
 						while($arr_product=webtsys_fetch_array($query))
 						{
 							$details=unserialize($arr_product['details']);
 							
-							$options_url='<a href="'.make_fancy_url($base_url, 'shop', 'buy', 'modify_product_options', array('IdCart_shop' => $arr_product['IdCart_shop'])).'">'.$lang['shop']['modify_product_options'].'</a>';
+							$options_url='<a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'buy', 'modify_product_options', array('IdCart_shop' => $arr_product['IdCart_shop'])).'">'.PhangoVar::$lang['shop']['modify_product_options'].'</a>';
 
 							$check_product=CheckBoxForm('idproduct['.$arr_product['IdCart_shop'].']', '', '');
 
@@ -1351,7 +1337,7 @@ function Cart()
 						down_table_config();
 
 						?>
-						<p><input type="submit" value="<?php echo $lang['shop']['delete_products_selected']; ?>"/></p>
+						<p><input type="submit" value="<?php echo PhangoVar::$lang['shop']['delete_products_selected']; ?>"/></p>
 						</form>
 						<?php
 
@@ -1359,31 +1345,31 @@ function Cart()
 					else
 					{
 
-						echo '<p>'.$lang['shop']['explain_delete_options_form'].'</p>';
+						echo '<p>'.PhangoVar::$lang['shop']['explain_delete_options_form'].'</p>';
 
-						$num_products=$model['cart_shop']->select_count('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"', 'IdProduct');
+						$num_products=PhangoVar::$model['cart_shop']->select_count('where cart_shop.idproduct='.$_GET['IdProduct'].' and token="'.$sha1_token.'"', 'IdProduct');
 
 						$text_num_products=TextForm('num_products', 'units', $num_products);
 
 						?>
-						<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'buy', 'modify_product_options', array('IdProduct' => $_GET['IdProduct'], 'add_more_units' => 1)); ?>">
+						<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'buy', 'modify_product_options', array('IdProduct' => $_GET['IdProduct'], 'add_more_units' => 1)); ?>">
 						<?php
 						set_csrf_key();
 
-						up_table_config(array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products']));
+						up_table_config(array(PhangoVar::$lang['shop']['referer'], PhangoVar::$lang['common']['name'], PhangoVar::$lang['shop']['num_products']));
 
 						middle_table_config(array($ref_product, $title_product, $text_num_products));
 
 						down_table_config();
 
 						?>
-						<p><input type="submit" value="<?php echo $lang['common']['send']; ?>" />
+						<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" />
 						</form>
 						<?php
 
 					}
 
-					echo '<p><a href="'.make_fancy_url($base_url, 'shop', 'cart', 'show_cart', array()).'">'.$lang['common']['go_back'].'</a></p>';
+					echo '<p><a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'show_cart', array()).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
 
 				break;
 
@@ -1401,14 +1387,14 @@ function Cart()
 
 			settype($idtax, 'integer');
 
-			$config_shop['idtax']=$idtax;
+			PhangoVar::$config_shop['idtax']=$idtax;
 			
-			if($config_shop['idtax']>0)
+			if(PhangoVar::$config_shop['idtax']>0)
 			{
 
-				echo '<p><strong>'.$lang['shop']['you_choose_a_country_that_have_taxes_about_this_products'].'</strong></p>';
+				echo '<p><strong>'.PhangoVar::$lang['shop']['you_choose_a_country_that_have_taxes_about_this_products'].'</strong></p>';
 
-				$config_shop['yes_taxes']=1;
+				PhangoVar::$config_shop['yes_taxes']=1;
 
 			}
 
@@ -1422,12 +1408,12 @@ function Cart()
 				if($arr_order_shop['make_payment']==0)
 				{
 		
-					echo '<h3>'.$lang['shop']['order_submited_show_order_and_prices'].'</h3>';
+					echo '<h3>'.PhangoVar::$lang['shop']['order_submited_show_order_and_prices'].'</h3>';
 
 					list($total_price, $discount_name, $discount_principal, $discount_taxes, $name_transport, $price_total_transport_original, $discount_transport, $name_payment, $price_payment_original, $discount_payment)=show_total_prices($sha1_token);
 					
-					$tax_name=$lang_taxes[$config_shop['idtax']];
-					$tax_percent=$arr_taxes[$config_shop['idtax']];
+					$tax_name=PhangoVar::$lang_taxes[PhangoVar::$config_shop['idtax']];
+					$tax_percent=$arr_taxes[PhangoVar::$config_shop['idtax']];
 
 					$post['discount']=$discount_name;
 					$post['discount_percent']=$discount_principal;
@@ -1445,24 +1431,24 @@ function Cart()
 					$post['payment_discount_percent']=$discount_payment;
 					$post['total_price']=$total_price;
 			
-					$model['order_shop']->reset_require();
+					PhangoVar::$model['order_shop']->reset_require();
 
 					//Update order shop with values...
 
-					$model['order_shop']->update($post, 'where token="'.$sha1_token.'"');
+					PhangoVar::$model['order_shop']->update($post, 'where token="'.$sha1_token.'"');
 
 					echo '<hr />';
 
-					echo '<h3>'.$lang['shop']['send_order_and_checkout'].'</h3>';
+					echo '<h3>'.PhangoVar::$lang['shop']['send_order_and_checkout'].'</h3>';
 					
-					echo '<p>'.$lang['shop']['explain_send_order_and_checkout'].'</p>';
+					echo '<p>'.PhangoVar::$lang['shop']['explain_send_order_and_checkout'].'</p>';
 
 					?>
-					<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 1) ); ?>">
-					<p><input type="submit" value="<?php echo $lang['shop']['checkout_order']; ?>" /></p>
+					<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('op' => 1) ); ?>">
+					<p><input type="submit" value="<?php echo PhangoVar::$lang['shop']['checkout_order']; ?>" /></p>
 					</form>
-					<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 2) ); ?>">
-					<p><input type="submit" value="<?php echo $lang['shop']['cancel_order']; ?>" /></p>
+					<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('op' => 2) ); ?>">
+					<p><input type="submit" value="<?php echo PhangoVar::$lang['shop']['cancel_order']; ?>" /></p>
 					</form>
 					<?php
 
@@ -1470,7 +1456,7 @@ function Cart()
 				else
 				{
 
-					header('Location: '.make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 1)));
+					header('Location: '.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('op' => 1)));
 					die;
 
 				}
@@ -1488,10 +1474,10 @@ function Cart()
 				
 				$name_payment=I18nField::show_formatted($name_payment);
 				
-				if(!include($base_path.'modules/shop/payment/'.basename($code_payment)))
+				if(!include(PhangoVar::$base_path.'modules/shop/payment/'.basename($code_payment)))
 				{
 			
-					echo $lang['shop']['error_no_proccess_payment_send_email'].': '.$config_data['portal_email'];
+					echo PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'].': '.$config_data['portal_email'];
 
 				}
 
@@ -1505,52 +1491,52 @@ function Cart()
 
 				$num_bill=calculate_num_bill($arr_order_shop['IdOrder_shop']);
 
-				echo '<p><strong>'.$lang['shop']['referer'].': '.$num_bill.'</strong></p>';
+				echo '<p><strong>'.PhangoVar::$lang['shop']['referer'].': '.$num_bill.'</strong></p>';
 
-				echo '<h2>'.$lang['shop']['address_billing'].'</h2>';
+				echo '<h2>'.PhangoVar::$lang['shop']['address_billing'].'</h2>';
 		
-				$model['order_shop']->reset_require();
+				PhangoVar::$model['order_shop']->reset_require();
 
-				foreach($model['order_shop']->forms as $key_form => $form)
+				foreach(PhangoVar::$model['order_shop']->forms as $key_form => $form)
 				{
 
-					$model['order_shop']->forms[$key_form]->form='TextPlainForm';
+					PhangoVar::$model['order_shop']->forms[$key_form]->form='TextPlainForm';
 
 				}
 
-				SetValuesForm($arr_order_shop, $model['order_shop']->forms, $show_error=0);
+				SetValuesForm($arr_order_shop, PhangoVar::$model['order_shop']->forms, $show_error=0);
 
-				$query=$model['country_shop']->select('where IdCountry_shop='.$arr_order_shop['country'], array('name'));
+				$query=PhangoVar::$model['country_shop']->select('where IdCountry_shop='.$arr_order_shop['country'], array('name'));
 
 				list($name_country)=webtsys_fetch_row($query);
 	
-				$name_country=$model['country_shop']->components['name']->show_formatted($name_country);
+				$name_country=PhangoVar::$model['country_shop']->components['name']->show_formatted($name_country);
 
-				$query=$model['country_shop']->select('where IdCountry_shop='.$arr_order_shop['country_transport'],  array('name'));
+				$query=PhangoVar::$model['country_shop']->select('where IdCountry_shop='.$arr_order_shop['country_transport'],  array('name'));
 
 				list($name_country_transport)=webtsys_fetch_row($query);
 
-				$name_country_transport=$model['country_shop']->components['name']->show_formatted($name_country_transport);
+				$name_country_transport=PhangoVar::$model['country_shop']->components['name']->show_formatted($name_country_transport);
 
-				$model['order_shop']->forms['country']->SetForm($name_country);
-				$model['order_shop']->forms['country_transport']->SetForm($name_country_transport);
+				PhangoVar::$model['order_shop']->forms['country']->SetForm($name_country);
+				PhangoVar::$model['order_shop']->forms['country_transport']->SetForm($name_country_transport);
 
-				echo load_view(array($model['order_shop']->forms, array('name', 'last_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
+				echo load_view(array(PhangoVar::$model['order_shop']->forms, array('name', 'last_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
 
-				if($config_shop['yes_transport']==1)
+				if(PhangoVar::$config_shop['yes_transport']==1)
 				{
 
-					echo '<h3>'.$lang['shop']['address_transport'].'</h3>';
+					echo '<h3>'.PhangoVar::$lang['shop']['address_transport'].'</h3>';
 
-					echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport'), ''), 'common/forms/modelform');
+					echo load_view(array(PhangoVar::$model['order_shop']->forms, array('name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport'), ''), 'common/forms/modelform');
 
 				}
 
-				echo '<h2>'.$lang['shop']['order'].'</h2>';
+				echo '<h2>'.PhangoVar::$lang['shop']['order'].'</h2>';
 				
 				show_total_prices($sha1_token);
 
-				echo '<h3>'.$lang['shop']['order_products_options'].'</h3>';
+				echo '<h3>'.PhangoVar::$lang['shop']['order_products_options'].'</h3>';
 
 				$z=0;
 
@@ -1569,10 +1555,10 @@ function Cart()
 				
 				$arr_description_type=array();
 
-				$model['product_option']->components['idtype']->fields_related_model=array('title', 'description');
-				$model['product_option']->components['idproduct']->fields_related_model=array('title');
+				PhangoVar::$model['product_option']->components['idtype']->fields_related_model=array('title', 'description');
+				PhangoVar::$model['product_option']->components['idproduct']->fields_related_model=array('title');
 				
-				$query=$model['product_option']->select('where product_option.idproduct IN ('.implode(', ', $arr_idproduct).')', array('idtype', 'idproduct'));
+				$query=PhangoVar::$model['product_option']->select('where product_option.idproduct IN ('.implode(', ', $arr_idproduct).')', array('idtype', 'idproduct'));
 
 				while($arr_product_options=webtsys_fetch_array($query))
 				{
@@ -1606,7 +1592,7 @@ function Cart()
 				if($z==0)
 				{
 
-					echo '<p>'.$lang['shop']['order_without_options'].'</p>';
+					echo '<p>'.PhangoVar::$lang['shop']['order_without_options'].'</p>';
 
 				}
 
@@ -1616,21 +1602,21 @@ function Cart()
 
 				$portal_name=html_entity_decode($config_data['portal_name']);
 
-				$text_explain_user='<h3>'.$lang['shop']['your_orders']." - ".$portal_name.'</h3>';
-				$text_explain_user.=$lang['shop']['explain_petition'].'<p>'.$lang['shop']['if_error_send_email_to'].': '.$config_data['portal_email'].'</p>';
+				$text_explain_user='<h3>'.PhangoVar::$lang['shop']['your_orders']." - ".$portal_name.'</h3>';
+				$text_explain_user.=PhangoVar::$lang['shop']['explain_petition'].'<p>'.PhangoVar::$lang['shop']['if_error_send_email_to'].': '.$config_data['portal_email'].'</p>';
 
-				$query=$model['module']->select('where name="shop"', array('IdModule'));
+				$query=PhangoVar::$model['module']->select('where name="shop"', array('IdModule'));
 
 				list($idmodule)=webtsys_fetch_row($query);
 				
-				$send_email_admin='<h3>'.$lang['shop']['url_bill_for_admin'].'</h3><p><a href="'.set_admin_link( 'obtain_bill', array('IdModule' => $idmodule, 'op' => 16, 'IdOrder_shop' => $arr_order_shop['IdOrder_shop'])).'">'.$lang['shop']['click_here_for_download_bill'].'</a></p>';
+				$send_email_admin='<h3>'.PhangoVar::$lang['shop']['url_bill_for_admin'].'</h3><p><a href="'.set_admin_link( 'obtain_bill', array('IdModule' => $idmodule, 'op' => 16, 'IdOrder_shop' => $arr_order_shop['IdOrder_shop'])).'">'.PhangoVar::$lang['shop']['click_here_for_download_bill'].'</a></p>';
 
 				//If no send mail write a message with the reference, for send to mail shop...
 
-				if( !send_mail($user_data['email'], $lang['shop']['your_orders']." - ".$portal_name, $text_explain_user.$content_mail, 'html') || !send_mail($config_data['portal_email'], $lang['shop']['orders']." - ".$portal_name, '<h1>'.$lang['shop']['new_order'].'</h1><p>'.$lang['shop']['explain_new_order'].'</p>'.$content_mail.$send_email_admin, 'html') )
+				if( !send_mail($user_data['email'], PhangoVar::$lang['shop']['your_orders']." - ".$portal_name, $text_explain_user.$content_mail, 'html') || !send_mail($config_data['portal_email'], PhangoVar::$lang['shop']['orders']." - ".$portal_name, '<h1>'.PhangoVar::$lang['shop']['new_order'].'</h1><p>'.PhangoVar::$lang['shop']['explain_new_order'].'</p>'.$content_mail.$send_email_admin, 'html') )
 				{
 
-					echo '<p>'.$lang['shop']['error_cannot_send_email'].', '.$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
+					echo '<p>'.PhangoVar::$lang['shop']['error_cannot_send_email'].', '.PhangoVar::$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
 
 				}
 
@@ -1642,12 +1628,12 @@ function Cart()
 				
 				$arr_plugin=array();
 		
-				$query=$model['plugin_shop']->select('where element="cart" order by position ASC', array('plugin'));
+				$query=PhangoVar::$model['plugin_shop']->select('where element="cart" order by position ASC', array('plugin'));
 				
 				while(list($plugin)=webtsys_fetch_row($query))
 				{
 					
-					load_libraries(array($plugin), $base_path.'modules/shop/plugins/cart/');
+					load_libraries(array($plugin), PhangoVar::$base_path.'modules/shop/plugins/cart/');
 				
 					$func_plugin=ucfirst($plugin).'Show';
 					
@@ -1664,7 +1650,7 @@ function Cart()
 
 				setcookie ( "webtsys_shop", FALSE, 0, $cookie_path);
 
-				echo $lang['shop']['order_success_cart_clean'];
+				echo PhangoVar::$lang['shop']['order_success_cart_clean'];
 
 			}
 
@@ -1676,10 +1662,10 @@ function Cart()
 
 				//Delete order_shop
 				ob_clean();
-				$query=$model['order_shop']->delete('where token=\''.$sha1_token.'\'');
+				$query=PhangoVar::$model['order_shop']->delete('where token=\''.$sha1_token.'\'');
 
 				load_libraries(array('redirect'));
-				die( redirect_webtsys( make_fancy_url($base_url, 'shop', 'cart', 'cart', array()), $lang['common']['redirect'], $lang['shop']['cancelling_order'], $lang['common']['press_here_redirecting'] , $arr_block) );
+				die( redirect_webtsys( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'cart', array()), PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['shop']['cancelling_order'], PhangoVar::$lang['common']['press_here_redirecting'] , $arr_block) );
 
 			break;
 
@@ -1691,7 +1677,7 @@ function Cart()
 	else
 	{
 
-		echo $lang['shop']['empty_cart'];
+		echo PhangoVar::$lang['shop']['empty_cart'];
 
 	}
 
@@ -1699,20 +1685,20 @@ function Cart()
 
 	ob_clean();
 
-	echo load_view(array($lang['shop']['cart'], $cont_cart), 'content');
+	echo load_view(array(PhangoVar::$lang['shop']['cart'], $cont_cart), 'content');
 
 	$cont_index=ob_get_contents();
 
 	ob_end_clean();
 
-	echo load_view(array($config_shop['title_shop'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	echo load_view(array(PhangoVar::$config_shop['title_shop'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
 }
 
 function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 {
 
-	global $base_url, $lang, $model, $arr_taxes, $config_shop, $sha1_token;
+	global PhangoVar::$base_url, PhangoVar::$lang, $model, $arr_taxes, PhangoVar::$config_shop, $sha1_token;
 
 	load_libraries(array('table_config'));
 
@@ -1724,26 +1710,26 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 		function head_list_cart($options=1)
 		{
 
-			global $lang, $base_url;
+			global PhangoVar::$lang, PhangoVar::$base_url;
 
 			?>
-			<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'deleteproduct', 'deleteproduct', array()); ?>">
+			<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'deleteproduct', 'deleteproduct', array()); ?>">
 			
 			<?php
 			set_csrf_key();
 
-			$fields=array($lang['shop']['referer'], $lang['common']['name'], $lang['shop']['num_products'], $lang['shop']['price']);
+			$fields=array(PhangoVar::$lang['shop']['referer'], PhangoVar::$lang['common']['name'], PhangoVar::$lang['shop']['num_products'], PhangoVar::$lang['shop']['price']);
 
 			$fields=name_field_taxes($fields);
 
 			if($options==1)
 			{
 
-				$fields[]=$lang['common']['options'];
+				$fields[]=PhangoVar::$lang['common']['options'];
 
 			}
 
-			$fields[]=$lang['shop']['select_product'];
+			$fields[]=PhangoVar::$lang['shop']['select_product'];
 
 			up_table_config( $fields );
 
@@ -1752,12 +1738,12 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 		function middle_list_cart($idproduct, $arr_id, $referer, $title, $price_without_tax, $price, $offer, $idtax, $sum_tax, $options=1, $extra_options='')
 		{
 
-			global $base_url, $arr_taxes, $lang_taxes, $lang, $model;
+			global PhangoVar::$base_url, $arr_taxes, PhangoVar::$lang_taxes, PhangoVar::$lang, $model;
 
 			$price*=$arr_id[$idproduct];
 			$price_without_tax*=$arr_id[$idproduct];
 
-			$title=$model['product']->components['title']->show_formatted($title);
+			$title=PhangoVar::$model['product']->components['title']->show_formatted($title);
 
 			$change_num_products=$arr_id[$idproduct]; //TextForm('change_num_products', 'units', $arr_id[$idproduct]);
 
@@ -1766,9 +1752,9 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			$fields=add_field_taxes($fields, $price, $idtax, $sum_tax*$arr_id[$idproduct]);
 
 				
-			$url_modify_options=make_fancy_url( $base_url, 'shop', 'cart', 'modify_product_options', array('op' => 4, 'IdProduct' => $idproduct) );
+			$url_modify_options=make_fancy_url( PhangoVar::$base_url, 'shop', 'cart', 'modify_product_options', array('op' => 4, 'IdProduct' => $idproduct) );
 
-			$fields[]='<a href="'.$url_modify_options.'">'.$lang['shop']['modify_options'].'</a>';
+			$fields[]='<a href="'.$url_modify_options.'">'.PhangoVar::$lang['shop']['modify_options'].'</a>';
 			$fields[]=CheckBoxForm('idproduct['.$idproduct.']', '', '');
 				//$fields[2]=$arr_id[$idproduct];
 
@@ -1780,11 +1766,11 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 		function bottom_list_cart()
 		{
 
-			global $lang;
+			global PhangoVar::$lang;
 
 			down_table_config(array());
 			?>
-			<p><input type="submit" value="<?php echo $lang['shop']['delete_products_selected']; ?>"/></p>
+			<p><input type="submit" value="<?php echo PhangoVar::$lang['shop']['delete_products_selected']; ?>"/></p>
 			</form>
 			<?php
 
@@ -1804,14 +1790,14 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 		function middle_list_cart($idproduct, $arr_id, $referer, $title, $price_without_tax, $price, $offer, $idtax)
 		{
 
-			global $base_url, $model;
+			global PhangoVar::$base_url, $model;
 
 			$price*=$arr_id[$idproduct];
 			$price_without_tax*=$arr_id[$idproduct];
 
-			$title=$model['product']->components['title']->show_formatted($title);
+			$title=PhangoVar::$model['product']->components['title']->show_formatted($title);
 
-			echo '<a href="'.make_fancy_url($base_url, 'shop', 'viewproduct', 'viewproduct', array('IdProduct' => $idproduct) ).'"><strong>'.$arr_id[$idproduct].' x '.$referer.' '.$title."</strong></a> - ".MoneyField::currency_format($price_without_tax)."<br />\n";
+			echo '<a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'viewproduct', 'viewproduct', array('IdProduct' => $idproduct) ).'"><strong>'.$arr_id[$idproduct].' x '.$referer.' '.$title."</strong></a> - ".MoneyField::currency_format($price_without_tax)."<br />\n";
 
 		}
 
@@ -1827,7 +1813,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 	if(!isset($_COOKIE['webtsys_shop']))
 	{
 
-		echo $lang['shop']['cart_empty'];
+		echo PhangoVar::$lang['shop']['cart_empty'];
 
 	}
 	else
@@ -1858,11 +1844,11 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 
 		$arr_lang_taxes=array();
 
-		$idtax=$config_shop['idtax'];
+		$idtax=PhangoVar::$config_shop['idtax'];
 
 		head_list_cart();
 		
-		$query=$model['product']->select('where IdProduct IN ('.implode(',', array_keys($arr_id) ).')', array('IdProduct', 'referer', 'title', 'price', 'special_offer', 'weight', 'extra_options'), 1);
+		$query=PhangoVar::$model['product']->select('where IdProduct IN ('.implode(',', array_keys($arr_id) ).')', array('IdProduct', 'referer', 'title', 'price', 'special_offer', 'weight', 'extra_options'), 1);
 		
 		while( list($idproduct, $referer, $title, $price, $offer, $weight, $extra_options)=webtsys_fetch_row($query) )
 		{
@@ -1907,7 +1893,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 
 			//Here put prices with taxes...
 
-			echo '<p><strong>'.$lang['shop']['total'].': </strong>'.MoneyField::currency_format($total_sum).' </p>';
+			echo '<p><strong>'.PhangoVar::$lang['shop']['total'].': </strong>'.MoneyField::currency_format($total_sum).' </p>';
 			
 			//Here the discounts...
 			
@@ -1919,7 +1905,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			
 			list($text_price_total, $text_taxes_total, $sum_taxes_final)=add_text_taxes_final($final_price, $idtax);
 			
-			//$lang['shop']['total_price_with_all_payments_and_discounts']
+			//PhangoVar::$lang['shop']['total_price_with_all_payments_and_discounts']
 			
 			
 			if($sum_taxes_final>0)
@@ -1937,7 +1923,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 			if($show_button_buy==1)
 			{
 				?>
-				<p><form action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'cart'); ?>" method="get"><input type="hidden" name="op" value="1" /><input type="submit" value="<?php echo $lang['shop']['buy']; ?>" /></form></p>
+				<p><form action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'cart'); ?>" method="get"><input type="hidden" name="op" value="1" /><input type="submit" value="<?php echo PhangoVar::$lang['shop']['buy']; ?>" /></form></p>
 				<?php
 
 			}
@@ -1946,7 +1932,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 		else if($total_sum==0)
 		{
 
-			echo $lang['shop']['empty_cart'];
+			echo PhangoVar::$lang['shop']['empty_cart'];
 
 		}
 
@@ -1959,72 +1945,72 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 {
 
-	global $lang, $language, $model, $config_data, $config_shop, $user_data, $base_url;
+	global PhangoVar::$lang, PhangoVar::$language, $model, $config_data, PhangoVar::$config_shop, $user_data, PhangoVar::$base_url;
 
 	load_libraries(array('generate_forms', 'forms/selectmodelform'));
 
-	echo '<h2>'.$lang['shop']['make_order'].'</h2>';
+	echo '<h2>'.PhangoVar::$lang['shop']['make_order'].'</h2>';
 
-	echo '<p>'.$lang['shop']['explain_order'].'<p>';
+	echo '<p>'.PhangoVar::$lang['shop']['explain_order'].'<p>';
 
 	show_cart_simple($sha1_token, 0);
 
 	//Send address
 
-	echo '<h3>'.$lang['shop']['address_billing'].'</h3>';
+	echo '<h3>'.PhangoVar::$lang['shop']['address_billing'].'</h3>';
 
-	//$model['order_shop']->create_form();
+	//PhangoVar::$model['order_shop']->create_form();
 
-	$set_user_form=array('private_nick' => &$model['user']->forms['private_nick'], 'password' => &$model['user']->forms['password'], 'repeat_password' => &$model['user']->forms['repeat_password']);
+	$set_user_form=array('private_nick' => &PhangoVar::$model['user']->forms['private_nick'], 'password' => &PhangoVar::$model['user']->forms['password'], 'repeat_password' => &PhangoVar::$model['user']->forms['repeat_password']);
 
 	//Set values for zone_transport..
 
-	$model['order_shop']->forms['country']->form='SelectModelForm';
+	PhangoVar::$model['order_shop']->forms['country']->form='SelectModelForm';
 			
-	$model['order_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+	PhangoVar::$model['order_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 	
-	//$model['order_shop']->forms['country_others']=new ModelForm('shopping', 'country_others', 'TextForm', $lang['shop']['country_others'], new CharField(255), $required=0, $parameters='');
+	//PhangoVar::$model['order_shop']->forms['country_others']=new ModelForm('shopping', 'country_others', 'TextForm', PhangoVar::$lang['shop']['country_others'], new CharField(255), $required=0, $parameters='');
 
-	$model['order_shop']->forms['country_transport']->form='SelectModelForm';
+	PhangoVar::$model['order_shop']->forms['country_transport']->form='SelectModelForm';
 			
-	$model['order_shop']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+	PhangoVar::$model['order_shop']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 
-	SetValuesForm($post_user, $model['order_shop']->forms, $show_error);
+	SetValuesForm($post_user, PhangoVar::$model['order_shop']->forms, $show_error);
 	SetValuesForm($post_user, $set_user_form, $show_error);
-	SetValuesForm($post_transport, $model['order_shop']->forms, $show_error);
+	SetValuesForm($post_transport, PhangoVar::$model['order_shop']->forms, $show_error);
 	
 	?>
-	<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'checkout', array('op' => 2)); ?>" name="shopping">
+	<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('op' => 2)); ?>" name="shopping">
 	<?php
 	set_csrf_key();
 
-	echo load_view(array($model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
+	echo load_view(array(PhangoVar::$model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
 	
-	if($config_shop['yes_transport']==1)
+	if(PhangoVar::$config_shop['yes_transport']==1)
 	{
 		?>
 		<div class="form">
-		<p><label for="click"><?php echo $lang['shop']['send_address_equal_shopping_address']; ?></label> <?php echo $lang['common']['yes']; ?><input type="radio" name="click" onclick="javascript:add_data_transport();"/></p>
+		<p><label for="click"><?php echo PhangoVar::$lang['shop']['send_address_equal_shopping_address']; ?></label> <?php echo PhangoVar::$lang['common']['yes']; ?><input type="radio" name="click" onclick="javascript:add_data_transport();"/></p>
 		</div>
 		<br clear="all" />
 		<?php
-		echo '<h3>'.$lang['shop']['address_transport'].'</h3>';
+		echo '<h3>'.PhangoVar::$lang['shop']['address_transport'].'</h3>';
 
 		//'zone_transport'
 
-		echo load_view(array($model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport',  'phone_transport'), ''), 'common/forms/modelform');
+		echo load_view(array(PhangoVar::$model['order_shop']->forms, array('name_transport', 'last_name_transport', 'enterprise_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport',  'phone_transport'), ''), 'common/forms/modelform');
 
 	}
 
 	if($user_data['IdUser']==0)
 	{
 
-		echo '<h3>'.$lang['common']['register_user'].'</h3>';
+		echo '<h3>'.PhangoVar::$lang['common']['register_user'].'</h3>';
 
-		echo '<p>'.$lang['shop']['register_user_if_not_register'].'</p>';
+		echo '<p>'.PhangoVar::$lang['shop']['register_user_if_not_register'].'</p>';
 
-		$model['user']->forms['password']->required=1;
-		$model['user']->forms['repeat_password']->required=1;
+		PhangoVar::$model['user']->forms['password']->required=1;
+		PhangoVar::$model['user']->forms['repeat_password']->required=1;
 
 		echo load_view(array($set_user_form, array('private_nick', 'password', 'repeat_password'), ''), 'common/forms/modelform');
 
@@ -2032,19 +2018,19 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 	?>
 	<hr />
-	<h3><?php echo $lang['shop']['observations']; ?></h3>
-	<p><?php echo $lang['shop']['observations_text']; ?></p>
+	<h3><?php echo PhangoVar::$lang['shop']['observations']; ?></h3>
+	<p><?php echo PhangoVar::$lang['shop']['observations_text']; ?></p>
 	<div class="form">
 	<?php
 	echo TextareaForm('observations', "form", "");
 	?>
 	</div>
 	<hr />
-	<h3><?php echo $lang['shop']['terms_of_sale']; ?></h3>
-	<p><?php echo $lang['shop']['accept_terms_of_sale_push_send_button']; ?></p>
+	<h3><?php echo PhangoVar::$lang['shop']['terms_of_sale']; ?></h3>
+	<p><?php echo PhangoVar::$lang['shop']['accept_terms_of_sale_push_send_button']; ?></p>
 	
 	<div class="form">
-	<iframe src="<?php echo make_fancy_url($base_url, 'shop', 'conditions', $lang['shop']['conditions'], array()); ?>"></iframe>
+	<iframe src="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'conditions', PhangoVar::$lang['shop']['conditions'], array()); ?>"></iframe>
 	</div>
 	<script language="Javascript">
 		function add_data_transport()
@@ -2064,7 +2050,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 		}
 		
 	</script>
-	<p><input type="submit" value="<?php echo $lang['common']['send']; ?>" /></p>
+	<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" /></p>
 	</form>
 	<?php
 
@@ -2073,9 +2059,9 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 function obtain_transport_price($total_weight, $total_price, $idtransport)
 {
 
-	global $model;
+	
 
-	$query=$model['transport']->select('where IdTransport='.$idtransport, array('type'));
+	$query=PhangoVar::$model['transport']->select('where IdTransport='.$idtransport, array('type'));
 	
 	list($type)=webtsys_fetch_row($query);
 	
@@ -2185,7 +2171,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 function show_total_prices($sha1_token, $type_cart=0)
 {
 
-	global $lang, $config_shop, $model, $arr_order_shop;
+	global PhangoVar::$lang, PhangoVar::$config_shop, $model, $arr_order_shop;
 
 	//obtain products...
 	
@@ -2202,21 +2188,21 @@ function show_total_prices($sha1_token, $type_cart=0)
 	//obtain prices for transport...
 	$discount_transport=0;
 					
-	if($config_shop['yes_transport']==1)	
+	if(PhangoVar::$config_shop['yes_transport']==1)	
 	{
 
-		echo '<h3><strong>'.$lang['shop']['price_transport'].'</strong></h3>';
+		echo '<h3><strong>'.PhangoVar::$lang['shop']['price_transport'].'</strong></h3>';
 		
 		list($price_total_transport, $num_packs)=obtain_transport_price($total_weight, $total_sum, $arr_order_shop['transport']);
 		
-		$query=$model['transport']->select('where IdTransport='.$arr_order_shop['transport'], array('name'));
+		$query=PhangoVar::$model['transport']->select('where IdTransport='.$arr_order_shop['transport'], array('name'));
 		
 		list($name_transport)=webtsys_fetch_row($query);
 
 		?>
 		
-		<p><strong><?php echo $lang['shop']['order_sended_with']; ?></strong> <?php echo $name_transport; ?></p>
-		<p><strong><?php echo $lang['shop']['price_total_transport']; ?>:</strong> <?php echo MoneyField::currency_format($price_total_transport); ?></p>
+		<p><strong><?php echo PhangoVar::$lang['shop']['order_sended_with']; ?></strong> <?php echo $name_transport; ?></p>
+		<p><strong><?php echo PhangoVar::$lang['shop']['price_total_transport']; ?>:</strong> <?php echo MoneyField::currency_format($price_total_transport); ?></p>
 
 		<?php
 
@@ -2230,7 +2216,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 	$price_payment=0;
 
-	$query=$model['payment_form']->select('where IdPayment_form='.$arr_order_shop['payment_form'], array('name', 'price_payment'));
+	$query=PhangoVar::$model['payment_form']->select('where IdPayment_form='.$arr_order_shop['payment_form'], array('name', 'price_payment'));
 
 	list($name_payment_form, $price_payment)=webtsys_fetch_row($query);
 	
@@ -2238,12 +2224,12 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 	settype($price_payment, 'double');
 
-	echo '<h3><strong>'.$lang['shop']['shipping_costs'].'</strong></h3>';
+	echo '<h3><strong>'.PhangoVar::$lang['shop']['shipping_costs'].'</strong></h3>';
 	
 	?>
 		
-	<p><strong><?php echo $lang['shop']['payment_with']; ?></strong> <?php echo $name_payment_form; ?></p>
-	<p><strong><?php echo $lang['shop']['price_payment']; ?>:</strong> <?php echo MoneyField::currency_format($price_payment); ?> </p>
+	<p><strong><?php echo PhangoVar::$lang['shop']['payment_with']; ?></strong> <?php echo $name_payment_form; ?></p>
+	<p><strong><?php echo PhangoVar::$lang['shop']['price_payment']; ?>:</strong> <?php echo MoneyField::currency_format($price_payment); ?> </p>
 
 	<?php
 
@@ -2256,7 +2242,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 	if($yes_discount>0)
 	{
 
-		echo '<h3>'.$lang['shop']['total_price_with_discounts'].'</h3>';
+		echo '<h3>'.PhangoVar::$lang['shop']['total_price_with_discounts'].'</h3>';
 		
 		echo $text_discount;
 		
@@ -2269,11 +2255,11 @@ function show_total_prices($sha1_token, $type_cart=0)
 			
 			//Recalculate taxes...
 			
-			$idtax=$config_shop['idtax'];
+			$idtax=PhangoVar::$config_shop['idtax'];
 			
 			$total_taxes=calculate_taxes($idtax, $total_sum);
 			
-			echo '<p><strong>'.$lang['shop']['discounts'].':</strong> '.number_format($discount_principal, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).'</span> &nbsp; -> '.MoneyField::currency_format($total_sum).'</p>';
+			echo '<p><strong>'.PhangoVar::$lang['shop']['discounts'].':</strong> '.number_format($discount_principal, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).'</span> &nbsp; -> '.MoneyField::currency_format($total_sum).'</p>';
 		}
 		//Discount transport...
 	
@@ -2283,7 +2269,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 			$price_total_transport-=$substract_transport;
 
-			echo '<p><strong>'.$lang['shop']['discount_transport'].':</strong> '.number_format($discount_transport, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_total_transport_original).'</span> &nbsp; -> '.MoneyField::currency_format($price_total_transport).'</p>';
+			echo '<p><strong>'.PhangoVar::$lang['shop']['discount_transport'].':</strong> '.number_format($discount_transport, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_total_transport_original).'</span> &nbsp; -> '.MoneyField::currency_format($price_total_transport).'</p>';
 	
 		}
 		
@@ -2294,7 +2280,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 
 	}
 
-	echo '<h2>'.$lang['shop']['total_price_with_all_payments_and_discounts'].'</h2>';
+	echo '<h2>'.PhangoVar::$lang['shop']['total_price_with_all_payments_and_discounts'].'</h2>';
 
 	$total_sum_final=$total_sum+$price_total_transport+$price_payment+$total_taxes;
 	
@@ -2311,12 +2297,12 @@ function show_total_prices($sha1_token, $type_cart=0)
 function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 {
 
-	global $user_data, $config_shop, $lang, $model, $base_path;
+	global $user_data, PhangoVar::$config_shop, PhangoVar::$lang, $model, PhangoVar::$base_path;
 	//Add discount if in group...
 	
 	ob_start();
 
-	echo '<h3>'.$lang['shop']['discounts'].'</h3>';
+	echo '<h3>'.PhangoVar::$lang['shop']['discounts'].'</h3>';
 
 	$z=0;
 	$discounts=0;
@@ -2334,12 +2320,12 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 	
 	$arr_plugin=array();
 		
-	$query=$model['plugin_shop']->select('where element="discounts" order by position ASC', array('plugin'));
+	$query=PhangoVar::$model['plugin_shop']->select('where element="discounts" order by position ASC', array('plugin'));
 	
 	while(list($plugin)=webtsys_fetch_row($query))
 	{
 		
-		load_libraries(array($plugin), $base_path.'modules/shop/plugins/discounts/');
+		load_libraries(array($plugin), PhangoVar::$base_path.'modules/shop/plugins/discounts/');
 	
 		$func_plugin=ucfirst($plugin).'Show';
 		
@@ -2367,14 +2353,14 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 	
 	//Choose the group discount more big for this user...
 	/*
-	$query=$model['group_shop_users']->select('where group_shop_users.iduser='.$user_data['IdUser'].' order by group_shop_discount DESC, group_shop_transport_for_group DESC, group_shop_shipping_costs_for_group DESC limit 1');
+	$query=PhangoVar::$model['group_shop_users']->select('where group_shop_users.iduser='.$user_data['IdUser'].' order by group_shop_discount DESC, group_shop_transport_for_group DESC, group_shop_shipping_costs_for_group DESC limit 1');
 	
 	$arr_group=webtsys_fetch_array($query);
 
 	if($arr_group['group_shop_discount']>0)
 	{
 
-		$arr_group['group_shop_name']=$model['group_shop']->components['name']->show_formatted($arr_group['group_shop_name']);
+		$arr_group['group_shop_name']=PhangoVar::$model['group_shop']->components['name']->show_formatted($arr_group['group_shop_name']);
 
 		$division=100/$arr_group['group_shop_discount'];
 		
@@ -2387,13 +2373,13 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 		echo '<p>'.$arr_group['group_shop_name'].'</p>';
 		$total_sum-=$discounts;
 
-		echo '<p><strong>'.$lang['shop']['discounts'].'</strong>: '.number_format($arr_group['group_shop_discount'], 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).' </span>&nbsp;-> '.MoneyField::currency_format($discounts).'</p>';
+		echo '<p><strong>'.PhangoVar::$lang['shop']['discounts'].'</strong>: '.number_format($arr_group['group_shop_discount'], 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($total_sum_original).' </span>&nbsp;-> '.MoneyField::currency_format($discounts).'</p>';
 
 	}
 
 	//create new taxes for new price...
 
-	$taxes_calculated=calculate_taxes($config_shop['idtax'], $total_sum);
+	$taxes_calculated=calculate_taxes(PhangoVar::$config_shop['idtax'], $total_sum);
 	
 	//Now discounts
 
@@ -2401,9 +2387,9 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 	
 	if(count($no_taxes)>0)
 	{
-		echo '<h3>'.$lang['shop']['taxes_calculated_in_new_price'].'</h3>';
+		echo '<h3>'.PhangoVar::$lang['shop']['taxes_calculated_in_new_price'].'</h3>';
 
-		echo '<p><strong>'.$lang['shop']['new_taxes_calculated'].': </strong>'.MoneyField::currency_format($taxes_calculated).'</p>';
+		echo '<p><strong>'.PhangoVar::$lang['shop']['new_taxes_calculated'].': </strong>'.MoneyField::currency_format($taxes_calculated).'</p>';
 
 		//echo $taxes_total_transport;
 		
@@ -2420,7 +2406,7 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 
 			$taxes_calculated-=$discount_taxes_calculated;
 
-			echo '<p><strong>'.$lang['shop']['discount_taxes'].'</strong>: '.number_format($discount_taxes, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($taxes_calculated_orig).' </span>&nbsp;-> '.MoneyField::currency_format($taxes_calculated).'</p>';
+			echo '<p><strong>'.PhangoVar::$lang['shop']['discount_taxes'].'</strong>: '.number_format($discount_taxes, 2).'% | <span style="text-decoration: line-through;">'.MoneyField::currency_format($taxes_calculated_orig).' </span>&nbsp;-> '.MoneyField::currency_format($taxes_calculated).'</p>';
 		
 		}
 
@@ -2476,7 +2462,7 @@ function calculate_price_cart_raw($token)
 
 	$arr_lang_taxes=array();
 	
-	$query=$model['product']->select('where IdProduct IN ('.implode(',', array_keys($arr_id) ).')', array('IdProduct', 'title', 'price', 'weight', 'idtax'), 1);
+	$query=PhangoVar::$model['product']->select('where IdProduct IN ('.implode(',', array_keys($arr_id) ).')', array('IdProduct', 'title', 'price', 'weight', 'idtax'), 1);
 	
 	while( list($idproduct, $title, $price, $weight, $idtax)=webtsys_fetch_row($query) )
 	{
@@ -2499,7 +2485,7 @@ function calculate_price_cart_raw($token)
 
 }
 
-function add_discount_to_element($arr_discount, $price_total_element, $lang_discount)
+function add_discount_to_element($arr_discount, $price_total_element, PhangoVar::$lang_discount)
 {
 
 	$discount_element=max($arr_discount);
@@ -2508,7 +2494,7 @@ function add_discount_to_element($arr_discount, $price_total_element, $lang_disc
 	if($discount_element>0)
 	{
 
-		echo '<p><strong>'.$lang_discount.'</strong>: '.$discount_element.'%</p>';
+		echo '<p><strong>'.PhangoVar::$lang_discount.'</strong>: '.$discount_element.'%</p>';
 		
 		$discount_element_final=$price_total_element/(100/$discount_element);
 	

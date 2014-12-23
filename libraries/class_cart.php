@@ -10,14 +10,12 @@ class CartClass {
 	public function __construct($yes_update=1)
 	{
 	
-		global $base_url, $cookie_path;
-	
 		if(!isset($_COOKIE['webtsys_shop']))
 		{
 		
 			$token=sha1(uniqid(rand(), true));
 
-			setcookie  ( 'webtsys_shop', $token, 0, $cookie_path);
+			setcookie  ( 'webtsys_shop', $token, 0, PhangoVar::$cookie_path);
 		
 		}
 		else
@@ -29,7 +27,7 @@ class CartClass {
 	
 		$this->token=sha1($token);
 	
-		$this->url_update=make_fancy_url($base_url, 'shop', 'cart', 'modify_product', array('action' => 'update'));
+		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'modify_product', array('action' => 'update'));
 	
 		$this->yes_update=$yes_update;
 	
@@ -43,8 +41,6 @@ class CartClass {
 	
 	public function show_cart()
 	{
-	
-		global $lang, $model, $base_url, $base_path;
 		
 		load_lang('shop');
 	
@@ -54,7 +50,7 @@ class CartClass {
 		
 		if($this->yes_update==1)
 		{
-			echo '<p>'.$lang['shop']['explain_cart_options'].'</p>';
+			echo '<p>'.PhangoVar::$lang['shop']['explain_cart_options'].'</p>';
 		}
 		
 		//Add plugins for cart that added money to price, for example, taxes or discounts. You can configure taxes or discounts on its plugins admin.
@@ -78,7 +74,7 @@ class CartClass {
 		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight'));
+		$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight'));
 		
 		while($arr_product=webtsys_fetch_array($query))
 		{
@@ -184,14 +180,12 @@ class CartClass {
 	{
 	
 		//Add product to cart, if the product have attributes, config here. Attributes are plugin. 
-		
-			global $model, $base_path, $base_url, $arr_block, $cookie_path, $lang;
 	
 			settype($_POST['IdCart_shop'], 'integer');
 
-			$redirect_url=make_fancy_url($base_url, 'shop', 'cart', 'add_cart', array() );
+			$redirect_url=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'add_cart', array() );
 
-			//$query=$model['cart_shop']->select('where token="'.$this->token.'"');
+			//$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"');
 
 			/*$arr_cart=webtsys_fetch_array($query);
 
@@ -202,7 +196,7 @@ class CartClass {
 
 				$this->token=sha1(uniqid(rand(), true));
 
-				setcookie  ( 'webtsys_shop', $this->token, 0, $cookie_path);
+				setcookie  ( 'webtsys_shop', $this->token, 0, PhangoVar::$cookie_path);
 
 			}*/
 
@@ -225,7 +219,7 @@ class CartClass {
 			
 			//obtain product
 			
-			$arr_product=$model['product']->select_a_row($idproduct, array('IdProduct', 'price', 'weight'));
+			$arr_product=PhangoVar::$model['product']->select_a_row($idproduct, array('IdProduct', 'price', 'weight'));
 			
 			settype($arr_product['IdProduct'], 'integer');
 			
@@ -233,7 +227,7 @@ class CartClass {
 			{
 				$where_sql='where cart_shop.idproduct='.$idproduct.' and token="'.$this->token.'" and details="'.addslashes(serialize($arr_details)).'"';
 				
-				if($model['cart_shop']->select_count($where_sql)==0)
+				if(PhangoVar::$model['cart_shop']->select_count($where_sql)==0)
 				{
 				
 					if($_POST['units']<=0)
@@ -243,7 +237,7 @@ class CartClass {
 					
 					}
 				
-					if(!$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']) ))
+					if(!PhangoVar::$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']) ))
 					{
 
 						return 0;
@@ -254,12 +248,12 @@ class CartClass {
 				else
 				{
 				
-					$arr_cart=$model['cart_shop']->select_a_row_where($where_sql);
+					$arr_cart=PhangoVar::$model['cart_shop']->select_a_row_where($where_sql);
 					
 					if($_POST['units']<=0 && $defined_post==1)
 					{
 					
-						$model['cart_shop']->delete($where_sql);
+						PhangoVar::$model['cart_shop']->delete($where_sql);
 					
 					}
 					else
@@ -280,7 +274,7 @@ class CartClass {
 						
 						$arr_cart['details']=SerializeField::unserialize($arr_cart['details']);
 						
-						$model['cart_shop']->update($arr_cart, $where_sql);
+						PhangoVar::$model['cart_shop']->update($arr_cart, $where_sql);
 					
 					}
 					
@@ -301,7 +295,7 @@ class CartClass {
 				ob_end_clean();
 				
 				load_libraries(array('redirect'));
-				die( redirect_webtsys( $redirect_url, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );
+				die( redirect_webtsys( $redirect_url, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'] , $arr_block) );
 
 			}
 			else
@@ -315,22 +309,21 @@ class CartClass {
 	
 	public function sum_product_to_cart($idcart_shop, $units)
 	{
-		global $model;
 	
 	
 		if($units>0)
 		{
 		
-			$model['cart_shop']->reset_require();
+			PhangoVar::$model['cart_shop']->reset_require();
 		
-			return $model['cart_shop']->update(array('units' => $units), 'where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
+			return PhangoVar::$model['cart_shop']->update(array('units' => $units), 'where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
 		
 		}
 		else
 		if($units<=0)
 		{
 		
-			return $model['cart_shop']->delete('where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
+			return PhangoVar::$model['cart_shop']->delete('where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
 		
 		}
 	
@@ -338,8 +331,6 @@ class CartClass {
 	
 	public function obtain_simple_cart()
 	{
-	
-		global $model;
 	
 		$num_product=0;
 		$total_price_product=0;
@@ -353,7 +344,7 @@ class CartClass {
 	
 		$plugin_price=array();
 		
-		$query=$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units', 'weight'));
+		$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units', 'weight'));
 		
 		while(list($idproduct, $price_product, $units, $weight)=webtsys_fetch_row($query))
 		{
@@ -393,23 +384,21 @@ class CartClass {
 	public function payment_gateway($idpayment)
 	{
 	
-		global $model, $lang, $base_path, $config_shop;
-	
 		$cart=new CartClass();
 	
 		//Here define the payment and notify that the product was paid. Also fill order_shop and delete cart.
 		
-		$arr_payment=$model['payment_form']->select_a_row($idpayment);
+		$arr_payment=PhangoVar::$model['payment_form']->select_a_row($idpayment);
 				
 		settype($arr_payment['IdPayment_form'], 'integer');
 		
 		if($arr_payment['IdPayment_form']>0)
 		{
 	
-			if(!include($base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
+			if(!include(PhangoVar::$base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
 			{
 		
-				echo $lang['shop']['error_no_proccess_payment_send_email'].': '.$config_data['portal_email'];
+				echo PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'].': '.$config_data['portal_email'];
 
 			}
 			else
@@ -423,26 +412,26 @@ class CartClass {
 				{
 					$post['token']=$this->token;
 					
-					$model['user_shop']->components['country']->name_field_to_field='name';
-					$model['user_shop']->components['country']->fields_related_model=array('name');
+					PhangoVar::$model['user_shop']->components['country']->name_field_to_field='name';
+					PhangoVar::$model['user_shop']->components['country']->fields_related_model=array('name');
 					
-					$model['address_transport']->components['country_transport']->name_field_to_field='name';
-					$model['address_transport']->components['country_transport']->fields_related_model=array('name');
+					PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field='name';
+					PhangoVar::$model['address_transport']->components['country_transport']->fields_related_model=array('name');
 					
 					ConfigShop::$arr_fields_address[]='email';
 					
-					$arr_address=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
+					$arr_address=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
 					
 					$arr_address['country']=unserialize($arr_address['country']);
 					
-					if($config_shop['no_transport']==0)
+					if(ConfigShop::$config_shop['no_transport']==0)
 					{
 					
-						$arr_address_transport=$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
+						$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
 					
 						$arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
 					
-						$arr_transport=$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+						$arr_transport=PhangoVar::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
 						
 						$post['transport']=$arr_transport['name'];
 				
@@ -468,7 +457,7 @@ class CartClass {
 					
 					$post['price_payment']=$arr_payment['price_payment'];
 					
-					if($model['order_shop']->insert($post))
+					if(PhangoVar::$model['order_shop']->insert($post))
 					{
 					
 						foreach($this->plugins->arr_plugin_list as $plugin)
@@ -488,24 +477,24 @@ class CartClass {
 						
 						$this->clean_cart();
 						
-						echo $lang['shop']['order_success_cart_clean'];
+						echo PhangoVar::$lang['shop']['order_success_cart_clean'];
 					
 					}
 					else
 					{
 					
-						echo '<p>'.$model['order_shop']->std_error.'</p>';
+						echo '<p>'.PhangoVar::$model['order_shop']->std_error.'</p>';
 					
 						if($payment_class->cancel_checkout())
 						{
 						
-							echo $lang['shop']['cancel_checkout_success'];
+							echo PhangoVar::$lang['shop']['cancel_checkout_success'];
 						
 						}
 						else
 						{
 						
-							echo $lang['shop']['no_cancel_checkout_success'];
+							echo PhangoVar::$lang['shop']['no_cancel_checkout_success'];
 						
 						}
 					
@@ -514,7 +503,7 @@ class CartClass {
 				else
 				{
 				
-					echo $lang['shop']['no_cancel_checkout_success'];
+					echo PhangoVar::$lang['shop']['no_cancel_checkout_success'];
 				
 				}
 			
@@ -527,9 +516,7 @@ class CartClass {
 	public function obtain_transport_price($total_weight, $total_price, $idtransport)
 	{
 
-		global $model;
-
-		$query=$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
+		$query=PhangoVar::$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
 		
 		list($name, $type)=webtsys_fetch_row($query);
 		
@@ -639,8 +626,6 @@ class CartClass {
 	public function clean_cart()
 	{
 	
-		global $cookie_path;
-	
 		if(isset($_SESSION['idaddress']))
 		{
 		
@@ -655,22 +640,20 @@ class CartClass {
 	
 		}
 	
-		setcookie ( "webtsys_shop", FALSE, 0, $cookie_path);
+		setcookie ( "webtsys_shop", FALSE, 0, PhangoVar::$cookie_path);
 	
 	}
 	
 	public function num_items_cart()
 	{
-		global $model;
+
 	
-		return $model['cart_shop']->select_count('where token="'.$this->token.'"');
+		return PhangoVar::$model['cart_shop']->select_count('where token="'.$this->token.'"');
 	
 	}
 	
 	public function send_mail_order($arr_order_shop, $arr_address, $arr_address_transport)
 	{
-	
-		global $model, $config_data, $config_shop, $lang;
 	
 		load_libraries(array('utilities/set_admin_link', 'send_email'));
 		
@@ -680,13 +663,13 @@ class CartClass {
 		
 		//Prepare email
 		
-		$arr_user=$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], array('email'));
+		$arr_user=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], array('email'));
 		
 		//$num_order=order_shop::calculate_num_bill($arr_order_shop['IdOrder_shop']);
 
 		$content_mail_user=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailcart');
 		
-		$query=$model['module']->select('where name="shop"', array('IdModule'));
+		$query=PhangoVar::$model['module']->select('where name="shop"', array('IdModule'));
 
 		list($idmodule)=webtsys_fetch_row($query);
 
@@ -694,10 +677,10 @@ class CartClass {
 		
 		//If no send mail write a message with the reference, for send to mail shop...
 
-		if( !send_mail($arr_user['email'], $lang['shop']['your_orders'], $content_mail_user, 'html') || !send_mail($config_data['portal_email'], $lang['shop']['orders'], $content_mail_admin, 'html') )
+		if( !send_mail($arr_user['email'], PhangoVar::$lang['shop']['your_orders'], $content_mail_user, 'html') || !send_mail($config_data['portal_email'], PhangoVar::$lang['shop']['orders'], $content_mail_admin, 'html') )
 		{
 
-			echo '<p>'.$lang['shop']['error_cannot_send_email'].', '.$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
+			echo '<p>'.PhangoVar::$lang['shop']['error_cannot_send_email'].', '.PhangoVar::$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
 
 		}
 	

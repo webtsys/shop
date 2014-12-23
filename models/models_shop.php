@@ -1,6 +1,6 @@
 <?php
 
-load_libraries(array('i18n_fields', 'fields/moneyfield', 'fields/passwordfield'));
+load_libraries(array('i18n_fields', 'fields/moneyfield', 'fields/passwordfield', 'models/userphango'));
 
 load_lang('shop');
 load_lang('common');
@@ -118,7 +118,7 @@ PhangoVar::$model['country_shop']->set_component('idzone_transport', 'ForeignKey
 //Users shop
 //When delete, don't delete, only leave the data how user deleted.
 
-class user_shop extends Webmodel {
+/*class user_shop extends UserPhangoModel {
 
 	public function update($post, $conditions="")
 	{
@@ -140,11 +140,11 @@ class user_shop extends Webmodel {
 	
 	}
 
-}
+}*/
 
-//PhangoVar::$model['user_shop']=new Webmodel('user_shop');
+PhangoVar::$model['user_shop']=new UserPhangoModel('user_shop');
 
-PhangoVar::$model['user_shop']=new user_shop('user_shop');
+//PhangoVar::$model['user_shop']=new user_shop('user_shop');
 
 PhangoVar::$model['user_shop']->set_component('email', 'CharField', array(255), 1);
 
@@ -721,7 +721,7 @@ PhangoVar::$model['config_shop']->components['description_shop']=new I18nField($
 PhangoVar::$model['config_shop']->components['head_bill']=new CharField(255);
 PhangoVar::$model['config_shop']->components['num_begin_bill']=new IntegerField(11);
 PhangoVar::$model['config_shop']->components['elements_num_bill']=new IntegerField(11);
-PhangoVar::$model['config_shop']->components['image_bill']=new ImageField('image_bill', PhangoVar::$application_path.'media/shop/images/products/', PhangoVar::$base_url.'/media/shop/images/products', 'image', 0);
+PhangoVar::$model['config_shop']->components['image_bill']=new ImageField('image_bill', PhangoVar::$application_path.'media/shop/images/products/', PhangoVar::$media_url.'/media/shop/images/products', 'image', 0);
 
 PhangoVar::$model['config_shop']->components['bill_data_shop']=new TextField();
 PhangoVar::$model['config_shop']->components['bill_data_shop']->form='TextAreaForm';
@@ -793,7 +793,7 @@ class cart_shop extends Webmodel {
 PhangoVar::$model['cart_shop']=new cart_shop();
 PhangoVar::$model['cart_shop']->components['token']=new CharField(255);
 PhangoVar::$model['cart_shop']->components['idproduct']=new ForeignKeyField('product', 11);
-PhangoVar::$model['cart_shop']->components['idproduct']->fields_related_model=array('referer', 'title', 'extra_options');
+PhangoVar::$model['cart_shop']->components['idproduct']->fields_related_model=array('referer', 'title');
 PhangoVar::$model['cart_shop']->components['price_product']=new MoneyField();
 /*PhangoVar::$model['cart_shop']->components['name_taxes_product']=new DoubleField();
 PhangoVar::$model['cart_shop']->components['taxes_product']=new DoubleField();*/
