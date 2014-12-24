@@ -1,6 +1,8 @@
 <?php
 
-PhangoVar::$urls['shop']['viewproduct']=array('pattern' => '/^shop\/viewproduct\/([0-9]+)\/(\w+)$/', 'url' => '/shop/viewproduct', 'module' => 'shop', 'controller' => 'viewproduct', 'action' => 'index', 'parameters' => array('$1' => 'integer', '$2' => 'string'));
+PhangoVar::$urls['shop']['viewproduct']=array('pattern' => '/^shop\/viewproduct\/([0-9]+)\/(.*)$/', 'url' => '/shop/viewproduct', 'module' => 'shop', 'controller' => 'viewproduct', 'action' => 'index', 'parameters' => array('$1' => 'integer', '$2' => 'string'));
+
+PhangoVar::$urls['shop']['viewcategory']=array('pattern' => '/^shop\/viewcategory\/([0-9]+)\/(.*)$/', 'url' => '/shop/viewcategory', 'module' => 'shop', 'controller' => 'viewcategory', 'action' => 'index', 'parameters' => array('$1' => 'integer', '$2' => 'string'));
 
 PhangoVar::$urls['shop']['cart']=array('pattern' => '/^shop\/cart/', 'url' => '/shop/cart', 'module' => 'shop', 'controller' => 'cart', 'action' => 'index', 'parameters' => array());
 
