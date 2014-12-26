@@ -4,7 +4,13 @@ PhangoVar::$urls['shop']['viewproduct']=array('pattern' => '/^shop\/viewproduct\
 
 PhangoVar::$urls['shop']['viewcategory']=array('pattern' => '/^shop\/viewcategory\/([0-9]+)\/(.*)$/', 'url' => '/shop/viewcategory', 'module' => 'shop', 'controller' => 'viewcategory', 'action' => 'index', 'parameters' => array('$1' => 'integer', '$2' => 'string'));
 
-PhangoVar::$urls['shop']['cart']=array('pattern' => '/^shop\/cart/', 'url' => '/shop/cart', 'module' => 'shop', 'controller' => 'cart', 'action' => 'index', 'parameters' => array());
+PhangoVar::$urls['shop']['cart_ajax_jscript']=array('pattern' => '/^shop\/cart\/ajax\/cart_ajax_jscript/', 'url' => '/shop/cart/ajax/cart_ajax_jscript', 'module' => 'shop', 'controller' => 'ajax/fjscript', 'action' => 'index', 'parameters' => array());
+
+PhangoVar::$urls['shop']['cart_ajax_buy']=array('pattern' => '/^shop\/cart\/ajax\/buy/', 'url' => '/shop/cart/ajax/buy', 'module' => 'shop', 'controller' => 'ajax/buy', 'action' => 'index', 'parameters' => array());
+
+PhangoVar::$urls['shop']['cart_checkoptionsproduct']=array('pattern' => '/^shop\/cart\/ajax\/checkoptionsproduct/', 'url' => '/shop/cart/ajax/checkoptionsproduct', 'module' => 'shop', 'controller' => 'ajax/checkoptionsproduct', 'action' => 'index', 'parameters' => array());
+
+PhangoVar::$urls['shop']['cart_ajax_obtaincart']=array('pattern' => '/^shop\/cart\/ajax\/obtain_cart\/(.*)$/', 'url' => '/shop/cart/ajax/obtain_cart', 'module' => 'shop', 'controller' => 'ajax/obtaincart', 'action' => 'index', 'parameters' => array('$1' => 'string'));
 
 PhangoVar::$urls['shop']['cart_update']=array('pattern' => '/^shop\/cart\/update/', 'url' => '/shop/cart/update', 'module' => 'shop', 'controller' => 'cart', 'action' => 'update', 'parameters' => array());
 
@@ -33,6 +39,8 @@ PhangoVar::$urls['shop']['cart_login']=array('pattern' => '/^shop\/cart\/login/'
 PhangoVar::$urls['shop']['cart_recovery_password']=array('pattern' => '/^shop\/cart\/recovery_password/', 'url' => '/shop/cart/recovery_password', 'module' => 'shop', 'controller' => 'cart', 'action' => 'recovery_password', 'parameters' => array());
 
 PhangoVar::$urls['shop']['cart_recovery_password_send']=array('pattern' => '/^shop\/cart\/recovery_password_send/', 'url' => '/shop/cart/recovery_password_send', 'module' => 'shop', 'controller' => 'cart', 'action' => 'recovery_password_send', 'parameters' => array());
+
+PhangoVar::$urls['shop']['cart']=array('pattern' => '/^shop\/cart/', 'url' => '/shop/cart', 'module' => 'shop', 'controller' => 'cart', 'action' => 'index', 'parameters' => array());
 
 
 
