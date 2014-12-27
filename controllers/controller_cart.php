@@ -117,9 +117,9 @@ class CartSwitchClass extends ControllerSwitchClass
 		//global $model, PhangoVar::$lang, PhangoVar::$base_url;
 	
 	
-		$arr_block=select_view(array('shop'));
+		/*$arr_block=select_view(array('shop'));
 	
-		$arr_block='/none';
+		$arr_block='/none';*/
 	
 		ob_start();
 		
@@ -147,7 +147,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 			
-		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		echo load_view(array($this->lang['shop']['cart'], $cont_index), 'home');
 	}
 	
 	public function save_address()

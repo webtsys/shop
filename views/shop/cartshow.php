@@ -13,7 +13,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 		$('#checkout_order').click( function() {
 		
-			location.href='<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('action' => 'get_address')); ?>';
+			location.href='<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_get_address'); ?>';
 		
 		});
 		
@@ -39,13 +39,13 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	$set_options_func='no_set_options';
 	
-	if($yes_update==1)
+	/*if($yes_update==1)
 	{
 		$fields[]=PhangoVar::$lang['common']['options'];
 		
 		$set_options_func='set_options';
 		
-	}
+	}*/
 	
 	//$fields[]=PhangoVar::$lang['shop']['select_product'];
 

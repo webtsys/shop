@@ -791,16 +791,16 @@ class cart_shop extends Webmodel {
 }
 
 PhangoVar::$model['cart_shop']=new cart_shop();
-PhangoVar::$model['cart_shop']->components['token']=new CharField(255);
-PhangoVar::$model['cart_shop']->components['idproduct']=new ForeignKeyField('product', 11);
+PhangoVar::$model['cart_shop']->set_component('token', 'CharField', array(255));
+PhangoVar::$model['cart_shop']->set_component('idproduct', 'ForeignKeyField', array('product', 11));
 PhangoVar::$model['cart_shop']->components['idproduct']->fields_related_model=array('referer', 'title');
-PhangoVar::$model['cart_shop']->components['price_product']=new MoneyField();
+PhangoVar::$model['cart_shop']->set_component('price_product', 'MoneyField', array());
 /*PhangoVar::$model['cart_shop']->components['name_taxes_product']=new DoubleField();
 PhangoVar::$model['cart_shop']->components['taxes_product']=new DoubleField();*/
-PhangoVar::$model['cart_shop']->components['units']=new IntegerField();
-PhangoVar::$model['cart_shop']->components['details']=new ArrayField(new CharField(255));
-PhangoVar::$model['cart_shop']->components['alter_price_elements']=new ArrayField(new MoneyField());
-PhangoVar::$model['cart_shop']->components['time']=new IntegerField();
+PhangoVar::$model['cart_shop']->set_component('units', 'IntegerField', array());
+PhangoVar::$model['cart_shop']->set_component('details', 'ArrayField', array(new CharField(255)));
+PhangoVar::$model['cart_shop']->set_component('alter_price_elements', 'ArrayField', array(new MoneyField()));
+PhangoVar::$model['cart_shop']->set_component('time', 'IntegerField', array());
 PhangoVar::$model['cart_shop']->set_component('weight', 'DoubleField', array());
 
 class order_shop extends Webmodel {

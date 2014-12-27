@@ -27,7 +27,7 @@ class CartClass {
 	
 		$this->token=sha1($token);
 	
-		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'modify_product', array('action' => 'update'));
+		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_update', 'modify_product', array());
 	
 		$this->yes_update=$yes_update;
 	
