@@ -34,6 +34,9 @@ PhangoVar::$urls['shop']['cart_save_choose_transport']=array('pattern' => '/^sho
 
 PhangoVar::$urls['shop']['cart_checkout']=array('pattern' => '/^shop\/cart\/checkout/', 'url' => '/shop/cart/checkout', 'module' => 'shop', 'controller' => 'cart', 'action' => 'checkout', 'parameters' => array());
 
+PhangoVar::$urls['shop']['cart_finish_checkout']=array('pattern' => '/^shop\/cart\/finish_checkout/', 'url' => '/shop/cart/finish_checkout', 'module' => 'shop', 'controller' => 'cart', 'action' => 'finish_checkout', 'parameters' => array());
+
+
 PhangoVar::$urls['shop']['cart_login']=array('pattern' => '/^shop\/cart\/login/', 'url' => '/shop/cart/login', 'module' => 'shop', 'controller' => 'cart', 'action' => 'login', 'parameters' => array());
 
 PhangoVar::$urls['shop']['cart_recovery_password']=array('pattern' => '/^shop\/cart\/recovery_password/', 'url' => '/shop/cart/recovery_password', 'module' => 'shop', 'controller' => 'cart', 'action' => 'recovery_password', 'parameters' => array());

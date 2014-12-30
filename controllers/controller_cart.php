@@ -30,13 +30,13 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		$this->login=new LoginClass('user_shop', 'email', 'password', 'token_client', $arr_user_session=array(), $arr_user_insert=array());
 		
-		$this->login->url_insert=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'register', array('action' => 'get_user_save'));
+		$this->login->url_insert=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_get_user_save');
 	
-		$this->login->url_login=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'register', array('action' => 'login'));
+		$this->login->url_login=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_login');
 	
-		$this->login->url_recovery=$this->get_method_url('recovery_password', 'recovery_password', array());
+		$this->login->url_recovery=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_recovery_password');
 		
-		$this->login->url_recovery_send=$this->get_method_url('recovery_password_send', 'recovery_password_send', array());
+		$this->login->url_recovery_send=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_recovery_password_send');
 	
 	}
 
@@ -92,7 +92,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		//Redirect
 	
-		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
+		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
 	
 	}
 	
@@ -107,7 +107,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		$cart->sum_product_to_cart($_GET['IdCart_shop'], 0);
 	
-		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
+		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
 	
 	}
 	
@@ -126,7 +126,9 @@ class CartSwitchClass extends ControllerSwitchClass
 		if(!$this->login->check_login())
 		{
 					
-			echo load_view(array($this->login), 'shop/forms/registerform');
+			//echo load_view(array($this->login), 'shop/forms/registerform');
+			
+			$this->login->create_account_form();
 			
 			echo load_view(array($this->login), 'shop/forms/loginshopform');
 	
@@ -136,7 +138,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 			$arr_user=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
 		
-			SetValuesForm($arr_user, PhangoVar::$model['user_shop']->forms, $show_error=1);
+			ModelForm::set_values_form($arr_user, PhangoVar::$model['user_shop']->forms, $show_error=1);
 			
 			echo load_view(array(), 'shop/forms/addressform');
 			
@@ -156,7 +158,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		if($this->login->check_login())
 		{
-	
+			
 			ob_start();
 			
 			PhangoVar::$model['user_shop']->components['email']->required=0;
@@ -171,7 +173,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			if(PhangoVar::$model['user_shop']->update($_POST, 'where IdUser_shop='.$_SESSION['IdUser_shop']))
 			{
 			
-				$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'transport', array('action' => 'set_transport'));
+				$url_return=make_fancy_url($this->base_url, 'shop', 'cart_set_transport');
 			
 				$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']	['press_here_redirecting']);
 			
@@ -179,7 +181,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				SetValuesForm($_POST, PhangoVar::$model['user_shop']->forms, $show_error=1);
+				ModelForm::set_values_form($_POST, PhangoVar::$model['user_shop']->forms, $show_error=1);
 			
 				echo load_view(array(), 'shop/forms/addressform');
 			
@@ -189,7 +191,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 			ob_end_clean();
 			
-			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			$this->load_theme($this->lang['shop']['cart'], $cont_index);
 			
 		}
 	
@@ -213,7 +215,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			load_libraries(array('redirect'));
 			
-			$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'autologin', array('action' => 'get_address'));
+			$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'cat_get_address');
 			
 			simple_redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'], $content_view='content');
 		
@@ -221,7 +223,8 @@ class CartSwitchClass extends ControllerSwitchClass
 		else
 		{
 		
-			echo load_view(array($this->login), 'shop/forms/registerform');
+			//echo load_view(array($this->login), 'shop/forms/registerform');
+			$this->login->create_account_form();
 		
 		}
 	
@@ -229,7 +232,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 		
-		echo load_view(array($this->lang['shop']['cart'], $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		echo load_view(array($this->lang['shop']['cart'], $cont_index,), 'home');
 	
 	}
 	
@@ -240,7 +243,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		if($this->login->check_login())
 		{
 		
-			if(PhangoVar::$config_shop['no_transport']==0)
+			if(ConfigShop::$config_shop['no_transport']==0)
 			{
 			
 				ob_start();
@@ -253,13 +256,13 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 				ob_end_clean();
 			
-				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+				$this->load_theme($this->lang['shop']['cart'], $cont_index);
 			
 			}
 			else
 			{
 			
-				$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'checkout', array('action' => 'checkout')));
+				$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_checkout'));
 			
 			}
 			
@@ -272,7 +275,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		if($this->login->check_login())
 		{
-	
+			
 			ob_start();
 			
 			PhangoVar::$model['address_transport']->arr_fields_updated=&ConfigShop::$arr_fields_transport;
@@ -286,7 +289,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				if(PhangoVar::$model['address_transport']->insert($_POST))
 				{
 				
-					$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'transport', array('action' => 'set_transport'));
+					$url_return=make_fancy_url($this->base_url, 'shop', 'cart_set_transport');
 				
 					$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']	['press_here_redirecting']);
 				
@@ -294,7 +297,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				else
 				{
 					
-					ModelForm::SetValuesForm($_POST, PhangoVar::$model['address_transport']->forms, $show_error=1);
+					ModelForm::set_values_form($_POST, PhangoVar::$model['address_transport']->forms, $show_error=1);
 				
 					echo load_view(array($arr_transport=array(), 1), 'shop/forms/transportform');
 				
@@ -312,7 +315,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 			ob_end_clean();
 			
-			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			$this->load_theme($this->lang['shop']['cart'], $cont_index);
 			
 		}
 	
@@ -320,10 +323,10 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 	public function save_choose_address_transport()
 	{
-	
+		
 		if($this->login->check_login())
 		{
-		
+			
 			settype($_GET['idaddress'], 'integer');
 			
 			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
@@ -335,13 +338,13 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 				//Now, select transport
 				
-				$this->simple_redirect($this->get_method_url('set_method_transport', 'cart', array()));
+				$this->simple_redirect($this->get_method_url('cart_set_method_transport'));
 				
 				/*$cont_index=ob_get_contents();
 					
 				ob_end_clean();
 				
-				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);*/
+				$this->load_theme($this->lang['shop']['cart'], $cont_index);*/
 				
 				
 			
@@ -349,7 +352,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				$this->simple_redirect($this->get_method_url('index', 'cart', array()));
+				$this->simple_redirect($this->get_method_url('index'));
 			
 			}
 			
@@ -405,7 +408,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 			ob_end_clean();
 			
-			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			$this->load_theme($this->lang['shop']['cart'], $cont_index);
 			
 		}
 	
@@ -430,13 +433,13 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 				//Now, select transport
 				
-				$this->simple_redirect($this->get_method_url('checkout', 'cart', array()));
+				$this->simple_redirect($this->get_method_url('cart_checkout', array()));
 				
 				/*$cont_index=ob_get_contents();
 					
 				ob_end_clean();
 				
-				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);*/
+				$this->load_theme($this->lang['shop']['cart'], $cont_index);*/
 				
 				
 			
@@ -444,7 +447,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				$this->simple_redirect($this->get_method_url('index', 'cart', array()));
+				$this->simple_redirect($this->get_method_url('cart', array()));
 			
 			}
 			
@@ -467,7 +470,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		if($this->login->check_login())
 		{
 		
-			if(PhangoVar::$config_shop['no_transport']==0)
+			if(ConfigShop::$config_shop['no_transport']==0)
 			{
 			
 				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
@@ -507,7 +510,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+				$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
 			
 			}
 			
@@ -515,13 +518,13 @@ class CartSwitchClass extends ControllerSwitchClass
 						
 			ob_end_clean();
 			
-			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			$this->load_theme($this->lang['shop']['cart'], $cont_index);
 	
 		}
 		else
 		{
 		
-			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
 		
 		}
 	
@@ -537,7 +540,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		if($this->login->check_login())
 		{
 		
-			if(PhangoVar::$config_shop['no_transport']==0)
+			if(ConfigShop::$config_shop['no_transport']==0)
 			{
 			
 				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
@@ -603,7 +606,7 @@ class CartSwitchClass extends ControllerSwitchClass
 					else
 					{
 					
-						$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+						$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
 					
 					}
 				
@@ -615,13 +618,13 @@ class CartSwitchClass extends ControllerSwitchClass
 							
 				ob_end_clean();
 				
-				$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+				$this->load_theme($this->lang['shop']['cart'], $cont_index);
 			}
 		}
 		else
 		{
 		
-			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart', 'cart', array('action' => 'index')));
+			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
 		
 		}
 	
@@ -639,7 +642,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 			load_libraries(array('redirect'));
 			
-			$url_return=make_fancy_url($this->base_url, 'shop', 'cart', 'autologin', array('action' => 'get_address'));
+			$url_return=make_fancy_url($this->base_url, 'shop', 'cart_get_address');
 			
 			$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']['press_here_redirecting']);
 			
@@ -657,7 +660,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			ob_end_clean();
 			
-			$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+			$this->load_theme($this->lang['shop']['cart'], $cont_index);
 		
 		}
 	
@@ -674,7 +677,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 		
-		$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+		$this->load_theme($this->lang['shop']['cart'], $cont_index);
 	
 	}
 	
@@ -689,7 +692,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		ob_end_clean();
 		
-		$this->load_theme('shop', $this->lang['shop']['cart'], $cont_index);
+		$this->load_theme($this->lang['shop']['cart'], $cont_index);
 	
 	}
 
@@ -700,7 +703,7 @@ class CartSwitchClass extends ControllerSwitchClass
 function Cart()
 {
 
-	global $user_data, $model, $ip, PhangoVar::$lang, $config_data, PhangoVar::$base_path, PhangoVar::$base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, PhangoVar::$config_shop, $arr_taxes, $arr_order_shop, PhangoVar::$language, PhangoVar::$lang_taxes, $webtsys_id;
+	global $user_data, $model, $ip, PhangoVar::$lang, $config_data, PhangoVar::$base_path, PhangoVar::$base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ConfigShop::$config_shop, $arr_taxes, $arr_order_shop, PhangoVar::$language, PhangoVar::$lang_taxes, $webtsys_id;
 
 	$arr_block='';
 
@@ -735,7 +738,7 @@ function Cart()
 	die;
 	
 	/*
-	if(PhangoVar::$config_shop['ssl_url']==1)
+	if(ConfigShop::$config_shop['ssl_url']==1)
 	{
 		
 		if(!isset($_SERVER['HTTPS']))
@@ -750,18 +753,18 @@ function Cart()
 		}
 	
 	}
-	//If exists idtax and PhangoVar::$config_shop['yes_taxes']==0, we need show the taxes to the client in the cart, yes_taxes is valid only for show products.
+	//If exists idtax and ConfigShop::$config_shop['yes_taxes']==0, we need show the taxes to the client in the cart, yes_taxes is valid only for show products.
 
-	if(PhangoVar::$config_shop['yes_taxes']==0 && PhangoVar::$config_shop['idtax']>0)
+	if(ConfigShop::$config_shop['yes_taxes']==0 && ConfigShop::$config_shop['idtax']>0)
 	{
 
-		PhangoVar::$config_shop['yes_taxes']=1;
+		ConfigShop::$config_shop['yes_taxes']=1;
 	
 	}
 	
 	//If no yes_transport don't need transport_fields in order shop
 					
-	if(PhangoVar::$config_shop['yes_transport']==0)
+	if(ConfigShop::$config_shop['yes_transport']==0)
 	{
 	
 		$arr_fields_trans=array('name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'zone_transport', 'transport');
@@ -797,7 +800,7 @@ function Cart()
 
 	//If order is send, then go to payment gateway
 
-	if($num_products>0 && PhangoVar::$config_shop['view_only_mode']==0)
+	if($num_products>0 && ConfigShop::$config_shop['view_only_mode']==0)
 	{
 
 		if($arr_order_shop['IdOrder_shop']==0)
@@ -939,7 +942,7 @@ function Cart()
 						
 						$post_transport=array();
 						
-						if(PhangoVar::$config_shop['yes_transport'])
+						if(ConfigShop::$config_shop['yes_transport'])
 						{
 
 							foreach($update_transport as $field)
@@ -1064,7 +1067,7 @@ function Cart()
 
 							}
 
-							if(PhangoVar::$config_shop['yes_transport'])
+							if(ConfigShop::$config_shop['yes_transport'])
 							{
 							
 								$post['country']=$real_country;
@@ -1129,7 +1132,7 @@ function Cart()
 						echo SelectForm('payment_form', '', $arr_payment );
 
 
-						if(PhangoVar::$config_shop['yes_transport']==1)
+						if(ConfigShop::$config_shop['yes_transport']==1)
 						{
 							?>
 							<h3><?php echo PhangoVar::$lang['shop']['transport']; ?></h3>
@@ -1244,7 +1247,7 @@ function Cart()
 							
 							$arr_products[$arr_product['idproduct']]['units']++;
 							
-							$sum_tax=calculate_taxes(PhangoVar::$config_shop['idtax'], $price);
+							$sum_tax=calculate_taxes(ConfigShop::$config_shop['idtax'], $price);
 		
 							$total_price+=($price+$sum_tax);
 								
@@ -1252,7 +1255,7 @@ function Cart()
 
 						}
 						
-						if(PhangoVar::$config_shop['yes_transport']==1)
+						if(ConfigShop::$config_shop['yes_transport']==1)
 						{
 
 							$post['transport']=$_POST['transport'];
@@ -1387,14 +1390,14 @@ function Cart()
 
 			settype($idtax, 'integer');
 
-			PhangoVar::$config_shop['idtax']=$idtax;
+			ConfigShop::$config_shop['idtax']=$idtax;
 			
-			if(PhangoVar::$config_shop['idtax']>0)
+			if(ConfigShop::$config_shop['idtax']>0)
 			{
 
 				echo '<p><strong>'.PhangoVar::$lang['shop']['you_choose_a_country_that_have_taxes_about_this_products'].'</strong></p>';
 
-				PhangoVar::$config_shop['yes_taxes']=1;
+				ConfigShop::$config_shop['yes_taxes']=1;
 
 			}
 
@@ -1412,8 +1415,8 @@ function Cart()
 
 					list($total_price, $discount_name, $discount_principal, $discount_taxes, $name_transport, $price_total_transport_original, $discount_transport, $name_payment, $price_payment_original, $discount_payment)=show_total_prices($sha1_token);
 					
-					$tax_name=PhangoVar::$lang_taxes[PhangoVar::$config_shop['idtax']];
-					$tax_percent=$arr_taxes[PhangoVar::$config_shop['idtax']];
+					$tax_name=PhangoVar::$lang_taxes[ConfigShop::$config_shop['idtax']];
+					$tax_percent=$arr_taxes[ConfigShop::$config_shop['idtax']];
 
 					$post['discount']=$discount_name;
 					$post['discount_percent']=$discount_principal;
@@ -1523,7 +1526,7 @@ function Cart()
 
 				echo load_view(array(PhangoVar::$model['order_shop']->forms, array('name', 'last_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
 
-				if(PhangoVar::$config_shop['yes_transport']==1)
+				if(ConfigShop::$config_shop['yes_transport']==1)
 				{
 
 					echo '<h3>'.PhangoVar::$lang['shop']['address_transport'].'</h3>';
@@ -1691,14 +1694,14 @@ function Cart()
 
 	ob_end_clean();
 
-	echo load_view(array(PhangoVar::$config_shop['title_shop'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
+	echo load_view(array(ConfigShop::$config_shop['title_shop'], $cont_index, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ''), $arr_block);
 
 }
 
 function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 {
 
-	global PhangoVar::$base_url, PhangoVar::$lang, $model, $arr_taxes, PhangoVar::$config_shop, $sha1_token;
+	global PhangoVar::$base_url, PhangoVar::$lang, $model, $arr_taxes, ConfigShop::$config_shop, $sha1_token;
 
 	load_libraries(array('table_config'));
 
@@ -1844,7 +1847,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 
 		$arr_lang_taxes=array();
 
-		$idtax=PhangoVar::$config_shop['idtax'];
+		$idtax=ConfigShop::$config_shop['idtax'];
 
 		head_list_cart();
 		
@@ -1945,7 +1948,7 @@ function show_cart_simple($token, $show_button_buy=1, $type_cart=0)
 function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 {
 
-	global PhangoVar::$lang, PhangoVar::$language, $model, $config_data, PhangoVar::$config_shop, $user_data, PhangoVar::$base_url;
+	global PhangoVar::$lang, PhangoVar::$language, $model, $config_data, ConfigShop::$config_shop, $user_data, PhangoVar::$base_url;
 
 	load_libraries(array('generate_forms', 'forms/selectmodelform'));
 
@@ -1986,7 +1989,7 @@ function form_order($sha1_token, $post_user, $post_transport, $show_error=0)
 
 	echo load_view(array(PhangoVar::$model['order_shop']->forms, array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax'), ''), 'common/forms/modelform');
 	
-	if(PhangoVar::$config_shop['yes_transport']==1)
+	if(ConfigShop::$config_shop['yes_transport']==1)
 	{
 		?>
 		<div class="form">
@@ -2171,7 +2174,7 @@ function obtain_transport_price($total_weight, $total_price, $idtransport)
 function show_total_prices($sha1_token, $type_cart=0)
 {
 
-	global PhangoVar::$lang, PhangoVar::$config_shop, $model, $arr_order_shop;
+	global PhangoVar::$lang, ConfigShop::$config_shop, $model, $arr_order_shop;
 
 	//obtain products...
 	
@@ -2188,7 +2191,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 	//obtain prices for transport...
 	$discount_transport=0;
 					
-	if(PhangoVar::$config_shop['yes_transport']==1)	
+	if(ConfigShop::$config_shop['yes_transport']==1)	
 	{
 
 		echo '<h3><strong>'.PhangoVar::$lang['shop']['price_transport'].'</strong></h3>';
@@ -2255,7 +2258,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 			
 			//Recalculate taxes...
 			
-			$idtax=PhangoVar::$config_shop['idtax'];
+			$idtax=ConfigShop::$config_shop['idtax'];
 			
 			$total_taxes=calculate_taxes($idtax, $total_sum);
 			
@@ -2297,7 +2300,7 @@ function show_total_prices($sha1_token, $type_cart=0)
 function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 {
 
-	global $user_data, PhangoVar::$config_shop, PhangoVar::$lang, $model, PhangoVar::$base_path;
+	global $user_data, ConfigShop::$config_shop, PhangoVar::$lang, $model, PhangoVar::$base_path;
 	//Add discount if in group...
 	
 	ob_start();
@@ -2379,7 +2382,7 @@ function obtain_discounts($total_sum, $price_total_transport, $sha1_token)
 
 	//create new taxes for new price...
 
-	$taxes_calculated=calculate_taxes(PhangoVar::$config_shop['idtax'], $total_sum);
+	$taxes_calculated=calculate_taxes(ConfigShop::$config_shop['idtax'], $total_sum);
 	
 	//Now discounts
 

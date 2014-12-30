@@ -27,7 +27,7 @@ class CartClass {
 	
 		$this->token=sha1($token);
 	
-		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_update', 'modify_product', array());
+		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_update');
 	
 		$this->yes_update=$yes_update;
 	
@@ -183,7 +183,7 @@ class CartClass {
 	
 			settype($_POST['IdCart_shop'], 'integer');
 
-			$redirect_url=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'add_cart', array() );
+			$redirect_url=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart');
 
 			//$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"');
 
@@ -383,7 +383,7 @@ class CartClass {
 	
 	public function payment_gateway($idpayment)
 	{
-	
+		
 		$cart=new CartClass();
 	
 		//Here define the payment and notify that the product was paid. Also fill order_shop and delete cart.
@@ -394,7 +394,7 @@ class CartClass {
 		
 		if($arr_payment['IdPayment_form']>0)
 		{
-	
+			
 			if(!include(PhangoVar::$base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
 			{
 		
@@ -426,6 +426,8 @@ class CartClass {
 					
 					if(ConfigShop::$config_shop['no_transport']==0)
 					{
+					
+						settype($_SESSION['idaddress'], 'integer');
 					
 						$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
 					
@@ -471,7 +473,7 @@ class CartClass {
 						
 						//Send emails...
 						
-						$post['IdOrder_shop']=Webmodel::insert_id();
+						$post['IdOrder_shop']=PhangoVar::$model['order_shop']->insert_id();
 						
 						$this->send_mail_order($post, $arr_address, $arr_address_transport);
 						
@@ -669,15 +671,15 @@ class CartClass {
 
 		$content_mail_user=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailcart');
 		
-		$query=PhangoVar::$model['module']->select('where name="shop"', array('IdModule'));
+		/*$query=PhangoVar::$model['module']->select('where name="shop"', array('IdModule'));
 
-		list($idmodule)=webtsys_fetch_row($query);
+		list($idmodule)=webtsys_fetch_row($query);*/
 
-		$content_mail_admin=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, $idmodule, 0), 'shop/mailadmincart');
+		$content_mail_admin=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailadmincart');
 		
 		//If no send mail write a message with the reference, for send to mail shop...
 
-		if( !send_mail($arr_user['email'], PhangoVar::$lang['shop']['your_orders'], $content_mail_user, 'html') || !send_mail($config_data['portal_email'], PhangoVar::$lang['shop']['orders'], $content_mail_admin, 'html') )
+		if( !send_mail($arr_user['email'], PhangoVar::$lang['shop']['your_orders'], $content_mail_user, 'html') || !send_mail(PhangoVar::$portal_email, PhangoVar::$lang['shop']['orders'], $content_mail_admin, 'html') )
 		{
 
 			echo '<p>'.PhangoVar::$lang['shop']['error_cannot_send_email'].', '.PhangoVar::$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';

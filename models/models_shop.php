@@ -146,6 +146,8 @@ PhangoVar::$model['user_shop']=new UserPhangoModel('user_shop');
 
 //PhangoVar::$model['user_shop']=new user_shop('user_shop');
 
+PhangoVar::$model['user_shop']->username='email';
+
 PhangoVar::$model['user_shop']->set_component('email', 'CharField', array(255), 1);
 
 PhangoVar::$model['user_shop']->set_component('password', 'PasswordField', array(255), 1);
@@ -631,13 +633,13 @@ class price_transport extends Webmodel {
 
 PhangoVar::$model['price_transport']=new price_transport();
 
-PhangoVar::$model['price_transport']->components['price']=new MoneyField();
+PhangoVar::$model['price_transport']->set_component('price', 'MoneyField', array());
 PhangoVar::$model['price_transport']->components['price']->required=1;
 
-PhangoVar::$model['price_transport']->components['weight']=new DoubleField();
+PhangoVar::$model['price_transport']->set_component('weight', 'DoubleField', array());
 PhangoVar::$model['price_transport']->components['weight']->required=0;
 
-PhangoVar::$model['price_transport']->components['idtransport']=new ForeignKeyField('transport');
+PhangoVar::$model['price_transport']->set_component('idtransport', 'ForeignKeyField', array('transport'));
 PhangoVar::$model['price_transport']->components['idtransport']->form='HiddenForm';
 PhangoVar::$model['price_transport']->components['idtransport']->required=1;
 
@@ -967,7 +969,7 @@ PhangoVar::$model['order_shop']->components['phone_transport']->required=1;
 PhangoVar::$model['order_shop']->components['token']->required=1;
 PhangoVar::$model['order_shop']->components['transport']->required=1;
 PhangoVar::$model['order_shop']->components['name_payment']->required=1;
-PhangoVar::$model['order_shop']->components['price_payment']->required=1;
+PhangoVar::$model['order_shop']->components['price_payment']->required=0;
 
 PhangoVar::$model['order_shop']->create_form();
 

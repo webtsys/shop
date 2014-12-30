@@ -510,6 +510,8 @@ function ShopAdmin()
 			
 			$admin->set_url_post($url_options);
 			
+			$admin->options_func='TransportOptionsListModel';
+			
 			$admin->show();
 
 			//generate_admin_model_ng('transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='TransportOptionsListModel', $where_sql='where IdTransport>0', $arr_fields_form=array(), $type_list='Basic');
@@ -583,6 +585,8 @@ function ShopAdmin()
 		break;
 
 		case 9:
+		
+			load_libraries(array('config_shop'), PhangoVar::$base_path.'/modules/shop/libraries/');
 
 			settype($_GET['IdTransport'], 'integer'); 
 
@@ -592,7 +596,7 @@ function ShopAdmin()
 
 			echo '<h3>'.PhangoVar::$lang['shop']['price_transport_for'].': '.$name_transport.'</h3>';
 
-			$url_options=set_admin_link( 'price_transport', array('op' => 9, 'IdTransport' => $_GET['IdTransport'] ) );
+			$url_options=set_admin_link( 'shop', array('op' => 9, 'IdTransport' => $_GET['IdTransport'] ) );
 			
 			if($type==0)
 			{
@@ -602,12 +606,22 @@ function ShopAdmin()
 
 				PhangoVar::$model['price_transport']->create_form();
 				
-				PhangoVar::$model['price_transport']->forms['idtransport']->SetForm($_GET['IdTransport']);
+				PhangoVar::$model['price_transport']->forms['idtransport']->set_param_value_form($_GET['IdTransport']);
 
 				PhangoVar::$model['price_transport']->forms['price']->label=PhangoVar::$lang['shop']['price'];
 				PhangoVar::$model['price_transport']->forms['weight']->label=PhangoVar::$lang['shop']['weight'];
+				
+				$admin=new GenerateAdminClass('price_transport');
+				
+				$admin->arr_fields=&$arr_fields;
+				
+				$admin->where_sql='where idtransport='.$_GET['IdTransport'];
+				
+				$admin->set_url_post($url_options);
+				
+				$admin->show();
 
-				generate_admin_model_ng('price_transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
+				//generate_admin_model_ng('price_transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
 				
 			}
 			else
@@ -622,15 +636,23 @@ function ShopAdmin()
 
 				PhangoVar::$model['price_transport_price']->forms['price']->label=PhangoVar::$lang['shop']['price'];
 				PhangoVar::$model['price_transport_price']->forms['min_price']->label=PhangoVar::$lang['shop']['min_price'];
+				
+				$admin=new GenerateAdminClass('price_transport');
+				
+				$admin->arr_fields=&$arr_fields;
+				
+				$admin->where_sql='where idtransport='.$_GET['IdTransport'];
+				
+				$admin->show();
 
-				generate_admin_model_ng('price_transport_price', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
+				//generate_admin_model_ng('price_transport_price', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idtransport='.$_GET['IdTransport'], $arr_fields_form=array(), $type_list='Basic');
 			
 			}
 
-			if(!isset($_GET['op_edit']))
+			if($_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'edit_transport', array('op' => 7) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 7) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
 
 			}
 
@@ -1355,6 +1377,8 @@ function ShopAdmin()
 			$admin->arr_fields_edit=&$arr_fields_edit;
 			
 			$admin->set_url_post($url_options);
+			
+			$admin->options_func='CurrencyOptionsListModel';
 			
 			$admin->show();
 			

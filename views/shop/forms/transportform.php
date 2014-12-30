@@ -3,7 +3,7 @@
 function TransportFormView($arr_transport, $only_form=0)
 {
 
-	global $model, $lang, $config_shop, $base_url, $arr_cache_header;
+	//global PhangoVar::$model, PhangoVar::$lang, ConfigShop::$config_shop, PhangoVar::$base_url, PhangoVar::$arr_cache_header;
 	
 	if($only_form==0)
 	{
@@ -35,26 +35,26 @@ function TransportFormView($arr_transport, $only_form=0)
 	</script>
 	<?php
 	
-	$arr_cache_header[]=ob_get_contents();
+	PhangoVar::$arr_cache_header[]=ob_get_contents();
 	
 	ob_end_clean();
 	
 	?>
-	<h2><?php echo $lang['shop']['choose_address_transport']; ?></h2>
+	<h2><?php echo PhangoVar::$lang['shop']['choose_address_transport']; ?></h2>
 	
-	<p><?php echo $lang['shop']['explain_address_transport']; ?></p>
+	<p><?php echo PhangoVar::$lang['shop']['explain_address_transport']; ?></p>
 	<?php
 	
 	if(count($arr_transport)==0)
 	{
 	
-		echo '<p>'.$lang['shop']['no_exists_address'].'</p>';
+		echo '<p>'.PhangoVar::$lang['shop']['no_exists_address'].'</p>';
 	
 	}
 	else
 	{
 		?>
-		<form method="get" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'choose_address_transport', array('action' => 'save_choose_address_transport/')); ?>">
+		<form method="get" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_choose_address_transport'); ?>">
 		<?php
 	
 		$arr_choose_transport=array(0);
@@ -75,30 +75,30 @@ function TransportFormView($arr_transport, $only_form=0)
 		echo RadioIntForm($name="idaddress", $class='', $arr_choose_transport, $more_options='');
 		
 		?>
-		<p><input type="submit" value="<?php echo $lang['common']['send']; ?>"  /></p>
+		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>"  /></p>
 		</form>
 		<?php
 		
 	}
 	
 	?>
-	<p><a href="#" id="add_new_address"><?php echo $lang['shop']['add_new_address']; ?><span class="plus">[+]</a></p>
+	<p><a href="#" id="add_new_address"><?php echo PhangoVar::$lang['shop']['add_new_address']; ?><span class="plus">[+]</a></p>
 	<?php
 	}
 	?>
 	<div id="add_new_address_form">
-		<h2><?php echo $lang['shop']['address_billing']; ?></h2>
-		<form method="post" action="<?php echo make_fancy_url($base_url, 'shop', 'cart', 'set_address_transport', array('action' => 'save_transport_address')); ?>">
+		<h2><?php echo PhangoVar::$lang['shop']['address_billing']; ?></h2>
+		<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_transport_address'); ?>">
 		<?php
 		
 		set_csrf_key();
 		
-		echo load_view(array($model['address_transport']->forms, ConfigShop::$arr_fields_transport), 'common/forms/modelform');
+		echo load_view(array(PhangoVar::$model['address_transport']->forms, ConfigShop::$arr_fields_transport), 'common/forms/modelform');
 		
-		echo '<span class="error">'.$model['address_transport']->std_error.'</span>';
+		echo '<span class="error">'.PhangoVar::$model['address_transport']->std_error.'</span>';
 		
 		?>
-		<p><input type="submit" value="<?php echo $lang['common']['send']; ?>" /></p>
+		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" /></p>
 		</form>
 	</div>
 	<?php

@@ -3,14 +3,14 @@
 function LoginShopFormView($login)
 {
 
-	global $lang;
+	//global $lang;
 
 	?>
 	<hr />
 	
 	<?php
 	
-	echo '<h1>'.$lang['user']['login'].'</h1>';
+	echo '<h1>'.PhangoVar::$lang['users']['login'].'</h1>';
 	
 	$login->login_form();
 
