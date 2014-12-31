@@ -36,6 +36,7 @@ PhangoVar::$urls['shop']['cart_checkout']=array('pattern' => '/^shop\/cart\/chec
 
 PhangoVar::$urls['shop']['cart_finish_checkout']=array('pattern' => '/^shop\/cart\/finish_checkout/', 'url' => '/shop/cart/finish_checkout', 'module' => 'shop', 'controller' => 'cart', 'action' => 'finish_checkout', 'parameters' => array());
 
+PhangoVar::$urls['shop']['cart_finished']=array('pattern' => '/^shop\/cart\/finished/', 'url' => '/shop/cart/finished', 'module' => 'shop', 'controller' => 'cart', 'action' => 'finished', 'parameters' => array());
 
 PhangoVar::$urls['shop']['cart_login']=array('pattern' => '/^shop\/cart\/login/', 'url' => '/shop/cart/login', 'module' => 'shop', 'controller' => 'cart', 'action' => 'login', 'parameters' => array());
 

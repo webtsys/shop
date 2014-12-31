@@ -695,6 +695,23 @@ class CartSwitchClass extends ControllerSwitchClass
 		$this->load_theme($this->lang['shop']['cart'], $cont_index);
 	
 	}
+	
+	public function finished()
+	{
+	
+		ob_start();
+	
+		//$this->login->recovery_password();
+		
+		echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+		
+		$cont_index=ob_get_contents();
+		
+		ob_end_clean();
+		
+		$this->load_theme($this->lang['shop']['cart'], $cont_index);
+	
+	}
 
 	
 }

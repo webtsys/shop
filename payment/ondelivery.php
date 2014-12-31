@@ -37,7 +37,7 @@ class OnDeliveryPaymentClass extends PaymentClass
 
 	public function checkout()
 	{
-		return 1;
+		return 'done';
 	}
 	
 	public function cancel_checkout()

@@ -12,10 +12,8 @@ class CartClass {
 	
 		if(!isset($_COOKIE['webtsys_shop']))
 		{
-		
-			$token=sha1(uniqid(rand(), true));
-
-			setcookie  ( 'webtsys_shop', $token, 0, PhangoVar::$cookie_path);
+			
+			$this->create_new_token();
 		
 		}
 		else
@@ -24,9 +22,9 @@ class CartClass {
 			$token=$_COOKIE['webtsys_shop'];
 		
 		}
-	
+		
 		$this->token=sha1($token);
-	
+		
 		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_update');
 	
 		$this->yes_update=$yes_update;
@@ -36,6 +34,15 @@ class CartClass {
 		//Prepare config for this plugins..
 		
 		$this->plugins->load_all_plugins();
+	
+	}
+	
+	public function create_new_token()
+	{
+	
+		$token=sha1(uniqid(rand(), true));
+
+		setcookie  ( 'webtsys_shop', $token, 0, PhangoVar::$cookie_path);
 	
 	}
 	
@@ -408,7 +415,9 @@ class CartClass {
 				
 				$payment_class=new $name_class($cart);
 				
-				if($payment_class->checkout($this))
+				$set_checkout=$payment_class->checkout($this);
+				
+				if($set_checkout==='done')
 				{
 					$post['token']=$this->token;
 					
@@ -479,7 +488,9 @@ class CartClass {
 						
 						$this->clean_cart();
 						
-						echo PhangoVar::$lang['shop']['order_success_cart_clean'];
+						//echo PhangoVar::$lang['shop']['order_success_cart_clean'];
+						
+						simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
 					
 					}
 					else
@@ -502,7 +513,7 @@ class CartClass {
 					
 					}
 				}
-				else
+				else if($set_checkout==0)
 				{
 				
 					echo PhangoVar::$lang['shop']['no_cancel_checkout_success'];
@@ -641,8 +652,19 @@ class CartClass {
 			unset($_SESSION['idtransport']);
 	
 		}
-	
-		setcookie ( "webtsys_shop", FALSE, 0, PhangoVar::$cookie_path);
+		
+		//$_COOKIE['webtsys_shop']=sha1(uniqid(rand(), true));
+		
+		/*if(!setcookie ( 'webtsys_shop', '', time()-36000, PhangoVar::$cookie_path))
+		{
+			
+			echo 'Error resetting the cookie cart';
+		
+		}*/
+		
+		$this->create_new_token();
+		
+		//die;
 	
 	}
 	
