@@ -388,7 +388,7 @@ class CartClass {
 	
 	}
 	
-	public function payment_gateway($idpayment)
+	public function payment_gateway($iduser_shop, $idpayment)
 	{
 		
 		$cart=new CartClass();
@@ -429,7 +429,7 @@ class CartClass {
 					
 					ConfigShop::$arr_fields_address[]='email';
 					
-					$arr_address=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], ConfigShop::$arr_fields_address);
+					$arr_address=PhangoVar::$model['user_shop']->select_a_row($iduser_shop, ConfigShop::$arr_fields_address);
 					
 					$arr_address['country']=unserialize($arr_address['country']);
 					
@@ -456,7 +456,7 @@ class CartClass {
 					
 					$post['date_order']=DateTimeNow::$today;
 					
-					$post['iduser']=$_SESSION['IdUser_shop'];
+					$post['iduser']=$iduser_shop;
 					
 					list($num_product, $total_price_product, $total_weight_product)=$this->obtain_simple_cart();
 					

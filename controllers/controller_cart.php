@@ -135,8 +135,8 @@ class CartSwitchClass extends ControllerSwitchClass
 		}
 		else
 		{
-		
-			$arr_user=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
+			
+			$arr_user=PhangoVar::$model['user_shop']->select_a_row($this->login->session['IdUser_shop']);
 		
 			ModelForm::set_values_form($arr_user, PhangoVar::$model['user_shop']->forms, $show_error=1);
 			
@@ -170,7 +170,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			PhangoVar::$model['user_shop']->arr_fields_updated=&ConfigShop::$arr_fields_address;
 		
-			if(PhangoVar::$model['user_shop']->update($_POST, 'where IdUser_shop='.$_SESSION['IdUser_shop']))
+			if(PhangoVar::$model['user_shop']->update($_POST, 'where IdUser_shop='.$this->login->session['IdUser_shop']))
 			{
 			
 				$url_return=make_fancy_url($this->base_url, 'shop', 'cart_set_transport');
@@ -248,7 +248,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 				ob_start();
 				
-				$arr_transport=PhangoVar::$model['address_transport']->select_to_array('where iduser='.$_SESSION['IdUser_shop'].' limit '.ConfigShop::$num_address_transport, array('IdAddress_transport', 'address_transport', 'region_transport'));
+				$arr_transport=PhangoVar::$model['address_transport']->select_to_array('where iduser='.$this->login->session['IdUser_shop'].' limit '.ConfigShop::$num_address_transport, array('IdAddress_transport', 'address_transport', 'region_transport'));
 				
 				echo load_view(array($arr_transport), 'shop/forms/transportform');
 				
@@ -282,9 +282,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			ConfigShop::$arr_fields_transport[]='iduser';
 		
-			$_POST['iduser']=$_SESSION['IdUser_shop'];
+			$_POST['iduser']=$this->login->session['IdUser_shop'];
 		
-			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'])<5)
+			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$this->login->session['IdUser_shop'])<5)
 			{
 				if(PhangoVar::$model['address_transport']->insert($_POST))
 				{
@@ -329,7 +329,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			settype($_GET['idaddress'], 'integer');
 			
-			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$_SESSION['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
+			if(PhangoVar::$model['address_transport']->select_count('where iduser='.$this->login->session['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
 			{
 			
 				$_SESSION['idaddress']=$_GET['idaddress'];
@@ -493,7 +493,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			}
 			
-			$arr_address=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop']);
+			$arr_address=PhangoVar::$model['user_shop']->select_a_row($this->login->session['IdUser_shop']);
 					
 			$arr_country=PhangoVar::$model['country_shop']->select_a_row($arr_address['country'], array('name'));
 			
@@ -536,7 +536,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		settype($_GET['op'], 'integer');
 		
 		$yes_use_transport=1;
-	
+		
 		if($this->login->check_login())
 		{
 		
@@ -600,7 +600,7 @@ class CartSwitchClass extends ControllerSwitchClass
 					if($cart->num_items_cart()>0)
 					{
 					
-						$cart->payment_gateway($_POST['payment_form']);
+						$cart->payment_gateway($this->login->session['IdUser_shop'], $_POST['payment_form']);
 				
 					}
 					else
@@ -639,6 +639,8 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		if($this->login->login($_POST['email'], $_POST['password'], $_POST['no_expire_session']))
 		{
+		
+			//Set $_SESSION['IdUser_shop']
 		
 			load_libraries(array('redirect'));
 			
