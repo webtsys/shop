@@ -49,7 +49,7 @@ class  ViewcategorySwitchClass extends ControllerSwitchClass
 		
 		$id_subcat=implode(', ', $arr_children[$arr_cat['IdCat_product']]);
 		
-		$where_sql='where product_relationship.idcat_product IN ('.$arr_cat['IdCat_product'].', '.$id_subcat.')';
+		$where_sql='where product_relationship.idcat_product IN ('.$arr_cat['IdCat_product'].', '.$id_subcat.') and product.stock=1';
 		
 		if($arr_cat['IdCat_product']==0)
 		{
