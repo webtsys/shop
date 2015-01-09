@@ -222,7 +222,7 @@ function ShopAdmin()
 		
 			//GeneratePositionModel('cat_product', 'title', 'position', set_admin_link( 'shop', array('op' => 2)), $where='');
 			
-			$admin->generate_position_model('title', 'position', set_admin_link( 'shop', array('op' => '2_5')), $where='');
+			$admin->generate_position_model('title', 'position', set_admin_link( 'shop', array('op' => '2_5')), $admin->where_sql);
 		
 		}
 		

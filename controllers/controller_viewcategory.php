@@ -27,10 +27,29 @@ class  ViewcategorySwitchClass extends ControllerSwitchClass
 		
 		$arr_cat=PhangoVar::$model['cat_product']->select_a_row($idcat_product, array(), 1);
 		
-		settype($arr_cat['IdCat_product'], 'integer');
+		settype($arr_cat['IdCat_product'], 'string');
 		
-		//$where_sql='where idcat='.$arr_cat['IdCat_product'];
-		$where_sql='where product_relationship.idcat_product='.$arr_cat['IdCat_product'];
+		//Select childrens cats ids too
+		
+		$arr_children=array();
+		
+		$arr_all_cats=PhangoVar::$model['cat_product']->select_to_array('', array('subcat'));
+		
+		foreach($arr_all_cats as $idcat => $arr_subcat)
+		{
+		
+			//echo $idcat;
+			$arr_children[$arr_subcat['subcat']][]=$idcat;
+		
+		}
+		
+		settype($arr_children[$arr_cat['IdCat_product']], 'array');
+		
+		$arr_children[$arr_cat['IdCat_product']][]=0;
+		
+		$id_subcat=implode(', ', $arr_children[$arr_cat['IdCat_product']]);
+		
+		$where_sql='where product_relationship.idcat_product IN ('.$arr_cat['IdCat_product'].', '.$id_subcat.')';
 		
 		if($arr_cat['IdCat_product']==0)
 		{

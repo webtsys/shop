@@ -4,6 +4,8 @@ PhangoVar::$urls['shop']['viewproduct']=array('pattern' => '/^shop\/viewproduct\
 
 PhangoVar::$urls['shop']['viewcategory']=array('pattern' => '/^shop\/viewcategory\/([0-9]+)\/(.*)$/', 'url' => '/shop/viewcategory', 'module' => 'shop', 'controller' => 'viewcategory', 'action' => 'index', 'parameters' => array('$1' => 'integer', '$2' => 'string'));
 
+PhangoVar::$urls['shop']['viewcategory_id']=array('pattern' => '/^shop\/viewcategory\/([0-9]+)$/', 'url' => '/shop/viewcategory', 'module' => 'shop', 'controller' => 'viewcategory', 'action' => 'index', 'parameters' => array('$1' => 'integer'));
+
 PhangoVar::$urls['shop']['cart_ajax_jscript']=array('pattern' => '/^shop\/cart\/ajax\/cart_ajax_jscript/', 'url' => '/shop/cart/ajax/cart_ajax_jscript', 'module' => 'shop', 'controller' => 'ajax/fjscript', 'action' => 'index', 'parameters' => array());
 
 PhangoVar::$urls['shop']['cart_ajax_buy']=array('pattern' => '/^shop\/cart\/ajax\/buy/', 'url' => '/shop/cart/ajax/buy', 'module' => 'shop', 'controller' => 'ajax/buy', 'action' => 'index', 'parameters' => array());
