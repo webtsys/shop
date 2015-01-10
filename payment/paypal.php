@@ -1,4 +1,26 @@
 <?php
+
+class OnDeliveryPaymentClass extends PaymentClass
+{
+
+	public function checkout()
+	{
+	
+		
+	
+		return 'done';
+	}
+	
+	public function cancel_checkout()
+	{
+	
+		return 1;
+	
+	}
+	
+}
+
+/*
 global $email_paypal_shop, $url_paypal_shop, $user_data, $prefix_key;
 
 //Boton de ejemplo de paypal
@@ -43,21 +65,6 @@ default:
 		$transport_discount=$arr_order_shop['transport_discount_percent'];
 		$taxes_discount=$arr_order_shop['tax_discount_percent'];
 		$payment_discount=$arr_order_shop['payment_discount_percent'];
-		
-		/*$model['group_shop_users']->components['group_shop']->fields_related_model=$model['group_shop_users']->components['group_shop']->get_all_fields();
-		
-		$query=$model['group_shop_users']->select('where group_shop_users.iduser='.$user_data['IdUser'].' order by group_shop_discount DESC, group_shop_transport_for_group DESC, group_shop_shipping_costs_for_group DESC limit 1');
-	
-		while($arr_group=webtsys_fetch_array($query))
-		{
-			
-			$discounts+=$arr_group['group_shop_discount'];
-			$transport_discount+=$arr_group['group_shop_transport_for_group'];
-			$taxes_discount+=$arr_group['group_shop_taxes_for_group'];
-			$payment_discount+=$arr_group['shipping_costs_for_group'];
-
-			//echo '<p>'.$arr_group['group_shop_name'].'</p>';
-		}*/
 		
 		$z=1;
 
@@ -194,110 +201,8 @@ default:
 <?php
 	break;
 
-	case 1:
-
-	//Check answered...
-	/*
-	$url_paypal='www.sandbox.paypal.com';
-
-	$model['order_shop']->components['name']->required=0;	
-	$model['order_shop']->components['last_name']->required=0;
-	$model['order_shop']->components['email']->required=0;
-	$model['order_shop']->components['address']->required=0;
-	$model['order_shop']->components['zip_code']->required=0;
-	$model['order_shop']->components['city']->required=0;
-	$model['order_shop']->components['country']->required=0;
-	$model['order_shop']->components['phone']->required=0;
-
-	$model['order_shop']->components['name_transport']->required=0;	
-	$model['order_shop']->components['last_name_transport']->required=0;
-	$model['order_shop']->components['address_transport']->required=0;
-	$model['order_shop']->components['zip_code_transport']->required=0;
-	$model['order_shop']->components['city_transport']->required=0;
-	$model['order_shop']->components['country_transport']->required=0;
-	$model['order_shop']->components['phone_transport']->required=0;
-
-
-	$model['order_shop']->components['token']->required=0;
-	$model['order_shop']->components['transport']->required=0;
-	$model['order_shop']->components['payment_form']->required=0;
-	$model['order_shop']->components['products_list']->required=0;
-
-	$query=$model['order_shop']->update(array('make_payment' => 1), 'where token="'.md5($_GET['webtsys_shop_payment']).'"');
-
-        $arr_mail=array();
-
-	foreach ($_POST as $key => $value)
-	{
-		$arr_mail[]=$key.'='.$value;
-	}
-	
-	mail($config_data['portal_email'], "Prueba Paypal", implode("\n\n", $arr_mail) );
-	ob_end_clean();
-	die;*/
-
-	/*
-	$req = 'cmd=_notify-validate';
-	$header='';
-
-	$header .= "POST /us/cgi-bin/webscr HTTP/1.0\r\n";
-	$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-	$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-	
-	$fp = fsockopen ($url_paypal, 80, $errno, $errstr, 30);
-	// Process validation from PayPal
-	if (!$fp) 
-	{ 
-		// HTTP ERROR
-
-		
-	} 
-	else 
-	{
-		// NO HTTP ERROR
-		fputs ($fp, $header . $req);
-		
-		while (!feof($fp)) 
-		{	
-			$res = fgets ($fp, 1024);
-			echo $res.'<p>';
-			if (strcmp ($res, "VERIFIED") == 0) 
-			{
-				
-				foreach ($_POST as $key => $value)
-				{
-					$emailtext .= $key . " = " .$value ."\n\n";
-					$arr_mail[$key]=$value;
-				}
-				
-				mail($email, "VALID IPN ".$res, $emailtext . "\n\n" . $req);
-
-				//setcookie ( "webtsys_shop_payment", FALSE, 0, $cookie_path);
-
-				
-
-				//die(header('Location: cart.php?op=1'));
-
-			}
-			if (strcmp ($res, "INVALID") == 0) 
-			{
-
-				foreach ($_POST as $key => $value)
-				{
-					$emailtext .= $key . " = " .$value ."\n\n";
-				}
-		
-				mail($email, "Live-INVALID IPN ".$res, $emailtext . "\n\n" . $req);
-
-			}
-
-		}
-
-	}*/
-
-	break;
 
 }
-
+*/
 ?>
 
