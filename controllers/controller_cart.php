@@ -26,7 +26,7 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function __construct()
 	{
 		
-		parent::__construct();
+		//parent::__construct();
 	
 		$this->login=new LoginClass('user_shop', 'email', 'password', 'token_client', $arr_user_session=array(), $arr_user_insert=array());
 		
@@ -61,7 +61,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		ob_end_clean();
 		
-		echo load_view(array($this->lang['shop']['cart'], $cont_index), 'home');
+		echo load_view(array(PhangoVar::$lang['shop']['cart'], $cont_index), 'home');
 	
 	}
 	
@@ -92,7 +92,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		//Redirect
 	
-		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
+		$this->redirect( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', array()), PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['press_here_redirecting']);
 	
 	}
 	
@@ -107,7 +107,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		$cart->sum_product_to_cart($_GET['IdCart_shop'], 0);
 	
-		$this->redirect( make_fancy_url($this->base_url, 'shop', 'cart', array()), $this->lang['common']['redirect'], $this->lang['common']['redirect'], $this->lang['common']['press_here_redirecting']);
+		$this->redirect( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', array()), PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['press_here_redirecting']);
 	
 	}
 	
@@ -149,7 +149,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 			
-		echo load_view(array($this->lang['shop']['cart'], $cont_index), 'home');
+		echo load_view(array(PhangoVar::$lang['shop']['cart'], $cont_index), 'home');
 	}
 	
 	public function save_address()
@@ -173,9 +173,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			if(PhangoVar::$model['user_shop']->update($_POST, 'where IdUser_shop='.$this->login->session['IdUser_shop']))
 			{
 			
-				$url_return=make_fancy_url($this->base_url, 'shop', 'cart_set_transport');
+				$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_set_transport');
 			
-				$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']	['press_here_redirecting']);
+				$this->redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']	['press_here_redirecting']);
 			
 			}
 			else
@@ -191,7 +191,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 			ob_end_clean();
 			
-			$this->load_theme($this->lang['shop']['cart'], $cont_index);
+			$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 			
 		}
 	
@@ -232,7 +232,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 		
-		echo load_view(array($this->lang['shop']['cart'], $cont_index,), 'home');
+		echo load_view(array(PhangoVar::$lang['shop']['cart'], $cont_index,), 'home');
 	
 	}
 	
@@ -256,7 +256,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 				ob_end_clean();
 			
-				$this->load_theme($this->lang['shop']['cart'], $cont_index);
+				$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 			
 			}
 			else
@@ -289,9 +289,9 @@ class CartSwitchClass extends ControllerSwitchClass
 				if(PhangoVar::$model['address_transport']->insert($_POST))
 				{
 				
-					$url_return=make_fancy_url($this->base_url, 'shop', 'cart_set_transport');
+					$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_set_transport');
 				
-					$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']	['press_here_redirecting']);
+					$this->redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']	['press_here_redirecting']);
 				
 				}
 				else
@@ -315,7 +315,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 			ob_end_clean();
 			
-			$this->load_theme($this->lang['shop']['cart'], $cont_index);
+			$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 			
 		}
 	
@@ -344,7 +344,7 @@ class CartSwitchClass extends ControllerSwitchClass
 					
 				ob_end_clean();
 				
-				$this->load_theme($this->lang['shop']['cart'], $cont_index);*/
+				$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);*/
 				
 				
 			
@@ -408,7 +408,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 			ob_end_clean();
 			
-			$this->load_theme($this->lang['shop']['cart'], $cont_index);
+			$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 			
 		}
 	
@@ -439,7 +439,7 @@ class CartSwitchClass extends ControllerSwitchClass
 					
 				ob_end_clean();
 				
-				$this->load_theme($this->lang['shop']['cart'], $cont_index);*/
+				$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);*/
 				
 				
 			
@@ -510,7 +510,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			else
 			{
 			
-				$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
+				$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
 			
 			}
 			
@@ -518,13 +518,13 @@ class CartSwitchClass extends ControllerSwitchClass
 						
 			ob_end_clean();
 			
-			$this->load_theme($this->lang['shop']['cart'], $cont_index);
+			$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 	
 		}
 		else
 		{
 		
-			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
+			$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
 		
 		}
 	
@@ -578,7 +578,7 @@ class CartSwitchClass extends ControllerSwitchClass
 						else
 						{
 
-							$price=$this->lang['shop']['mode_payment_free_charge'];
+							$price=PhangoVar::$lang['shop']['mode_payment_free_charge'];
 
 						}
 
@@ -606,7 +606,7 @@ class CartSwitchClass extends ControllerSwitchClass
 					else
 					{
 					
-						$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
+						$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
 					
 					}
 				
@@ -618,13 +618,13 @@ class CartSwitchClass extends ControllerSwitchClass
 							
 				ob_end_clean();
 				
-				$this->load_theme($this->lang['shop']['cart'], $cont_index);
+				$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 			}
 		}
 		else
 		{
 		
-			$this->simple_redirect(make_fancy_url($this->base_url, 'shop', 'cart'));
+			$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
 		
 		}
 	
@@ -644,9 +644,9 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 			load_libraries(array('redirect'));
 			
-			$url_return=make_fancy_url($this->base_url, 'shop', 'cart_get_address');
+			$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_get_address');
 			
-			$this->redirect($url_return, $this->lang['common']['redirect'], $this->lang['common']['success'], $this->lang['common']['press_here_redirecting']);
+			$this->redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']);
 			
 			//simple_redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'], $content_view='content');
 		
@@ -662,7 +662,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 			ob_end_clean();
 			
-			$this->load_theme($this->lang['shop']['cart'], $cont_index);
+			$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 		
 		}
 	
@@ -679,7 +679,7 @@ class CartSwitchClass extends ControllerSwitchClass
 			
 		ob_end_clean();
 		
-		$this->load_theme($this->lang['shop']['cart'], $cont_index);
+		$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 	
 	}
 	
@@ -694,7 +694,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		ob_end_clean();
 		
-		$this->load_theme($this->lang['shop']['cart'], $cont_index);
+		$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 	
 	}
 	
@@ -711,7 +711,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		ob_end_clean();
 		
-		$this->load_theme($this->lang['shop']['cart'], $cont_index);
+		$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 	
 	}
 

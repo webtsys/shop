@@ -1,5 +1,41 @@
 <?php
 
+PhangoVar::$lang['shop']['cart']='Carrito';
+
+PhangoVar::$lang['shop']['no_stock']='Sin stock';
+
+PhangoVar::$lang['shop']['in_stock']='En stock';
+
+PhangoVar::$lang['shop']['served_on_request']='Servido bajo pedido';
+
+PhangoVar::$lang['shop']['special_offer']='Oferta especial';
+
+PhangoVar::$lang['shop']['free_product']='Gratuito';
+
+PhangoVar::$lang['shop']['weight']='Peso';
+
+PhangoVar::$lang['shop']['kg']='Kg';
+
+PhangoVar::$lang['shop']['buy_product']='Comprar producto';
+
+PhangoVar::$lang['shop']['buying_product']='Comprando producto';
+
+PhangoVar::$lang['shop']['success_buy']='Se añadio este producto al carrito de la compra';
+
+PhangoVar::$lang['shop']['select_category_shop']='Seleccionar categoría';
+
+PhangoVar::$lang['shop']['choose_category']='Elegir categoría';
+
+PhangoVar::$lang['shop']['offer']='Oferta';
+
+PhangoVar::$lang['shop']['pvp']='PVP';
+
+PhangoVar::$lang['shop']['weight_in_kg']='Peso en kilogramos';
+
+PhangoVar::$lang['shop']['see_product']='Ver detalles';
+
+PhangoVar::$lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
+
 PhangoVar::$lang['shop']['config_shop']='Configuración de su tienda';
 
 PhangoVar::$lang['shop']['products_categories']='Categorías de productos';
@@ -70,8 +106,6 @@ PhangoVar::$lang['shop']['no_category_defined']='Categoría sin definir';
 
 PhangoVar::$lang['shop']['edit_products_from_category']='Editar productos de la categoría';
 
-PhangoVar::$lang['shop']['choose_category']='Elegir categoría';
-
 PhangoVar::$lang['shop']['referer']='Referencia';
 
 PhangoVar::$lang['shop']['description_short']='Descripción breve del producto, útil para listados';
@@ -80,15 +114,11 @@ PhangoVar::$lang['shop']['idcat']='Categoría de tienda';
 
 PhangoVar::$lang['shop']['price']='Precio';
 
-PhangoVar::$lang['shop']['special_offer']='Oferta especial';
-
 PhangoVar::$lang['shop']['stock']='Stock';
 
 PhangoVar::$lang['shop']['about_order']='Bajo pedido';
 
 PhangoVar::$lang['shop']['extra_options']='Opciones extra';
-
-PhangoVar::$lang['shop']['weight']='Peso';
 
 PhangoVar::$lang['shop']['num_sold']='Número de veces vendido';
 
@@ -232,43 +262,13 @@ PhangoVar::$lang['shop']['obtain_bill']='Obtener factura';
 
 PhangoVar::$lang['shop']['edit_plugin_external']='Editar plugin externo';
 
-PhangoVar::$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
-
-PhangoVar::$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
-
-PhangoVar::$lang['shop']['observations']='Observaciones';
-
-PhangoVar::$lang['shop']['invoice_num']='Número de factura';
-
-PhangoVar::$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
-
-PhangoVar::$lang['shop']['admin_external_plugin']='Administrar plugin externo';
-
-PhangoVar::$lang['shop']['new_products']='Nuevos productos';
-
-PhangoVar::$lang['shop']['listing']='Listados';
-
-PhangoVar::$lang['shop']['bestsellers']='Más vendidos';
-
-PhangoVar::$lang['shop']['empty_cart']='Carro vacio';
-
-PhangoVar::$lang['shop']['buy']='Comprar';
-
-PhangoVar::$lang['shop']['name_enterprise']='Nombre de empresa';
-
-PhangoVar::$lang['shop']['go_back_cart']='Regresar a carro';
-
-PhangoVar::$lang['shop']['product_options']='Opciones de producto';
-
-PhangoVar::$lang['shop']['shopping_cart']='Carro de la compra';
-
-PhangoVar::$lang['shop']['no_stock']='Sin stock';
-
-PhangoVar::$lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
-
 PhangoVar::$lang['shop']['cannot_add_more_address']='cannot_add_more_address';
 
-PhangoVar::$lang['shop']['cart']='Carrito';
+PhangoVar::$lang['shop']['mode_payment_free_charge']='Modo de pago libre de cargo';
+
+PhangoVar::$lang['shop']['your_orders']='Su pedido';
+
+PhangoVar::$lang['shop']['order_success_cart_clean']='<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>';
 
 PhangoVar::$lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
 
@@ -285,8 +285,6 @@ PhangoVar::$lang['shop']['choose_more_options']='Elegir más opciones';
 PhangoVar::$lang['shop']['explain_payment_type_transport_type']='Por favor, elija el medio de pago para terminar la transacción';
 
 PhangoVar::$lang['shop']['payment_type']='Tipo de pago';
-
-PhangoVar::$lang['shop']['mode_payment_free_charge']='Modo de pago libre de cargo';
 
 PhangoVar::$lang['shop']['error_in_country_no_exists_transport']='Lo sentimos, pero no hay medio de transporte para este país en estos momentos';
 
@@ -332,8 +330,6 @@ PhangoVar::$lang['shop']['order_products_options']='Opciones del pedido de produ
 
 PhangoVar::$lang['shop']['order_without_options']='Pedido sin opciones';
 
-PhangoVar::$lang['shop']['your_orders']='Su pedido';
-
 PhangoVar::$lang['shop']['explain_petition']='En este email, le adjuntamos los datos de su pedido. Por favor, guárdelo por si necesita hacer algún tipo de reclamación sobre este.';
 
 PhangoVar::$lang['shop']['if_error_send_email_to']='Si hubo algún error, por favor, envíenos un email a esta dirección';
@@ -350,15 +346,17 @@ PhangoVar::$lang['shop']['error_cannot_send_email']='Error: no puedo enviar el e
 
 PhangoVar::$lang['shop']['use_this_id_for_contact_with_us']='Este es su número de pedido, especifíquelo en el email que nos envíe.';
 
-PhangoVar::$lang['shop']['order_success_cart_clean']='<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>';
-
 PhangoVar::$lang['shop']['cancelling_order']='Cancelando pedido';
+
+PhangoVar::$lang['shop']['empty_cart']='Carro vacio';
 
 PhangoVar::$lang['shop']['modify_options']='Opciones de modificación';
 
 PhangoVar::$lang['shop']['cart_empty']='Carrito vacio';
 
 PhangoVar::$lang['shop']['total_price_with_all_payments_and_discounts']='Precio total despues de impuestos y descuentos';
+
+PhangoVar::$lang['shop']['buy']='Comprar';
 
 PhangoVar::$lang['shop']['make_order']='Hacer pedido';
 
@@ -369,6 +367,8 @@ PhangoVar::$lang['shop']['country_others']='country_others';
 PhangoVar::$lang['shop']['send_address_equal_shopping_address']='¿Dirección de envío igual a dirección de facturación?';
 
 PhangoVar::$lang['shop']['register_user_if_not_register']='Se le creará un usuario, ya que usted no está registrado.';
+
+PhangoVar::$lang['shop']['observations']='Observaciones';
 
 PhangoVar::$lang['shop']['observations_text']='Observaciones';
 
@@ -400,71 +400,15 @@ PhangoVar::$lang['shop']['all_products']='Todos los productos';
 
 PhangoVar::$lang['shop']['desc_all_products']='Aquí encontrará un listado de todos los productos';
 
-PhangoVar::$lang['shop']['offer']='Oferta';
-
-PhangoVar::$lang['shop']['free_product']='Gratuito';
-
-PhangoVar::$lang['shop']['no_exists_product']='No existe este producto';
-
-PhangoVar::$lang['shop']['this_product_is_not_found']='No se encuentra este producto';
-
-PhangoVar::$lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
-
-PhangoVar::$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
-
-PhangoVar::$lang['shop']['success_buy']='Se añadio este producto al carrito de la compra';
-
 PhangoVar::$lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
-
-PhangoVar::$lang['shop']['included']='Incluido';
-
-PhangoVar::$lang['shop']['total_price_with_taxes']='Precio total con impuestos';
-
-PhangoVar::$lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='El país seleccionado es diferente al país donde se aplican impuestos por defecto. No hay impuestos añadidos';
-
-PhangoVar::$lang['shop']['price_with_taxes']='Precio con impuestos';
-
-PhangoVar::$lang['shop']['taxes_no_included']='Impuestos no incluidos';
 
 PhangoVar::$lang['shop']['cancel_checkout_success']='Se ha producido un error y hemos cancelado su pago, por favor, póngase en contacto con nosotros';
 
 PhangoVar::$lang['shop']['no_cancel_checkout_success']='Se produjo un error al registrar su pedido, pero no se ha podido guardar el pago, por favor, envíenos la referencia dada en el modo de pago. En caso de contrareembolso, no se preocupe, simplemente infórmenos del fallo para poder subsanarlo';
 
-PhangoVar::$lang['shop']['choose_cat']='Elegir categoría';
-
-PhangoVar::$lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
-
-PhangoVar::$lang['shop']['apply_discounts']='Aplicar descuentos';
-
-PhangoVar::$lang['shop']['buy_product_units']='Unidades';
-
-PhangoVar::$lang['shop']['warning_products_with_options']='Cuidado: se han detectado varios productos que tienen opciones para elegir. En este modo usted no puede especificar opciones para sus productos.';
-
 PhangoVar::$lang['shop']['num_order']='Número de pedido';
 
 PhangoVar::$lang['shop']['no_products_in_index']='No hay productos para mostrar';
-
-PhangoVar::$lang['shop']['in_stock']='En stock';
-
-PhangoVar::$lang['shop']['served_on_request']='Servido bajo pedido';
-
-PhangoVar::$lang['shop']['pvp']='PVP';
-
-PhangoVar::$lang['shop']['kg']='Kg';
-
-PhangoVar::$lang['shop']['buy_product']='Comprar producto';
-
-PhangoVar::$lang['shop']['buying_product']='Comprando producto';
-
-PhangoVar::$lang['shop']['weight_in_kg']='Peso en kilogramos';
-
-PhangoVar::$lang['shop']['see_product']='Ver detalles';
-
-PhangoVar::$lang['shop']['select_category_shop']='Seleccionar categoría';
-
-PhangoVar::$lang['shop']['no_products_in_category']='Todavía no hay ningún producto en esta categoría';
-
-PhangoVar::$lang['shop']['see_products']='Ver productos';
 
 PhangoVar::$lang['shop']['payment_form']='Forma de pago';
 
@@ -479,6 +423,66 @@ PhangoVar::$lang['shop']['explain_address_transport']='Por favor, elija la direc
 PhangoVar::$lang['shop']['no_exists_address']='no_exists_address';
 
 PhangoVar::$lang['shop']['add_new_address']='add_new_address';
+
+PhangoVar::$lang['shop']['final_order']='Pedido final';
+
+PhangoVar::$lang['shop']['shopping_list']='Lista de la compra';
+
+PhangoVar::$lang['shop']['error_other_countries_is_selected']='Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona';
+
+PhangoVar::$lang['shop']['product_is_already_on_category']='Este producto está realmente en la categoría';
+
+PhangoVar::$lang['shop']['invoice_num']='Número de factura';
+
+PhangoVar::$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+
+PhangoVar::$lang['shop']['admin_external_plugin']='Administrar plugin externo';
+
+PhangoVar::$lang['shop']['new_products']='Nuevos productos';
+
+PhangoVar::$lang['shop']['listing']='Listados';
+
+PhangoVar::$lang['shop']['bestsellers']='Más vendidos';
+
+PhangoVar::$lang['shop']['name_enterprise']='Nombre de empresa';
+
+PhangoVar::$lang['shop']['go_back_cart']='Regresar a carro';
+
+PhangoVar::$lang['shop']['product_options']='Opciones de producto';
+
+PhangoVar::$lang['shop']['shopping_cart']='Carro de la compra';
+
+PhangoVar::$lang['shop']['no_stock_for_this_article']='No hay stock para este producto';
+
+PhangoVar::$lang['shop']['no_exists_product']='No existe este producto';
+
+PhangoVar::$lang['shop']['this_product_is_not_found']='No se encuentra este producto';
+
+PhangoVar::$lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
+
+PhangoVar::$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
+
+PhangoVar::$lang['shop']['included']='Incluido';
+
+PhangoVar::$lang['shop']['total_price_with_taxes']='Precio total con impuestos';
+
+PhangoVar::$lang['shop']['the_country_selected_is_different_to_default_dont_have_taxes']='El país seleccionado es diferente al país donde se aplican impuestos por defecto. No hay impuestos añadidos';
+
+PhangoVar::$lang['shop']['price_with_taxes']='Precio con impuestos';
+
+PhangoVar::$lang['shop']['taxes_no_included']='Impuestos no incluidos';
+
+PhangoVar::$lang['shop']['choose_cat']='Elegir categoría';
+
+PhangoVar::$lang['shop']['go_products_to_cart']='Terminar pedido e ir a carro';
+
+PhangoVar::$lang['shop']['apply_discounts']='Aplicar descuentos';
+
+PhangoVar::$lang['shop']['buy_product_units']='Unidades';
+
+PhangoVar::$lang['shop']['warning_products_with_options']='Cuidado: se han detectado varios productos que tienen opciones para elegir. En este modo usted no puede especificar opciones para sus productos.';
+
+PhangoVar::$lang['shop']['see_products']='Ver productos';
 
 PhangoVar::$lang['shop']['see_more']='Ver más';
 
@@ -503,10 +507,6 @@ PhangoVar::$lang['shop']['no_in_discount_group']='Usted aún no está en un grup
 PhangoVar::$lang['shop']['dir_transport']='Dirección de envio';
 
 PhangoVar::$lang['shop']['no_dir_transport_for_now']='Usted todavía no tiene ninguna dirección de envio. Por favor, haga su primer pedido para así tenerla.';
-
-PhangoVar::$lang['shop']['final_order']='Pedido final';
-
-PhangoVar::$lang['shop']['shopping_list']='Lista de la compra';
 
 PhangoVar::$lang['shop']['need_minimum_an_option']='No ha elegido alguna de las opciones obligatorias';
 
