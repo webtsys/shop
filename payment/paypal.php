@@ -32,7 +32,7 @@ class PaypalPaymentClass extends PaymentClass
 					<input type="hidden" name="cmd" value="_cart">
 					<input type="hidden" name="business" value="<?php echo EMAIL_PAYPAL_SHOP; ?>">
 					<input type="hidden" name="notify_url" value="<?php echo make_direct_url(PhangoVar::$base_url, 'shop', 'paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'])); ?>">
-					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout', array(), array('op' => 1)); ?>">
+					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout', array(), array('op' => 1, 'op_pay' => 1)); ?>">
 					<!--<input type="hidden" name="quantity" value="1">-->
 					<?php
 					
@@ -101,8 +101,22 @@ class PaypalPaymentClass extends PaymentClass
 				case 1:
 				
 					//Here check that the payment was done.
+					//Check payment
+					
+					$c=PhangoVar::$model['paypal_check']->select_count('where cookie_shop="'.sha1($_COOKIE['webtsys_shop']).'"');
+					
+					if($c>0)
+					{
 				
-					return 'done';
+						return 'done';
+						
+					}
+					else
+					{
+					
+						return 1;
+					
+					}
 				
 				break;
 			

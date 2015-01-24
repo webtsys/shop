@@ -1334,6 +1334,8 @@ PhangoVar::$model['paypal_check']=new Webmodel('paypal_check');
 PhangoVar::$model['paypal_check']->set_component('cookie_shop', 'CharField', array(255), 1);
 PhangoVar::$model['paypal_check']->set_component('ckeck', 'BooleanField', array());
 
+//Moneyfield
+
 class MoneyField extends DoubleField{
 
 

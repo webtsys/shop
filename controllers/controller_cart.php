@@ -592,8 +592,17 @@ class CartSwitchClass extends ControllerSwitchClass
 				break;
 				
 				case 1:
-				
+					
 					settype($_POST['payment_form'], 'integer');
+					
+					$_SESSION['payment_form']=$_POST['payment_form'];
+					
+					if(!isset($_POST['payment_form']) && isset($_SESSION['payment_form']))
+					{
+					
+						$_POST['payment_form']=$_SESSION['payment_form'];
+					
+					}
 					
 					$cart=new CartClass();
 					
