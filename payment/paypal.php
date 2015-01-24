@@ -1,14 +1,120 @@
 <?php
 
-class OnDeliveryPaymentClass extends PaymentClass
+load_libraries(array('config_shop', 'class_cart'));
+
+class PaypalPaymentClass extends PaymentClass
 {
 
 	public function checkout()
 	{
 	
-		
+		$cart=new CartClass();
 	
-		return 'done';
+		settype($_GET['op_pay'], 'integer');
+		
+		if(EMAIL_PAYPAL_SHOP && URL_PAYPAL_SHOP)
+		{
+			
+			switch($_GET['op_pay'])
+			{
+				default:
+				
+					?>
+					<p><strong><?php echo PhangoVar::$lang['shop']['paypal_explain']; ?></strong></p>
+					<?php
+
+					/*$query=PhangoVar::$model['config_shop']->select('', array('yes_transport'));
+
+					list($yes_transport)=webtsys_fetch_row($query);*/
+					
+					?>
+					<form action="<?php echo URL_PAYPAL_SHOP; ?>" method="post">
+					<input type="hidden" name="cmd" value="_cart">
+					<input type="hidden" name="business" value="<?php echo EMAIL_PAYPAL_SHOP; ?>">
+					<input type="hidden" name="notify_url" value="<?php echo make_direct_url(PhangoVar::$base_url, 'shop', 'paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'])); ?>">
+					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout', array(), array('op' => 1)); ?>">
+					<!--<input type="hidden" name="quantity" value="1">-->
+					<?php
+					
+					$arr_products=PhangoVar::$model['cart_shop']->select_to_array('where token="'.sha1($_COOKIE['webtsys_shop']).'"');
+					
+					$total_weight=0;
+					
+					$total_price=0;
+					
+					$z=1;
+					
+					foreach($arr_products as $idcart_shop => $arr_cart_shop)
+					{
+					
+					$idproduct=$arr_cart_shop['idproduct'];
+					
+					$price_total=MoneyField::currency_format($arr_cart_shop['price_product']*$arr_cart_shop['units'], 0);
+					
+					?>
+					
+					<input type="hidden" name="item_name_<?php echo $z; ?>" value="<?php echo $arr_cart_shop['units']; ?> x <?php echo PhangoVar::$model['product']->components['title']->show_formatted($arr_cart_shop['product_title']); ?>">
+					<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo $price_total; ?>">
+					<input type="hidden" name="quantity_<?php echo $z; ?>" value="1">
+					<?php
+					
+					$total_weight+=$arr_cart_shop['weight'];
+					
+					$total_price+=$price_total;
+					
+					$z++;
+					
+					}
+					
+					if(ConfigShop::$config_shop['no_transport']==0)
+					{
+
+						list($price_total_transport, $num_packs)=$cart->obtain_transport_price($total_weight, $total_price, $_SESSION['idtransport']);
+
+						?>
+						<input type="hidden" name="item_name_<?php echo $z; ?>" value="Transporte">
+						<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo $price_total_transport; ?>">
+						<?php
+						$z++;
+
+					}
+					
+					?>
+
+						<input type="hidden" name="custom" value="merchant_custom_value">
+						<!--<input type="hidden" name="invoice" value="merchant_invoice_12345">-->
+						<input type="hidden" name="charset" value="utf-8">
+						<input type="hidden" name="no_shipping" value="1">
+						<input type="hidden" name="cancel_return" value="<?php //echo make_fancy_url($base_url, 'shop', 'cart', 'cancel_payment', array() ); ?>/shop/cart.php">
+						<input type="hidden" name="no_note" value="0">
+						<input type="hidden" name="upload" value="1">
+						<input type="hidden" name="currency_code" value="EUR">
+						<input type="submit" value="<?php echo PhangoVar::$lang['shop']['checkout_order']; ?>" />
+						</form>
+
+					<?php
+					
+					return 5;
+				
+				break;
+			
+				case 1:
+				
+					//Here check that the payment was done.
+				
+					return 'done';
+				
+				break;
+			
+			}
+			
+		}
+		else
+		{
+			echo '<p><strong>'.PhangoVar::$lang['shop']['paypal_email_variable_no_isset'].'</strong></p>';
+
+			return 0;
+		}
 	}
 	
 	public function cancel_checkout()

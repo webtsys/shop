@@ -68,7 +68,7 @@ class CartSwitchClass extends ControllerSwitchClass
 	public function update()
 	{
 	
-		load_libraries(array('class_cart'), $this->base_path.'modules/shop/libraries/');
+		load_libraries(array('class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
 	
 		//print_r($_POST);
 		
@@ -599,6 +599,8 @@ class CartSwitchClass extends ControllerSwitchClass
 					
 					if($cart->num_items_cart()>0)
 					{
+					
+						//The payment gateway
 					
 						$cart->payment_gateway($this->login->session['IdUser_shop'], $_POST['payment_form']);
 				

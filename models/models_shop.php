@@ -1327,6 +1327,13 @@ PhangoVar::$model['product_attachments']->components['file']->required=1;
 PhangoVar::$model['product_attachments']->components['idproduct']=new ForeignKeyField('product', 11);
 PhangoVar::$model['product_attachments']->components['idproduct']->required=1;
 
+//Paypal
+
+PhangoVar::$model['paypal_check']=new Webmodel('paypal_check');
+
+PhangoVar::$model['paypal_check']->set_component('cookie_shop', 'CharField', array(255), 1);
+PhangoVar::$model['paypal_check']->set_component('ckeck', 'BooleanField', array());
+
 class MoneyField extends DoubleField{
 
 

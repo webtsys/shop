@@ -484,7 +484,7 @@ class CartClass {
 						
 						$post['IdOrder_shop']=PhangoVar::$model['order_shop']->insert_id();
 						
-						$this->send_mail_order($post, $arr_address, $arr_address_transport);
+						$this->send_mail_order($post, $arr_address, $arr_address_transport, $iduser_shop);
 						
 						$this->clean_cart();
 						
@@ -676,7 +676,7 @@ class CartClass {
 	
 	}
 	
-	public function send_mail_order($arr_order_shop, $arr_address, $arr_address_transport)
+	public function send_mail_order($arr_order_shop, $arr_address, $arr_address_transport, $iduser_shop)
 	{
 	
 		load_libraries(array('utilities/set_admin_link', 'send_email'));
@@ -687,7 +687,7 @@ class CartClass {
 		
 		//Prepare email
 		
-		$arr_user=PhangoVar::$model['user_shop']->select_a_row($_SESSION['IdUser_shop'], array('email'));
+		$arr_user=PhangoVar::$model['user_shop']->select_a_row($iduser_shop, array('email'));
 		
 		//$num_order=order_shop::calculate_num_bill($arr_order_shop['IdOrder_shop']);
 
