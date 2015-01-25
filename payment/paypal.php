@@ -5,10 +5,8 @@ load_libraries(array('config_shop', 'class_cart'));
 class PaypalPaymentClass extends PaymentClass
 {
 
-	public function checkout()
+	public function checkout($cart)
 	{
-	
-		$cart=new CartClass();
 	
 		settype($_GET['op_pay'], 'integer');
 		
@@ -32,7 +30,7 @@ class PaypalPaymentClass extends PaymentClass
 					<input type="hidden" name="cmd" value="_cart">
 					<input type="hidden" name="business" value="<?php echo EMAIL_PAYPAL_SHOP; ?>">
 					<input type="hidden" name="notify_url" value="<?php echo make_direct_url(PhangoVar::$base_url, 'shop', 'paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'])); ?>">
-					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout', array(), array('op' => 1, 'op_pay' => 1)); ?>">
+					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished', array(), array()); ?>">
 					<!--<input type="hidden" name="quantity" value="1">-->
 					<?php
 					

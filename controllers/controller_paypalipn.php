@@ -43,7 +43,7 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 		if($result=='VERIFIED' && ($_POST['payment_status']=='Completed' || $_POST['payment_status']=='Pending') )
 		{
 
-			PhangoVar::$model['paypal_check']->insert(array('cookie_shop' => $cookie_shop, 'check' => 1));
+			PhangoVar::$model['order_shop']->update(array('payment_done' => 1), 'where token="'.$cookie_shop.'"');
 
 			$db_res='Orden:'.$num_order;
 

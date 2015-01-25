@@ -388,10 +388,125 @@ class CartClass {
 	
 	}
 	
+	public function check_order()
+	{
+	
+		$arr_order=PhangoVar::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
+		
+		settype($arr_order['IdOrder_shop'], 'integer');
+		
+		if($arr_order['IdOrder_shop']!=0)
+		{
+		
+			if($arr_order['payment_done']==1)
+			{
+			
+				$this->clean_cart();
+				
+				simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+			
+			}
+			
+			return true;
+		
+		}
+		else
+		{
+		
+			return false;
+		
+		}
+	
+		/*if(PhangoVar::$model['order_shop']->select_count('where token="'.$this->token.'" and payment_done=0'))
+		{
+		
+			return true;
+		
+		}*/
+		
+		
+		
+	
+	}
+	
+	public function create_order_shop($iduser_shop)
+	{
+	
+		$post['token']=$this->token;
+					
+		PhangoVar::$model['user_shop']->components['country']->name_field_to_field='name';
+		PhangoVar::$model['user_shop']->components['country']->fields_related_model=array('name');
+		
+		PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field='name';
+		PhangoVar::$model['address_transport']->components['country_transport']->fields_related_model=array('name');
+		
+		ConfigShop::$arr_fields_address[]='email';
+		
+		$arr_address=PhangoVar::$model['user_shop']->select_a_row($iduser_shop, ConfigShop::$arr_fields_address);
+		
+		$arr_address['country']=unserialize($arr_address['country']);
+		
+		if(ConfigShop::$config_shop['no_transport']==0)
+		{
+		
+			settype($_SESSION['idaddress'], 'integer');
+		
+			$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
+		
+			$arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
+		
+			$arr_transport=PhangoVar::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+			
+			$post['transport']=$arr_transport['name'];
+	
+		}
+		
+		$post=array_merge($post, $arr_address, $arr_address_transport);
+		
+		/*$post['name_payment']=$arr_payment['name'];
+		
+		$post['make_payment']=1;*/
+		
+		$post['date_order']=DateTimeNow::$today;
+		
+		$post['iduser']=$iduser_shop;
+		
+		list($num_product, $total_price_product, $total_weight_product)=$this->obtain_simple_cart();
+		
+		$post['total_price']=$total_price_product;
+		
+		list($total_price_transport, $num_packs, $name)=$this->obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
+		
+		$post['price_transport']=$total_price_transport;
+		
+		//$post['price_payment']=$arr_payment['price_payment'];
+		
+		$method='insert';
+		
+		if($this->check_order())
+		{
+		
+			$method='update';
+		
+		}
+		
+		if(!PhangoVar::$model['order_shop']->$method($post, 'where token="'.$this->token.'"'))
+		{
+			
+			echo PhangoVar::$model['order_shop']->std_error;
+			return false;
+		
+		}
+		
+		return true;
+		
+	}
+	
 	public function payment_gateway($iduser_shop, $idpayment)
 	{
-		
-		$cart=new CartClass();
+	
+		settype($_GET['op_payment'], 'integer');
+		//$cart=new CartClass();
 	
 		//Here define the payment and notify that the product was paid. Also fill order_shop and delete cart.
 		
@@ -412,90 +527,21 @@ class CartClass {
 			{
 			
 				$name_class=str_replace('.php', '', $arr_payment['code']).'PaymentClass';
-				
-				$payment_class=new $name_class($cart);
-				
-				$set_checkout=$payment_class->checkout($this);
-				
-				if($set_checkout==='done')
+						
+				$payment_class=new $name_class($this);
+			
+				/*switch($_GET['op_payment'])
 				{
-					$post['token']=$this->token;
-					
-					PhangoVar::$model['user_shop']->components['country']->name_field_to_field='name';
-					PhangoVar::$model['user_shop']->components['country']->fields_related_model=array('name');
-					
-					PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field='name';
-					PhangoVar::$model['address_transport']->components['country_transport']->fields_related_model=array('name');
-					
-					ConfigShop::$arr_fields_address[]='email';
-					
-					$arr_address=PhangoVar::$model['user_shop']->select_a_row($iduser_shop, ConfigShop::$arr_fields_address);
-					
-					$arr_address['country']=unserialize($arr_address['country']);
-					
-					if(ConfigShop::$config_shop['no_transport']==0)
-					{
-					
-						settype($_SESSION['idaddress'], 'integer');
-					
-						$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
-					
-						$arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
-					
-						$arr_transport=PhangoVar::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
-						
-						$post['transport']=$arr_transport['name'];
 				
-					}
-					
-					$post=array_merge($post, $arr_address, $arr_address_transport);
-					
-					$post['name_payment']=$arr_payment['name'];
-					
-					$post['make_payment']=1;
-					
-					$post['date_order']=DateTimeNow::$today;
-					
-					$post['iduser']=$iduser_shop;
-					
-					list($num_product, $total_price_product, $total_weight_product)=$this->obtain_simple_cart();
-					
-					$post['total_price']=$total_price_product;
-					
-					list($total_price_transport, $num_packs, $name)=$this->obtain_transport_price($total_weight_product, $total_price_product, $_SESSION['idtransport']);
-					
-					$post['price_transport']=$total_price_transport;
-					
-					$post['price_payment']=$arr_payment['price_payment'];
-					
-					if(PhangoVar::$model['order_shop']->insert($post))
-					{
-					
-						foreach($this->plugins->arr_plugin_list as $plugin)
-						{
+					default:*/
 						
-							//Pass the filter of the plugin
-						
-							$this->arr_plugins[$plugin]->insert_price_to_order_shop($this);
-						
-						}
-						
-						//Send emails...
-						
-						$post['IdOrder_shop']=PhangoVar::$model['order_shop']->insert_id();
-						
-						$this->send_mail_order($post, $arr_address, $arr_address_transport, $iduser_shop);
-						
-						$this->clean_cart();
-						
-						//echo PhangoVar::$lang['shop']['order_success_cart_clean'];
-						
-						simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+						$payment_class->checkout($this);
 					
-					}
-					else
-					{
+					/*break;
 					
+					case 1:
+					
+						//If no payment
 						echo '<p>'.PhangoVar::$model['order_shop']->std_error.'</p>';
 					
 						if($payment_class->cancel_checkout())
@@ -511,18 +557,27 @@ class CartClass {
 						
 						}
 					
-					}
-				}
-				else if($set_checkout==0)
-				{
-				
-					echo PhangoVar::$lang['shop']['no_cancel_checkout_success'];
-				
-				}
+					break;*/
+					
+				//}
 			
 			}
 	
 		}
+	
+	}
+	
+	public function finish()
+	{
+	
+	
+		$this->send_mail_order();
+		
+		$this->clean_cart();
+			
+		simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+						
+		
 	
 	}
 	
@@ -676,8 +731,18 @@ class CartClass {
 	
 	}
 	
-	public function send_mail_order($arr_order_shop, $arr_address, $arr_address_transport, $iduser_shop)
+	public function send_mail_order()
 	{
+	
+		$arr_order_shop=PhangoVar::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
+	
+		#$arr_address=PhangoVar::$model['order_shop']->select_a_row($);
+		
+		$arr_address=$arr_order_shop;
+		
+		$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress']);
+	
+		//$arr_order_shop, $arr_address, $arr_address_transport, $iduser_shop
 	
 		load_libraries(array('utilities/set_admin_link', 'send_email'));
 		
@@ -687,7 +752,7 @@ class CartClass {
 		
 		//Prepare email
 		
-		$arr_user=PhangoVar::$model['user_shop']->select_a_row($iduser_shop, array('email'));
+		$arr_user=PhangoVar::$model['user_shop']->select_a_row($arr_address['iduser'], array('email'));
 		
 		//$num_order=order_shop::calculate_num_bill($arr_order_shop['IdOrder_shop']);
 

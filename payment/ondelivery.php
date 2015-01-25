@@ -35,9 +35,33 @@ die(header('Location: '.make_fancy_url($base_url, 'shop', 'cart', 'payment_done'
 class OnDeliveryPaymentClass extends PaymentClass
 {
 
-	public function checkout()
+	public function checkout($cart)
 	{
-		return 'done';
+		//Update payment_done
+		
+		PhangoVar::$model['order_shop']->reset_require();
+		
+		//print_r($_SESSION);
+		
+		if(PhangoVar::$model['order_shop']->update(array('payment_done' => 1), 'where token="'.$cart->token.'"'))
+		{
+			
+
+			$cart->send_mail_order();
+			
+			$cart->clean_cart();
+				
+			simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+			
+			
+		}
+		else
+		{
+		
+			//echo load_view(array('
+		
+		}
+		
 	}
 	
 	public function cancel_checkout()

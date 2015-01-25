@@ -930,11 +930,13 @@ PhangoVar::$model['order_shop']->components['price_transport']=new MoneyField();
 PhangoVar::$model['order_shop']->components['name_payment']=new CharField(255);
 PhangoVar::$model['order_shop']->components['price_payment']=new MoneyField();
 
-PhangoVar::$model['order_shop']->components['make_payment']=new BooleanField();
+PhangoVar::$model['order_shop']->components['payment_done']=new BooleanField();
 
 PhangoVar::$model['order_shop']->components['observations']=new TextHTMLField();
 
 PhangoVar::$model['order_shop']->components['date_order']=new DateField();
+
+PhangoVar::$model['order_shop']->set_component('iduser', 'ForeignKeyField', array('user_shop'), 1);
 
 //PhangoVar::$model['order_shop']->components['iduser']=new ForeignKeyField('user_shop');
 
@@ -968,7 +970,7 @@ PhangoVar::$model['order_shop']->components['phone_transport']->required=1;
 
 PhangoVar::$model['order_shop']->components['token']->required=1;
 PhangoVar::$model['order_shop']->components['transport']->required=1;
-PhangoVar::$model['order_shop']->components['name_payment']->required=1;
+//PhangoVar::$model['order_shop']->components['name_payment']->required=1;
 PhangoVar::$model['order_shop']->components['price_payment']->required=0;
 
 PhangoVar::$model['order_shop']->create_form();
@@ -997,7 +999,7 @@ PhangoVar::$model['order_shop']->forms['country_transport']->label=PhangoVar::$l
 PhangoVar::$model['order_shop']->forms['phone_transport']->label=PhangoVar::$lang['common']['phone'];
 //PhangoVar::$model['order_shop']->forms['zone_transport']->label=PhangoVar::$lang['shop']['zone'];
 PhangoVar::$model['order_shop']->forms['transport']->label=PhangoVar::$lang['shop']['transport'];
-PhangoVar::$model['order_shop']->forms['make_payment']->label=PhangoVar::$lang['shop']['make_payment'];
+PhangoVar::$model['order_shop']->forms['payment_done']->label=PhangoVar::$lang['shop']['make_payment'];
 PhangoVar::$model['order_shop']->forms['observations']->label=PhangoVar::$lang['shop']['observations'];
 PhangoVar::$model['order_shop']->forms['date_order']->label=PhangoVar::$lang['common']['date'];
 //PhangoVar::$model['order_shop']->forms['invoice_num']->label=PhangoVar::$lang['shop']['invoice_num'];
@@ -1561,16 +1563,16 @@ class ConfigShop {
 
 class PaymentClass {
 
-	public $cart;
+	//public $cart;
 
 	function __construct()
 	{
 	
-		$this->cart=new CartClass();
+		//$this->cart=new CartClass();
 	
 	}
 	
-	public function checkout()
+	public function checkout($cart)
 	{
 		return 1;
 	}
