@@ -906,6 +906,8 @@ class CartSwitchClass extends ControllerSwitchClass
 		else
 		{
 		
+			$this->cart->clean_cart();
+		
 			echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
 		
 		}
