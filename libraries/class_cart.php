@@ -7,7 +7,7 @@ class CartClass {
 	public $yes_update;
 	public $plugins;
 	
-	public function __construct($yes_update=1)
+	public function __construct($yes_update=1, $token_selected='')
 	{
 	
 		if(!isset($_COOKIE['webtsys_shop']))
@@ -20,6 +20,13 @@ class CartClass {
 		{
 		
 			$token=$_COOKIE['webtsys_shop'];
+		
+		}
+		
+		if($token_selected!='')
+		{
+		
+			$token=$token_selected;
 		
 		}
 		
@@ -403,9 +410,11 @@ class CartClass {
 			
 				$this->clean_cart();
 				
-				simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+				simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'));
 			
 			}
+			
+			ConfigShop::$arr_order=$arr_order;
 			
 			return true;
 		

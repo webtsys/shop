@@ -659,61 +659,92 @@ class CartSwitchClass extends ControllerSwitchClass
 			}
 			else
 			{
-			
-				switch($_GET['op'])
+				
+				if(ConfigShop::$arr_order['finished']==0)
 				{
 			
-				default:
-				
-					$arr_payment=array(0);
-
-					$query=PhangoVar::$model['payment_form']->select('', array(PhangoVar::$model['payment_form']->idmodel, 'name', 'price_payment'));
-					
-					while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
+					switch($_GET['op'])
 					{
+				
+					default:
 					
-						$name=I18nField::show_formatted($name);
+						$arr_payment=array(0);
 
-						if($price>0)
+						$query=PhangoVar::$model['payment_form']->select('', array(PhangoVar::$model['payment_form']->idmodel, 'name', 'price_payment'));
+						
+						while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
 						{
-							$price=MoneyField::currency_format( $price );
+						
+							$name=I18nField::show_formatted($name);
+
+							if($price>0)
+							{
+								$price=MoneyField::currency_format( $price );
+							}
+							else
+							{
+
+								$price=PhangoVar::$lang['shop']['mode_payment_free_charge'];
+
+							}
+
+							$arr_payment[]=$name.' - '.$price;
+							$arr_payment[]=$idpayment;
+
+						}
+				
+						echo load_view(array($arr_payment), 'shop/forms/methodpayment');
+					
+					break;
+					
+					case 1:
+					
+						settype($_POST['payment_form'], 'integer');
+						
+						if($this->cart->num_items_cart()>0)
+						{
+						
+							//The payment gateway
+						
+							$this->cart->payment_gateway($this->login->session['IdUser_shop'], $_POST['payment_form']);
+					
 						}
 						else
 						{
-
-							$price=PhangoVar::$lang['shop']['mode_payment_free_charge'];
-
+						
+							$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+						
 						}
-
-						$arr_payment[]=$name.' - '.$price;
-						$arr_payment[]=$idpayment;
-
+					
+					break;
+					
 					}
-			
-					echo load_view(array($arr_payment), 'shop/forms/methodpayment');
-				
-				break;
-				
-				case 1:
-				
-					settype($_POST['payment_form'], 'integer');
 					
-					if($this->cart->num_items_cart()>0)
-					{
-					
-						//The payment gateway
-					
-						$this->cart->payment_gateway($this->login->session['IdUser_shop'], $_POST['payment_form']);
+				}
+				else
+				{
 				
-					}
+					/*$num_product=$this->cart->num_items_cart();
+		
+					if($num_product==0)
+					{*/
+					
+						//Clean cart
+					
+						$this->cart->clean_cart();
+					
+						//echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+						simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+						
+					/*}
 					else
 					{
 					
-						$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+						$this->cart->clean_cart();
 					
-					}
-				
-				break;
+						echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
+					
+					}*/
 				
 				}
 			
@@ -726,97 +757,6 @@ class CartSwitchClass extends ControllerSwitchClass
 			$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 			
 		}
-		
-		/*if($this->login->check_login())
-		{
-		
-			if(ConfigShop::$config_shop['no_transport']==0)
-			{
-			
-				if(!isset($_SESSION['idtransport']) && !isset($_SESSION['idaddress']))
-				{
-					
-					$yes_use_transport=0;
-				
-				}
-			
-			}
-			
-			if($yes_use_transport==1)
-			{
-	
-				ob_start();
-				
-				switch($_GET['op'])
-				{
-			
-				default:
-				
-					$arr_payment=array(0);
-
-					$query=PhangoVar::$model['payment_form']->select('', array(PhangoVar::$model['payment_form']->idmodel, 'name', 'price_payment'));
-					
-					while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
-					{
-					
-						$name=I18nField::show_formatted($name);
-
-						if($price>0)
-						{
-							$price=MoneyField::currency_format( $price );
-						}
-						else
-						{
-
-							$price=PhangoVar::$lang['shop']['mode_payment_free_charge'];
-
-						}
-
-						$arr_payment[]=$name.' - '.$price;
-						$arr_payment[]=$idpayment;
-
-					}
-			
-					echo load_view(array($arr_payment), 'shop/forms/methodpayment');
-				
-				break;
-				
-				case 1:
-					
-					
-					
-					if($this->cart->num_items_cart()>0)
-					{
-					
-						//The payment gateway
-					
-						$this->cart->payment_gateway($this->login->session['IdUser_shop'], $_POST['payment_form']);
-				
-					}
-					else
-					{
-					
-						$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
-					
-					}
-				
-				break;
-				
-				}
-			
-				$cont_index=ob_get_contents();
-							
-				ob_end_clean();
-				
-				$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
-			}
-		}
-		else
-		{
-		
-			$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
-		
-		}*/
 	
 	}
 	
@@ -895,12 +835,14 @@ class CartSwitchClass extends ControllerSwitchClass
 	
 		//$this->login->recovery_password();
 		
-		$num_product=$this->cart->num_items_cart();
+		//$num_product=$this->cart->num_items_cart();
 		
-		if($num_product==0)
+		echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+		
+		/*if($num_product==0)
 		{
 		
-			echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+			
 			
 		}
 		else
@@ -910,7 +852,7 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 			echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
 		
-		}
+		}*/
 		
 		$cont_index=ob_get_contents();
 		

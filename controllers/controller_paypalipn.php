@@ -6,8 +6,15 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 	{
 
 		load_model('shop');
+		load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
+		
+		settype($_GET['webtsys_shop'], 'string');
+		
+		$_GET['webtsys_shop']=form_text($_GET['webtsys_shop']);
+		
+		$cart=new CartClass(0, $_GET['webtsys_shop']);
 
-		$cookie_shop=sha1($_GET['webtsys_shop']);
+		//$cookie_shop=sha1($_GET['webtsys_shop']);
 
 		$req = 'cmd=_notify-validate';
 
@@ -43,7 +50,16 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 		if($result=='VERIFIED' && ($_POST['payment_status']=='Completed' || $_POST['payment_status']=='Pending') )
 		{
 
-			PhangoVar::$model['order_shop']->update(array('payment_done' => 1), 'where token="'.$cookie_shop.'"');
+			PhangoVar::$model['order_shop']->reset_require();
+		
+		//print_r($_SESSION);
+		
+			if(PhangoVar::$model['order_shop']->update(array('payment_done' => 1, 'finished' => 1), 'where token="'.$cart->token.'"'))
+			{
+			
+				$cart->send_mail_order();
+			
+			}
 
 			$db_res='Orden:'.$num_order;
 

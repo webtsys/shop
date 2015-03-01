@@ -43,15 +43,12 @@ class OnDeliveryPaymentClass extends PaymentClass
 		
 		//print_r($_SESSION);
 		
-		if(PhangoVar::$model['order_shop']->update(array('payment_done' => 1), 'where token="'.$cart->token.'"'))
+		if(PhangoVar::$model['order_shop']->update(array('payment_done' => 0, 'finished' => 1), 'where token="'.$cart->token.'"'))
 		{
 			
-
 			$cart->send_mail_order();
-			
-			$cart->clean_cart();
 				
-			simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+			simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'));
 			
 			
 		}
@@ -59,6 +56,9 @@ class OnDeliveryPaymentClass extends PaymentClass
 		{
 		
 			//echo load_view(array('
+			
+			//simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'));
+			echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
 		
 		}
 		

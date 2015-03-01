@@ -25,6 +25,8 @@ class PaypalPaymentClass extends PaymentClass
 
 					list($yes_transport)=webtsys_fetch_row($query);*/
 					
+					$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'finish_checkout', array(), array('op' => 1, 'op_pay' => 1));
+					
 					?>
 					<form action="<?php echo URL_PAYPAL_SHOP; ?>" method="post">
 					<input type="hidden" name="cmd" value="_cart">

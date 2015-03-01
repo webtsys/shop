@@ -930,6 +930,8 @@ PhangoVar::$model['order_shop']->components['price_transport']=new MoneyField();
 PhangoVar::$model['order_shop']->components['name_payment']=new CharField(255);
 PhangoVar::$model['order_shop']->components['price_payment']=new MoneyField();
 
+PhangoVar::$model['order_shop']->components['finished']=new BooleanField();
+
 PhangoVar::$model['order_shop']->components['payment_done']=new BooleanField();
 
 PhangoVar::$model['order_shop']->components['observations']=new TextHTMLField();
@@ -1558,6 +1560,7 @@ class ConfigShop {
 	static public $config_shop=array();
 	static public $arr_currency=array(); 
 	static public $arr_change_currency=array();
+	static public $arr_order=array();
 
 }
 
