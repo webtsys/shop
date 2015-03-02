@@ -47,7 +47,7 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 		
 		settype($_POST['payment_status'], 'string');
 
-		if($result=='VERIFIED' && ($_POST['payment_status']=='Completed' || $_POST['payment_status']=='Pending') )
+		/*if($result=='VERIFIED' && ($_POST['payment_status']=='Completed' || $_POST['payment_status']=='Pending') )
 		{
 
 			PhangoVar::$model['order_shop']->reset_require();
@@ -65,7 +65,7 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 
 			//die;
 		
-		}
+		}*/
 
 		mail('webmaster@web-t-sys.com', "Prueba Paypal", $result." ".$_POST['payment_status']."\n\n".$cookie_shop."\n\n".$db_res );
 		die;
