@@ -772,9 +772,7 @@ class CartClass {
 		/*$query=PhangoVar::$model['module']->select('where name="shop"', array('IdModule'));
 
 		list($idmodule)=webtsys_fetch_row($query);*/
-		print_r( $arr_address_transport);
 		
-		die;
 		$content_mail_admin=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailadmincart');
 		
 		//If no send mail write a message with the reference, for send to mail shop...
