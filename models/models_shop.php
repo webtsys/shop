@@ -922,7 +922,7 @@ PhangoVar::$model['order_shop']->components['city_transport']=new CharField(255)
 PhangoVar::$model['order_shop']->components['region_transport']=new CharField(255);
 PhangoVar::$model['order_shop']->components['country_transport']=new I18nField(new TextField());
 PhangoVar::$model['order_shop']->components['phone_transport']=new CharField(255);
-//PhangoVar::$model['order_shop']->components['zone_transport']=new IntegerField(11);
+PhangoVar::$model['order_shop']->components['address_transport_id']=new IntegerField(11);
 
 PhangoVar::$model['order_shop']->components['transport']=new CharField(255);
 PhangoVar::$model['order_shop']->components['price_transport']=new MoneyField();

@@ -45,6 +45,8 @@ class OnDeliveryPaymentClass extends PaymentClass
 		
 		if(PhangoVar::$model['order_shop']->update(array('payment_done' => 0, 'finished' => 1), 'where token="'.$cart->token.'"'))
 		{
+			
+			$cart->send_mail_order();
 				
 			simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'));
 			

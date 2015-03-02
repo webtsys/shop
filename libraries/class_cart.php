@@ -466,6 +466,8 @@ class CartClass {
 		
 			$arr_transport=PhangoVar::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
 			
+			$post['address_transport_id']=$_SESSION['idtransport'];
+			
 			$post['transport']=$arr_transport['name'];
 	
 		}
