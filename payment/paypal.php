@@ -31,7 +31,7 @@ class PaypalPaymentClass extends PaymentClass
 					<form action="<?php echo URL_PAYPAL_SHOP; ?>" method="post">
 					<input type="hidden" name="cmd" value="_cart">
 					<input type="hidden" name="business" value="<?php echo EMAIL_PAYPAL_SHOP; ?>">
-					<input type="hidden" name="notify_url" value="<?php echo make_direct_url(PhangoVar::$base_url, 'shop', 'paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'])); ?>">
+					<input type="hidden" name="notify_url" value="<?php echo make_direct_url(PhangoVar::$base_url, 'shop', 'paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'], 'csrf_token' => PhangoVar::$prefix_key)); ?>">
 					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished', array(), array()); ?>">
 					<!--<input type="hidden" name="quantity" value="1">-->
 					<?php
