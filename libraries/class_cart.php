@@ -408,7 +408,7 @@ class CartClass {
 			if($arr_order['payment_done']==1)
 			{
 			
-				$this->clean_cart();
+				//$this->clean_cart();
 				
 				simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'));
 			
