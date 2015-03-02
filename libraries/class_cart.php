@@ -199,21 +199,6 @@ class CartClass {
 
 			$redirect_url=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart');
 
-			//$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"');
-
-			/*$arr_cart=webtsys_fetch_array($query);
-
-			settype($arr_cart['IdCart_shop'], 'integer');*/
-			
-			/*if($arr_cart['IdCart_shop']==0)
-			{
-
-				$this->token=sha1(uniqid(rand(), true));
-
-				setcookie  ( 'webtsys_shop', $this->token, 0, PhangoVar::$cookie_path);
-
-			}*/
-
 			if($special_offer>0)
 			{
 
@@ -349,12 +334,6 @@ class CartClass {
 		$num_product=0;
 		$total_price_product=0;
 		$total_weight_product=0;
-		
-		/*$plugins=new PreparePluginClass('cart');
-		
-		//Prepare config for this plugins..
-		
-		$plugins->load_all_plugins();*/
 	
 		$plugin_price=array();
 		
@@ -404,15 +383,6 @@ class CartClass {
 		
 		if($arr_order['IdOrder_shop']!=0)
 		{
-		
-			/*if($arr_order['finished']==1)
-			{
-			
-				//$this->clean_cart();
-				
-				simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
-			
-			}*/
 			
 			ConfigShop::$arr_order=$arr_order;
 			
@@ -425,17 +395,7 @@ class CartClass {
 			return false;
 		
 		}
-	
-		/*if(PhangoVar::$model['order_shop']->select_count('where token="'.$this->token.'" and payment_done=0'))
-		{
 		
-			return true;
-		
-		}*/
-		
-		
-		
-	
 	}
 	
 	public function create_order_shop($iduser_shop)
@@ -540,37 +500,8 @@ class CartClass {
 				$name_class=str_replace('.php', '', $arr_payment['code']).'PaymentClass';
 						
 				$payment_class=new $name_class($this);
-			
-				/*switch($_GET['op_payment'])
-				{
-				
-					default:*/
-						
-						$payment_class->checkout($this);
 					
-					/*break;
-					
-					case 1:
-					
-						//If no payment
-						echo '<p>'.PhangoVar::$model['order_shop']->std_error.'</p>';
-					
-						if($payment_class->cancel_checkout())
-						{
-						
-							echo PhangoVar::$lang['shop']['cancel_checkout_success'];
-						
-						}
-						else
-						{
-						
-							echo PhangoVar::$lang['shop']['no_cancel_checkout_success'];
-						
-						}
-					
-					break;*/
-					
-				//}
+				$payment_class->checkout($this);
 			
 			}
 	
@@ -691,10 +622,6 @@ class CartClass {
 				
 				return array($max_price, 1, $name);
 
-				//Tenemos que ver en cuanto supera los kilos...
-
-				//Dividimos y obtenemos el resto...
-
 				
 			}
 		
@@ -718,15 +645,6 @@ class CartClass {
 			unset($_SESSION['idtransport']);
 	
 		}
-		
-		//$_COOKIE['webtsys_shop']=sha1(uniqid(rand(), true));
-		
-		/*if(!setcookie ( 'webtsys_shop', '', time()-36000, PhangoVar::$cookie_path))
-		{
-			
-			echo 'Error resetting the cookie cart';
-		
-		}*/
 		
 		$this->create_new_token();
 		
@@ -759,8 +677,6 @@ class CartClass {
 		}
 	
 		$arr_order_shop=PhangoVar::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
-	
-		#$arr_address=PhangoVar::$model['order_shop']->select_a_row($);
 		
 		$arr_address=$arr_order_shop;
 		
@@ -777,14 +693,8 @@ class CartClass {
 		//Prepare email
 		
 		$arr_user=PhangoVar::$model['user_shop']->select_a_row($arr_address['iduser'], array('email'));
-		
-		//$num_order=order_shop::calculate_num_bill($arr_order_shop['IdOrder_shop']);
 
 		$content_mail_user=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailcart');
-		
-		/*$query=PhangoVar::$model['module']->select('where name="shop"', array('IdModule'));
-
-		list($idmodule)=webtsys_fetch_row($query);*/
 		
 		$content_mail_admin=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailadmincart');
 		
