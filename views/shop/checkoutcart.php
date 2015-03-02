@@ -47,7 +47,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	
 	foreach(ConfigShop::$arr_fields_address as $field)
 	{
-	
+		
 		PhangoVar::$model['user_shop']->forms[$field]->form='TextPlainForm';
 	
 	}
