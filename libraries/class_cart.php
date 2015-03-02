@@ -751,7 +751,7 @@ class CartClass {
 		
 		$arr_address=$arr_order_shop;
 		
-		$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress']);
+		$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($arr_order_shop['address_transport_id']);
 	
 		//$arr_order_shop, $arr_address, $arr_address_transport, $iduser_shop
 	
