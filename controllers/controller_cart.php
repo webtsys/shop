@@ -662,7 +662,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				
 				if(ConfigShop::$arr_order['finished']==0)
 				{
-			
+					
 					switch($_GET['op'])
 					{
 				
@@ -731,7 +731,7 @@ class CartSwitchClass extends ControllerSwitchClass
 					
 						//Clean cart
 					
-						$this->cart->clean_cart();
+						//$this->cart->clean_cart();
 					
 						//echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
 						simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
