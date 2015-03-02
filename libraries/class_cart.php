@@ -405,14 +405,14 @@ class CartClass {
 		if($arr_order['IdOrder_shop']!=0)
 		{
 		
-			if($arr_order['finished']==1)
+			/*if($arr_order['finished']==1)
 			{
 			
-				$this->clean_cart();
+				//$this->clean_cart();
 				
 				simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
 			
-			}
+			}*/
 			
 			ConfigShop::$arr_order=$arr_order;
 			
