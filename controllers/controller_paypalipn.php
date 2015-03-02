@@ -57,12 +57,7 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 		
 		//print_r($_SESSION);
 		
-			if(PhangoVar::$model['order_shop']->update(array('payment_done' => 1, 'finished' => 1), 'where token="'.$cart->token.'"'))
-			{
-			
-				$cart->send_mail_order();
-			
-			}
+			PhangoVar::$model['order_shop']->update(array('payment_done' => 1, 'finished' => 1), 'where token="'.$cart->token.'"');
 
 			$db_res='Orden:'.$num_order;
 

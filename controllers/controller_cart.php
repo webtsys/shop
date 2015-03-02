@@ -734,6 +734,9 @@ class CartSwitchClass extends ControllerSwitchClass
 						//$this->cart->clean_cart();
 					
 						//echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+						
+						$cart->send_mail_order();
+						
 						simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
 						
 					/*}
