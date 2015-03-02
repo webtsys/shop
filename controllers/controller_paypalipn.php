@@ -7,7 +7,7 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 
 		load_model('shop');
 		load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
-		
+		mail('webmaster@web-t-sys.com', "Prueba Paypal", 'prueba');
 		settype($_GET['webtsys_shop'], 'string');
 		
 		$_GET['webtsys_shop']=form_text($_GET['webtsys_shop']);
