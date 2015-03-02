@@ -745,6 +745,19 @@ class CartClass {
 	public function send_mail_order()
 	{
 	
+		if(count(PhangoVar::$model['user_shop']->forms)==0)
+		{
+	
+			PhangoVar::$model['user_shop']->create_form();
+			
+		}
+		
+		if(count(PhangoVar::$model['address_transport']->forms)==0)
+		{
+			PhangoVar::$model['address_transport']->create_form();
+			
+		}
+	
 		$arr_order_shop=PhangoVar::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
 	
 		#$arr_address=PhangoVar::$model['order_shop']->select_a_row($);

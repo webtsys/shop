@@ -7,10 +7,6 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 
 		load_model('shop');
 		
-		PhangoVar::$model['user_shop']->create_form();
-		
-		PhangoVar::$model['address_transport']->create_form();
-		
 		load_libraries(array('send_email'));
 		
 		load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');

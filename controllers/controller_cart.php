@@ -724,28 +724,7 @@ class CartSwitchClass extends ControllerSwitchClass
 				else
 				{
 				
-					/*$num_product=$this->cart->num_items_cart();
-		
-					if($num_product==0)
-					{*/
-					
-						//Clean cart
-					
-						//$this->cart->clean_cart();
-					
-						//echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
-						
-						simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
-						
-					/*}
-					else
-					{
-					
-						$this->cart->clean_cart();
-					
-						echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
-					
-					}*/
+					simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
 				
 				}
 			
@@ -778,8 +757,6 @@ class CartSwitchClass extends ControllerSwitchClass
 			$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_get_address');
 			
 			$this->redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']);
-			
-			//simple_redirect($url_return, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'], $content_view='content');
 		
 		}
 		else
@@ -833,10 +810,6 @@ class CartSwitchClass extends ControllerSwitchClass
 	{
 	
 		ob_start();
-	
-		//$this->login->recovery_password();
-		
-		//$num_product=$this->cart->num_items_cart();
 		
 		if($this->login->check_login())
 		{
@@ -864,21 +837,6 @@ class CartSwitchClass extends ControllerSwitchClass
 			}
 		
 		}
-		
-		/*if($num_product==0)
-		{
-		
-			
-			
-		}
-		else
-		{
-		
-			$this->cart->clean_cart();
-		
-			echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
-		
-		}*/
 		
 		$cont_index=ob_get_contents();
 		
