@@ -14,7 +14,7 @@ class PayPalIpnSwitchClass extends ControllerSwitchClass {
 		
 		$cart=new CartClass(0, $_GET['webtsys_shop']);
 
-		//$cookie_shop=sha1($_GET['webtsys_shop']);
+		$cookie_shop=sha1($_GET['webtsys_shop']);
 
 		$req = 'cmd=_notify-validate';
 

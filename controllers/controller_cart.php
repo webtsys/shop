@@ -837,7 +837,25 @@ class CartSwitchClass extends ControllerSwitchClass
 		
 		//$num_product=$this->cart->num_items_cart();
 		
-		echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+		if($this->login->check_login())
+		{
+		
+			if(!$this->cart->check_order())
+			{
+		
+				echo load_view(array( PhangoVar::$lang['shop']['your_orders'], PhangoVar::$lang['shop']['order_success_cart_clean'] ), 'content');
+		
+			}
+			else
+			{
+			
+				$this->cart->clean_cart();
+			
+				echo load_view(array( PhangoVar::$lang['shop']['error_no_proccess_payment_send_email'], PhangoVar::$lang['shop']['error_contact_with_us'] ), 'content');
+			
+			}
+		
+		}
 		
 		/*if($num_product==0)
 		{
