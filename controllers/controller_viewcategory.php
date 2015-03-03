@@ -118,12 +118,21 @@ class  ViewcategorySwitchClass extends ControllerSwitchClass
 		
 		$arr_photo=array();
 		
+		foreach($arr_id as $id)
+		{
+		
+			$arr_photo[$id]='default_image.jpg';
+		
+		}
+		
 		$query=PhangoVar::$model['image_product']->select('where idproduct IN (\''.implode("', '", $arr_id).'\') and principal=1', array('photo', 'idproduct'), true);
 
 		while(list($photo, $idproduct)=webtsys_fetch_row($query))
 		{
 
-			$arr_photo[$idproduct]=$photo;
+		
+				$arr_photo[$idproduct]=$photo;
+				
 
 		}
 		

@@ -51,6 +51,13 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 			
 			$arr_product['images']=PhangoVar::$model['image_product']->select_to_array('where idproduct='.$idproduct.' order by principal DESC', array('photo'));
 			
+			if(count($arr_product['images'])==0)
+			{
+			
+				$arr_product['images'][0]['photo']='default.jpg';
+			
+			}
+			
 			//Obtain plugins...
 			
 			$arr_plugin=array();
