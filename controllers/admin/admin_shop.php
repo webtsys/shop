@@ -762,6 +762,8 @@ function ShopAdmin()
 
 			//?order_field=date_order&order_desc=1&search_word=&search_field=IdOrder_shop
 			
+			load_libraries(array('config_shop'), PhangoVar::$base_path.'/modules/shop/libraries/');
+			
 			echo '<h2>'.PhangoVar::$lang['shop']['orders'].'</h2>';
 
 			if(!isset($_GET['order_field']))
@@ -779,7 +781,7 @@ function ShopAdmin()
 			
 			$where_sql='';
 
-			$arr_fields=array('name', 'last_name', 'email', 'total_price', 'make_payment', 'date_order');
+			$arr_fields=array('name', 'last_name', 'email', 'total_price', 'payment_done', 'date_order');
 			
 			if($_GET['op_payment']==1)
 			{
@@ -788,7 +790,7 @@ function ShopAdmin()
 			
 			}
 			
-			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'make_payment', 'total_price');
+			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'payment_done', 'total_price');
 			
 			$url_options=set_admin_link( 'shop', array('op' => 13, 'op_payment' => $_GET['op_payment']) );
 	
@@ -814,7 +816,7 @@ function ShopAdmin()
 			PhangoVar::$model['order_shop']->forms['last_name']->label=PhangoVar::$lang['common']['last_name'];
 			PhangoVar::$model['order_shop']->forms['email']->label=PhangoVar::$lang['common']['email'];
 			PhangoVar::$model['order_shop']->forms['total_price']->label=PhangoVar::$lang['shop']['total_price'];
-			PhangoVar::$model['order_shop']->forms['make_payment']->label=PhangoVar::$lang['shop']['make_payment'];
+			PhangoVar::$model['order_shop']->forms['payment_done']->label=PhangoVar::$lang['shop']['make_payment'];
 			PhangoVar::$model['order_shop']->forms['date_order']->label=PhangoVar::$lang['common']['date'];
 
 			//Zone_transport...
@@ -849,7 +851,7 @@ function ShopAdmin()
 
 				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
 				
-				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
+				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where payment_done=1', $arr_fields_edit, 0);
 				
 				$list->show();
 				
@@ -861,7 +863,7 @@ function ShopAdmin()
 
 				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
 				
-				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
+				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where payment_done=0', $arr_fields_edit, 0);
 				
 				$list->show();
 				

@@ -1367,7 +1367,7 @@ class MoneyField extends DoubleField{
 			$idcurrency=ConfigShop::$config_shop['idcurrency'];
 		
 		}
-	
+		
 		$symbol_currency=ConfigShop::$arr_currency[$idcurrency];
 		
 		if(ConfigShop::$config_shop['idcurrency']!=$idcurrency)
