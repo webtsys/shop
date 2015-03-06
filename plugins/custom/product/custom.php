@@ -51,24 +51,35 @@ class CustomProductClass {
 					load_libraries(array('forms/selectmodelformbyorder'));
 				
 					settype($_GET['id'], 'integer');
+					
+					if(PhangoVar::$model['characteristic']->element_exists($_GET['id']))
+					{
 				
-					echo '<h3>'.PhangoVar::$lang['shop']['add_characteristic_to_cat'].'</h3>';
-					
-					PhangoVar::$model['characteristic_cat']->create_form();
-					
-					PhangoVar::$model['characteristic_cat']->forms['idcat']->form='SelectModelFormByOrder';
-					
-					PhangoVar::$model['characteristic_cat']->forms['idcat']->set_parameter(5, 'subcat');
-					
-					$admin=new GenerateAdminClass('characteristic_cat');
-					
-					$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'id' => $_GET['id']));
-					
-					$admin->set_url_post($url_post);
-					
-					$admin->arr_fields=array('idcat');
-					
-					$admin->show();
+						echo '<h3>'.PhangoVar::$lang['shop']['add_characteristic_to_cat'].'</h3>';
+						
+						PhangoVar::$model['characteristic_cat']->create_form();
+						
+						PhangoVar::$model['characteristic_cat']->forms['idcat']->form='SelectModelFormByOrder';
+						
+						PhangoVar::$model['characteristic_cat']->forms['idcat']->set_parameter(5, 'subcat');
+						
+						PhangoVar::$model['characteristic_cat']->forms['idcharacteristic']->form='HiddenForm';
+						
+						PhangoVar::$model['characteristic_cat']->forms['idcharacteristic']->set_parameter_value($_GET['id']);
+						
+						$admin=new GenerateAdminClass('characteristic_cat');
+						
+						$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'id' => $_GET['id']));
+						
+						$admin->set_url_post($url_post);
+						
+						$admin->arr_fields=array('idcat');
+						
+						$admin->where_sql='where idcharacteristic='.$_GET['id'];
+						
+						$admin->show();
+						
+					}
 				
 				break;
 			
@@ -163,7 +174,7 @@ class CustomProductClass {
 			{
 				
 			
-				echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcat']), PhangoVar::$lang['shop']['add_option']) );
+				echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcharacteristic']), PhangoVar::$lang['shop']['edit_options']) );
 			
 			}
 			

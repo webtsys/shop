@@ -262,7 +262,7 @@ PhangoVar::$lang['shop']['add_product_characteristics']='add_product_characteris
 
 PhangoVar::$lang['shop']['add_characteristic_to_cat']='add_characteristic_to_cat';
 
-PhangoVar::$lang['shop']['add_option']='Añadir opción';
+PhangoVar::$lang['shop']['edit_options']='edit_options';
 
 PhangoVar::$lang['shop']['add_standard_options']='add_standard_options';
 
@@ -359,6 +359,8 @@ PhangoVar::$lang['shop']['observations']='Observaciones';
 PhangoVar::$lang['shop']['invoice_num']='Número de factura';
 
 PhangoVar::$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+
+PhangoVar::$lang['shop']['add_option']='Añadir opción';
 
 PhangoVar::$lang['shop']['edit_plugin']='Edit plugin';
 
