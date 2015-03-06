@@ -206,7 +206,9 @@ PhangoVar::$lang['shop']['element_choice']='Elegir elemento';
 
 PhangoVar::$lang['shop']['order_plugins']='Ordenar plugins';
 
-PhangoVar::$lang['shop']['edit_plugin']='Edit plugin';
+PhangoVar::$lang['shop']['plugin_product_admin']='plugin_product_admin';
+
+PhangoVar::$lang['shop']['plugin_product_admin_home']='plugin_product_admin_home';
 
 PhangoVar::$lang['shop']['change_shop_category']='Cambiar categoría de tienda';
 
@@ -221,8 +223,6 @@ PhangoVar::$lang['shop']['modify_products']='Modificar productos';
 PhangoVar::$lang['shop']['subcat_products']='Subcategorías de productos';
 
 PhangoVar::$lang['shop']['edit_cat_product']='Editar categorías de producto';
-
-PhangoVar::$lang['shop']['add__select_options_to_product']='Añadir opciones para seleccionar para este producto';
 
 PhangoVar::$lang['shop']['add__select_prices_for_transport']='Añadir tabla de precios para el transporte';
 
@@ -256,6 +256,16 @@ PhangoVar::$lang['shop']['success_buy']='Se añadio este producto al carrito de 
 
 PhangoVar::$lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
+PhangoVar::$lang['shop']['add_custom_characteristics']='add_custom_characteristics';
+
+PhangoVar::$lang['shop']['add_product_characteristics']='add_product_characteristics';
+
+PhangoVar::$lang['shop']['add_characteristic_to_cat']='add_characteristic_to_cat';
+
+PhangoVar::$lang['shop']['add_option']='Añadir opción';
+
+PhangoVar::$lang['shop']['add_standard_options']='add_standard_options';
+
 PhangoVar::$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
 
 PhangoVar::$lang['shop']['checkout_order']='Pagar pedido';
@@ -263,10 +273,6 @@ PhangoVar::$lang['shop']['checkout_order']='Pagar pedido';
 PhangoVar::$lang['shop']['paypal_email_variable_no_isset']='Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago';
 
 PhangoVar::$lang['shop']['explain_cart_options']='Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.';
-
-PhangoVar::$lang['shop']['cancel_checkout_success']='Se ha producido un error y hemos cancelado su pago, por favor, póngase en contacto con nosotros';
-
-PhangoVar::$lang['shop']['no_cancel_checkout_success']='Se produjo un error al registrar su pedido, pero no se ha podido guardar el pago, por favor, envíenos la referencia dada en el modo de pago. En caso de contrareembolso, no se preocupe, simplemente infórmenos del fallo para poder subsanarlo';
 
 PhangoVar::$lang['shop']['error_cannot_send_email']='Error: no puedo enviar el email';
 
@@ -353,6 +359,14 @@ PhangoVar::$lang['shop']['observations']='Observaciones';
 PhangoVar::$lang['shop']['invoice_num']='Número de factura';
 
 PhangoVar::$lang['shop']['this_currency_have_equivalence']='Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia';
+
+PhangoVar::$lang['shop']['edit_plugin']='Edit plugin';
+
+PhangoVar::$lang['shop']['add__select_options_to_product']='Añadir opciones para seleccionar para este producto';
+
+PhangoVar::$lang['shop']['cancel_checkout_success']='Se ha producido un error y hemos cancelado su pago, por favor, póngase en contacto con nosotros';
+
+PhangoVar::$lang['shop']['no_cancel_checkout_success']='Se produjo un error al registrar su pedido, pero no se ha podido guardar el pago, por favor, envíenos la referencia dada en el modo de pago. En caso de contrareembolso, no se preocupe, simplemente infórmenos del fallo para poder subsanarlo';
 
 PhangoVar::$lang['shop']['explain_buying_without_register']='Usted no está registrado, puede elegir entre registrarse mientras compra, identificarse si ya tiene un usuario, siendo redirigido a la página donde podrá finalizar su compra.';
 
@@ -705,8 +719,6 @@ PhangoVar::$lang['shop']['option_description_separed_by_|']='Opciones del produc
 PhangoVar::$lang['shop']['create_option']='Crear opción para el producto';
 
 PhangoVar::$lang['shop']['options_list']='Lista de opciones';
-
-PhangoVar::$lang['shop']['add_option']='Añadir opción';
 
 PhangoVar::$lang['shop']['options_for']='Opciones para';
 

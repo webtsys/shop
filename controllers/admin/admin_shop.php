@@ -348,7 +348,7 @@ function ShopAdmin()
 			
 			//Load plugins for show links to ProductOptionsListModel
 			
-			$arr_plugin_product_list=array();
+			/*$arr_plugin_product_list=array();
 			
 			$query=PhangoVar::$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
 			
@@ -357,7 +357,13 @@ function ShopAdmin()
 			
 				$arr_plugin_product_list[]=$plugin;
 				
-			}
+			}*/
+			
+			$plugins=new PreparePluginClass('product');
+			
+			$plugins->obtain_list_plugins();
+			
+			$plugins->load_all_plugins();
 			
 			$admin=new GenerateAdminClass('product');
 			
@@ -365,6 +371,7 @@ function ShopAdmin()
 			$admin->arr_fields_edit=&$arr_fields_edit;
 			$admin->set_url_post($url_options);
 			$admin->options_func='ProductOptionsListModel';
+			$admin->options_func_extra_args=array('plugins' => $plugins);
 			$admin->where_sql=&$where_sql;
 			
 			$admin->show();
@@ -1672,41 +1679,53 @@ function ShopAdmin()
 		case 22:
 		
 			settype($_GET['IdProduct'], 'integer');
-		
-			echo '<h3>'.PhangoVar::$lang['shop']['edit_plugin'].'</h3>';
+			settype($_GET['plugin'], 'string');
 			
-			$element_choice=PhangoVar::$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			$_GET['plugin']=basename(slugify($_GET['plugin']));
 			
-			if($element_choice!='')
+			$plugin=$_GET['plugin'];
+			
+			$plugins=new PreparePluginClass('product');
+			
+			$plugins->obtain_list_plugins();
+			
+			if(isset($plugins->arr_plugin_list[$plugin]))
 			{
 			
-				$plugin=@form_text($_GET['plugin']);
-			
-				if( in_array($plugin, $arr_plugin_list[$element_choice]) )
-				{
+				echo '<h2>'.PhangoVar::$lang['shop']['plugin_product_admin'].'</h2>';
 				
-					load_libraries(array($plugin), PhangoVar::$base_path.'modules/shop/plugins/product/');
-	
-					$var_func=ucfirst($plugin).'Admin';
-					
-					if(function_exists($var_func))
-					{
-					
-						$var_func($_GET['IdProduct']);
-						
-					}
+				$plugins->load_plugin($plugin);
 				
-				}
-				
+				$plugins->arr_class_plugin[$plugin]->admin_plugin_product();
 			
 			}
+			
 			
 		
 		break;
 		
 		case 23:
 		
-			$element_choice=PhangoVar::$model['plugin_shop']->components['element']->check($_GET['element_choice']);
+			$_GET['plugin']=basename(slugify($_GET['plugin']));
+		
+			$plugin=$_GET['plugin'];
+		
+			$plugins=new PreparePluginClass('product');
+			
+			$plugins->obtain_list_plugins();
+			
+			if(isset($plugins->arr_plugin_list[$plugin]))
+			{
+			
+				echo '<h2>'.PhangoVar::$lang['shop']['plugin_product_admin_home'].'</h2>';
+				
+				$plugins->load_plugin($plugin);
+				
+				$plugins->arr_class_plugin[$plugin]->admin_plugin();
+			
+			}
+		
+			/*$element_choice=PhangoVar::$model['plugin_shop']->components['element']->check($_GET['element_choice']);
 			
 			if($element_choice!='')
 			{
@@ -1730,7 +1749,7 @@ function ShopAdmin()
 				}
 				
 			
-			}
+			}*/
 		
 		break;
 		
@@ -1897,7 +1916,7 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 
 }
 
-function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
+function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw, $args)
 {
 	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
@@ -1905,33 +1924,15 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw)
 	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 24, 'idproduct' => $id) ).'">'.PhangoVar::$lang['shop']['edit_cat_product'].'</a>';
 	
 	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $id) ).'">'.PhangoVar::$lang['shop']['edit_image_product'].'</a>';
-
-	/*if($arr_row_raw['extra_options']=='standard_options.php')
+	
+	$plugins=$args['plugins'];
+	
+	foreach($plugins->arr_class_plugin as $plugin => $arr_class)
 	{
-
-		$arr_options[]='<a href="'. set_admin_link( PhangoVar::$lang['shop']['add__select_options_to_product'], array('op' => 5, 'IdProduct' => $id) ).'">'.PhangoVar::$lang['shop']['add__select_options_to_product'].'</a>';
-
-	}*/
-	
-	//Add plugin options
-	
-	/*foreach($arr_plugin_product_list as $plugin)
-	{
-	
-		//include($);
 		
-		load_libraries(array($plugin), PhangoVar::$base_path.'modules/shop/plugins/product/');
+		$arr_options[]=$arr_class->admin_show_options($arr_row_raw);
 	
-		$var_func=ucfirst($plugin).'Link';
-		
-		if(function_exists($var_func))
-		{
-			
-			$arr_options[]='<a href="'.set_admin_link( $var_func($id), array('op' => 22, 'IdProduct' => $id, 'plugin' => $plugin, 'element_choice' => 'product') ).'">'.$var_func($id).'</a>';
-			
-		}
-	
-	}*/
+	}
 
 	return $arr_options;
 
@@ -1973,19 +1974,19 @@ function BillOptionsListModel($url_options, $model_name, $id)
 function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
 {
 
-	global $arr_plugin_options;
+	//global $arr_plugin_options;
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
 	
-	if(isset($arr_plugin_options[$arr_row['plugin']]['admin_external']))
+	if(isset(ConfigShop::$arr_plugin_options[$arr_row['plugin']]['admin_external']))
 	{
 	
 		//$func_admin_plugin=$arr_row['plugin'].'AdminExternal';
 		
 		
 		
-		$arr_options[]='<a href="'.set_admin_link( 'shop', array('op' => 23, 'IdProduct' => $id, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.PhangoVar::$lang['shop']['edit_plugin_external'].'</a>';
+		$arr_options[]='<a href="'.set_admin_link( 'shop', array('op' => 23, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.PhangoVar::$lang['shop']['edit_plugin_external'].'</a>';
 		
 		//$func_admin_plugin();
 	
@@ -2017,5 +2018,6 @@ function obtain_payment_form()
 	return array($arr_code, $arr_code_check);
 
 }
+
 
 ?>

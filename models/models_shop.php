@@ -1338,6 +1338,28 @@ PhangoVar::$model['paypal_check']=new Webmodel('paypal_check');
 PhangoVar::$model['paypal_check']->set_component('cookie_shop', 'CharField', array(255), 1);
 PhangoVar::$model['paypal_check']->set_component('ckeck', 'BooleanField', array());
 
+//Characteristics example plugin
+
+PhangoVar::$model['characteristic']=new Webmodel('characteristic');
+
+PhangoVar::$model['characteristic']->set_component('name', 'I18nField', array(new TextField()), 1);
+
+PhangoVar::$model['characteristic_cat']=new Webmodel('characteristic_cat');
+
+PhangoVar::$model['characteristic_cat']->set_component('idcat', 'ForeignKeyField', array('cat_product'), 1);
+
+PhangoVar::$model['characteristic_cat']->components['idcat']->name_field_to_field='title';
+
+//PhangoVar::$model['characteristic']->set_component('idproduct', 'ForeignKeyField', array('product'), 1);
+
+PhangoVar::$model['characteristic_option']=new Webmodel('characteristic_option');
+
+PhangoVar::$model['characteristic_option']->set_component('name', 'I18nField', array(new TextField()), 1);
+
+PhangoVar::$model['characteristic_option']->set_component('characteristic', 'ForeignKeyField', array('characteristic'), 1);
+
+PhangoVar::$model['characteristic_option']->set_component('idproduct', 'ForeignKeyField', array('product'), 1);
+
 //Moneyfield
 
 class MoneyField extends DoubleField{
@@ -1470,7 +1492,8 @@ class PreparePluginClass {
 		
 			$class_plugin=ucfirst($plugin).ucfirst($this->hook_plugin).'Class';
 			
-			$this->arr_plugin[$plugin]=$class_plugin;
+			$this->arr_plugins[$plugin]=$class_plugin;
+			$this->arr_plugin_list[$plugin]=$plugin;
 		
 		}
 	
@@ -1485,7 +1508,7 @@ class PreparePluginClass {
 	
 		$this->arr_class_plugin[$plugin]=new $func_class($arguments);
 	
-		$this->arr_plugin_list[$plugin]=$plugin;
+		//$this->arr_plugin_list[$plugin]=$plugin;
 	
 	}
 	
@@ -1525,32 +1548,19 @@ class PreparePluginClass {
 	}*/
 
 }
-
-class PluginClass {
-
-	public function __construct()
-	{
-	
-	}
+/*
+interface PluginClass {
 	
 	//Here prepare the config of the plugin.
 	
-	public function prepare_plugin()
-	{
+	public function prepare_plugin();
 	
-	}
+	public function show();
 	
-	public function show()
-	{
-	
-	}
-	
-	public function return_value_modified()
-	{
-	
-	}
+	public function return_value_modified();
 
 }
+*/
 
 class ConfigShop {
 
@@ -1561,6 +1571,7 @@ class ConfigShop {
 	static public $arr_currency=array(); 
 	static public $arr_change_currency=array();
 	static public $arr_order=array();
+	static public $arr_plugin_options=array();
 
 }
 
