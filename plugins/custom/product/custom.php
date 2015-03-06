@@ -16,76 +16,67 @@ class CustomProductClass {
 	{
 	
 		settype($_GET['op_plugin'], 'integer');
-		//settype($_GET['IdProduct'], 'integer');
+
+	
+		switch($_GET['op_plugin'])
+		{
 		
-		//$arr_product=PhangoVar::$model['product']->select_a_row($_GET['IdProduct']);
-		
-		/*settype($arr_product['IdProduct'], 'integer');
-		
-		if($arr_product['IdProduct']>0)
-		{*/
-		
-			switch($_GET['op_plugin'])
-			{
+			default:
 			
-				default:
+				echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics'].'</h3>';
+			
+				$admin=new GenerateAdminClass('characteristic');
 				
-					echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics'].'</h3>';
+				$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => $_GET['op_plugin']));
 				
-					$admin=new GenerateAdminClass('characteristic');
+				$admin->set_url_post($url_post);
+				
+				$admin->arr_fields=array('name');
+				
+				$admin->options_func='CustomOptionsListModel';
+				
+				$admin->show();
+			
+			break;
+			
+			case 1:
+			
+				load_libraries(array('forms/selectmodelformbyorder'));
+			
+				settype($_GET['id'], 'integer');
+				
+				if(PhangoVar::$model['characteristic']->element_exists($_GET['id']))
+				{
+			
+					echo '<h3>'.PhangoVar::$lang['shop']['add_characteristic_to_cat'].'</h3>';
 					
-					$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => $_GET['op_plugin']));
+					PhangoVar::$model['characteristic_cat']->create_form();
+					
+					PhangoVar::$model['characteristic_cat']->forms['idcat']->form='SelectModelFormByOrder';
+					
+					PhangoVar::$model['characteristic_cat']->forms['idcat']->set_parameter(5, 'subcat');
+					
+					PhangoVar::$model['characteristic_cat']->forms['idcharacteristic']->form='HiddenForm';
+					
+					PhangoVar::$model['characteristic_cat']->forms['idcharacteristic']->set_parameter_value($_GET['id']);
+					
+					$admin=new GenerateAdminClass('characteristic_cat');
+					
+					$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'id' => $_GET['id']));
 					
 					$admin->set_url_post($url_post);
 					
-					$admin->arr_fields=array('name');
+					$admin->arr_fields=array('idcat');
 					
-					$admin->options_func='CustomOptionsListModel';
+					$admin->where_sql='where idcharacteristic='.$_GET['id'];
 					
 					$admin->show();
-				
-				break;
-				
-				case 1:
-				
-					load_libraries(array('forms/selectmodelformbyorder'));
-				
-					settype($_GET['id'], 'integer');
 					
-					if(PhangoVar::$model['characteristic']->element_exists($_GET['id']))
-					{
-				
-						echo '<h3>'.PhangoVar::$lang['shop']['add_characteristic_to_cat'].'</h3>';
-						
-						PhangoVar::$model['characteristic_cat']->create_form();
-						
-						PhangoVar::$model['characteristic_cat']->forms['idcat']->form='SelectModelFormByOrder';
-						
-						PhangoVar::$model['characteristic_cat']->forms['idcat']->set_parameter(5, 'subcat');
-						
-						PhangoVar::$model['characteristic_cat']->forms['idcharacteristic']->form='HiddenForm';
-						
-						PhangoVar::$model['characteristic_cat']->forms['idcharacteristic']->set_parameter_value($_GET['id']);
-						
-						$admin=new GenerateAdminClass('characteristic_cat');
-						
-						$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'id' => $_GET['id']));
-						
-						$admin->set_url_post($url_post);
-						
-						$admin->arr_fields=array('idcat');
-						
-						$admin->where_sql='where idcharacteristic='.$_GET['id'];
-						
-						$admin->show();
-						
-					}
-				
-				break;
+				}
 			
-			}
-			
-		//}
+			break;
+		
+		}
 	
 	}
 	
@@ -104,6 +95,8 @@ class CustomProductClass {
 		
 			echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics'].' - '.PhangoVar::$model['product']->components['title']->show_formatted($arr_product['title']).'</h3>';
 			
+			//Need obtain the category  and fathers.
+			
 			//Load relationship of this product
 			
 			$arr_relationship=PhangoVar::$model['product_relationship']->select_to_array('where product_relationship.idproduct='.$_GET['IdProduct'], array('idcat_product'), 1);
@@ -117,11 +110,9 @@ class CustomProductClass {
 			
 			}
 			
+			//Load all cat products id for order. 
+			
 			$arr_order_cat=array();
-			
-			//print_r($arr_id_cat_prod);
-			
-			//Need obtain the category  and fathers.
 			
 			$arr_id_cat=PhangoVar::$model['cat_product']->select_to_array('', array('IdCat_product', 'subcat'));
 			
@@ -130,30 +121,9 @@ class CustomProductClass {
 			foreach($arr_id_cat as $id => $arr_subcat)
 			{
 			
-				/*if(in_array($id, $arr_id_cat_prod))
-				{
-				
-					
-				
-				}*/
-				
-				//6->5->4
 				$arr_order_cat[$id][]=$arr_subcat['subcat'];
 			
 			}
-			
-			/*echo '<pre>';
-			$arr_final_cat=array();
-			
-			foreach($arr_id_cat_prod as $id)
-			{
-				//echo $id;
-				
-				print_r(load_hierarchy_cat($arr_order_cat, $arr_final_cat, $id));
-				
-			}
-			
-			echo '</pre>';*/
 			
 			$arr_final_cat[0]=0;
 			
@@ -164,16 +134,15 @@ class CustomProductClass {
 				
 			}
 			
-			$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')');
+			//order recursively
 			
-			//print_r($arr_chars);
+			$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')');
 			
 			echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
 			
 			foreach($arr_chars as $arr_char)
 			{
 				
-			
 				echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcharacteristic']), PhangoVar::$lang['shop']['edit_options']) );
 			
 			}
@@ -181,17 +150,6 @@ class CustomProductClass {
 			echo down_table_config();
 		
 		}
-		
-		/*switch($_GET['op_plugin'])
-		{
-		
-			default:
-		
-				
-		
-			break;
-		
-		}*/
 	
 	}
 
