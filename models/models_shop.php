@@ -1371,9 +1371,13 @@ PhangoVar::$model['characteristic_standard_option']->set_component('added_price'
 
 PhangoVar::$model['characteristic_standard_option']->set_component('idcharacteristic', 'ForeignKeyField', array('characteristic'), 1);
 
+PhangoVar::$model['characteristic_standard_option']->set_component('idproduct', 'ForeignKeyField', array('product'), 0);
+
+PhangoVar::$model['characteristic_standard_option']->set_component('position', 'IntegerField', array(), 0);
+
 //Options for product
 
-PhangoVar::$model['characteristic_option']=new Webmodel('characteristic_option');
+/*PhangoVar::$model['characteristic_option']=new Webmodel('characteristic_option');
 
 PhangoVar::$model['characteristic_option']->set_component('name', 'I18nField', array(new TextField()), 1);
 
@@ -1383,7 +1387,7 @@ PhangoVar::$model['characteristic_option']->set_component('characteristic', 'For
 
 PhangoVar::$model['characteristic_option']->set_component('add', 'BooleanField', array(), 0);
 
-PhangoVar::$model['characteristic_option']->set_component('idproduct', 'ForeignKeyField', array('product'), 1);
+PhangoVar::$model['characteristic_option']->set_component('idproduct', 'ForeignKeyField', array('product'), 1);*/
 
 //Moneyfield
 

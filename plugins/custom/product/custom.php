@@ -99,6 +99,8 @@ class CustomProductClass {
 					
 					$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => $_GET['op_plugin'], 'id' => $_GET['id']));
 					
+					$admin->arr_fields_edit=array('name', 'added_price', 'idcharacteristic');
+					
 					$admin->set_url_post($url_post);
 					
 					$admin->arr_fields=array('name');
