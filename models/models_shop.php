@@ -1344,6 +1344,12 @@ PhangoVar::$model['characteristic']=new Webmodel('characteristic');
 
 PhangoVar::$model['characteristic']->set_component('name', 'I18nField', array(new TextField()), 1);
 
+//The type search in directory php files with forms. The value always is text.
+
+PhangoVar::$model['characteristic']->set_component('type', 'CharField', array(255), 1);
+
+//Children of characteristic
+
 PhangoVar::$model['characteristic_cat']=new Webmodel('characteristic_cat');
 
 PhangoVar::$model['characteristic_cat']->set_component('idcat', 'ForeignKeyField', array('cat_product'), 1);
@@ -1359,9 +1365,11 @@ PhangoVar::$model['characteristic_standard_option']=new Webmodel('characteristic
 
 PhangoVar::$model['characteristic_standard_option']->set_component('name', 'I18nField', array(new TextField()), 1);
 
-PhangoVar::$model['characteristic_standard_option']->set_component('characteristic', 'ForeignKeyField', array('characteristic'), 1);
+PhangoVar::$model['characteristic_standard_option']->set_component('added_price', 'MoneyField', array(), 0);
 
-PhangoVar::$model['characteristic_standard_option']->set_component('idproduct', 'ForeignKeyField', array('product'), 1);
+//PhangoVar::$model['characteristic_standard_option']->set_component('characteristic', 'ForeignKeyField', array('characteristic'), 1);
+
+PhangoVar::$model['characteristic_standard_option']->set_component('idcharacteristic', 'ForeignKeyField', array('characteristic'), 1);
 
 //Options for product
 

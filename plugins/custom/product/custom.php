@@ -75,6 +75,41 @@ class CustomProductClass {
 				}
 			
 			break;
+			
+			case 2:
+			
+				settype($_GET['id'], 'integer');
+				
+				$arr_cat=PhangoVar::$model['characteristic']->select_a_row($_GET['id'], array(), 1);
+				
+				settype($arr_cat['IdCharacteristic'], 'integer');
+				
+				if($arr_cat['IdCharacteristic']>0)
+				{
+				
+					echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics_option'].' - '.I18nField::show_formatted($arr_cat['name']).'</h3>';
+			
+					PhangoVar::$model['characteristic_standard_option']->create_form();
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['idcharacteristic']->form='HiddenForm';
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['idcharacteristic']->set_parameter_value($_GET['id']);
+				
+					$admin=new GenerateAdminClass('characteristic_standard_option');
+					
+					$url_post=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => $_GET['op_plugin'], 'id' => $_GET['id']));
+					
+					$admin->set_url_post($url_post);
+					
+					$admin->arr_fields=array('name');
+					
+					//$admin->options_func='CustomOptionsListModel';
+					
+					$admin->show();
+					
+				}
+			
+			break;
 		
 		}
 	
@@ -99,55 +134,72 @@ class CustomProductClass {
 			
 			//Load relationship of this product
 			
-			$arr_relationship=PhangoVar::$model['product_relationship']->select_to_array('where product_relationship.idproduct='.$_GET['IdProduct'], array('idcat_product'), 1);
-			
-			$arr_id_cat_prod=array();
-			
-			foreach($arr_relationship as $arr_rel)
+			switch($_GET['op_plugin'])
 			{
 			
-				$arr_id_cat_prod[]=$arr_rel['idcat_product'];
+				default:
 			
-			}
-			
-			//Load all cat products id for order. 
-			
-			$arr_order_cat=array();
-			
-			$arr_id_cat=PhangoVar::$model['cat_product']->select_to_array('', array('IdCat_product', 'subcat'));
-			
-			$arr_order_cat[0]=array(0 => 0);
-			
-			foreach($arr_id_cat as $id => $arr_subcat)
-			{
-			
-				$arr_order_cat[$id][]=$arr_subcat['subcat'];
-			
-			}
-			
-			$arr_final_cat[0]=0;
-			
-			foreach($arr_id_cat_prod as $id)
-			{
-			
-				$arr_final_cat=load_hierarchy_cat($arr_order_cat, $arr_final_cat, $id);
+				$arr_relationship=PhangoVar::$model['product_relationship']->select_to_array('where product_relationship.idproduct='.$_GET['IdProduct'], array('idcat_product'), 1);
+				
+				$arr_id_cat_prod=array();
+				
+				foreach($arr_relationship as $arr_rel)
+				{
+				
+					$arr_id_cat_prod[]=$arr_rel['idcat_product'];
+				
+				}
+				
+				//Load all cat products id for order. 
+				
+				$arr_order_cat=array();
+				
+				$arr_id_cat=PhangoVar::$model['cat_product']->select_to_array('', array('IdCat_product', 'subcat'));
+				
+				$arr_order_cat[0]=array(0 => 0);
+				
+				foreach($arr_id_cat as $id => $arr_subcat)
+				{
+				
+					$arr_order_cat[$id][]=$arr_subcat['subcat'];
+				
+				}
+				
+				$arr_final_cat[0]=0;
+				
+				foreach($arr_id_cat_prod as $id)
+				{
+				
+					$arr_final_cat=load_hierarchy_cat($arr_order_cat, $arr_final_cat, $id);
+					
+				}
+				
+				//order recursively
+				
+				$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')');
+				
+				echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
+				
+				foreach($arr_chars as $arr_char)
+				{
+				
+					$url_set_options=set_plugin_link_product($arr_product['IdProduct'], $_GET['plugin'], 1);//set_admin_link('shop', array('op' => 22, 'IdProduct' => $arr_product['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1));
+					
+					echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcharacteristic']), '<a href="'.$url_set_options.'">'.PhangoVar::$lang['shop']['edit_options'].'</a>') );
+				
+				}
+				
+				echo down_table_config();
+				
+				break;
+				
+				case 1:
+				
+					
+				
+				break;
 				
 			}
-			
-			//order recursively
-			
-			$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')');
-			
-			echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
-			
-			foreach($arr_chars as $arr_char)
-			{
-				
-				echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcharacteristic']), PhangoVar::$lang['shop']['edit_options']) );
-			
-			}
-			
-			echo down_table_config();
 		
 		}
 	
@@ -191,7 +243,9 @@ function CustomOptionsListModel($url_options, $model_name, $id)
 	
 	$url=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'id' => $id));
 	
-	$arr_options[]='<a href="'. $url.'">'.PhangoVar::$lang['shop']['add_standard_options'].'</a>';
+	$url_standard=set_admin_link('shop', array('op' => 23, 'element_choice' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'id' => $id));
+	
+	$arr_options[]='<a href="'. $url_standard.'">'.PhangoVar::$lang['shop']['add_standard_options'].'</a>';
 	$arr_options[]='<a href="'. $url.'">'.PhangoVar::$lang['shop']['add_characteristic_to_cat'].'</a>';
 
 	return $arr_options;
