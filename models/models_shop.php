@@ -1344,7 +1344,7 @@ PhangoVar::$model['characteristic']=new Webmodel('characteristic');
 
 PhangoVar::$model['characteristic']->set_component('name', 'I18nField', array(new TextField()), 1);
 
-//The type search in directory php files with forms. The value always is text.
+//The type search in an array in config, can be for example TextForm or ColorForm with a color picker. The value always is text. TextForm is the key, the value is the explain text. If is an array with explain text and library path for load. I can use a table with 3 fields, form, name and path if need load the thing.
 
 PhangoVar::$model['characteristic']->set_component('type', 'CharField', array(255), 1);
 
@@ -1378,6 +1378,10 @@ PhangoVar::$model['characteristic_option']=new Webmodel('characteristic_option')
 PhangoVar::$model['characteristic_option']->set_component('name', 'I18nField', array(new TextField()), 1);
 
 PhangoVar::$model['characteristic_option']->set_component('characteristic', 'ForeignKeyField', array('characteristic'), 1);
+
+//If false, this option is deleted for standard, if is add, is added to this product. 
+
+PhangoVar::$model['characteristic_option']->set_component('add', 'BooleanField', array(), 0);
 
 PhangoVar::$model['characteristic_option']->set_component('idproduct', 'ForeignKeyField', array('product'), 1);
 
