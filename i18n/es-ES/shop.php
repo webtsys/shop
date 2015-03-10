@@ -268,6 +268,8 @@ PhangoVar::$lang['shop']['edit_options']='edit_options';
 
 PhangoVar::$lang['shop']['add_standard_options']='add_standard_options';
 
+PhangoVar::$lang['shop']['delete_option_from_product']='delete_option_from_product';
+
 PhangoVar::$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
 
 PhangoVar::$lang['shop']['checkout_order']='Pagar pedido';

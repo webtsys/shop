@@ -178,14 +178,16 @@ class CustomProductClass {
 				
 				//order recursively
 				
-				$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')');
+				PhangoVar::$model['characteristic_cat']->components['idcharacteristic']->fields_related_model=array('IdCharacteristic');
+				
+				$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')', array());
 				
 				echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
 				
 				foreach($arr_chars as $arr_char)
 				{
 				
-					$url_set_options=set_plugin_link_product($arr_product['IdProduct'], $_GET['plugin'], 1);//set_admin_link('shop', array('op' => 22, 'IdProduct' => $arr_product['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1));
+					$url_set_options=set_admin_link('shop', array('op' => 22, 'IdProduct' => $arr_product['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $arr_char['characteristic_IdCharacteristic']));
 					
 					echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcharacteristic']), '<a href="'.$url_set_options.'">'.PhangoVar::$lang['shop']['edit_options'].'</a>') );
 				
@@ -196,6 +198,27 @@ class CustomProductClass {
 				break;
 				
 				case 1:
+				
+					settype($_GET['IdProduct'], 'integer');
+					settype($_GET['idcharacteristic'], 'integer');
+				
+					$admin=new GenerateAdminClass('characteristic_standard_option');
+					
+					$admin->arr_fields=array('name');
+					
+					$admin->set_url_post(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'])));
+					
+					$admin->where_sql='where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].')';
+					
+					$admin->no_search=1;
+					
+					$admin->options_func='SetOptionsListModel';
+					
+					$admin->show();
+				
+				break;
+				
+				case 2:
 				
 					
 				
@@ -254,6 +277,18 @@ function CustomOptionsListModel($url_options, $model_name, $id)
 
 }
 
+function SetOptionsListModel($url_options, $model_name, $id)
+{
+
+	//$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	
+	$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic']));
+	
+	$arr_options[]='<a href="'. $url.'">'.PhangoVar::$lang['shop']['delete_option_from_product'].'</a>';
+
+	return $arr_options;
+
+}
 
 
 ?>
