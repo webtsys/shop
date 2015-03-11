@@ -266,6 +266,8 @@ PhangoVar::$lang['shop']['add_product_characteristics_option']='add_product_char
 
 PhangoVar::$lang['shop']['edit_options']='edit_options';
 
+PhangoVar::$lang['shop']['add_new_option']='add_new_option';
+
 PhangoVar::$lang['shop']['add_standard_options']='add_standard_options';
 
 PhangoVar::$lang['shop']['delete_option_from_product']='delete_option_from_product';

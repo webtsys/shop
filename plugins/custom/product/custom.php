@@ -202,7 +202,7 @@ class CustomProductClass {
 					settype($_GET['IdProduct'], 'integer');
 					settype($_GET['idcharacteristic'], 'integer');
 				
-					$admin=new GenerateAdminClass('characteristic_standard_option');
+					/*$admin=new GenerateAdminClass('characteristic_standard_option');
 					
 					$admin->arr_fields=array('name');
 					
@@ -214,13 +214,50 @@ class CustomProductClass {
 					
 					$admin->options_func='SetOptionsListModel';
 					
-					$admin->show();
+					$admin->show();*/
+					
+					echo '<p><a href="'.set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'])).'">'.PhangoVar::$lang['shop']['add_new_option'].'</a></p>';
+					
+					$arr_chars=PhangoVar::$model['characteristic_standard_option']->select_to_array('where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].') order by position ASC', array(), 1);
+					
+					echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
+					
+					foreach($arr_chars as $id => $arr_char)
+					{
+					
+						$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $id));
+						
+						if($arr_char['add']==0)
+						{
+					
+							echo middle_table_config( array(I18nField::show_formatted($arr_char['name']), '<a href="'.$url.'" class="check_click">'.PhangoVar::$lang['common']['delete'].'</a>') );
+							
+						}
+						else
+						{
+						
+							
+						
+						}
+						
+					
+					}
+					
+					echo down_table_config();
+					
+					//print_r($arr_chars);
+					
+					
 				
 				break;
 				
 				case 2:
 				
+					settype($_GET['IdProduct'], 'integer');
+					settype($_GET['idcharacteristic'], 'integer');
+					settype($_GET['idcharacteristic_option'], 'integer');
 					
+					//PhangoVar::$model['characteristic_standard_option']->insert();
 				
 				break;
 				
