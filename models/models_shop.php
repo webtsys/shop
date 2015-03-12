@@ -1375,9 +1375,9 @@ PhangoVar::$model['characteristic_standard_option']->set_component('idproduct', 
 
 PhangoVar::$model['characteristic_standard_option']->set_component('position', 'IntegerField', array(), 0);
 
-PhangoVar::$model['characteristic_standard_option']->set_component('add', 'BooleanField', array(), 0);
+//PhangoVar::$model['characteristic_standard_option']->set_component('add', 'BooleanField', array(), 0);
 
-PhangoVar::$model['characteristic_standard_option']->set_component('option_substr', 'IntegerField', array(), 0);
+PhangoVar::$model['characteristic_standard_option']->set_component('option_delete', 'IntegerField', array(), 0);
 
 //Options for product
 

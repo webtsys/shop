@@ -105,6 +105,8 @@ class CustomProductClass {
 					
 					$admin->arr_fields=array('name');
 					
+					$admin->where_sql='where option_delete=0 and idproduct IS NULL';
+					
 					//$admin->options_func='CustomOptionsListModel';
 					
 					$admin->show();
@@ -218,7 +220,16 @@ class CustomProductClass {
 					
 					echo '<p><a href="'.set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'])).'">'.PhangoVar::$lang['shop']['add_new_option'].'</a></p>';
 					
-					$arr_chars=PhangoVar::$model['characteristic_standard_option']->select_to_array('where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].') order by position ASC', array(), 1);
+					$arr_chars=PhangoVar::$model['characteristic_standard_option']->select_to_array('where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].') order by position ASC, name ASC', array(), 1);
+					
+					$arr_deleted_char=array();
+					
+					foreach($arr_chars as $id => $arr_char)
+					{
+					
+						$arr_deleted_char[$arr_char['option_delete']]=$id;
+					
+					}
 					
 					echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
 					
@@ -227,7 +238,16 @@ class CustomProductClass {
 					
 						$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $id));
 						
-						if($arr_char['add']==0)
+						settype($arr_deleted_char[$id], 'integer');
+						
+						if(!$arr_deleted_char[$id] && $arr_char['name']!='')
+						{
+						
+							echo middle_table_config( array(I18nField::show_formatted($arr_char['name']), '<a href="'.$url.'" class="check_click">'.PhangoVar::$lang['common']['delete'].'</a>') );
+						
+						}
+						
+						/*if($arr_char['option_delete']==0)
 						{
 					
 							echo middle_table_config( array(I18nField::show_formatted($arr_char['name']), '<a href="'.$url.'" class="check_click">'.PhangoVar::$lang['common']['delete'].'</a>') );
@@ -238,7 +258,7 @@ class CustomProductClass {
 						
 							
 						
-						}
+						}*/
 						
 					
 					}
@@ -253,11 +273,66 @@ class CustomProductClass {
 				
 				case 2:
 				
+					settype($_GET['plugin'], 'string');
 					settype($_GET['IdProduct'], 'integer');
 					settype($_GET['idcharacteristic'], 'integer');
 					settype($_GET['idcharacteristic_option'], 'integer');
 					
-					//PhangoVar::$model['characteristic_standard_option']->insert();
+					load_libraries(array('redirect'));
+					
+					PhangoVar::$model['characteristic_standard_option']->reset_require();
+					
+					//option_delete idproduct, idcharacteristic
+					
+					$url_back=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $_GET['idcharacteristic_option']));
+					
+					$arr_post=array('option_delete' => $_GET['idcharacteristic_option'], 'idproduct' => $_GET['IdProduct'], 'idcharacteristic' => $_GET['idcharacteristic']);
+					
+					PhangoVar::$model['characteristic_standard_option']->insert($arr_post);
+					
+					simple_redirect( $url_back, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']);
+				
+				break;
+				
+				case 3:
+				
+					settype($_GET['plugin'], 'string');
+					settype($_GET['IdProduct'], 'integer');
+					settype($_GET['idcharacteristic'], 'integer');
+					settype($_GET['idcharacteristic_option'], 'integer');
+				
+					/*if(!isset($_GET['op_action']))
+					{
+					
+						$_GET['op_action']=1;
+					
+					}*/
+					
+					PhangoVar::$model['characteristic_standard_option']->create_form();
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['idcharacteristic']->form='HiddenForm';
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['idcharacteristic']->set_parameter_value($_GET['idcharacteristic']);
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['idproduct']->form='HiddenForm';
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['idproduct']->set_parameter_value($_GET['IdProduct']);
+				
+					echo '<h3>'.PhangoVar::$lang['shop']['add_product_option'].'</h3>';
+					
+					$admin=new GenerateAdminClass('characteristic_standard_option');
+					
+					$admin->arr_fields=array('name');
+					
+					$admin->set_url_post(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'])));
+					
+					$admin->set_url_back(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'])));
+					
+					//$admin->where_sql='where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].')';
+					
+					$admin->arr_fields_edit=array('name', 'added_price', 'idcharacteristic', 'idproduct');
+					
+					$admin->insert_model_form();
 				
 				break;
 				
