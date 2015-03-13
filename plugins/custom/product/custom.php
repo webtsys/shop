@@ -5,6 +5,15 @@ load_libraries(array('table_config'));
 
 class CustomProductClass {
 
+	public function show_plugin_product($arr_row)
+	{
+	
+		
+	
+		return $tpl_plugin;
+	
+	}
+
 	public function admin_show_options($arr_row)
 	{
 	
