@@ -256,23 +256,23 @@ PhangoVar::$lang['shop']['success_buy']='Se añadio este producto al carrito de 
 
 PhangoVar::$lang['shop']['error_buy_ajax']='Error en compra mediante ajax';
 
-PhangoVar::$lang['shop']['add_custom_characteristics']='add_custom_characteristics';
+PhangoVar::$lang['shop']['add_custom_characteristics']='Añadir nuevas características';
 
-PhangoVar::$lang['shop']['add_product_characteristics']='add_product_characteristics';
+PhangoVar::$lang['shop']['add_product_characteristics']='Añadir opciones a esta característica';
 
-PhangoVar::$lang['shop']['add_characteristic_to_cat']='add_characteristic_to_cat';
+PhangoVar::$lang['shop']['add_characteristic_to_cat']='Añadir característica a categoría';
 
-PhangoVar::$lang['shop']['add_product_characteristics_option']='add_product_characteristics_option';
+PhangoVar::$lang['shop']['add_product_characteristics_option']='Añadir opciones';
 
-PhangoVar::$lang['shop']['edit_options']='edit_options';
+PhangoVar::$lang['shop']['edit_options']='Editar opciones';
 
-PhangoVar::$lang['shop']['add_new_option']='add_new_option';
+PhangoVar::$lang['shop']['add_new_option']='Añadir nueva opción';
 
-PhangoVar::$lang['shop']['add_product_option']='add_product_option';
+PhangoVar::$lang['shop']['add_product_option']='Añadir opción de producto';
 
-PhangoVar::$lang['shop']['add_standard_options']='add_standard_options';
+PhangoVar::$lang['shop']['add_standard_options']='Añadir opciones estandard';
 
-PhangoVar::$lang['shop']['delete_option_from_product']='delete_option_from_product';
+PhangoVar::$lang['shop']['delete_option_from_product']='Borrar esta opción para este producto';
 
 PhangoVar::$lang['shop']['paypal_explain']='Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.';
 

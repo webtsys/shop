@@ -16,7 +16,15 @@ class CustomProductClass {
 	{
 	
 		settype($_GET['op_plugin'], 'integer');
-
+		settype($_GET['id'], 'integer');
+		
+		//$arr_menu[0]=array(PhangoVar::$lang['plugin_product_admin_home'], set_admin_link('shop', array('op' => 22)) );
+		
+		$arr_menu[0]=array(PhangoVar::$lang['shop']['plugin_product_admin_home'], set_admin_link('shop', array('op' => 23, 'plugin' => $_GET['plugin'], 'element_choice' => 'product', 'op_plugin' => 0)) );
+		
+		$arr_menu[1]=array(PhangoVar::$lang['shop']['add_characteristic_to_cat'], set_admin_link('shop', array('op' => 23, 'plugin' => $_GET['plugin'], 'element_choice' => 'product', 'op_plugin' => 1, 'id' => $_GET['id'])) );
+		
+		echo '<a href="'.set_admin_link('shop', array('op' => 20, 'element_choice' => 'product')).'">'.PhangoVar::$lang['shop']['plugin_admin'].'</a> &gt;&gt; '.menu_barr_hierarchy($arr_menu, 'op_plugin', $yes_last_link=0, $arr_final_menu=array(), $return_arr_menu=0);
 	
 		switch($_GET['op_plugin'])
 		{
@@ -122,8 +130,13 @@ class CustomProductClass {
 	public function admin_plugin_product()
 	{
 	
+		settype($_GET['idcat'], 'integer');
 		settype($_GET['IdProduct'], 'integer');
 		settype($_GET['op_plugin'], 'integer');
+		settype($_GET['plugin'], 'string');
+		settype($_GET['IdProduct'], 'integer');
+		settype($_GET['idcharacteristic'], 'integer');
+		settype($_GET['idcharacteristic_option'], 'integer');
 		
 		$arr_product=PhangoVar::$model['product']->select_a_row($_GET['IdProduct']);
 		
@@ -131,6 +144,11 @@ class CustomProductClass {
 		
 		if($arr_product['IdProduct']>0)
 		{
+		
+			$arr_menu[0]=array(PhangoVar::$lang['shop']['add_product_characteristics'], set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 0, 'idcat' => $_GET['idcat'])));
+			$arr_menu[1]=array(PhangoVar::$lang['shop']['add_new_option'], set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat'])) );
+			
+			echo '<a href="'.set_admin_link('shop', array('op' => 3, 'idcat' => $_GET['idcat'])).'">'.PhangoVar::$lang['shop']['products'].'</a> &gt;&gt; '.menu_barr_hierarchy($arr_menu, 'op_plugin', $yes_last_link=0, $arr_final_menu=array(), $return_arr_menu=0);
 		
 			echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics'].' - '.PhangoVar::$model['product']->components['title']->show_formatted($arr_product['title']).'</h3>';
 			
@@ -189,7 +207,7 @@ class CustomProductClass {
 				foreach($arr_chars as $arr_char)
 				{
 				
-					$url_set_options=set_admin_link('shop', array('op' => 22, 'IdProduct' => $arr_product['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $arr_char['characteristic_IdCharacteristic']));
+					$url_set_options=set_admin_link('shop', array('op' => 22, 'IdProduct' => $arr_product['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $arr_char['characteristic_IdCharacteristic'], 'idcat' => $_GET['idcat']));
 					
 					echo middle_table_config( array(PhangoVar::$model['characteristic']->components['name']->show_formatted($arr_char['idcharacteristic']), '<a href="'.$url_set_options.'">'.PhangoVar::$lang['shop']['edit_options'].'</a>') );
 				
@@ -218,7 +236,7 @@ class CustomProductClass {
 					
 					$admin->show();*/
 					
-					echo '<p><a href="'.set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'])).'">'.PhangoVar::$lang['shop']['add_new_option'].'</a></p>';
+					echo '<p><a href="'.set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat'])).'">'.PhangoVar::$lang['shop']['add_new_option'].'</a></p>';
 					
 					$arr_chars=PhangoVar::$model['characteristic_standard_option']->select_to_array('where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].') order by position ASC, name ASC', array(), 1);
 					
@@ -236,7 +254,7 @@ class CustomProductClass {
 					foreach($arr_chars as $id => $arr_char)
 					{
 					
-						$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $id));
+						$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $id, 'idcat' => $_GET['idcat']));
 						
 						settype($arr_deleted_char[$id], 'integer');
 						
@@ -284,7 +302,7 @@ class CustomProductClass {
 					
 					//option_delete idproduct, idcharacteristic
 					
-					$url_back=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $_GET['idcharacteristic_option']));
+					$url_back=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $_GET['idcharacteristic_option'], 'idcat' => $_GET['idcat']));
 					
 					$arr_post=array('option_delete' => $_GET['idcharacteristic_option'], 'idproduct' => $_GET['IdProduct'], 'idcharacteristic' => $_GET['idcharacteristic']);
 					
@@ -324,9 +342,9 @@ class CustomProductClass {
 					
 					$admin->arr_fields=array('name');
 					
-					$admin->set_url_post(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'])));
+					$admin->set_url_post(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat'])));
 					
-					$admin->set_url_back(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'])));
+					$admin->set_url_back(set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 1, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat'])));
 					
 					//$admin->where_sql='where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].')';
 					
@@ -369,7 +387,7 @@ function load_hierarchy_cat($arr_order_cat, $arr_final_cat, $id)
 function set_plugin_link_product($idproduct, $plugin, $op_plugin)
 {
 
-	return set_admin_link('shop', array('op' => 22, 'IdProduct' => $idproduct, 'type' => 'product', 'plugin' => $plugin, 'op_plugin' => $op_plugin));
+	return set_admin_link('shop', array('op' => 22, 'IdProduct' => $idproduct, 'type' => 'product', 'plugin' => $plugin, 'op_plugin' => $op_plugin, 'idcat' => $_GET['idcat']));
 
 }
 
@@ -394,7 +412,7 @@ function SetOptionsListModel($url_options, $model_name, $id)
 
 	//$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic']));
+	$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat']));
 	
 	$arr_options[]='<a href="'. $url.'">'.PhangoVar::$lang['shop']['delete_option_from_product'].'</a>';
 
