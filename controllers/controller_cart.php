@@ -189,9 +189,9 @@ class CartSwitchClass extends ControllerSwitchClass
 			if(!$this->login->check_login())
 			{
 						
-				//echo load_view(array($this->login), 'shop/forms/registerform');
+				echo load_view(array($this->login), 'shop/forms/registershopform');
 				
-				$this->login->create_account_form();
+				//$this->login->create_account_form();
 				
 				echo load_view(array($this->login), 'shop/forms/loginshopform');
 		

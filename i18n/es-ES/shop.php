@@ -332,11 +332,15 @@ PhangoVar::$lang['shop']['payment_type']='Tipo de pago';
 
 PhangoVar::$lang['shop']['send_order_and_checkout']='Enviar pedido y pagar';
 
+PhangoVar::$lang['shop']['cancel_order']='Cancelar pedido';
+
 PhangoVar::$lang['shop']['choose_transport']='Elegir transporte';
 
 PhangoVar::$lang['shop']['explain_choose_transport']='Por favor, eliga su método de transporte';
 
 PhangoVar::$lang['shop']['address_billing']='Dirección de facturación';
+
+PhangoVar::$lang['shop']['register_explain']='Por favor, rellene este simple formulario para comenzar el proceso de compra si no está registrado.';
 
 PhangoVar::$lang['shop']['choose_address_transport']='Elegir dirección de transporte';
 
@@ -411,8 +415,6 @@ PhangoVar::$lang['shop']['you_choose_a_country_that_have_taxes_about_this_produc
 PhangoVar::$lang['shop']['order_submited_show_order_and_prices']='Pedido procesado. Le presentamos su petición y el precio.';
 
 PhangoVar::$lang['shop']['explain_send_order_and_checkout']='Ahora que se ha procesado su pedido, por favor, proceda a su pago.';
-
-PhangoVar::$lang['shop']['cancel_order']='Cancelar pedido';
 
 PhangoVar::$lang['shop']['order']='Pedido';
 
