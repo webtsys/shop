@@ -19,6 +19,7 @@ function AddressFormView()
 		echo '<span class="error">'.PhangoVar::$model['user_shop']->std_error.'</span>';
 		
 		?>
+		<p class="error"><?php echo PhangoVar::$lang['common']['with_*_field_required']; ?></p>
 		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" /></p>
 		</form>
 	</div>

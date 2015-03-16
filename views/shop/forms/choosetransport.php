@@ -43,6 +43,7 @@ function ChooseTransportView($arr_transport, $total_price_product, $total_weight
 		}
 		
 		?>
+		<p class="error"><?php echo PhangoVar::$lang['common']['with_*_field_required']; ?></p>
 		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>"  /></p>
 		</form>
 		<?php

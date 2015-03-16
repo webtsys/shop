@@ -11,13 +11,13 @@ class FjscriptSwitchClass extends ControllerSwitchClass {
 		
 		$original_base_url=PhangoVar::$base_url;
 		
-		load_libraries(array('config_shop'), PhangoVar::$base_path.'modules/shop/libraries/');
+		load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
 
 		load_model('shop');
 
-		settype($_COOKIE['webtsys_shop'], 'string');
+		$cart=new CartClass();
 
-		$token=$_COOKIE['webtsys_shop'];
+		$token=$cart->token;
 		
 		settype($_SERVER ['HTTP_REFERER'], 'string');
 

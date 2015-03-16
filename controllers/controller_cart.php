@@ -881,6 +881,24 @@ class CartSwitchClass extends ControllerSwitchClass
 		$this->load_theme(PhangoVar::$lang['shop']['cart'], $cont_index);
 	
 	}
+	
+	public function cancel_order()
+	{
+	
+		$this->cart->cancel_order();
+		
+		$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+	
+	}
+	
+	public function logout()
+	{
+	
+		$this->login->logout();
+	
+		$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+	
+	}
 
 	
 }

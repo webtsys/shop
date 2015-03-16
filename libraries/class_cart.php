@@ -13,7 +13,7 @@ class CartClass {
 		if(!isset($_COOKIE['webtsys_shop']))
 		{
 			
-			$this->create_new_token();
+			$token=$this->create_new_token();
 		
 		}
 		else
@@ -50,6 +50,8 @@ class CartClass {
 		$token=sha1(uniqid(rand(), true));
 
 		setcookie  ( 'webtsys_shop', $token, 0, PhangoVar::$cookie_path);
+		
+		return $token;
 	
 	}
 	
@@ -736,6 +738,13 @@ class CartClass {
 			echo '<p>'.PhangoVar::$lang['shop']['error_cannot_send_email'].', '.PhangoVar::$lang['shop']['use_this_id_for_contact_with_us'].': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
 
 		}
+	
+	}
+	
+	public function cancel_order()
+	{
+	
+		return PhangoVar::$model['order_shop']->delete('where token="'.$this->token.'"');
 	
 	}
 

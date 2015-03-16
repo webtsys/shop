@@ -98,6 +98,7 @@ function TransportFormView($arr_transport, $only_form=0)
 		echo '<span class="error">'.PhangoVar::$model['address_transport']->std_error.'</span>';
 		
 		?>
+		<p class="error"><?php echo PhangoVar::$lang['common']['with_*_field_required']; ?></p>
 		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" /></p>
 		</form>
 	</div>
