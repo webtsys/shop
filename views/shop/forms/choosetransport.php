@@ -32,7 +32,7 @@ function ChooseTransportView($arr_transport, $total_price_product, $total_weight
 		
 			$arr_choose_transport[0]=$arr_transport_id[0];
 		
-			echo RadioIntForm($name="idtransport", $class='', $arr_choose_transport, $more_options='');
+			echo '<p>'.RadioIntForm($name="idtransport", $class='', $arr_choose_transport, $more_options='').'</p>';
 		
 		}
 		else

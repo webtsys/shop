@@ -30,7 +30,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 		
 		?>
 		
-			<strong><?php echo $name_transport; ?>: <?php echo MoneyField::currency_format($price_transport); ?></strong>
+			<p><strong><?php echo $name_transport; ?>: <?php echo MoneyField::currency_format($price_transport); ?></strong></p>
 		
 		<?php
 		

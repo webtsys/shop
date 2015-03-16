@@ -54,7 +54,7 @@ function TransportFormView($arr_transport, $only_form=0)
 	else
 	{
 		?>
-		<form method="get" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_choose_address_transport'); ?>">
+		<form class="form" method="get" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_choose_address_transport'); ?>">
 		<?php
 	
 		$arr_choose_transport=array(0);
@@ -72,7 +72,7 @@ function TransportFormView($arr_transport, $only_form=0)
 		
 		$arr_choose_transport[0]=$arr_transport_id[0];
 		
-		echo RadioIntForm($name="idaddress", $class='', $arr_choose_transport, $more_options='');
+		echo '<p>'.RadioIntForm($name="idaddress", $class='', $arr_choose_transport, $more_options='').'</p>';
 		
 		?>
 		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>"  /></p>

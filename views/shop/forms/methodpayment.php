@@ -13,7 +13,7 @@ function MethodPaymentView($arr_payment)
 	<h3><?php echo PhangoVar::$lang['shop']['payment_type']; ?></h3>
 	<?php
 
-		echo SelectForm('payment_form', '', $arr_payment );
+		echo '<p>'.SelectForm('payment_form', '', $arr_payment ).'</p>';
 	
 	?>
 	<p><input type="submit" value="<?php echo PhangoVar::$lang['shop']['send_order_and_checkout']; ?>" /></p>
