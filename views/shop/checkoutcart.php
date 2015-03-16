@@ -52,6 +52,8 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	
 	}
 	
+	$arr_address['country']=I18nField::show_formatted($arr_address['country']);
+	
 	ModelForm::set_values_form($arr_address, PhangoVar::$model['user_shop']->forms, $show_error=1);
 	
 	echo load_view(array(PhangoVar::$model['user_shop']->forms, ConfigShop::$arr_fields_address), 'common/forms/modelform');

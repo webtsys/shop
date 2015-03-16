@@ -264,9 +264,9 @@ PhangoVar::$lang['shop']['add_characteristic_to_cat']='Añadir característica a
 
 PhangoVar::$lang['shop']['add_product_characteristics_option']='Añadir opciones';
 
-PhangoVar::$lang['shop']['edit_options']='Editar opciones';
-
 PhangoVar::$lang['shop']['add_new_option']='Añadir nueva opción';
+
+PhangoVar::$lang['shop']['edit_options']='Editar opciones';
 
 PhangoVar::$lang['shop']['add_product_option']='Añadir opción de producto';
 
@@ -291,6 +291,8 @@ PhangoVar::$lang['shop']['num_order']='Número de pedido';
 PhangoVar::$lang['shop']['explain_petition']='En este email, le adjuntamos los datos de su pedido. Por favor, guárdelo por si necesita hacer algún tipo de reclamación sobre este.';
 
 PhangoVar::$lang['shop']['if_error_send_email_to']='Si hubo algún error, por favor, envíenos un email a esta dirección';
+
+PhangoVar::$lang['shop']['details']='Detalles';
 
 PhangoVar::$lang['shop']['select_product']='Seleccionar producto';
 

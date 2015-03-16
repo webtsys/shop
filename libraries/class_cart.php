@@ -56,6 +56,7 @@ class CartClass {
 	public function show_cart()
 	{
 		
+		
 		load_lang('shop');
 	
 		load_libraries(array('table_config'));
@@ -88,7 +89,7 @@ class CartClass {
 		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight'));
+		$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight', 'details'));
 		
 		while($arr_product=webtsys_fetch_array($query))
 		{
@@ -100,8 +101,20 @@ class CartClass {
 			//Original price.
 			
 			$arr_price[$arr_product['IdCart_shop']]=$arr_product['price_product'];
+			
+			//Product plugins.
+			
+			/*foreach($plugins_product->arr_plugin_list as $plugin_product)
+			{
+			
+				//$arr_product['
+				
+				$arr_product['details_name']=$plugins_product->arr_plugins[$plugin_product]->prepare_name_plugin($arr_product['details']);
+			
+			}*/
+			
 			$arr_product_cart[$arr_product['IdCart_shop']]=$arr_product;
-
+			
 			//Plugins for add money to value.
 			
 			//$arr_product_cart[$arr_product['idproduct']]['price_product_last']=$arr_product['price_product'];
@@ -224,6 +237,21 @@ class CartClass {
 			
 			if($arr_product['IdProduct']>0)
 			{
+				//Add arr_details from plugins.
+					
+				$plugins=new PreparePluginClass('product');
+				
+				$plugins->obtain_list_plugins();
+				
+				$plugins->load_all_plugins();
+				
+				foreach($plugins->arr_class_plugin as $idclass => $class_cart)
+				{
+					
+					$arr_details=$class_cart->cart_product_insert_data($_POST, $arr_details);
+					
+				}
+			
 				$where_sql='where cart_shop.idproduct='.$idproduct.' and token="'.$this->token.'" and details="'.addslashes(serialize($arr_details)).'"';
 				
 				if(PhangoVar::$model['cart_shop']->select_count($where_sql)==0)
@@ -680,15 +708,17 @@ class CartClass {
 		
 		$arr_address=$arr_order_shop;
 		
+		PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field ='name';
+		
 		$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($arr_order_shop['address_transport_id']);
-	
+		
 		//$arr_order_shop, $arr_address, $arr_address_transport, $iduser_shop
 	
 		load_libraries(array('utilities/set_admin_link', 'send_email'));
 		
 		$arr_address['country']=I18nField::show_formatted(serialize($arr_address['country']));
 		
-		$arr_address_transport['country_transport']=I18nField::show_formatted(serialize($arr_address_transport['country_transport']));
+		$arr_address_transport['country_transport']=I18nField::show_formatted($arr_address_transport['country_transport']);
 		
 		//Prepare email
 		

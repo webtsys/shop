@@ -25,8 +25,24 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	PhangoVar::$arr_cache_header[]=ob_get_contents();
 	
 	ob_end_clean();
+	
+	//Products plugin used in this view.
+	
+	$plugins_product=new PreparePluginClass('product');
+		
+	$plugins_product->obtain_list_plugins();
+
+	$plugins_product->load_all_plugins();
+	
 
 	$fields=array(PhangoVar::$lang['shop']['referer'], PhangoVar::$lang['common']['name'], PhangoVar::$lang['shop']['num_products']);
+	
+	/*if(count($arr_product_cart['details'])>0)
+	{*/
+	
+		$fields[]=PhangoVar::$lang['shop']['details'];
+	
+	//}
 
 	foreach($plugins->arr_plugin_list as $plugin)
 	{
@@ -34,6 +50,8 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		$fields[]=$this->arr_plugins[$plugin]->name_plugin;
 	
 	}
+	
+	//here the plugins applied to this shit.
 	
 	$fields[]=PhangoVar::$lang['shop']['total_price'];
 	
@@ -80,6 +98,25 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		
 		}
 		
+		//Here the plugins applied to products.
+		
+		//a:1:{s:14:"characteristic";a:2:{s:19:"characteristic_name";a:1:{i:0;a:1:{i:0;s:14:"Número de pie";}}s:21:"characteristic_option";a:1:{i:0;a:1:{i:0;s:2:"35";}}}} 
+		
+		$arr_details=unserialize($arr_product['details']);
+		
+		if(count($arr_details)>0)
+		{
+		
+			$arr_row[]=$arr_details['characteristic']['characteristic_name'][0][0].': '.$arr_details['characteristic']['characteristic_option'][0][0];
+			
+		}
+		else
+		{
+		
+			$arr_row[]='';
+		
+		}
+		
 		$arr_row[]=$arr_product['price_product_last_txt'];
 		
 		$set_options_func($arr_product, $arr_row);
@@ -96,7 +133,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	if($z>0)
 	{
-		middle_table_config(array('', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
+		middle_table_config(array('', '', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
 		
 		$text_submit='<input type="submit" value="'.PhangoVar::$lang['shop']['modify_products'].'"/> <input type="button" value="'.PhangoVar::$lang['shop']['checkout_order'].'" id="checkout_order" />';
 	}

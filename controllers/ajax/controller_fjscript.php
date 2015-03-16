@@ -88,19 +88,33 @@ class FjscriptSwitchClass extends ControllerSwitchClass {
 
 		$('#loading_buy_'+idproduct).fadeIn(1000);
 		$('#buying_'+idproduct).fadeIn(1000);
-				
-
 
 		//Put gif in button.
 
 		//$('.ship').html('<img src="<?php echo PhangoVar::$base_url; ?>/media/default/images/loading.gif" />');
 
 		//Make other ajax for buying
-
+		
+		data_product=new Object;
+		
+		data_product['csrf_token']="<?php echo PhangoVar::$key_csrf; ?>";
+		
+		//data_product['IdProduct']=idproduct;
+		
+		$('#details').find(':input').each(function () {
+			
+			name=$(this).attr('name');
+			
+			data_product[name]=$(this).val();
+			
+			//alert(name);
+			
+		})
+		
 		$.ajax({
-			url: "<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_ajax_buy'); ?>",
-			type: "GET",
-			data: "IdProduct="+idproduct,
+			url: "<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_ajax_buy'); ?>/get/IdProduct/"+idproduct,
+			type: "POST",
+			data: data_product,
 			dataType: "json",
 			success: function(data){
 				

@@ -3,9 +3,13 @@
 function MailCartView($arr_address, $arr_address_transport, $arr_order_shop, $cart, $no_show_button_checkout=0)
 {
 
-	//global $config_data, PhangoVar::$lang;
-
 	$portal_name=html_entity_decode(PhangoVar::$portal_name);
+	
+	?>
+	<style>
+	td { padding: 4px; border: solid #000 1px; }
+	</style>
+	<?php
 	
 	echo '<h3>'.PhangoVar::$lang['shop']['your_orders'].'</h3>';
 		

@@ -7,6 +7,12 @@ function MailAdminCartView($arr_address, $arr_address_transport, $arr_order_shop
 
 	$portal_name=html_entity_decode(PhangoVar::$portal_name);
 	
+	?>
+	<style>
+	td { padding: 4px; border: solid #000 1px; }
+	</style>
+	<?php
+	
 	echo '<h1>'.PhangoVar::$lang['shop']['new_order'].'</h1><p>'.PhangoVar::$lang['shop']['explain_new_order'].'</p>'; 
 	
 	echo load_view(array($arr_address, $arr_address_transport, $cart, $no_show_button_checkout), 'shop/checkoutcart');

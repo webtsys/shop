@@ -5,12 +5,84 @@ load_libraries(array('table_config'));
 
 class CustomProductClass {
 
+	//For use in views, by flexibility.You can create different methods.
+
 	public function show_plugin_product($arr_row)
 	{
 	
+		$tpl_plugin='';
+	
+		$arr_chars=$this->obtain_chars($arr_row['IdProduct']);
 		
+		$z=0;
+	
+		foreach($arr_chars as $id => $arr_char)
+		{
+		
+			$char_name=I18nField::show_formatted($arr_char['idcharacteristic']);
+			
+			echo '<p>'.$char_name.': ';
+			
+			echo '<input type="hidden" name="characteristic_name[]" value="'.$char_name.'" id="characteristic_name_'.$z.'"/>';
+			
+			echo '<select name="characteristic_option[]" id="characteristic_option_'.$z.'">';
+			
+			$arr_options_chars=$this->load_options_chars($arr_char['characteristic_IdCharacteristic'], $arr_row['IdProduct']);
+			
+			$selected='selected';
+			
+			foreach($arr_options_chars as $arr_char_option)
+			{
+			
+				$name_option=I18nField::show_formatted($arr_char_option['name']);
+				
+				echo '<option value="'.$name_option.'" '.$selected.'>'.$name_option.'</option>';
+			
+				$selected='';
+			
+			}
+			
+			echo '</select>';
+			
+			echo'</p>';
+		
+		}
 	
 		return $tpl_plugin;
+	
+	}
+	
+	public function cart_product_insert_data($post, $arr_data)
+	{
+	
+		//Simple validation
+		
+		settype($post['characteristic_name'], 'array');
+		
+		foreach($post['characteristic_name'] as $id =>  $char)
+		{
+		
+			$post['characteristic_name'][$id]=@form_text($post['characteristic_name'][$id]);
+			$post['characteristic_option'][$id]=@form_text($post['characteristic_option'][$id]);
+			
+			if($post['characteristic_name'][$id]!='' && $post['characteristic_option'][$id]!='')
+			{
+				;
+				$arr_data['characteristic']['characteristic_name'][$id]=$post['characteristic_name'];
+				$arr_data['characteristic']['characteristic_option'][$id]=$post['characteristic_option'];
+			
+			}
+			
+		}
+		
+		return $arr_data;
+	
+	}
+	
+	public function prepare_name_plugin($idcart_shop, $arr_details)
+	{
+	
+		
 	
 	}
 
@@ -136,6 +208,84 @@ class CustomProductClass {
 	
 	}
 	
+	public function obtain_chars($idproduct)
+	{
+	
+		$arr_relationship=PhangoVar::$model['product_relationship']->select_to_array('where product_relationship.idproduct='.$idproduct, array('idcat_product'), 1);
+				
+		$arr_id_cat_prod=array();
+		
+		foreach($arr_relationship as $arr_rel)
+		{
+		
+			$arr_id_cat_prod[]=$arr_rel['idcat_product'];
+		
+		}
+		
+		//Load all cat products id for order. 
+		
+		$arr_order_cat=array();
+		
+		$arr_id_cat=PhangoVar::$model['cat_product']->select_to_array('', array('IdCat_product', 'subcat'));
+		
+		$arr_order_cat[0]=array(0 => 0);
+		
+		foreach($arr_id_cat as $id => $arr_subcat)
+		{
+		
+			$arr_order_cat[$id][]=$arr_subcat['subcat'];
+		
+		}
+		
+		$arr_final_cat[0]=0;
+		
+		foreach($arr_id_cat_prod as $id)
+		{
+		
+			$arr_final_cat=load_hierarchy_cat($arr_order_cat, $arr_final_cat, $id);
+			
+		}
+		
+		//order recursively
+		
+		PhangoVar::$model['characteristic_cat']->components['idcharacteristic']->fields_related_model=array('IdCharacteristic');
+		
+		return PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')', array());
+	
+	}
+	
+	public function load_options_chars($idcharacteristic, $idproduct)
+	{
+	
+		$arr_chars=PhangoVar::$model['characteristic_standard_option']->select_to_array('where characteristic_standard_option.idcharacteristic='.$idcharacteristic.' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$idproduct.') order by position ASC, name ASC', array(), 1);
+					
+		$arr_deleted_char=array();
+		
+		foreach($arr_chars as $id => $arr_char)
+		{
+		
+			$arr_deleted_char[$arr_char['option_delete']]=$id;
+		
+		}
+		
+		foreach($arr_chars as $id => $arr_char)
+		{
+		
+			settype($arr_deleted_char[$id], 'integer');
+		
+			if($arr_deleted_char[$id] || $arr_char['name']=='')
+			{
+			
+				unset($arr_chars[$id]);
+			
+			}
+		
+		}
+		
+		return $arr_chars;
+	
+	}
+	
 	public function admin_plugin_product()
 	{
 	
@@ -170,46 +320,7 @@ class CustomProductClass {
 			
 				default:
 			
-				$arr_relationship=PhangoVar::$model['product_relationship']->select_to_array('where product_relationship.idproduct='.$_GET['IdProduct'], array('idcat_product'), 1);
-				
-				$arr_id_cat_prod=array();
-				
-				foreach($arr_relationship as $arr_rel)
-				{
-				
-					$arr_id_cat_prod[]=$arr_rel['idcat_product'];
-				
-				}
-				
-				//Load all cat products id for order. 
-				
-				$arr_order_cat=array();
-				
-				$arr_id_cat=PhangoVar::$model['cat_product']->select_to_array('', array('IdCat_product', 'subcat'));
-				
-				$arr_order_cat[0]=array(0 => 0);
-				
-				foreach($arr_id_cat as $id => $arr_subcat)
-				{
-				
-					$arr_order_cat[$id][]=$arr_subcat['subcat'];
-				
-				}
-				
-				$arr_final_cat[0]=0;
-				
-				foreach($arr_id_cat_prod as $id)
-				{
-				
-					$arr_final_cat=load_hierarchy_cat($arr_order_cat, $arr_final_cat, $id);
-					
-				}
-				
-				//order recursively
-				
-				PhangoVar::$model['characteristic_cat']->components['idcharacteristic']->fields_related_model=array('IdCharacteristic');
-				
-				$arr_chars=PhangoVar::$model['characteristic_cat']->select_to_array('where idcat IN ('.implode(',', $arr_final_cat).')', array());
+				$arr_chars=$this->obtain_chars($_GET['IdProduct']);
 				
 				echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
 				
@@ -247,16 +358,7 @@ class CustomProductClass {
 					
 					echo '<p><a href="'.set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 3, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat'])).'">'.PhangoVar::$lang['shop']['add_new_option'].'</a></p>';
 					
-					$arr_chars=PhangoVar::$model['characteristic_standard_option']->select_to_array('where characteristic_standard_option.idcharacteristic='.$_GET['idcharacteristic'].' AND (characteristic_standard_option.idproduct IS NULL OR characteristic_standard_option.idproduct='.$_GET['IdProduct'].') order by position ASC, name ASC', array(), 1);
-					
-					$arr_deleted_char=array();
-					
-					foreach($arr_chars as $id => $arr_char)
-					{
-					
-						$arr_deleted_char[$arr_char['option_delete']]=$id;
-					
-					}
+					$arr_chars=$this->load_options_chars($_GET['idcharacteristic'], $_GET['IdProduct']);
 					
 					echo up_table_config(array(PhangoVar::$lang['common']['name'], PhangoVar::$lang['common']['options']));
 					
@@ -265,14 +367,14 @@ class CustomProductClass {
 					
 						$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcharacteristic_option' => $id, 'idcat' => $_GET['idcat']));
 						
-						settype($arr_deleted_char[$id], 'integer');
+						/*settype($arr_deleted_char[$id], 'integer');
 						
 						if(!$arr_deleted_char[$id] && $arr_char['name']!='')
-						{
+						{*/
 						
 							echo middle_table_config( array(I18nField::show_formatted($arr_char['name']), '<a href="'.$url.'" class="check_click">'.PhangoVar::$lang['common']['delete'].'</a>') );
 						
-						}
+						//}
 						
 						/*if($arr_char['option_delete']==0)
 						{
@@ -299,6 +401,8 @@ class CustomProductClass {
 				break;
 				
 				case 2:
+				
+					//Falta delete las caracteristicas de producto creadas.
 				
 					settype($_GET['plugin'], 'string');
 					settype($_GET['IdProduct'], 'integer');
@@ -416,9 +520,9 @@ function CustomOptionsListModel($url_options, $model_name, $id)
 
 }
 
-function SetOptionsListModel($url_options, $model_name, $id)
+function SetOptionsListModel($url_options, $model_name, $id, $arr_row)
 {
-
+	//Change the option if have idproduct on.
 	//$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$url=set_admin_link('shop', array('op' => 22, 'IdProduct' => $_GET['IdProduct'], 'type' => 'product', 'plugin' => $_GET['plugin'], 'op_plugin' => 2, 'idcharacteristic' => $_GET['idcharacteristic'], 'idcat' => $_GET['idcat']));
