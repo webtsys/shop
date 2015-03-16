@@ -14,11 +14,47 @@ PhangoVar::$model['user_shop']->forms['country']->form='SelectModelForm';
 
 PhangoVar::$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
 
+PhangoVar::$model['user_shop']->forms['name']->label=PhangoVar::$lang['users']['name'];
+
+PhangoVar::$model['user_shop']->forms['last_name']->label=PhangoVar::$lang['users']['last_name'];
+
+PhangoVar::$model['user_shop']->forms['nif']->label=PhangoVar::$lang['users']['nif'];
+
+PhangoVar::$model['user_shop']->forms['address']->label=PhangoVar::$lang['common']['address'];
+
+PhangoVar::$model['user_shop']->forms['city']->label=PhangoVar::$lang['users']['city'];
+
+PhangoVar::$model['user_shop']->forms['region']->label=PhangoVar::$lang['common']['region'];
+
+PhangoVar::$model['user_shop']->forms['country']->label=PhangoVar::$lang['common']['country'];
+
+PhangoVar::$model['user_shop']->forms['zip_code']->label=PhangoVar::$lang['users']['zip_code'];
+
+PhangoVar::$model['user_shop']->forms['phone']->label=PhangoVar::$lang['common']['phone'];
+
+PhangoVar::$model['user_shop']->forms['fax']->label=PhangoVar::$lang['common']['fax'];
+
 PhangoVar::$model['address_transport']->create_form();
 
 PhangoVar::$model['address_transport']->forms['country_transport']->form='SelectModelForm';
 
 PhangoVar::$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');
+
+PhangoVar::$model['address_transport']->forms['name_transport']->label=PhangoVar::$lang['users']['name'];
+
+PhangoVar::$model['address_transport']->forms['last_name_transport']->label=PhangoVar::$lang['users']['last_name'];
+
+PhangoVar::$model['address_transport']->forms['address_transport']->label=PhangoVar::$lang['common']['address'];
+
+PhangoVar::$model['address_transport']->forms['city_transport']->label=PhangoVar::$lang['users']['city'];
+
+PhangoVar::$model['address_transport']->forms['region_transport']->label=PhangoVar::$lang['common']['region'];
+
+PhangoVar::$model['address_transport']->forms['country_transport']->label=PhangoVar::$lang['common']['country'];
+
+PhangoVar::$model['address_transport']->forms['zip_code_transport']->label=PhangoVar::$lang['users']['zip_code'];
+
+PhangoVar::$model['address_transport']->forms['phone_transport']->label=PhangoVar::$lang['common']['phone'];
 
 class CartSwitchClass extends ControllerSwitchClass 
 {

@@ -157,6 +157,7 @@ PhangoVar::$model['user_shop']->set_component('token_client', 'CharField', array
 PhangoVar::$model['user_shop']->set_component('token_recovery', 'CharField', array(255), 1);
 
 PhangoVar::$model['user_shop']->set_component('name', 'CharField', array(255), 1);
+
 PhangoVar::$model['user_shop']->set_component('last_name', 'CharField', array(255), 1);
 PhangoVar::$model['user_shop']->set_component('address', 'CharField', array(255), 1);
 PhangoVar::$model['user_shop']->set_component('zip_code', 'CharField', array(255), 1);
@@ -179,6 +180,8 @@ PhangoVar::$model['country_user_shop']=new Webmodel('country_user_shop');
 
 PhangoVar::$model['country_user_shop']->components['iduser']=new IntegerField(11);
 PhangoVar::$model['country_user_shop']->components['idcountry']=new IntegerField(11);
+
+
 
 class product extends Webmodel {
 
