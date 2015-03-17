@@ -9,7 +9,7 @@ function ShopAdmin()
 	load_model('shop');
 	load_config('shop');
 	
-	load_libraries(array('generate_admin_ng', 'admin/generate_admin_class', 'forms/selectmodelformbyorder', 'forms/selectmodelform', 'forms/textareabb', 'utilities/menu_selected', 'utilities/menu_barr_hierarchy'));
+	load_libraries(array('generate_admin_ng', 'admin/generate_admin_class', 'forms/selectmodelformbyorder', 'forms/selectmodelform', 'forms/textareabb', 'utilities/menu_selected', 'utilities/menu_barr_hierarchy', 'utilities/hierarchy_links'));
 
 	settype($_GET['op'], 'string');
 
@@ -154,6 +154,17 @@ function ShopAdmin()
 
 			}
 			
+			$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['subcat'], 0);
+			
+			//http://localhost/phango2/index.php/admin/shop/get/op/2/subcat/2
+			
+			$url_fancy=set_admin_link('shop', array('op' => 2));
+			
+			echo load_view(array($arr_hierarchy_links, $url_fancy, 'subcat', $arr_parameters=array(), $last_link=0), 'common/utilities/hierarchy_links_standard');
+			
+			//.' &gt; '.I18nField::show_formatted($arr_product['title'])
+			//echo load_view(array($arr_hierarchy_links, 'admin', 'index', 'subcat', array(), 1), 'common/utilities/hierarchy_links');
+			
 			//Get view_only_mode from config_shop
 			
 			$query=PhangoVar::$model['config_shop']->select('limit 1', array('view_only_mode'), 1);
@@ -233,6 +244,17 @@ function ShopAdmin()
 			settype($_GET['idcat'], 'integer');
 			settype($_GET['IdProduct'], 'integer');
 
+			if($_GET['idcat']>0)
+			{
+			
+				$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['idcat'], 0);
+			
+				$url_fancy=set_admin_link('shop', array('op' => 3));
+				
+				echo load_view(array($arr_hierarchy_links, $url_fancy, 'idcat', $arr_parameters=array(), $last_link=0, 'Todos los productos'), 'common/utilities/hierarchy_links_standard');
+			
+			}
+			
 			$query=PhangoVar::$model['cat_product']->select('where IdCat_product='.$_GET['idcat'], array('IdCat_product', 'title', 'subcat'));
 
 			list($idcat, $title, $parent)=webtsys_fetch_row($query);
@@ -384,7 +406,7 @@ function ShopAdmin()
 			if($_GET['IdProduct']==0 && !isset($_GET['op_update']))
 			{
 
-				echo '<p><a href="'. set_admin_link( 'config_shop', array('op' => 2, 'subcat' => $parent) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $parent) ).'">'.PhangoVar::$lang['common']['go_back'].'</a></p>';
 
 			}
 
