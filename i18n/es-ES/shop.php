@@ -262,6 +262,8 @@ PhangoVar::$lang['shop']['add_product_characteristics']='Añadir opciones a esta
 
 PhangoVar::$lang['shop']['add_characteristic_to_cat']='Añadir característica a categoría';
 
+PhangoVar::$lang['shop']['choose_element']='Elegir...';
+
 PhangoVar::$lang['shop']['add_product_characteristics_option']='Añadir opciones';
 
 PhangoVar::$lang['shop']['add_new_option']='Añadir nueva opción';

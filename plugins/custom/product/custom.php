@@ -111,8 +111,26 @@ class CustomProductClass {
 		{
 		
 			default:
-			
+				
 				echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics'].'</h3>';
+			
+				PhangoVar::$model['characteristic']->create_form();
+				
+				PhangoVar::$model['characteristic']->forms['type']->form='SelectForm';
+				
+				$arr_form=array('', PhangoVar::$lang['shop']['choose_element'], '');
+				
+				settype(ConfigShop::$arr_plugin_options['custom']['types'], 'array');
+				
+				foreach(ConfigShop::$arr_plugin_options['custom']['types'] as $type_form => $arr_form_type)
+				{
+					
+					$arr_form[]=ucfirst($type_form);
+					$arr_form[]=$type_form;
+				
+				}
+				
+				PhangoVar::$model['characteristic']->forms['type']->set_parameter_value($arr_form);
 			
 				$admin=new GenerateAdminClass('characteristic');
 				
@@ -176,9 +194,20 @@ class CustomProductClass {
 				if($arr_cat['IdCharacteristic']>0)
 				{
 				
+					if(ConfigShop::$arr_plugin_options['custom']['types'][$arr_cat['type']][0]!='')
+					{
+					
+						load_libraries( array(ConfigShop::$arr_plugin_options['custom']['types'][$arr_cat['type']][1]), ConfigShop::$arr_plugin_options['custom']['types'][$arr_cat['type']][0] );
+					
+					}
+				
 					echo '<h3>'.PhangoVar::$lang['shop']['add_product_characteristics_option'].' - '.I18nField::show_formatted($arr_cat['name']).'</h3>';
 			
 					PhangoVar::$model['characteristic_standard_option']->create_form();
+					
+					//PhangoVar::$model['characteristic_standard_option']->forms['name']->form=$arr_cat['type'];
+					
+					PhangoVar::$model['characteristic_standard_option']->forms['name']->set_parameter(3, $arr_cat['type']);
 					
 					PhangoVar::$model['characteristic_standard_option']->forms['idcharacteristic']->form='HiddenForm';
 					
@@ -194,7 +223,7 @@ class CustomProductClass {
 					
 					$admin->arr_fields=array('name');
 					
-					$admin->where_sql='where option_delete=0 and idproduct IS NULL';
+					$admin->where_sql='where option_delete=0 and idcharacteristic='.$arr_cat['IdCharacteristic'].' and idproduct IS NULL';
 					
 					//$admin->options_func='CustomOptionsListModel';
 					
