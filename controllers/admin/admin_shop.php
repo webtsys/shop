@@ -179,7 +179,7 @@ function ShopAdmin()
 
 			PhangoVar::$model['cat_product']->forms['subcat']->form='SelectModelFormByOrder';
 
-			PhangoVar::$model['cat_product']->forms['subcat']->parameters=array('subcat', '', '', 'cat_product', 'title', 'subcat', $where='');
+			PhangoVar::$model['cat_product']->forms['subcat']->parameters=array('subcat', '', $_GET['subcat'], 'cat_product', 'title', 'subcat', $where='');
 
 			PhangoVar::$model['cat_product']->forms['title']->label=PhangoVar::$lang['common']['title'];
 			PhangoVar::$model['cat_product']->forms['subcat']->label=PhangoVar::$lang['shop']['subcat'];
