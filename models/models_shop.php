@@ -502,14 +502,21 @@ class cat_product extends Webmodel {
 	function delete($conditions="")
 	{
 		
+		$arr_id_cat_product=array(0);
+		
 		$query=$this->select($conditions, array('IdCat_product'));
 		
 		while(list($idcat_product)=webtsys_fetch_row($query))
 		{
 		
-			$query=PhangoVar::$model['product']->delete('where idcat='.$idcat_product);
+			//$query=PhangoVar::$model['product']->delete('where idcat='.$idcat_product);
+			$arr_idcat_product[]=$idcat_product;
 		
 		}
+		
+		//Delete relationships...
+		
+		PhangoVar::$model['product_relationship']->delete('where idcat_product IN ('.implode(',', $arr_idcat_product).')');
 	
 		return parent::delete($conditions);
 	
@@ -1399,6 +1406,15 @@ PhangoVar::$model['characteristic_option']->set_component('idproduct', 'ForeignK
 //Moneyfield
 
 class MoneyField extends DoubleField{
+
+	public function check($value)
+	{
+	
+		$value=str_replace(',', '.', $value);
+		
+		return parent::check($value);
+	
+	}
 
 
 	function show_formatted($value)
