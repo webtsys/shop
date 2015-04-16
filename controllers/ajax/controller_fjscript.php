@@ -65,13 +65,13 @@ class FjscriptSwitchClass extends ControllerSwitchClass {
 			if(mode==0)
 			{
 
-				$("#cart_content").html('<?php echo PhangoVar::$lang['shop']['num_products']; ?>: '+data['num_product']+', <?php echo PhangoVar::$lang['shop']['price']; ?>: '+data['price_product']);
+				$("#cart_content").html('<?php echo PhangoVar::$l_['shop']->lang('num_products', 'Unidades'); ?>: '+data['num_product']+', <?php echo PhangoVar::$l_['shop']->lang('price', 'Precio'); ?>: '+data['price_product']);
 
 			}
 			else
 			{
 
-				$("#cart_content_block").html('<?php echo PhangoVar::$lang['shop']['num_products']; ?>: '+data['num_product']+'<br /><?php echo PhangoVar::$lang['shop']['price']; ?>: '+data['price_product']);
+				$("#cart_content_block").html('<?php echo PhangoVar::$l_['shop']->lang('num_products', 'Unidades'); ?>: '+data['num_product']+'<br /><?php echo PhangoVar::$l_['shop']->lang('price', 'Precio'); ?>: '+data['price_product']);
 				$("#cart_content_block_form").show();
 
 			}
@@ -84,7 +84,7 @@ class FjscriptSwitchClass extends ControllerSwitchClass {
 	{
 		
 		//Check if is a product with options via ajax.
-		//$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo PhangoVar::$lang['shop']['success_buy']; ?></span>');
+		//$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo PhangoVar::$l_['shop']->lang('success_buy', 'Se añadio este producto al carrito de la compra'); ?></span>');
 
 		$('#loading_buy_'+idproduct).fadeIn(1000);
 		$('#buying_'+idproduct).fadeIn(1000);
@@ -156,9 +156,9 @@ class FjscriptSwitchClass extends ControllerSwitchClass {
 				else
 				{
 
-					alert('<?php echo PhangoVar::$lang['shop']['error_buy_ajax']; ?> '+JSON.stringify(data));
+					alert('<?php echo PhangoVar::$l_['shop']->lang('error_buy_ajax', 'Error en compra mediante ajax'); ?> '+JSON.stringify(data));
 
-					$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo PhangoVar::$lang['shop']['error_buy_ajax']; ?></span>');
+					$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo PhangoVar::$l_['shop']->lang('error_buy_ajax', 'Error en compra mediante ajax'); ?></span>');
 
 				}
 				
@@ -172,9 +172,9 @@ class FjscriptSwitchClass extends ControllerSwitchClass {
 			
 			error: function(data){
 			
-				alert('<?php echo PhangoVar::$lang['shop']['error_buy_ajax']; ?> '+JSON.stringify(data));
+				alert('<?php echo PhangoVar::$l_['shop']->lang('error_buy_ajax', 'Error en compra mediante ajax'); ?> '+JSON.stringify(data));
 
-				$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo PhangoVar::$lang['shop']['error_buy_ajax']; ?></span>');
+				$('#sucess_buy_'+idproduct).html('<span class="error"><?php echo PhangoVar::$l_['shop']->lang('error_buy_ajax', 'Error en compra mediante ajax'); ?></span>');
 			
 			},
 		});

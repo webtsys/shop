@@ -10,8 +10,8 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	$cart->yes_update=0;
 	
 	?>
-	<h1><?php echo PhangoVar::$lang['shop']['final_order']; ?></h1>
-	<h2><?php echo PhangoVar::$lang['shop']['shopping_list']; ?></h2>
+	<h1><?php echo PhangoVar::$l_['shop']->lang('final_order', 'Pedido final'); ?></h1>
+	<h2><?php echo PhangoVar::$l_['shop']->lang('shopping_list', 'Lista de la compra'); ?></h2>
 	<?php
 	
 	list($arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $arr_weight_product)=$cart->show_cart();
@@ -21,7 +21,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	if(isset($_SESSION['idtransport']))
 	{
 	?>
-	<h2><?php echo PhangoVar::$lang['shop']['transport_price']; ?></h2>
+	<h2><?php echo PhangoVar::$l_['shop']->lang('transport_price', 'Portes'); ?></h2>
 	<?php
 	
 		$total_weight_product=array_sum($arr_weight_product);
@@ -39,10 +39,10 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	}
 	
 	?>
-	<p style="font-size:28px;"><?php echo PhangoVar::$lang['shop']['total_price']; ?>: <?php echo MoneyField::currency_format($total_price_product); ?></p>
+	<p style="font-size:28px;"><?php echo PhangoVar::$l_['shop']->lang('total_price', 'Precio total'); ?>: <?php echo MoneyField::currency_format($total_price_product); ?></p>
 	<?php
 	?>
-	<h2><?php echo PhangoVar::$lang['shop']['address_billing']; ?></h2>
+	<h2><?php echo PhangoVar::$l_['shop']->lang('address_billing', 'Dirección de facturación'); ?></h2>
 	<?php
 	
 	foreach(ConfigShop::$arr_fields_address as $field)
@@ -59,7 +59,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	echo load_view(array(PhangoVar::$model['user_shop']->forms, ConfigShop::$arr_fields_address), 'common/forms/modelform');
 	?>
 	<br />
-	<h2><?php echo PhangoVar::$lang['shop']['address_transport']; ?></h2>
+	<h2><?php echo PhangoVar::$l_['shop']->lang('address_transport', 'Dirección de envio'); ?></h2>
 	<?php
 	
 	foreach(ConfigShop::$arr_fields_transport as $field)
@@ -78,7 +78,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	?>
 	<br />
 	<form method="get" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'); ?>">
-	<p><input type="submit" value="<?php echo PhangoVar::$lang['shop']['send_order_and_checkout']; ?>" /></p>
+	<p><input type="submit" value="<?php echo PhangoVar::$l_['shop']->lang('send_order_and_checkout', 'Enviar pedido y pagar'); ?>" /></p>
 	</form>
 	<?php
 	}

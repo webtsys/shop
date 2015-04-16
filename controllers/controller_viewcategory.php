@@ -54,8 +54,8 @@ class  ViewcategorySwitchClass extends ControllerSwitchClass
 		if($arr_cat['IdCat_product']==0)
 		{
 		
-			$arr_cat['title']=PhangoVar::$lang['shop']['all_products'];
-			$arr_cat['description']=PhangoVar::$lang['shop']['desc_all_products'];
+			$arr_cat['title']=PhangoVar::$l_['shop']->lang('all_products', 'Todos los productos');
+			$arr_cat['description']=PhangoVar::$l_['shop']->lang('desc_all_products', 'Aquí encontrará un listado de todos los productos');
 			$arr_cat['subcat']=0;
 			$arr_cat['view_only_mode']=ConfigShop::$config_shop['view_only_mode'];
 			$where_sql='';
@@ -78,8 +78,8 @@ class  ViewcategorySwitchClass extends ControllerSwitchClass
 		$arr_fields_orders=array('date', 'title_'.$_SESSION['language']);
 		$arr_fields_search=array('title_'.$_SESSION['language']);
 		
-		PhangoVar::$model['product']->forms['title_'.$_SESSION['language']]->label=PhangoVar::$lang['common']['title'];
-		PhangoVar::$model['product']->forms['date']->label=PhangoVar::$lang['common']['date'];
+		PhangoVar::$model['product']->forms['title_'.$_SESSION['language']]->label=PhangoVar::$l_['common']->lang('title', 'Title');
+		PhangoVar::$model['product']->forms['date']->label=PhangoVar::$l_['common']->lang('date', 'date');
 		
 		$cont_search='';
 		

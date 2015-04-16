@@ -40,15 +40,15 @@ function TransportFormView($arr_transport, $only_form=0)
 	ob_end_clean();
 	
 	?>
-	<h2><?php echo PhangoVar::$lang['shop']['choose_address_transport']; ?></h2>
+	<h2><?php echo PhangoVar::$l_['shop']->lang('choose_address_transport', 'Elegir dirección de transporte'); ?></h2>
 	
-	<p><?php echo PhangoVar::$lang['shop']['explain_address_transport']; ?></p>
+	<p><?php echo PhangoVar::$l_['shop']->lang('explain_address_transport', 'Por favor, elija la dirección a la que enviaremos su pedido'); ?></p>
 	<?php
 	
 	if(count($arr_transport)==0)
 	{
 	
-		echo '<p>'.PhangoVar::$lang['shop']['no_exists_address'].'</p>';
+		echo '<p>'.PhangoVar::$l_['shop']->lang('no_exists_address', 'no_exists_address').'</p>';
 	
 	}
 	else
@@ -75,19 +75,19 @@ function TransportFormView($arr_transport, $only_form=0)
 		echo '<p>'.RadioIntForm($name="idaddress", $class='', $arr_choose_transport, $more_options='').'</p>';
 		
 		?>
-		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>"  /></p>
+		<p><input type="submit" value="<?php echo PhangoVar::$l_['common']->lang('send', 'Send'); ?>"  /></p>
 		</form>
 		<?php
 		
 	}
 	
 	?>
-	<p><a href="#" id="add_new_address"><?php echo PhangoVar::$lang['shop']['add_new_address']; ?><span class="plus">[+]</a></p>
+	<p><a href="#" id="add_new_address"><?php echo PhangoVar::$l_['shop']->lang('add_new_address', 'add_new_address'); ?><span class="plus">[+]</a></p>
 	<?php
 	}
 	?>
 	<div id="add_new_address_form">
-		<h2><?php echo PhangoVar::$lang['shop']['address_billing']; ?></h2>
+		<h2><?php echo PhangoVar::$l_['shop']->lang('address_billing', 'Dirección de facturación'); ?></h2>
 		<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_transport_address'); ?>">
 		<?php
 		
@@ -98,8 +98,8 @@ function TransportFormView($arr_transport, $only_form=0)
 		echo '<span class="error">'.PhangoVar::$model['address_transport']->std_error.'</span>';
 		
 		?>
-		<p class="error"><?php echo PhangoVar::$lang['common']['with_*_field_required']; ?></p>
-		<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" /></p>
+		<p class="error"><?php echo PhangoVar::$l_['common']->lang('with_*_field_required', '* Field required'); ?></p>
+		<p><input type="submit" value="<?php echo PhangoVar::$l_['common']->lang('send', 'Send'); ?>" /></p>
 		</form>
 	</div>
 	<?php

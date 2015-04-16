@@ -35,12 +35,12 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	$plugins_product->load_all_plugins();
 	
 
-	$fields=array(PhangoVar::$lang['shop']['referer'], PhangoVar::$lang['common']['name'], PhangoVar::$lang['shop']['num_products']);
+	$fields=array(PhangoVar::$l_['shop']->lang('referer', 'Referencia'), PhangoVar::$l_['common']->lang('name', 'name'), PhangoVar::$l_['shop']->lang('num_products', 'Unidades'));
 	
 	/*if(count($arr_product_cart['details'])>0)
 	{*/
 	
-		$fields[]=PhangoVar::$lang['shop']['details'];
+		$fields[]=PhangoVar::$l_['shop']->lang('details', 'details');
 	
 	//}
 
@@ -53,19 +53,19 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	//here the plugins applied to this shit.
 	
-	$fields[]=PhangoVar::$lang['shop']['total_price'];
+	$fields[]=PhangoVar::$l_['shop']->lang('total_price', 'Precio total');
 	
 	$set_options_func='no_set_options';
 	
 	/*if($yes_update==1)
 	{
-		$fields[]=PhangoVar::$lang['common']['options'];
+		$fields[]=PhangoVar::$l_['common']->lang('options', 'Options');
 		
 		$set_options_func='set_options';
 		
 	}*/
 	
-	//$fields[]=PhangoVar::$lang['shop']['select_product'];
+	//$fields[]=PhangoVar::$l_['shop']->lang('select_product', 'Seleccionar producto');
 
 	$total=0;
 	$total_units=0;
@@ -135,12 +135,12 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	{
 		middle_table_config(array('', '', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
 		
-		$text_submit='<input type="submit" value="'.PhangoVar::$lang['shop']['modify_products'].'"/> <input type="button" value="'.PhangoVar::$lang['shop']['checkout_order'].'" id="checkout_order" />';
+		$text_submit='<input type="submit" value="'.PhangoVar::$l_['shop']->lang('modify_products', 'Modificar productos').'"/> <input type="button" value="'.PhangoVar::$l_['shop']->lang('checkout_order', 'Pagar pedido').'" id="checkout_order" />';
 	}
 	else
 	{
 	
-		middle_table_config(array(PhangoVar::$lang['shop']['no_products_in_index']), array(' colspan='.count($fields)));
+		middle_table_config(array(PhangoVar::$l_['shop']->lang('no_products_in_index', 'No hay productos para mostrar')), array(' colspan='.count($fields)));
 	
 	}
 
@@ -172,7 +172,7 @@ function set_options($arr_product, $arr_options)
 {
 
 
-	$arr_options[]= '<a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.PhangoVar::$lang['common']['delete'].'</a>';
+	$arr_options[]= '<a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.PhangoVar::$l_['common']->lang('delete', 'Delete').'</a>';
 	
 	return $arr_options;
 

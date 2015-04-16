@@ -5,9 +5,9 @@ function RegisterShopFormView($login)
 
 	//global $lang;
 	
-	echo '<h1>'.PhangoVar::$lang['users']['register'].'</h1>';
+	echo '<h1>'.PhangoVar::$l_['users']->lang('register', 'Register in the web').'</h1>';
 	
-	echo '<p>'.PhangoVar::$lang['shop']['register_explain'].'</p>';
+	echo '<p>'.PhangoVar::$l_['shop']->lang('register_explain', 'register_explain').'</p>';
 	
 	$login->create_account_form();
 
