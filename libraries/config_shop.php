@@ -4,14 +4,14 @@
 
 //global $arr_currency, $arr_change_currency;
 
-load_model('shop');
+Webmodel::load_model('shop');
 
-//$query=PhangoVar::$model['config_shop']->select('', array(), 1);
+//$query=Webmodel::$model['config_shop']->select('', array(), 1);
 
-ConfigShop::$config_shop=PhangoVar::$model['config_shop']->select_a_row_where('');
+ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where('');
 
-ConfigShop::$config_shop['title_shop']=PhangoVar::$model['config_shop']->components['title_shop']->show_formatted(ConfigShop::$config_shop['title_shop']);
-ConfigShop::$config_shop['conditions']=PhangoVar::$model['config_shop']->components['conditions']->show_formatted(ConfigShop::$config_shop['conditions']);
+ConfigShop::$config_shop['title_shop']=Webmodel::$model['config_shop']->components['title_shop']->show_formatted(ConfigShop::$config_shop['title_shop']);
+ConfigShop::$config_shop['conditions']=Webmodel::$model['config_shop']->components['conditions']->show_formatted(ConfigShop::$config_shop['conditions']);
 
 //Prepare cookie_shop token
 
@@ -38,7 +38,7 @@ $lang_taxes[0]='';
 $arr_currency=array();
 $arr_change_currency=array();
 
-$query=PhangoVar::$model['taxes']->select('', array(PhangoVar::$model['taxes']->idmodel, 'name', 'percent') );
+$query=Webmodel::$model['taxes']->select('', array(Webmodel::$model['taxes']->idmodel, 'name', 'percent') );
 
 while(list($idtaxes, $name, $percent)=webtsys_fetch_row($query))
 {
@@ -50,18 +50,18 @@ while(list($idtaxes, $name, $percent)=webtsys_fetch_row($query))
 */
 //Load currencies...
 
-$query=PhangoVar::$model['currency']->select('', array(PhangoVar::$model['currency']->idmodel, 'symbol') );
+$query=Webmodel::$model['currency']->select('', array(Webmodel::$model['currency']->idmodel, 'symbol') );
 
-while(list($idcurrency, $symbol_currency)=webtsys_fetch_row($query))
+while(list($idcurrency, $symbol_currency)=Webmodel::$model['currency']->fetch_row($query))
 {
 
 	ConfigShop::$arr_currency[$idcurrency]=$symbol_currency;
 
 }
 
-$query=PhangoVar::$model['currency_change']->select('', array('idcurrency', 'idcurrency_related', 'change_value') , 1);
+$query=Webmodel::$model['currency_change']->select('', array('idcurrency', 'idcurrency_related', 'change_value') , 1);
 
-while(list($idcurrency, $idcurrency_related, $change_value)=webtsys_fetch_row($query))
+while(list($idcurrency, $idcurrency_related, $change_value)=Webmodel::$model['currency_change']->fetch_row($query))
 {
 
 	ConfigShop::$arr_change_currency[$idcurrency][$idcurrency_related]=$change_value;
@@ -395,7 +395,7 @@ function add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
 
 	$token=$_COOKIE['webtsys_shop'];
 
-	$query=PhangoVar::$model['cart_shop']->select('where token="'.sha1($token).'"');
+	$query=Webmodel::$model['cart_shop']->select('where token="'.sha1($token).'"');
 
 	$arr_cart=webtsys_fetch_array($query);
 
@@ -417,10 +417,10 @@ function add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
 	
 	}
 	
-	if($_POST['IdCart_shop']>0 && PhangoVar::$model['cart_shop']->select_count('where cart_shop.IdCart_shop='.$_POST['IdCart_shop'], 'IdCart_shop'))
+	if($_POST['IdCart_shop']>0 && Webmodel::$model['cart_shop']->select_count('where cart_shop.IdCart_shop='.$_POST['IdCart_shop'], 'IdCart_shop'))
 	{
 		
-		if(!PhangoVar::$model['cart_shop']->update( array('details' => $arr_details, 'time' => time(), 'price_product' => $price) , 'where token = "'.sha1($token).'" and IdCart_shop='.$_POST['IdCart_shop'].'  and idproduct ='. $_GET['IdProduct']))
+		if(!Webmodel::$model['cart_shop']->update( array('details' => $arr_details, 'time' => time(), 'price_product' => $price) , 'where token = "'.sha1($token).'" and IdCart_shop='.$_POST['IdCart_shop'].'  and idproduct ='. $_GET['IdProduct']))
 		{
 
 			return 0;
@@ -432,7 +432,7 @@ function add_cart($arr_details=array(), $price=0, $special_offer=0, $redirect=1)
 	else
 	{
 		
-		if(!PhangoVar::$model['cart_shop']->insert( array('token' => sha1($token), 'idproduct' => $_GET['IdProduct'], 'details' => $arr_details, 'time' => time(), 'price_product' => $price) ))
+		if(!Webmodel::$model['cart_shop']->insert( array('token' => sha1($token), 'idproduct' => $_GET['IdProduct'], 'details' => $arr_details, 'time' => time(), 'price_product' => $price) ))
 		{
 
 			return 0;

@@ -3,8 +3,8 @@
 function ColorPickerForm($name="", $class='', $value='')
 {
 
-	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
-	PhangoVar::$arr_cache_jscript['shop'][]='jscolor.js';
+	View::$js[]='jquery.min.js';
+	View::$js['shop'][]='jscolor.js';
 
 	/*ob_start();
 	
@@ -28,7 +28,7 @@ function ColorPickerForm($name="", $class='', $value='')
 function ColorPickerFormSet($post, $value)
 {
 
-	$value = replace_quote_text( $value );
+	$value = Utils::replace_quote_text( $value );
 	return $value;
 
 }

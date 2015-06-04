@@ -59,9 +59,9 @@ class CartClass {
 	{
 		
 		
-		load_lang('shop');
+		I18n::load_lang('shop');
 	
-		load_libraries(array('table_config'));
+		Utils::load_libraries(array('table_config'));
 	
 		$plugin_price=array();
 		
@@ -91,9 +91,9 @@ class CartClass {
 		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight', 'details'));
+		$query=Webmodel::$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight', 'details'));
 		
-		while($arr_product=webtsys_fetch_array($query))
+		while($arr_product=Webmodel::$model['cart_shop']->fetch_array($query))
 		{
 			
 			settype($arr_id[$arr_product['IdCart_shop']], 'integer');
@@ -233,7 +233,7 @@ class CartClass {
 			
 			//obtain product
 			
-			$arr_product=PhangoVar::$model['product']->select_a_row($idproduct, array('IdProduct', 'price', 'weight'));
+			$arr_product=Webmodel::$model['product']->select_a_row($idproduct, array('IdProduct', 'price', 'weight'));
 			
 			settype($arr_product['IdProduct'], 'integer');
 			
@@ -256,7 +256,7 @@ class CartClass {
 			
 				$where_sql='where cart_shop.idproduct='.$idproduct.' and token="'.$this->token.'" and details="'.addslashes(serialize($arr_details)).'"';
 				
-				if(PhangoVar::$model['cart_shop']->select_count($where_sql)==0)
+				if(Webmodel::$model['cart_shop']->select_count($where_sql)==0)
 				{
 				
 					if($_POST['units']<=0)
@@ -266,7 +266,7 @@ class CartClass {
 					
 					}
 				
-					if(!PhangoVar::$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']) ))
+					if(!Webmodel::$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']) ))
 					{
 
 						return 0;
@@ -277,12 +277,12 @@ class CartClass {
 				else
 				{
 				
-					$arr_cart=PhangoVar::$model['cart_shop']->select_a_row_where($where_sql);
+					$arr_cart=Webmodel::$model['cart_shop']->select_a_row_where($where_sql);
 					
 					if($_POST['units']<=0 && $defined_post==1)
 					{
 					
-						PhangoVar::$model['cart_shop']->delete($where_sql);
+						Webmodel::$model['cart_shop']->delete($where_sql);
 					
 					}
 					else
@@ -303,7 +303,7 @@ class CartClass {
 						
 						$arr_cart['details']=SerializeField::unserialize($arr_cart['details']);
 						
-						PhangoVar::$model['cart_shop']->update($arr_cart, $where_sql);
+						Webmodel::$model['cart_shop']->update($arr_cart, $where_sql);
 					
 					}
 					
@@ -323,7 +323,7 @@ class CartClass {
 
 				ob_end_clean();
 				
-				load_libraries(array('redirect'));
+				Utils::load_libraries(array('redirect'));
 				die( redirect_webtsys( $redirect_url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting') , $arr_block) );
 
 			}
@@ -343,16 +343,16 @@ class CartClass {
 		if($units>0)
 		{
 		
-			PhangoVar::$model['cart_shop']->reset_require();
+			Webmodel::$model['cart_shop']->reset_require();
 		
-			return PhangoVar::$model['cart_shop']->update(array('units' => $units), 'where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
+			return Webmodel::$model['cart_shop']->update(array('units' => $units), 'where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
 		
 		}
 		else
 		if($units<=0)
 		{
 		
-			return PhangoVar::$model['cart_shop']->delete('where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
+			return Webmodel::$model['cart_shop']->delete('where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
 		
 		}
 	
@@ -367,9 +367,9 @@ class CartClass {
 	
 		$plugin_price=array();
 		
-		$query=PhangoVar::$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units', 'weight'));
+		$query=Webmodel::$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units', 'weight'));
 		
-		while(list($idproduct, $price_product, $units, $weight)=webtsys_fetch_row($query))
+		while(list($idproduct, $price_product, $units, $weight)=Webmodel::$model['cart_shop']->fetch_row($query))
 		{
 			
 			$num_product+=$units;
@@ -407,7 +407,7 @@ class CartClass {
 	public function check_order()
 	{
 	
-		$arr_order=PhangoVar::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
+		$arr_order=Webmodel::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
 		
 		settype($arr_order['IdOrder_shop'], 'integer');
 		
@@ -433,15 +433,15 @@ class CartClass {
 	
 		$post['token']=$this->token;
 					
-		PhangoVar::$model['user_shop']->components['country']->name_field_to_field='name';
-		PhangoVar::$model['user_shop']->components['country']->fields_related_model=array('name');
+		Webmodel::$model['user_shop']->components['country']->name_field_to_field='name';
+		Webmodel::$model['user_shop']->components['country']->fields_related_model=array('name');
 		
-		PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field='name';
-		PhangoVar::$model['address_transport']->components['country_transport']->fields_related_model=array('name');
+		Webmodel::$model['address_transport']->components['country_transport']->name_field_to_field='name';
+		Webmodel::$model['address_transport']->components['country_transport']->fields_related_model=array('name');
 		
 		ConfigShop::$arr_fields_address[]='email';
 		
-		$arr_address=PhangoVar::$model['user_shop']->select_a_row($iduser_shop, ConfigShop::$arr_fields_address);
+		$arr_address=Webmodel::$model['user_shop']->select_a_row($iduser_shop, ConfigShop::$arr_fields_address);
 		
 		$arr_address['country']=unserialize($arr_address['country']);
 		
@@ -450,11 +450,11 @@ class CartClass {
 		
 			settype($_SESSION['idaddress'], 'integer');
 		
-			$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
+			$arr_address_transport=Webmodel::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
 		
 			$arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
 		
-			$arr_transport=PhangoVar::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+			$arr_transport=Webmodel::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
 			
 			$post['address_transport_id']=$_SESSION['idaddress'];
 			
@@ -491,10 +491,10 @@ class CartClass {
 		
 		}
 		
-		if(!PhangoVar::$model['order_shop']->$method($post, 'where token="'.$this->token.'"'))
+		if(!Webmodel::$model['order_shop']->$method($post, 'where token="'.$this->token.'"'))
 		{
 			
-			echo PhangoVar::$model['order_shop']->std_error;
+			echo Webmodel::$model['order_shop']->std_error;
 			return false;
 		
 		}
@@ -511,7 +511,7 @@ class CartClass {
 	
 		//Here define the payment and notify that the product was paid. Also fill order_shop and delete cart.
 		
-		$arr_payment=PhangoVar::$model['payment_form']->select_a_row($idpayment);
+		$arr_payment=Webmodel::$model['payment_form']->select_a_row($idpayment);
 				
 		settype($arr_payment['IdPayment_form'], 'integer');
 		
@@ -556,16 +556,16 @@ class CartClass {
 	public function obtain_transport_price($total_weight, $total_price, $idtransport)
 	{
 
-		$query=PhangoVar::$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
+		$query=Webmodel::$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
 		
-		list($name, $type)=webtsys_fetch_row($query);
+		list($name, $type)=Webmodel::$model['transport']->fetch_row($query);
 		
 		if($type==0)
 		{
 
-			$query=webtsys_query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			$query=MySQLClass::webtsys_query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
 				
-			list($price_transport)=webtsys_fetch_row($query);
+			list($price_transport)=MySQLClass::webtsys_fetch_row($query);
 
 			settype($price_transport, 'double');
 			
@@ -582,9 +582,9 @@ class CartClass {
 				$price_transport=0;
 				$total_price_transport=0;
 
-				$query=webtsys_query('select weight, price from price_transport order by price DESC limit 1');
+				$query=MySQLClass::webtsys_query('select weight, price from price_transport order by price DESC limit 1');
 
-				list($max_weight, $max_price)=webtsys_fetch_row($query);
+				list($max_weight, $max_price)=MySQLClass::webtsys_fetch_row($query);
 
 				//Tenemos que ver en cuanto supera los kilos...
 
@@ -609,9 +609,9 @@ class CartClass {
 
 				$weight_last=$total_weight-$weight_substract;
 			
-				$query=webtsys_query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
+				$query=MySQLClass::webtsys_query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
 				
-				list($price_transport)=webtsys_fetch_row($query);
+				list($price_transport)=MySQLClass::webtsys_fetch_row($query);
 
 				settype($price_transport, 'double');
 				
@@ -627,9 +627,9 @@ class CartClass {
 		else
 		{
 		
-			$query=webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
+			$query=MySQLClass::webtsys_query('select price from price_transport_price where min_price>='.$total_price.' and idtransport='.$idtransport.' order by min_price ASC limit 1');
 			
-			list($price_transport)=webtsys_fetch_row($query);
+			list($price_transport)=MySQLClass::webtsys_fetch_row($query);
 
 			//settype($price_transport, 'double');
 			
@@ -646,9 +646,9 @@ class CartClass {
 				$price_transport=0;
 				$total_price_transport=0;
 
-				$query=webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
+				$query=MySQLClass::webtsys_query('select min_price, price from price_transport_price order by min_price DESC limit 1');
 
-				list($max_min_price, $max_price)=webtsys_fetch_row($query);
+				list($max_min_price, $max_price)=MySQLClass::webtsys_fetch_row($query);
 				
 				return array($max_price, 1, $name);
 
@@ -686,37 +686,37 @@ class CartClass {
 	{
 
 	
-		return PhangoVar::$model['cart_shop']->select_count('where token="'.$this->token.'"');
+		return Webmodel::$model['cart_shop']->select_count('where token="'.$this->token.'"');
 	
 	}
 	
 	public function send_mail_order()
 	{
 	
-		if(count(PhangoVar::$model['user_shop']->forms)==0)
+		if(count(Webmodel::$model['user_shop']->forms)==0)
 		{
 	
-			PhangoVar::$model['user_shop']->create_form();
+			Webmodel::$model['user_shop']->create_form();
 			
 		}
 		
-		if(count(PhangoVar::$model['address_transport']->forms)==0)
+		if(count(Webmodel::$model['address_transport']->forms)==0)
 		{
-			PhangoVar::$model['address_transport']->create_form();
+			Webmodel::$model['address_transport']->create_form();
 			
 		}
 	
-		$arr_order_shop=PhangoVar::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
+		$arr_order_shop=Webmodel::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
 		
 		$arr_address=$arr_order_shop;
 		
-		PhangoVar::$model['address_transport']->components['country_transport']->name_field_to_field ='name';
+		Webmodel::$model['address_transport']->components['country_transport']->name_field_to_field ='name';
 		
-		$arr_address_transport=PhangoVar::$model['address_transport']->select_a_row($arr_order_shop['address_transport_id']);
+		$arr_address_transport=Webmodel::$model['address_transport']->select_a_row($arr_order_shop['address_transport_id']);
 		
 		//$arr_order_shop, $arr_address, $arr_address_transport, $iduser_shop
 	
-		load_libraries(array('utilities/set_admin_link', 'send_email'));
+		Utils::load_libraries(array('utilities/set_admin_link', 'send_email'));
 		
 		$arr_address['country']=I18nField::show_formatted(serialize($arr_address['country']));
 		
@@ -724,7 +724,7 @@ class CartClass {
 		
 		//Prepare email
 		
-		$arr_user=PhangoVar::$model['user_shop']->select_a_row($arr_address['iduser'], array('email'));
+		$arr_user=Webmodel::$model['user_shop']->select_a_row($arr_address['iduser'], array('email'));
 
 		$content_mail_user=load_view(array($arr_address, $arr_address_transport, $arr_order_shop, $this, 0), 'shop/mailcart');
 		
@@ -744,7 +744,7 @@ class CartClass {
 	public function cancel_order()
 	{
 	
-		return PhangoVar::$model['order_shop']->delete('where token="'.$this->token.'"');
+		return Webmodel::$model['order_shop']->delete('where token="'.$this->token.'"');
 	
 	}
 
