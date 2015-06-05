@@ -878,9 +878,8 @@ function ShopAdmin()
 			
 				echo '<h3>'.PhangoVar::$l_['shop']->lang('payment_orders', 'Pedidos pagados').'</h3>';
 
-				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
-				
-				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where payment_done=1', $arr_fields_edit, 0);
+				//($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $options_func_extra_args=array(), $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
+				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $options_func_extra_args=array(), $where_sql='where payment_done=1', $arr_fields_edit, 0);
 				
 				$list->show();
 				
