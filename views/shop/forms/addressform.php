@@ -7,7 +7,7 @@ function AddressFormView()
 	// ModelFormView(PhangoVar::$model_form, $fields=array(), $html_id='')
 	
 	?>
-	<h2><?php echo PhangoVar::$l_['shop']->lang('address_billing', 'Dirección de facturación'); ?></h2>
+	<h2><?php echo i18n_lang('shop', 'address_billing', 'Dirección de facturación'); ?></h2>
 	<div class="content">
 		<form method="post" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_address'); ?>">
 		<?php
@@ -19,8 +19,8 @@ function AddressFormView()
 		echo '<span class="error">'.PhangoVar::$model['user_shop']->std_error.'</span>';
 		
 		?>
-		<p class="error"><?php echo PhangoVar::$l_['common']->lang('with_*_field_required', '* Field required'); ?></p>
-		<p><input type="submit" value="<?php echo PhangoVar::$l_['common']->lang('send', 'Send'); ?>" /></p>
+		<p class="error"><?php echo i18n_lang('common', 'with_*_field_required', '* Field required'); ?></p>
+		<p><input type="submit" value="<?php echo i18n_lang('common', 'send', 'Send'); ?>" /></p>
 		</form>
 	</div>
 	<?php

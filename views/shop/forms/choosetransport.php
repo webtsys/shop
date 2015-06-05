@@ -7,8 +7,8 @@ function ChooseTransportView($arr_transport, $total_price_product, $total_weight
 
 	?>
 		<form method="get" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_save_choose_transport'); ?>">
-		<h2><?php echo PhangoVar::$l_['shop']->lang('choose_transport', 'Elegir transporte'); ?></h2>
-		<p><?php echo PhangoVar::$l_['shop']->lang('explain_choose_transport', 'Por favor, eliga su método de transporte'); ?></p>
+		<h2><?php echo i18n_lang('shop', 'choose_transport', 'Elegir transporte'); ?></h2>
+		<p><?php echo i18n_lang('shop', 'explain_choose_transport', 'Por favor, eliga su método de transporte'); ?></p>
 		<?php
 	
 		$arr_transport_id=[];
@@ -43,8 +43,8 @@ function ChooseTransportView($arr_transport, $total_price_product, $total_weight
 		}
 		
 		?>
-		<p class="error"><?php echo PhangoVar::$l_['common']->lang('with_*_field_required', '* Field required'); ?></p>
-		<p><input type="submit" value="<?php echo PhangoVar::$l_['common']->lang('send', 'Send'); ?>"  /></p>
+		<p class="error"><?php echo i18n_lang('common', 'with_*_field_required', '* Field required'); ?></p>
+		<p><input type="submit" value="<?php echo i18n_lang('common', 'send', 'Send'); ?>"  /></p>
 		</form>
 		<?php
 

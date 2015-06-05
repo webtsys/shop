@@ -18,7 +18,7 @@ class PaypalPaymentClass extends PaymentClass
 				default:
 				
 					?>
-					<p><strong><?php echo PhangoVar::$l_['shop']->lang('paypal_explain', 'Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.'); ?></strong></p>
+					<p><strong><?php echo i18n_lang('shop', 'paypal_explain', 'Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.'); ?></strong></p>
 					<?php
 
 					/*$query=PhangoVar::$model['config_shop']->select('', array('yes_transport'));
@@ -89,7 +89,7 @@ class PaypalPaymentClass extends PaymentClass
 						<input type="hidden" name="no_note" value="0">
 						<input type="hidden" name="upload" value="1">
 						<input type="hidden" name="currency_code" value="EUR">
-						<input type="submit" value="<?php echo PhangoVar::$l_['shop']->lang('checkout_order', 'Pagar pedido'); ?>" />
+						<input type="submit" value="<?php echo i18n_lang('shop', 'checkout_order', 'Pagar pedido'); ?>" />
 						</form>
 
 					<?php
@@ -125,7 +125,7 @@ class PaypalPaymentClass extends PaymentClass
 		}
 		else
 		{
-			echo '<p><strong>'.PhangoVar::$l_['shop']->lang('paypal_email_variable_no_isset', 'Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago').'</strong></p>';
+			echo '<p><strong>'.i18n_lang('shop', 'paypal_email_variable_no_isset', 'Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago').'</strong></p>';
 
 			return 0;
 		}

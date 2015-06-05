@@ -31,10 +31,10 @@ ob_start();
 	<p>
 	<?php
 
-	echo PhangoVar::$l_['shop']->lang('select_category_shop', 'Seleccionar categoría').': '.SelectModelFormByOrder('IdCat_product', '', $idcat_product, 'cat_product', 'title', 'subcat', $where='');
+	echo i18n_lang('shop', 'select_category_shop', 'Seleccionar categoría').': '.SelectModelFormByOrder('IdCat_product', '', $idcat_product, 'cat_product', 'title', 'subcat', $where='');
 
 	?>
-	<input type="submit" value="<?php echo PhangoVar::$l_['shop']->lang('choose_category', 'Elegir categoría'); ?>"/>
+	<input type="submit" value="<?php echo i18n_lang('shop', 'choose_category', 'Elegir categoría'); ?>"/>
 	</p>
 <form>
 <?php
@@ -68,15 +68,15 @@ foreach($arr_product as $key_prod => $product)
 		/*$add_tax_offer=calculate_taxes($idtax, $product['special_offer']);
 		$offer+=$add_tax_offer;*/
 
-		$price= '<strong>'.PhangoVar::$l_['shop']->lang('offer', 'Oferta').'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_real).' </span> -> '.MoneyField::currency_format($offer);
+		$price= '<strong>'.i18n_lang('shop', 'offer', 'Oferta').'</strong> <span style="text-decoration: line-through;">'.MoneyField::currency_format($price_real).' </span> -> '.MoneyField::currency_format($offer);
 
 	}
 	
 	$stock=$product['stock'];
 	$stock_txt='';
 	
-	$arr_stock[0]=PhangoVar::$l_['shop']->lang('no_stock', 'Sin stock');
-	$arr_stock[1]=PhangoVar::$l_['shop']->lang('in_stock', 'En stock');
+	$arr_stock[0]=i18n_lang('shop', 'no_stock', 'Sin stock');
+	$arr_stock[1]=i18n_lang('shop', 'in_stock', 'En stock');
 
 	if($product['about_order']==0)
 	{
@@ -87,7 +87,7 @@ foreach($arr_product as $key_prod => $product)
 	else
 	{
 
-		$stock_txt=PhangoVar::$l_['shop']->lang('served_on_request', 'Servido bajo pedido');
+		$stock_txt=i18n_lang('shop', 'served_on_request', 'Servido bajo pedido');
 
 	}
 	
@@ -110,25 +110,25 @@ foreach($arr_product as $key_prod => $product)
 			<div class="description_product">
 				<?php echo I18nField::show_formatted($product['description']); ?>
 				<br /><br />
-				<strong><?php echo PhangoVar::$l_['shop']->lang('pvp', 'PVP'); ?>:</strong> <?php echo $price; ?>
+				<strong><?php echo i18n_lang('shop', 'pvp', 'PVP'); ?>:</strong> <?php echo $price; ?>
 				<br />
 				<?php echo $stock_txt; ?>
 				<!--<br />
-				<strong><?php echo PhangoVar::$l_['shop']->lang('weight_in_kg', 'Peso en kilogramos'); ?>: </strong> <?php echo $product['weight']; ?> <?php echo PhangoVar::$l_['shop']->lang('kg', 'Kg'); ?>-->.
+				<strong><?php echo i18n_lang('shop', 'weight_in_kg', 'Peso en kilogramos'); ?>: </strong> <?php echo $product['weight']; ?> <?php echo i18n_lang('shop', 'kg', 'Kg'); ?>-->.
 				<br />
 				<br />
 				<a href="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'viewproduct', array($idproduct, $title_product) ); ?>" class="see">
-					<?php echo PhangoVar::$l_['shop']->lang('see_product', 'Ver detalles'); ?>
+					<?php echo i18n_lang('shop', 'see_product', 'Ver detalles'); ?>
 				</a>
 				<?php
 			/*if(ConfigShop::$config_shop['view_only_mode']==0 && $arr_cat['view_only_mode']==0 && $stock==1)
 			{
 			?>
-			<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship"><span id="text_buy_<?php echo $idproduct; ?>"><?php echo PhangoVar::$l_['shop']->lang('buy_product', 'Comprar producto'); ?></span>
+			<a onclick="javascript:buy_product(<?php echo $idproduct; ?>); return false;" href="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'buy', 'buy_product', array('IdProduct' => $idproduct) ); ?>" class="ship"><span id="text_buy_<?php echo $idproduct; ?>"><?php echo i18n_lang('shop', 'buy_product', 'Comprar producto'); ?></span>
 			</a>
-			<img id="loading_buy_<?php echo $idproduct; ?>" src="<?php echo PhangoVar::$base_url; ?>/media/default/images/loading.gif" alt="<?php echo PhangoVar::$l_['shop']->lang('buying_product', 'Comprando producto'); ?>" style="display: none;" />
+			<img id="loading_buy_<?php echo $idproduct; ?>" src="<?php echo PhangoVar::$base_url; ?>/media/default/images/loading.gif" alt="<?php echo i18n_lang('shop', 'buying_product', 'Comprando producto'); ?>" style="display: none;" />
 			
-			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo PhangoVar::$l_['shop']->lang('buying_product', 'Comprando producto'); ?></span></p><p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo PhangoVar::$l_['shop']->lang('success_buy', 'Se añadio este producto al carrito de la compra'); ?></span></p></div>
+			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo i18n_lang('shop', 'buying_product', 'Comprando producto'); ?></span></p><p id="sucess_buy_<?php echo $idproduct; ?>" style="display: none;"><span class="error"><?php echo i18n_lang('shop', 'success_buy', 'Se añadio este producto al carrito de la compra'); ?></span></p></div>
 			<?php
 			}*/
 			?>
@@ -145,7 +145,7 @@ foreach($arr_product as $key_prod => $product)
 	if($z==0)
 	{
 
-		echo '<p>'.PhangoVar::$l_['shop']->lang('no_products_in_category', 'Todavía no hay ningún producto en esta categoría').'</p>';
+		echo '<p>'.i18n_lang('shop', 'no_products_in_category', 'Todavía no hay ningún producto en esta categoría').'</p>';
 
 	}
 	else
@@ -154,7 +154,7 @@ foreach($arr_product as $key_prod => $product)
 		
 		$url_next=make_fancy_url(PhangoVar::$base_url, 'shop', 'viewcategory', array($idcat_product, slugify($title_category)) );
 		
-		echo '<p>'.PhangoVar::$l_['common']->lang('pages', 'Pages').': '.pages( $_GET['begin_page'], $total_elements, $num_news, $url_next).'</p>';
+		echo '<p>'.i18n_lang('common', 'pages', 'Pages').': '.pages( $_GET['begin_page'], $total_elements, $num_news, $url_next).'</p>';
 
 	}
 

@@ -10,7 +10,7 @@ function LoginShopFormView($login)
 	
 	<?php
 	
-	echo '<h1>'.PhangoVar::$l_['users']->lang('login', 'Login').'</h1>';
+	echo '<h1>'.i18n_lang('users', 'login', 'Login').'</h1>';
 	
 	$login->login_form();
 

@@ -13,37 +13,37 @@ function ShopAdmin()
 
 	settype($_GET['op'], 'string');
 
-	$arr_link_options[1]=array('link' => set_admin_link( 'shop', array('op' => 1) ), 'text' => PhangoVar::$l_['shop']->lang('config_shop', 'Configuración de su tienda'));
-	$arr_link_options[2]=array('link' => set_admin_link( 'shop', array('op' => 2) ), 'text' => PhangoVar::$l_['shop']->lang('products_categories', 'Categorías de productos'));
-	$arr_link_options[3]=array('link' => set_admin_link( 'shop', array('op' => 3) ), 'text' => PhangoVar::$l_['shop']->lang('products', 'Productos'));
-	//$arr_link_options[4]=array('link' => set_admin_link( 'standard_options_for_products', array('op' => 4) ), 'text' => PhangoVar::$l_['shop']->lang('standard_options_for_products', 'Opciones estandard para productos'));
-	//$arr_link_options[6]=array('link' => set_admin_link( 'taxes', array('op' => 6) ), 'text' => PhangoVar::$l_['shop']->lang('taxes', 'Impuestos'));
-	$arr_link_options[7]=array('link' => set_admin_link( 'shop', array('op' => 7) ), 'text' => PhangoVar::$l_['shop']->lang('transport', 'Transporte'));
-	$arr_link_options[10]=array('link' => set_admin_link( 'shop', array('op' => 10) ), 'text' => PhangoVar::$l_['shop']->lang('gateways_payment', 'Pasarelas de pago'));
-	//$arr_link_options[11]=array('link' => set_admin_link( 'discount_groups', array('op' => 11) ), 'text' => PhangoVar::$l_['shop']->lang('discount_groups', 'Grupos de descuento'));
-	$arr_link_options[13]=array('link' => set_admin_link( 'shop', array('op' => 13) ), 'text' => PhangoVar::$l_['shop']->lang('orders', 'Pedidos'));
-	$arr_link_options[15]=array('link' => set_admin_link( 'shop', array('op' => 15) ), 'text' => PhangoVar::$l_['shop']->lang('countries', 'Paises'));
+	$arr_link_options[1]=array('link' => set_admin_link( 'shop', array('op' => 1) ), 'text' => i18n_lang('shop', 'config_shop', 'Configuración de su tienda'));
+	$arr_link_options[2]=array('link' => set_admin_link( 'shop', array('op' => 2) ), 'text' => i18n_lang('shop', 'products_categories', 'Categorías de productos'));
+	$arr_link_options[3]=array('link' => set_admin_link( 'shop', array('op' => 3) ), 'text' => i18n_lang('shop', 'products', 'Productos'));
+	//$arr_link_options[4]=array('link' => set_admin_link( 'standard_options_for_products', array('op' => 4) ), 'text' => i18n_lang('shop', 'standard_options_for_products', 'Opciones estandard para productos'));
+	//$arr_link_options[6]=array('link' => set_admin_link( 'taxes', array('op' => 6) ), 'text' => i18n_lang('shop', 'taxes', 'Impuestos'));
+	$arr_link_options[7]=array('link' => set_admin_link( 'shop', array('op' => 7) ), 'text' => i18n_lang('shop', 'transport', 'Transporte'));
+	$arr_link_options[10]=array('link' => set_admin_link( 'shop', array('op' => 10) ), 'text' => i18n_lang('shop', 'gateways_payment', 'Pasarelas de pago'));
+	//$arr_link_options[11]=array('link' => set_admin_link( 'discount_groups', array('op' => 11) ), 'text' => i18n_lang('shop', 'discount_groups', 'Grupos de descuento'));
+	$arr_link_options[13]=array('link' => set_admin_link( 'shop', array('op' => 13) ), 'text' => i18n_lang('shop', 'orders', 'Pedidos'));
+	$arr_link_options[15]=array('link' => set_admin_link( 'shop', array('op' => 15) ), 'text' => i18n_lang('shop', 'countries', 'Paises'));
 
-	$arr_link_options[17]=array('link' => set_admin_link( 'shop', array('op' => 17) ), 'text' => PhangoVar::$l_['shop']->lang('currency', 'Moneda'));
+	$arr_link_options[17]=array('link' => set_admin_link( 'shop', array('op' => 17) ), 'text' => i18n_lang('shop', 'currency', 'Moneda'));
 	
-	$arr_link_options[20]=array('link' => set_admin_link( 'shop', array('op' => 20) ), 'text' => PhangoVar::$l_['shop']->lang('plugins_shop', 'Plugins de tienda'));
+	$arr_link_options[20]=array('link' => set_admin_link( 'shop', array('op' => 20) ), 'text' => i18n_lang('shop', 'plugins_shop', 'Plugins de tienda'));
 	
-	$arr_link_options[25]=array('link' => set_admin_link( 'shop', array('op' => 25) ), 'text' => PhangoVar::$l_['shop']->lang('admin_users', 'admin_users'));
+	$arr_link_options[25]=array('link' => set_admin_link( 'shop', array('op' => 25) ), 'text' => i18n_lang('shop', 'admin_users', 'admin_users'));
 	
 	menu_selected($_GET['op'], $arr_link_options);
 	
 	/*
 	?>
 	<ul>
-		<li><a href="<?php echo set_admin_link( 'config_shop', array('op' => 1) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('config_shop', 'Configuración de su tienda'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'products_categories', array('op' => 2) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('products_categories', 'Categorías de productos'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'standard_options_for_products', array('op' => 4) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('standard_options_for_products', 'Opciones estandard para productos'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'taxes', array('op' => 6) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('taxes', 'Impuestos'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'transport', array('op' => 7) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('transport', 'Transporte'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'gateways_payment', array('op' => 10) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('gateways_payment', 'Pasarelas de pago'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'discount_groups', array('op' => 11) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('discount_groups', 'Grupos de descuento'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'orders', array('op' => 13) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('orders', 'Pedidos'); ?></a></li>
-		<li><a href="<?php echo set_admin_link( 'countries', array('op' => 15) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('countries', 'Paises'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'config_shop', array('op' => 1) ); ?>"><?php echo i18n_lang('shop', 'config_shop', 'Configuración de su tienda'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'products_categories', array('op' => 2) ); ?>"><?php echo i18n_lang('shop', 'products_categories', 'Categorías de productos'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'standard_options_for_products', array('op' => 4) ); ?>"><?php echo i18n_lang('shop', 'standard_options_for_products', 'Opciones estandard para productos'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'taxes', array('op' => 6) ); ?>"><?php echo i18n_lang('shop', 'taxes', 'Impuestos'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'transport', array('op' => 7) ); ?>"><?php echo i18n_lang('shop', 'transport', 'Transporte'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'gateways_payment', array('op' => 10) ); ?>"><?php echo i18n_lang('shop', 'gateways_payment', 'Pasarelas de pago'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'discount_groups', array('op' => 11) ); ?>"><?php echo i18n_lang('shop', 'discount_groups', 'Grupos de descuento'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'orders', array('op' => 13) ); ?>"><?php echo i18n_lang('shop', 'orders', 'Pedidos'); ?></a></li>
+		<li><a href="<?php echo set_admin_link( 'countries', array('op' => 15) ); ?>"><?php echo i18n_lang('shop', 'countries', 'Paises'); ?></a></li>
 	</ul>
 
 	<?php
@@ -80,7 +80,7 @@ function ShopAdmin()
 				closedir($dh);
 			}*/
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_config_shop', 'Editar configuración de tienda').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_config_shop', 'Editar configuración de tienda').'</h3>';
 
 			PhangoVar::$model['config_shop']->create_form();
 
@@ -100,24 +100,24 @@ function ShopAdmin()
 
 			//labels
 
-			PhangoVar::$model['config_shop']->forms['image_bill']->label=PhangoVar::$l_['common']->lang('image', 'image');
-			PhangoVar::$model['config_shop']->forms['num_news']->label=PhangoVar::$l_['shop']->lang('num_news', 'Novedades');
-			//PhangoVar::$model['config_shop']->forms['yes_taxes']->label=PhangoVar::$l_['shop']->lang('yes_taxes', '¿Con impuestos incluidos?');
-			//PhangoVar::$model['config_shop']->forms['idtax']->label=PhangoVar::$l_['shop']->lang('taxes', 'Impuestos');
-			//PhangoVar::$model['config_shop']->forms['yes_transport']->label=PhangoVar::$l_['shop']->lang('yes_transport', '¿Necesitan transporte los productos?');
-			//PhangoVar::$model['config_shop']->forms['type_index']->label=PhangoVar::$l_['shop']->lang('type_index', 'Tipo de página principal');
-			//PhangoVar::$model['config_shop']->forms['explain_discounts_page']->label=PhangoVar::$l_['shop']->lang('explain_discounts_page', 'Página donde se definen los descuentos');
-			PhangoVar::$model['config_shop']->forms['conditions']->label=PhangoVar::$l_['shop']->lang('conditions', 'Terminos de venta');
-			//PhangoVar::$model['config_shop']->forms['ssl_url']->label=PhangoVar::$l_['shop']->lang('ssl_url', '¿Este dominio tiene SSL?. Elija sí, si su url base por defecto no tiene SSL');
-			PhangoVar::$model['config_shop']->forms['title_shop']->label=PhangoVar::$l_['shop']->lang('title_shop', 'Titulo de la tienda');
-			PhangoVar::$model['config_shop']->forms['description_shop']->label=PhangoVar::$l_['shop']->lang('description_shop', 'Descripción de la tienda');	
-			PhangoVar::$model['config_shop']->forms['head_bill']->label=PhangoVar::$l_['shop']->lang('head_bill', 'Cabecera de las facturas');
-			PhangoVar::$model['config_shop']->forms['num_begin_bill']->label=PhangoVar::$l_['shop']->lang('num_begin_bill', 'Número de comienzo de factura');
-			PhangoVar::$model['config_shop']->forms['elements_num_bill']->label=PhangoVar::$l_['shop']->lang('elements_num_bill', 'Número de elementos de la fáctura (si el número de factura sobrepasa estos elementos, tendrá un número de elementos de acuerdo a la cifra)');
-			PhangoVar::$model['config_shop']->forms['bill_data_shop']->label=PhangoVar::$l_['shop']->lang('bill_data_shop', 'Datos de su empresa que aparecerá en la fáctura');
-			PhangoVar::$model['config_shop']->forms['footer_bill']->label=PhangoVar::$l_['shop']->lang('footer_bill', 'Pie de la factura');
-			PhangoVar::$model['config_shop']->forms['idcurrency']->label=PhangoVar::$l_['shop']->lang('currency', 'Moneda');
-			PhangoVar::$model['config_shop']->forms['view_only_mode']->label=PhangoVar::$l_['shop']->lang('view_only_mode', 'Modo mostrador');
+			PhangoVar::$model['config_shop']->forms['image_bill']->label=i18n_lang('common', 'image', 'image');
+			PhangoVar::$model['config_shop']->forms['num_news']->label=i18n_lang('shop', 'num_news', 'Novedades');
+			//PhangoVar::$model['config_shop']->forms['yes_taxes']->label=i18n_lang('shop', 'yes_taxes', '¿Con impuestos incluidos?');
+			//PhangoVar::$model['config_shop']->forms['idtax']->label=i18n_lang('shop', 'taxes', 'Impuestos');
+			//PhangoVar::$model['config_shop']->forms['yes_transport']->label=i18n_lang('shop', 'yes_transport', '¿Necesitan transporte los productos?');
+			//PhangoVar::$model['config_shop']->forms['type_index']->label=i18n_lang('shop', 'type_index', 'Tipo de página principal');
+			//PhangoVar::$model['config_shop']->forms['explain_discounts_page']->label=i18n_lang('shop', 'explain_discounts_page', 'Página donde se definen los descuentos');
+			PhangoVar::$model['config_shop']->forms['conditions']->label=i18n_lang('shop', 'conditions', 'Terminos de venta');
+			//PhangoVar::$model['config_shop']->forms['ssl_url']->label=i18n_lang('shop', 'ssl_url', '¿Este dominio tiene SSL?. Elija sí, si su url base por defecto no tiene SSL');
+			PhangoVar::$model['config_shop']->forms['title_shop']->label=i18n_lang('shop', 'title_shop', 'Titulo de la tienda');
+			PhangoVar::$model['config_shop']->forms['description_shop']->label=i18n_lang('shop', 'description_shop', 'Descripción de la tienda');	
+			PhangoVar::$model['config_shop']->forms['head_bill']->label=i18n_lang('shop', 'head_bill', 'Cabecera de las facturas');
+			PhangoVar::$model['config_shop']->forms['num_begin_bill']->label=i18n_lang('shop', 'num_begin_bill', 'Número de comienzo de factura');
+			PhangoVar::$model['config_shop']->forms['elements_num_bill']->label=i18n_lang('shop', 'elements_num_bill', 'Número de elementos de la fáctura (si el número de factura sobrepasa estos elementos, tendrá un número de elementos de acuerdo a la cifra)');
+			PhangoVar::$model['config_shop']->forms['bill_data_shop']->label=i18n_lang('shop', 'bill_data_shop', 'Datos de su empresa que aparecerá en la fáctura');
+			PhangoVar::$model['config_shop']->forms['footer_bill']->label=i18n_lang('shop', 'footer_bill', 'Pie de la factura');
+			PhangoVar::$model['config_shop']->forms['idcurrency']->label=i18n_lang('shop', 'currency', 'Moneda');
+			PhangoVar::$model['config_shop']->forms['view_only_mode']->label=i18n_lang('shop', 'view_only_mode', 'Modo mostrador');
 
 			$query=PhangoVar::$model['config_shop']->select('limit 1', array(), 1);
 			
@@ -171,7 +171,7 @@ function ShopAdmin()
 			
 			list($view_only_mode)=webtsys_fetch_row($query);
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_categories_shop', 'Editar categorias de tienda').' '.$title.'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_categories_shop', 'Editar categorias de tienda').' '.$title.'</h3>';
 
 			PhangoVar::$model['cat_product']->create_form();
 			
@@ -181,15 +181,15 @@ function ShopAdmin()
 
 			PhangoVar::$model['cat_product']->forms['subcat']->parameters=array('subcat', '', $_GET['subcat'], 'cat_product', 'title', 'subcat', $where='');
 
-			PhangoVar::$model['cat_product']->forms['title']->label=PhangoVar::$l_['common']->lang('title', 'Title');
-			PhangoVar::$model['cat_product']->forms['subcat']->label=PhangoVar::$l_['shop']->lang('subcat', 'Elija categoría padre');
-			PhangoVar::$model['cat_product']->forms['description']->label=PhangoVar::$l_['shop']->lang('description', 'Descripción');
+			PhangoVar::$model['cat_product']->forms['title']->label=i18n_lang('common', 'title', 'Title');
+			PhangoVar::$model['cat_product']->forms['subcat']->label=i18n_lang('shop', 'subcat', 'Elija categoría padre');
+			PhangoVar::$model['cat_product']->forms['description']->label=i18n_lang('shop', 'description', 'Descripción');
 			PhangoVar::$model['cat_product']->forms['description']->parameters=array('description', $class='', array(), $type_form='TextAreaBBForm');
 			
 			PhangoVar::$model['cat_product']->forms['view_only_mode']->set_param_value_form($view_only_mode);
-			PhangoVar::$model['cat_product']->forms['view_only_mode']->label=PhangoVar::$l_['shop']->lang('view_only_mode', 'Modo mostrador');
+			PhangoVar::$model['cat_product']->forms['view_only_mode']->label=i18n_lang('shop', 'view_only_mode', 'Modo mostrador');
 			
-			PhangoVar::$model['cat_product']->forms['image_cat']->label=PhangoVar::$l_['common']->lang('image', 'image');
+			PhangoVar::$model['cat_product']->forms['image_cat']->label=i18n_lang('common', 'image', 'image');
 			PhangoVar::$model['cat_product']->forms['image_cat']->parameters=array('image_cat', '', '', 1, PhangoVar::$model['cat_product']->components['image_cat']->url_path);
 
 			$url_options=set_admin_link( 'shop', array('op' => 2, 'subcat' => $_GET['subcat']) );
@@ -214,7 +214,7 @@ function ShopAdmin()
 			/*if($_GET['op_edit']>0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 2, 'subcat' => $parent) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 2, 'subcat' => $parent) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 
 			}
 			else*/
@@ -229,7 +229,7 @@ function ShopAdmin()
 		
 			//Order principal categories, util for various things.
 			
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('order_cats', 'Ordenar categorías').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'order_cats', 'Ordenar categorías').'</h3>';
 		
 			//GeneratePositionModel('cat_product', 'title', 'position', set_admin_link( 'shop', array('op' => 2)), $where='');
 			
@@ -279,14 +279,14 @@ function ShopAdmin()
 			else
 			{
 			
-				$title=PhangoVar::$l_['shop']->lang('no_category_defined', 'Categoría sin definir');
+				$title=i18n_lang('shop', 'no_category_defined', 'Categoría sin definir');
 				$where_sql='';
 				
 				$cont_edit_product='';
 			
 			}
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_products_from_category', 'Editar productos de la categoría').': '.$title.'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_products_from_category', 'Editar productos de la categoría').': '.$title.'</h3>';
 			
 			ob_start();
 			
@@ -309,7 +309,7 @@ function ShopAdmin()
 			
 			ob_end_clean();
 			
-			echo '<p><strong>'.PhangoVar::$l_['shop']->lang('choose_category', 'Elegir categoría').'</strong>: '.SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='').'</p>';
+			echo '<p><strong>'.i18n_lang('shop', 'choose_category', 'Elegir categoría').'</strong>: '.SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='').'</p>';
 			
 			$arr_fields=array('referer', 'title');
 			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'weight', 'num_sold', 'cool' );
@@ -322,7 +322,7 @@ function ShopAdmin()
 
 			PhangoVar::$model['product']->forms['idcat']->parameters=array('idcat', '', $_GET['idcat'], 'cat_product', 'title', 'subcat', $where='');*/
 
-			$arr_options=array('', PhangoVar::$l_['common']->lang('any_option', 'any option'), '');
+			$arr_options=array('', i18n_lang('common', 'any_option', 'any option'), '');
 			$arr_options_check=array();
 
 			$dir = opendir(PhangoVar::$base_path.'modules/shop/options');
@@ -349,20 +349,20 @@ function ShopAdmin()
 
 			//Labels for forms..
 
-			PhangoVar::$model['product']->forms['referer']->label=PhangoVar::$l_['shop']->lang('referer', 'Referencia');
-			PhangoVar::$model['product']->forms['title']->label=PhangoVar::$l_['common']->lang('title', 'Title');
-			PhangoVar::$model['product']->forms['description']->label=PhangoVar::$l_['common']->lang('description', 'description');
-			PhangoVar::$model['product']->forms['description_short']->label=PhangoVar::$l_['shop']->lang('description_short', 'Descripción breve del producto, útil para listados');
-			//PhangoVar::$model['product']->forms['idcat']->label=PhangoVar::$l_['shop']->lang('idcat', 'Categoría de tienda');
-			PhangoVar::$model['product']->forms['price']->label=PhangoVar::$l_['shop']->lang('price', 'Precio');
-			PhangoVar::$model['product']->forms['special_offer']->label=PhangoVar::$l_['shop']->lang('special_offer', 'Oferta especial');
-			PhangoVar::$model['product']->forms['stock']->label=PhangoVar::$l_['shop']->lang('stock', 'Stock');
-			PhangoVar::$model['product']->forms['date']->label=PhangoVar::$l_['common']->lang('date', 'date');
-			PhangoVar::$model['product']->forms['about_order']->label=PhangoVar::$l_['shop']->lang('about_order', 'Bajo pedido');
-			//PhangoVar::$model['product']->forms['extra_options']->label=PhangoVar::$l_['shop']->lang('extra_options', 'Opciones extra');
-			PhangoVar::$model['product']->forms['weight']->label=PhangoVar::$l_['shop']->lang('weight', 'Peso');
-			PhangoVar::$model['product']->forms['num_sold']->label=PhangoVar::$l_['shop']->lang('num_sold', 'Número de veces vendido');
-			PhangoVar::$model['product']->forms['cool']->label=PhangoVar::$l_['shop']->lang('cool', 'Recomendado');
+			PhangoVar::$model['product']->forms['referer']->label=i18n_lang('shop', 'referer', 'Referencia');
+			PhangoVar::$model['product']->forms['title']->label=i18n_lang('common', 'title', 'Title');
+			PhangoVar::$model['product']->forms['description']->label=i18n_lang('common', 'description', 'description');
+			PhangoVar::$model['product']->forms['description_short']->label=i18n_lang('shop', 'description_short', 'Descripción breve del producto, útil para listados');
+			//PhangoVar::$model['product']->forms['idcat']->label=i18n_lang('shop', 'idcat', 'Categoría de tienda');
+			PhangoVar::$model['product']->forms['price']->label=i18n_lang('shop', 'price', 'Precio');
+			PhangoVar::$model['product']->forms['special_offer']->label=i18n_lang('shop', 'special_offer', 'Oferta especial');
+			PhangoVar::$model['product']->forms['stock']->label=i18n_lang('shop', 'stock', 'Stock');
+			PhangoVar::$model['product']->forms['date']->label=i18n_lang('common', 'date', 'date');
+			PhangoVar::$model['product']->forms['about_order']->label=i18n_lang('shop', 'about_order', 'Bajo pedido');
+			//PhangoVar::$model['product']->forms['extra_options']->label=i18n_lang('shop', 'extra_options', 'Opciones extra');
+			PhangoVar::$model['product']->forms['weight']->label=i18n_lang('shop', 'weight', 'Peso');
+			PhangoVar::$model['product']->forms['num_sold']->label=i18n_lang('shop', 'num_sold', 'Número de veces vendido');
+			PhangoVar::$model['product']->forms['cool']->label=i18n_lang('shop', 'cool', 'Recomendado');
 
 			//Set enctype for this model...
 
@@ -406,7 +406,7 @@ function ShopAdmin()
 			if($_GET['IdProduct']==0 && !isset($_GET['op_update']))
 			{
 
-				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $parent) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $parent) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 
 			}
 
@@ -416,7 +416,7 @@ function ShopAdmin()
 
 		case 4:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_options_for_product', 'Editar opciones para el producto').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_options_for_product', 'Editar opciones para el producto').'</h3>';
 
 			$url_options=set_admin_link( 'config_options_shop', array('op' => 4) );
 
@@ -425,11 +425,11 @@ function ShopAdmin()
 
 			PhangoVar::$model['type_product_option']->create_form();
 
-			PhangoVar::$model['type_product_option']->forms['title']->label=PhangoVar::$l_['common']->lang('title', 'Title');
-			PhangoVar::$model['type_product_option']->forms['description']->label=PhangoVar::$l_['common']->lang('description', 'description');
-			PhangoVar::$model['type_product_option']->forms['question']->label=PhangoVar::$l_['shop']->lang('question', 'Pregunta para hacer al cliente sobre las opciones');
-			PhangoVar::$model['type_product_option']->forms['options']->label=PhangoVar::$l_['shop']->lang('options_product', 'Opciones (separadas por |)');
-			PhangoVar::$model['type_product_option']->forms['price']->label=PhangoVar::$l_['shop']->lang('price', 'Precio');
+			PhangoVar::$model['type_product_option']->forms['title']->label=i18n_lang('common', 'title', 'Title');
+			PhangoVar::$model['type_product_option']->forms['description']->label=i18n_lang('common', 'description', 'description');
+			PhangoVar::$model['type_product_option']->forms['question']->label=i18n_lang('shop', 'question', 'Pregunta para hacer al cliente sobre las opciones');
+			PhangoVar::$model['type_product_option']->forms['options']->label=i18n_lang('shop', 'options_product', 'Opciones (separadas por |)');
+			PhangoVar::$model['type_product_option']->forms['price']->label=i18n_lang('shop', 'price', 'Precio');
 
 			generate_admin_model_ng('type_product_option', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 
@@ -443,7 +443,7 @@ function ShopAdmin()
 
 			list($title, $idcat)=webtsys_fetch_row($query);
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('add_options_to_product', 'Añadir opciones al producto').': </h3>';
+			echo '<h3>'.i18n_lang('shop', 'add_options_to_product', 'Añadir opciones al producto').': </h3>';
 
 			$url_options=set_admin_link( 'add_options_to_product', array('op' => 5, 'IdProduct' => $_GET['IdProduct']) );
 
@@ -456,18 +456,18 @@ function ShopAdmin()
 
 			PhangoVar::$model['product_option']->forms['idtype']->form='SelectModelForm';
 
-			PhangoVar::$model['product_option']->forms['idtype']->label=PhangoVar::$l_['shop']->lang('option_type', 'Tipo de opción');
+			PhangoVar::$model['product_option']->forms['idtype']->label=i18n_lang('shop', 'option_type', 'Tipo de opción');
 			
 			PhangoVar::$model['product_option']->forms['idtype']->parameters=array('idtype', '', '', 'type_product_option', 'title', $where='');
 			
-			PhangoVar::$model['product_option']->forms['field_required']->label=PhangoVar::$l_['shop']->lang('option_required', 'Opción requerida');
+			PhangoVar::$model['product_option']->forms['field_required']->label=i18n_lang('shop', 'option_required', 'Opción requerida');
 
 			generate_admin_model_ng('product_option', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 
 			if(!isset($_GET['op_edit']))
 			{
 
-				echo '<p><a href="'. set_admin_link( 'edit_product', array('op' => 3, 'idcat' => $idcat) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'edit_product', array('op' => 3, 'idcat' => $idcat) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 		
 			}
 
@@ -475,11 +475,11 @@ function ShopAdmin()
 
 		case 6:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_taxes', 'Editar impuestos').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_taxes', 'Editar impuestos').'</h3>';
 
 			?>
 			<p>
-			<a href="<?php echo set_admin_link( 'zones_shop', array('op' => 8, 'type' => 1) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('zones_taxes', 'Zonas de impuestos'); ?></a>
+			<a href="<?php echo set_admin_link( 'zones_shop', array('op' => 8, 'type' => 1) ); ?>"><?php echo i18n_lang('shop', 'zones_taxes', 'Zonas de impuestos'); ?></a>
 			</p>
 			<?php
 
@@ -492,9 +492,9 @@ function ShopAdmin()
 		
 			PhangoVar::$model['taxes']->forms['country']->form='SelectModelForm';
 	
-			PhangoVar::$model['taxes']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
-			PhangoVar::$model['taxes']->forms['percent']->label=PhangoVar::$l_['shop']->lang('percent', 'Porcentaje');
-			PhangoVar::$model['taxes']->forms['country']->label=PhangoVar::$l_['shop']->lang('zone', 'Zona');
+			PhangoVar::$model['taxes']->forms['name']->label=i18n_lang('common', 'name', 'name');
+			PhangoVar::$model['taxes']->forms['percent']->label=i18n_lang('shop', 'percent', 'Porcentaje');
+			PhangoVar::$model['taxes']->forms['country']->label=i18n_lang('shop', 'zone', 'Zona');
 			
 			PhangoVar::$model['taxes']->forms['country']->parameters=array('country', '', '', 'zone_shop', 'name', $where='where type=1');
 
@@ -504,11 +504,11 @@ function ShopAdmin()
 
 		case 7:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_transport', 'Editar transporte').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_transport', 'Editar transporte').'</h3>';
 
 			?>
 			<p>
-			<a href="<?php echo set_admin_link( 'shop', array('op' => 8, 'type' => 0) ); ?>"><?php echo PhangoVar::$l_['shop']->lang('zones_transport', 'Zonas de transporte'); ?></a>
+			<a href="<?php echo set_admin_link( 'shop', array('op' => 8, 'type' => 0) ); ?>"><?php echo i18n_lang('shop', 'zones_transport', 'Zonas de transporte'); ?></a>
 			</p>
 			<?php
 
@@ -523,11 +523,11 @@ function ShopAdmin()
 			
 			PhangoVar::$model['transport']->forms['country']->parameters=array('country', '', '', 'zone_shop', 'name', $where='where type=0');
 	
-			PhangoVar::$model['transport']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
-			PhangoVar::$model['transport']->forms['country']->label=PhangoVar::$l_['shop']->lang('zone', 'Zona');
-			PhangoVar::$model['transport']->forms['type']->label=PhangoVar::$l_['shop']->lang('type_transport', 'Tipo de transporte');
+			PhangoVar::$model['transport']->forms['name']->label=i18n_lang('common', 'name', 'name');
+			PhangoVar::$model['transport']->forms['country']->label=i18n_lang('shop', 'zone', 'Zona');
+			PhangoVar::$model['transport']->forms['type']->label=i18n_lang('shop', 'type_transport', 'Tipo de transporte');
 			
-			$arr_type_transport=array(0, PhangoVar::$l_['shop']->lang('type_by_weight', 'Por peso'), 0, PhangoVar::$l_['shop']->lang('type_by_price', 'Por precio'), 1);
+			$arr_type_transport=array(0, i18n_lang('shop', 'type_by_weight', 'Por peso'), 0, i18n_lang('shop', 'type_by_price', 'Por precio'), 1);
 			
 			PhangoVar::$model['transport']->forms['type']->set_parameter_value($arr_type_transport);
 			
@@ -551,9 +551,9 @@ function ShopAdmin()
 
 			settype($_GET['type'], 'integer');
 
-			$arr_type_zone[$_GET['type']]=PhangoVar::$l_['shop']->lang('countries_zones_transport', 'Areas de transporte');
-			$arr_type_zone[0]=PhangoVar::$l_['shop']->lang('countries_zones_transport', 'Areas de transporte');
-			$arr_type_zone[1]=PhangoVar::$l_['shop']->lang('countries_zones_taxes', 'Areas de impuestos');
+			$arr_type_zone[$_GET['type']]=i18n_lang('shop', 'countries_zones_transport', 'Areas de transporte');
+			$arr_type_zone[0]=i18n_lang('shop', 'countries_zones_transport', 'Areas de transporte');
+			$arr_type_zone[1]=i18n_lang('shop', 'countries_zones_taxes', 'Areas de impuestos');
 
 			$sql_type_zone[$_GET['type']]='where type=0';
 			$sql_type_zone[0]='where type=0';
@@ -563,7 +563,7 @@ function ShopAdmin()
 			$back_type_zone[0]=7;
 			$back_type_zone[1]=6;
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('countries_zones', 'Zonas').' - '.$arr_type_zone[$_GET['type']].'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'countries_zones', 'Zonas').' - '.$arr_type_zone[$_GET['type']].'</h3>';
 
 			$url_options=set_admin_link( 'shop', array('op' => 8, 'type' => $_GET['type']) );
 
@@ -574,15 +574,15 @@ function ShopAdmin()
 			/*foreach(PhangoVar::$arr_i18n as $lang_i18n)
 			{
 
-				PhangoVar::$model['zone_shop']->forms['name_'.$lang_i18n]->label=PhangoVar::$l_['common']->lang('name', 'name').' '.$lang_i18n;
+				PhangoVar::$model['zone_shop']->forms['name_'.$lang_i18n]->label=i18n_lang('common', 'name', 'name').' '.$lang_i18n;
 
 			}*/
 
-			PhangoVar::$model['zone_shop']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
+			PhangoVar::$model['zone_shop']->forms['name']->label=i18n_lang('common', 'name', 'name');
 
-			PhangoVar::$model['zone_shop']->forms['code']->label=PhangoVar::$l_['shop']->lang('country_code', 'Código de zona');
+			PhangoVar::$model['zone_shop']->forms['code']->label=i18n_lang('shop', 'country_code', 'Código de zona');
 			
-			PhangoVar::$model['zone_shop']->forms['other_countries']->label=PhangoVar::$l_['shop']->lang('other_countries', 'Abarcar todos los países que no estén en ninguna otra zona');
+			PhangoVar::$model['zone_shop']->forms['other_countries']->label=i18n_lang('shop', 'other_countries', 'Abarcar todos los países que no estén en ninguna otra zona');
 
 			$arr_fields=array('name');
 			$arr_fields_edit=array('name', 'code', 'type');
@@ -606,8 +606,8 @@ function ShopAdmin()
 			
 			$admin->show();
 
-			$go_back_text[0]=PhangoVar::$l_['shop']->lang('go_back_to_transport', 'Regresar a transporte');
-			$go_back_text[1]=PhangoVar::$l_['shop']->lang('go_back_to_taxes', 'Regresar a impuestos');
+			$go_back_text[0]=i18n_lang('shop', 'go_back_to_transport', 'Regresar a transporte');
+			$go_back_text[1]=i18n_lang('shop', 'go_back_to_taxes', 'Regresar a impuestos');
 
 			echo '<p><a href="'. set_admin_link( 'shop', array('op' => $back_type_zone[$_GET['type']]) ).'">'.$go_back_text[$_GET['type']].'</a></p>';
 
@@ -623,7 +623,7 @@ function ShopAdmin()
 
 			list($name_transport, $type)=webtsys_fetch_row($query);
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('price_transport_for', 'Precio de transporte para').': '.$name_transport.'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'price_transport_for', 'Precio de transporte para').': '.$name_transport.'</h3>';
 
 			$url_options=set_admin_link( 'shop', array('op' => 9, 'IdTransport' => $_GET['IdTransport'] ) );
 			
@@ -637,8 +637,8 @@ function ShopAdmin()
 				
 				PhangoVar::$model['price_transport']->forms['idtransport']->set_param_value_form($_GET['IdTransport']);
 
-				PhangoVar::$model['price_transport']->forms['price']->label=PhangoVar::$l_['shop']->lang('price', 'Precio');
-				PhangoVar::$model['price_transport']->forms['weight']->label=PhangoVar::$l_['shop']->lang('weight', 'Peso');
+				PhangoVar::$model['price_transport']->forms['price']->label=i18n_lang('shop', 'price', 'Precio');
+				PhangoVar::$model['price_transport']->forms['weight']->label=i18n_lang('shop', 'weight', 'Peso');
 				
 				$admin=new GenerateAdminClass('price_transport');
 				
@@ -663,8 +663,8 @@ function ShopAdmin()
 				
 				PhangoVar::$model['price_transport_price']->forms['idtransport']->SetForm($_GET['IdTransport']);
 
-				PhangoVar::$model['price_transport_price']->forms['price']->label=PhangoVar::$l_['shop']->lang('price', 'Precio');
-				PhangoVar::$model['price_transport_price']->forms['min_price']->label=PhangoVar::$l_['shop']->lang('min_price', 'Precio total de pedido');
+				PhangoVar::$model['price_transport_price']->forms['price']->label=i18n_lang('shop', 'price', 'Precio');
+				PhangoVar::$model['price_transport_price']->forms['min_price']->label=i18n_lang('shop', 'min_price', 'Precio total de pedido');
 				
 				$admin=new GenerateAdminClass('price_transport');
 				
@@ -681,7 +681,7 @@ function ShopAdmin()
 			if($_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 7) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 7) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 
 			}
 
@@ -689,7 +689,7 @@ function ShopAdmin()
 
 		case 10:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('gateways_payment', 'Pasarelas de pago').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'gateways_payment', 'Pasarelas de pago').'</h3>';
 
 			$url_options=set_admin_link( 'shop', array('op' => 10) );
 
@@ -719,9 +719,9 @@ function ShopAdmin()
 
 			PhangoVar::$model['payment_form']->forms['code']->set_parameter_value($arr_code);
 
-			PhangoVar::$model['payment_form']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
-			PhangoVar::$model['payment_form']->forms['code']->label=PhangoVar::$l_['shop']->lang('code_payment', 'Código php');
-			PhangoVar::$model['payment_form']->forms['price_payment']->label=PhangoVar::$l_['shop']->lang('price_payment', 'Cargo del modo de pago');
+			PhangoVar::$model['payment_form']->forms['name']->label=i18n_lang('common', 'name', 'name');
+			PhangoVar::$model['payment_form']->forms['code']->label=i18n_lang('shop', 'code_payment', 'Código php');
+			PhangoVar::$model['payment_form']->forms['price_payment']->label=i18n_lang('shop', 'price_payment', 'Cargo del modo de pago');
 
 			//generate_admin_model_ng('payment_form', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 			
@@ -737,7 +737,7 @@ function ShopAdmin()
 
 		case 11:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('group_shop', 'Grupo').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'group_shop', 'Grupo').'</h3>';
 
 			$url_options=set_admin_link( 'edit_group_shop', array('op' => 11) );
 
@@ -746,11 +746,11 @@ function ShopAdmin()
 
 			PhangoVar::$model['group_shop']->create_form();
 
-			PhangoVar::$model['group_shop']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
-			PhangoVar::$model['group_shop']->forms['discount']->label=PhangoVar::$l_['shop']->lang('discount', 'Descuento');
-			PhangoVar::$model['group_shop']->forms['taxes_for_group']->label=PhangoVar::$l_['shop']->lang('taxes_for_group', 'Descuentos en impuestos');
-			PhangoVar::$model['group_shop']->forms['transport_for_group']->label=PhangoVar::$l_['shop']->lang('transport_for_group', 'Descuento en portes');
-			PhangoVar::$model['group_shop']->forms['shipping_costs_for_group']->label=PhangoVar::$l_['shop']->lang('shipping_costs_for_group', 'Descuento en pasarela de pago');
+			PhangoVar::$model['group_shop']->forms['name']->label=i18n_lang('common', 'name', 'name');
+			PhangoVar::$model['group_shop']->forms['discount']->label=i18n_lang('shop', 'discount', 'Descuento');
+			PhangoVar::$model['group_shop']->forms['taxes_for_group']->label=i18n_lang('shop', 'taxes_for_group', 'Descuentos en impuestos');
+			PhangoVar::$model['group_shop']->forms['transport_for_group']->label=i18n_lang('shop', 'transport_for_group', 'Descuento en portes');
+			PhangoVar::$model['group_shop']->forms['shipping_costs_for_group']->label=i18n_lang('shop', 'shipping_costs_for_group', 'Descuento en pasarela de pago');
 		
 			generate_admin_model_ng('group_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='GroupShopOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 
@@ -766,7 +766,7 @@ function ShopAdmin()
 			$url_options=set_admin_link( 'edit_group_shop', array('op' => 12) );
 
 			PhangoVar::$model['group_shop_users']->forms['group_shop']->SetForm($_GET['IdGroup_shop']);
-			PhangoVar::$model['group_shop_users']->forms['iduser']->label=PhangoVar::$l_['common']->lang('user', 'user');
+			PhangoVar::$model['group_shop_users']->forms['iduser']->label=i18n_lang('common', 'user', 'user');
 
 			PhangoVar::$model['group_shop_users']->forms['iduser']->form='SelectModelForm';
 			
@@ -780,7 +780,7 @@ function ShopAdmin()
 			{
 
 			?>
-				<p><a href="<?php echo $url_back; ?>"><?php echo PhangoVar::$l_['common']->lang('go_back', 'Go back'); ?></a></p>
+				<p><a href="<?php echo $url_back; ?>"><?php echo i18n_lang('common', 'go_back', 'Go back'); ?></a></p>
 			<?php
 
 			}
@@ -793,7 +793,7 @@ function ShopAdmin()
 			
 			load_libraries(array('config_shop'), PhangoVar::$base_path.'/modules/shop/libraries/');
 			
-			echo '<h2>'.PhangoVar::$l_['shop']->lang('orders', 'Pedidos').'</h2>';
+			echo '<h2>'.i18n_lang('shop', 'orders', 'Pedidos').'</h2>';
 
 			if(!isset($_GET['order_field']))
 			{
@@ -841,12 +841,12 @@ function ShopAdmin()
 			PhangoVar::$model['order_shop']->forms['country_transport']->form='SelectForm';
 			PhangoVar::$model['order_shop']->forms['country_transport']->set_parameter_value($arr_country);
 
-			PhangoVar::$model['order_shop']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
-			PhangoVar::$model['order_shop']->forms['last_name']->label=PhangoVar::$l_['common']->lang('last_name', 'Lastname');
-			PhangoVar::$model['order_shop']->forms['email']->label=PhangoVar::$l_['common']->lang('email', 'Email');
-			PhangoVar::$model['order_shop']->forms['total_price']->label=PhangoVar::$l_['shop']->lang('total_price', 'Precio total');
-			PhangoVar::$model['order_shop']->forms['payment_done']->label=PhangoVar::$l_['shop']->lang('make_payment', '¿Pagado?');
-			PhangoVar::$model['order_shop']->forms['date_order']->label=PhangoVar::$l_['common']->lang('date', 'date');
+			PhangoVar::$model['order_shop']->forms['name']->label=i18n_lang('common', 'name', 'name');
+			PhangoVar::$model['order_shop']->forms['last_name']->label=i18n_lang('common', 'last_name', 'Lastname');
+			PhangoVar::$model['order_shop']->forms['email']->label=i18n_lang('common', 'email', 'Email');
+			PhangoVar::$model['order_shop']->forms['total_price']->label=i18n_lang('shop', 'total_price', 'Precio total');
+			PhangoVar::$model['order_shop']->forms['payment_done']->label=i18n_lang('shop', 'make_payment', '¿Pagado?');
+			PhangoVar::$model['order_shop']->forms['date_order']->label=i18n_lang('common', 'date', 'date');
 
 			//Zone_transport...
 
@@ -865,9 +865,9 @@ function ShopAdmin()
 			PhangoVar::$model['order_shop']->forms['transport']->form='SelectForm';
 			PhangoVar::$model['order_shop']->forms['transport']->set_parameter_value($arr_transport);
 			
-			$arr_link_orders[0]=array('link' => set_admin_link( 'shop', array('op' => 13, 'op_payment' => 0) ), 'text' => PhangoVar::$l_['shop']->lang('payment_orders', 'Pedidos pagados'));
+			$arr_link_orders[0]=array('link' => set_admin_link( 'shop', array('op' => 13, 'op_payment' => 0) ), 'text' => i18n_lang('shop', 'payment_orders', 'Pedidos pagados'));
 			
-			$arr_link_orders[1]=array('link' => set_admin_link( 'shop', array('op' => 13, 'op_payment' => 1) ), 'text' => PhangoVar::$l_['shop']->lang('no_payment_orders', 'Pedidos no pagados'));
+			$arr_link_orders[1]=array('link' => set_admin_link( 'shop', array('op' => 13, 'op_payment' => 1) ), 'text' => i18n_lang('shop', 'no_payment_orders', 'Pedidos no pagados'));
 			
 			menu_selected($_GET['op_payment'], $arr_link_orders, 1);
 			
@@ -876,7 +876,7 @@ function ShopAdmin()
 			
 				default:
 			
-				echo '<h3>'.PhangoVar::$l_['shop']->lang('payment_orders', 'Pedidos pagados').'</h3>';
+				echo '<h3>'.i18n_lang('shop', 'payment_orders', 'Pedidos pagados').'</h3>';
 
 				//($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $options_func_extra_args=array(), $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
 				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $options_func_extra_args=array(), $where_sql='where payment_done=1', $arr_fields_edit, 0);
@@ -887,7 +887,7 @@ function ShopAdmin()
 				
 				case 1:
 			
-				echo '<h3>'.PhangoVar::$l_['shop']->lang('no_payment_orders', 'Pedidos no pagados').'</h3>';
+				echo '<h3>'.i18n_lang('shop', 'no_payment_orders', 'Pedidos no pagados').'</h3>';
 
 				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
 				
@@ -913,11 +913,11 @@ function ShopAdmin()
 			
 			$title=I18nField::show_formatted($title);
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('edit_image_product', 'Editar imagen de producto').' - '.$title.'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'edit_image_product', 'Editar imagen de producto').' - '.$title.'</h3>';
 			
 			$url_add_images=set_admin_link( 'edit_image_product',array('op' => 19, 'IdProduct' => $_GET['IdProduct']) );
 			
-			echo '<p><a href="'.$url_add_images.'">'.PhangoVar::$l_['shop']->lang('add_new_images', 'Añadir nuevas imágenes').'</a></h3>';
+			echo '<p><a href="'.$url_add_images.'">'.i18n_lang('shop', 'add_new_images', 'Añadir nuevas imágenes').'</a></h3>';
 
 			$url_options=set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $_GET['IdProduct']) );
 
@@ -932,8 +932,8 @@ function ShopAdmin()
 
 			PhangoVar::$model['image_product']->forms['idproduct']->set_param_value_form($_GET['IdProduct']);
 
-			PhangoVar::$model['image_product']->forms['photo']->label=PhangoVar::$l_['common']->lang('image', 'image');
-			PhangoVar::$model['image_product']->forms['principal']->label=PhangoVar::$l_['shop']->lang('principal_photo', 'Imagen principal');
+			PhangoVar::$model['image_product']->forms['photo']->label=i18n_lang('common', 'image', 'image');
+			PhangoVar::$model['image_product']->forms['principal']->label=i18n_lang('shop', 'principal_photo', 'Imagen principal');
 
 			//order_field=photo&order_desc=1&search_word=&search_field=IdImage_product
 
@@ -962,7 +962,7 @@ function ShopAdmin()
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $arr_relationship['idcat_product']) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $arr_relationship['idcat_product']) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 
 			}
 
@@ -970,7 +970,7 @@ function ShopAdmin()
 
 		case 15:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('countries', 'Paises').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'countries', 'Paises').'</h3>';
 
 			$url_options=set_admin_link( 'shop', array('op' => 15) );
 
@@ -990,15 +990,15 @@ function ShopAdmin()
 			/*foreach(PhangoVar::$arr_i18n as $lang_i18n)
 			{
 
-				PhangoVar::$model['country_shop']->forms['name_'.$lang_i18n]->label=PhangoVar::$l_['common']->lang('name', 'name').' '.$lang_i18n;
+				PhangoVar::$model['country_shop']->forms['name_'.$lang_i18n]->label=i18n_lang('common', 'name', 'name').' '.$lang_i18n;
 
 			}*/
 
-			PhangoVar::$model['country_shop']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
+			PhangoVar::$model['country_shop']->forms['name']->label=i18n_lang('common', 'name', 'name');
 
-			PhangoVar::$model['country_shop']->forms['code']->label=PhangoVar::$l_['shop']->lang('code_country', 'Código de país');
-			//PhangoVar::$model['country_shop']->forms['idzone_taxes']->label=PhangoVar::$l_['shop']->lang('idzone_taxes', 'Zona de impuestos');
-			PhangoVar::$model['country_shop']->forms['idzone_transport']->label=PhangoVar::$l_['shop']->lang('idzone_transport', 'Zonas de transporte');
+			PhangoVar::$model['country_shop']->forms['code']->label=i18n_lang('shop', 'code_country', 'Código de país');
+			//PhangoVar::$model['country_shop']->forms['idzone_taxes']->label=i18n_lang('shop', 'idzone_taxes', 'Zona de impuestos');
+			PhangoVar::$model['country_shop']->forms['idzone_transport']->label=i18n_lang('shop', 'idzone_transport', 'Zonas de transporte');
 
 			//generate_admin_model_ng('country_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 			
@@ -1099,17 +1099,17 @@ function ShopAdmin()
 			
 					}
 				
-					$text_address_client[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('client', 'Cliente').': '.$name_client);
-					$text_address_client[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('city', 'City').': '.$order_shop['city']);
-					$text_address_client[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('region', 'Region').': '.$order_shop['region'] );
-					$text_address_client[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('email', 'Email').': '.$order_shop['email'] );
-					$text_address_client[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('country', 'Country').': '.$order_shop['country'] );
+					$text_address_client[]=iconv("UTF-8", "CP1252", i18n_lang('shop', 'client', 'Cliente').': '.$name_client);
+					$text_address_client[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'city', 'City').': '.$order_shop['city']);
+					$text_address_client[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'region', 'Region').': '.$order_shop['region'] );
+					$text_address_client[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'email', 'Email').': '.$order_shop['email'] );
+					$text_address_client[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'country', 'Country').': '.$order_shop['country'] );
 					
-					$text_address_client_other[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('address', 'Address').': '.$order_shop['address'] );
-					$text_address_client_other[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('zip_code', 'Zip code').': '.$order_shop['zip_code'] );
-					$text_address_client_other[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('fiscal_identity', 'Identidad fiscal').': '.$order_shop['nif'] );
-					$text_address_client_other[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('phone', 'Phone').': '.$order_shop['phone'] );
-					$text_address_client_other[]=iconv("UTF-8", "CP1252", PhangoVar::$l_['common']->lang('fax', 'Fax').': '.$order_shop['fax'] );
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'address', 'Address').': '.$order_shop['address'] );
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'zip_code', 'Zip code').': '.$order_shop['zip_code'] );
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", i18n_lang('shop', 'fiscal_identity', 'Identidad fiscal').': '.$order_shop['nif'] );
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'phone', 'Phone').': '.$order_shop['phone'] );
+					$text_address_client_other[]=iconv("UTF-8", "CP1252", i18n_lang('common', 'fax', 'Fax').': '.$order_shop['fax'] );
 
 					$this->SetFont('Arial','',10);
 
@@ -1130,8 +1130,8 @@ function ShopAdmin()
 
 					$this->SetFont('Arial','',14);
 
-					$this->Cell(90,9,PhangoVar::$l_['common']->lang('date', 'date').': '.$date,0,0,'LR');
-					$this->Cell(95,9,iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('num_bill', 'Número de factura')).': '.$num_bill,0,0,'LR');
+					$this->Cell(90,9,i18n_lang('common', 'date', 'date').': '.$date,0,0,'LR');
+					$this->Cell(95,9,iconv("UTF-8", "CP1252", i18n_lang('shop', 'num_bill', 'Número de factura')).': '.$num_bill,0,0,'LR');
 
 					$this->Ln();
 
@@ -1149,15 +1149,15 @@ function ShopAdmin()
 					$this->SetXY(10,220);
 
 					$this->Cell(40,8,'', 0);
-					$this->Cell(40,8,PhangoVar::$l_['shop']->lang('value', 'Valor'),1);
-					$this->Cell(40,8,PhangoVar::$l_['shop']->lang('discount', 'Descuento'),1);
-					$this->Cell(40,8,PhangoVar::$l_['shop']->lang('final_value', 'Valor final'),1);
+					$this->Cell(40,8,i18n_lang('shop', 'value', 'Valor'),1);
+					$this->Cell(40,8,i18n_lang('shop', 'discount', 'Descuento'),1);
+					$this->Cell(40,8,i18n_lang('shop', 'final_value', 'Valor final'),1);
 					$this->Ln();
 					//Here total price...
 
 					//total_price | tax | tax_percent | tax_discount_percent | price_transport | transport_discount_percent | price_payment | payment_discount_percent | discount      | discount_percent | name_payment
 
-					$this->Cell(40, 8, PhangoVar::$l_['shop']->lang('total_price', 'Precio total'), 1);
+					$this->Cell(40, 8, i18n_lang('shop', 'total_price', 'Precio total'), 1);
 					$this->Cell(40, 8, iconv("UTF-8", "CP1252", MoneyField::currency_format($total_price)), 1);
 
 					$discount=0;
@@ -1207,7 +1207,7 @@ function ShopAdmin()
 					if($order_shop['transport']!='')
 					{
 
-						$tax_name=iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('transport_price', 'Portes'));
+						$tax_name=iconv("UTF-8", "CP1252", i18n_lang('shop', 'transport_price', 'Portes'));
 
 						$this->Cell(40,8, $tax_name, 1);
 
@@ -1231,7 +1231,7 @@ function ShopAdmin()
 					if($order_shop['price_payment']!='')
 					{
 
-						$payment_name=iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('shipping_costs', 'Cargos en pago'));
+						$payment_name=iconv("UTF-8", "CP1252", i18n_lang('shop', 'shipping_costs', 'Cargos en pago'));
 
 						$this->Cell(40,8, $payment_name, 1);
 
@@ -1256,7 +1256,7 @@ function ShopAdmin()
 
 					$total=iconv("UTF-8", "CP1252", MoneyField::currency_format($total_price+$tax_final+$transport_final+$payment_final) );
 	
-					$this->Cell(90,14, strtoupper(PhangoVar::$l_['shop']->lang('total', 'Total')).': '.$total,0);
+					$this->Cell(90,14, strtoupper(i18n_lang('shop', 'total', 'Total')).': '.$total,0);
 
 				}
 				
@@ -1316,7 +1316,7 @@ function ShopAdmin()
 
 				$arr_order['country']=PhangoVar::$model['country_shop']->components['name']->show_formatted($arr_order['country']);
 
-				$header = array(iconv("UTF-8", "CP1252",PhangoVar::$l_['shop']->lang('referer', 'Referencia')), iconv("UTF-8", "CP1252",PhangoVar::$l_['shop']->lang('description', 'Descripción')), iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('units', 'Unidades')), iconv("UTF-8", "CP1252", PhangoVar::$l_['shop']->lang('price', 'Precio')), iconv("UTF-8", "CP1252",PhangoVar::$l_['shop']->lang('discount', 'Descuento')), iconv("UTF-8", "CP1252",PhangoVar::$l_['shop']->lang('total', 'Total')) );
+				$header = array(iconv("UTF-8", "CP1252",i18n_lang('shop', 'referer', 'Referencia')), iconv("UTF-8", "CP1252",i18n_lang('shop', 'description', 'Descripción')), iconv("UTF-8", "CP1252", i18n_lang('shop', 'units', 'Unidades')), iconv("UTF-8", "CP1252", i18n_lang('shop', 'price', 'Precio')), iconv("UTF-8", "CP1252",i18n_lang('shop', 'discount', 'Descuento')), iconv("UTF-8", "CP1252",i18n_lang('shop', 'total', 'Total')) );
 
 				//here query from cart_shop
 
@@ -1388,7 +1388,7 @@ function ShopAdmin()
 
 		case 17:
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('currency', 'Moneda').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'currency', 'Moneda').'</h3>';
 
 			$url_options=set_admin_link( 'shop', array('op' => 17) );
 
@@ -1397,8 +1397,8 @@ function ShopAdmin()
 
 			PhangoVar::$model['currency']->create_form();
 
-			PhangoVar::$model['currency']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
-			PhangoVar::$model['currency']->forms['symbol']->label=PhangoVar::$l_['shop']->lang('symbol', 'Símbolo');
+			PhangoVar::$model['currency']->forms['name']->label=i18n_lang('common', 'name', 'name');
+			PhangoVar::$model['currency']->forms['symbol']->label=i18n_lang('shop', 'symbol', 'Símbolo');
 		
 			//generate_admin_model_ng('currency', $arr_fields, $arr_fields_edit, $url_options, $options_func='CurrencyOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 			$admin=new GenerateAdminClass('currency');
@@ -1425,7 +1425,7 @@ function ShopAdmin()
 
 			$name_currency=I18nField::show_formatted($name_currency);
 
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('modify_change_currencies', 'Modificar cambios entre monedas').': '.$name_currency.'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'modify_change_currencies', 'Modificar cambios entre monedas').': '.$name_currency.'</h3>';
 
 			$url_options=set_admin_link( 'modify_change_currencies', array('op' => 18, 'IdCurrency' => $_GET['IdCurrency']) );
 
@@ -1439,20 +1439,20 @@ function ShopAdmin()
 			PhangoVar::$model['currency_change']->forms['idcurrency']->form='HiddenForm';
 			PhangoVar::$model['currency_change']->forms['idcurrency']->SetForm($_GET['IdCurrency']);
 
-			PhangoVar::$model['currency_change']->forms['idcurrency_related']->label=PhangoVar::$l_['shop']->lang('currency', 'Moneda');
+			PhangoVar::$model['currency_change']->forms['idcurrency_related']->label=i18n_lang('shop', 'currency', 'Moneda');
 
 			PhangoVar::$model['currency_change']->forms['idcurrency_related']->form='SelectModelForm';
 			
 			PhangoVar::$model['currency_change']->forms['idcurrency_related']->parameters=array('idcurrency_related', '', '', 'currency', 'name', $where='where IdCurrency!='.$_GET['IdCurrency']);
 
-			PhangoVar::$model['currency_change']->forms['change_value']->label=PhangoVar::$l_['shop']->lang('explain_change_value', 'Indique que valor es 1 unidad de la moneda elegida en relación a').' '.$name_currency;
+			PhangoVar::$model['currency_change']->forms['change_value']->label=i18n_lang('shop', 'explain_change_value', 'Indique que valor es 1 unidad de la moneda elegida en relación a').' '.$name_currency;
 		
 			generate_admin_model_ng('currency_change', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where currency_change.idcurrency='.$_GET['IdCurrency'], $arr_fields_form=array(), $type_list='Basic');
 
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
-				echo '<p><a href="'. set_admin_link( 'edit_currency', array('op' => 17) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'. set_admin_link( 'edit_currency', array('op' => 17) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 
 			}
 
@@ -1468,11 +1468,11 @@ function ShopAdmin()
 			$arr_field['image_form1']=clone PhangoVar::$model['image_product']->components['photo'];
 			$arr_field['image_form1']->name_file='image_form1';
 		
-			$arr_form['image_form1']=new ModelForm('create_image', 'image_form1', 'ImageForm', PhangoVar::$l_['common']->lang('image', 'image').' 1', $arr_field['image_form1'], $required=1, $parameters='');
+			$arr_form['image_form1']=new ModelForm('create_image', 'image_form1', 'ImageForm', i18n_lang('common', 'image', 'image').' 1', $arr_field['image_form1'], $required=1, $parameters='');
 			
 			/*$bool[1]=new BooleanField();
 			
-			$arr_form['principal1']=new ModelForm('create_image', 'principal1', 'SelectForm', PhangoVar::$l_['shop']->lang('principal_photo', 'Imagen principal').' 1', $bool[1], $required=0, $parameters=$bool[1]->get_parameters_default());*/
+			$arr_form['principal1']=new ModelForm('create_image', 'principal1', 'SelectForm', i18n_lang('shop', 'principal_photo', 'Imagen principal').' 1', $bool[1], $required=0, $parameters=$bool[1]->get_parameters_default());*/
 			
 			for($x=2;$x<11;$x++)
 			{
@@ -1480,11 +1480,11 @@ function ShopAdmin()
 				$arr_field['image_form'.$x]=clone PhangoVar::$model['image_product']->components['photo'];
 				$arr_field['image_form'.$x]->name_file='image_form'.$x;
 			
-				$arr_form['image_form'.$x]=new ModelForm('create_image', 'image_form'.$x.'', 'ImageForm', PhangoVar::$l_['common']->lang('image', 'image').' '.$x, $arr_field['image_form'.$x], $required=0, $parameters='');
+				$arr_form['image_form'.$x]=new ModelForm('create_image', 'image_form'.$x.'', 'ImageForm', i18n_lang('common', 'image', 'image').' '.$x, $arr_field['image_form'.$x], $required=0, $parameters='');
 				
 				/*$bool[$x]=new BooleanField();
 				
-				$arr_form['principal'.$x]=new ModelForm('create_image', 'principal'.$x, 'SelectForm', PhangoVar::$l_['shop']->lang('principal_photo', 'Imagen principal').' 1', $bool[$x], $required=0, $parameters=$bool[$x]->get_parameters_default());*/
+				$arr_form['principal'.$x]=new ModelForm('create_image', 'principal'.$x, 'SelectForm', i18n_lang('shop', 'principal_photo', 'Imagen principal').' 1', $bool[$x], $required=0, $parameters=$bool[$x]->get_parameters_default());*/
 			
 			}
 			
@@ -1509,9 +1509,9 @@ function ShopAdmin()
 					
 					ob_end_clean();
 					
-					echo load_view(array(PhangoVar::$l_['shop']->lang('add_new_images', 'Añadir nuevas imágenes').' - '.$title, $cont_add), 'content');
+					echo load_view(array(i18n_lang('shop', 'add_new_images', 'Añadir nuevas imágenes').' - '.$title, $cont_add), 'content');
 					
-					echo '<p><a href="'.$url_post=set_admin_link( 'edit_image_product',array('op' => 14, 'IdProduct' => $_GET['IdProduct']) ).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+					echo '<p><a href="'.$url_post=set_admin_link( 'edit_image_product',array('op' => 14, 'IdProduct' => $_GET['IdProduct']) ).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 				
 				break;
 				
@@ -1542,7 +1542,7 @@ function ShopAdmin()
 					
 						ob_end_clean();
 						load_libraries(array('redirect'));
-						die( redirect_webtsys( $url_post=set_admin_link( 'edit_image_product',array('op' => 14, 'IdProduct' => $_GET['IdProduct']) ), PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting') , $arr_block) );
+						die( redirect_webtsys( $url_post=set_admin_link( 'edit_image_product',array('op' => 14, 'IdProduct' => $_GET['IdProduct']) ), i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting') , $arr_block) );
 						
 					}
 					else
@@ -1550,9 +1550,9 @@ function ShopAdmin()
 						
 						$url_go_back=set_admin_link( 'edit_image_product',array('op' => 19, 'IdProduct' => $_GET['IdProduct']) );
 						
-						echo '<p>'.PhangoVar::$l_['common']->lang('error_cannot_upload_this_image_to_the_server', 'Error: Cannot upload this image to the server').'</p>';
+						echo '<p>'.i18n_lang('common', 'error_cannot_upload_this_image_to_the_server', 'Error: Cannot upload this image to the server').'</p>';
 					
-						echo '<p><a href="'.$url_go_back.'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+						echo '<p><a href="'.$url_go_back.'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 					
 					}
 					
@@ -1567,7 +1567,7 @@ function ShopAdmin()
 		
 			//First, select form for choose an module, for now, products.
 			
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('plugin_admin', 'Administración de plugins').'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'plugin_admin', 'Administración de plugins').'</h3>';
 			
 			settype($_GET['element_choice'], 'string');
 			
@@ -1575,7 +1575,7 @@ function ShopAdmin()
 			
 			echo '<form method="get" action="'.set_admin_link( 'shop', array('op' => 20)).'">';
 			
-			echo '<p>'.PhangoVar::$l_['shop']->lang('element_choice', 'Elegir elemento').': '.SelectForm('element_choice', '', $arr_elements_plugin).' <input type="submit" value="'.PhangoVar::$l_['common']->lang('send', 'Send').'" /></p>';
+			echo '<p>'.i18n_lang('shop', 'element_choice', 'Elegir elemento').': '.SelectForm('element_choice', '', $arr_elements_plugin).' <input type="submit" value="'.i18n_lang('common', 'send', 'Send').'" /></p>';
 			
 			echo '</form>';
 			
@@ -1645,7 +1645,7 @@ function ShopAdmin()
 				
 				PhangoVar::$model['plugin_shop']->forms['plugin']->parameters=array('plugin', '', $arr_plugins);
 			
-				PhangoVar::$model['plugin_shop']->forms['name']->label=PhangoVar::$l_['common']->lang('name', 'name');
+				PhangoVar::$model['plugin_shop']->forms['name']->label=i18n_lang('common', 'name', 'name');
 			
 				$arr_fields=array('name', 'plugin');
 				$arr_fields_edit=array('name', 'element', 'plugin');
@@ -1672,7 +1672,7 @@ function ShopAdmin()
 				
 				//Now the order...
 				
-				echo '<p><a href="'.set_admin_link( 'shop', array('op' => 21, 'element_choice' => $element_choice)).'">'.PhangoVar::$l_['shop']->lang('order_plugins', 'Ordenar plugins').'</a></p>';
+				echo '<p><a href="'.set_admin_link( 'shop', array('op' => 21, 'element_choice' => $element_choice)).'">'.i18n_lang('shop', 'order_plugins', 'Ordenar plugins').'</a></p>';
 			
 			}
 			
@@ -1687,11 +1687,11 @@ function ShopAdmin()
 			if($element_choice!='')
 			{
 			
-				echo '<h3>'.PhangoVar::$l_['shop']->lang('order_plugins', 'Ordenar plugins').'</h3>';
+				echo '<h3>'.i18n_lang('shop', 'order_plugins', 'Ordenar plugins').'</h3>';
 				
 				GeneratePositionModel('plugin_shop', 'name', 'position', set_admin_link( 'plugin_admin', array('op' => 21, 'element_choice' => $element_choice)), $where='where element="'.$element_choice.'"');
 				
-				echo '<p><a href="'.set_admin_link( 'plugin_admin', array('op' => 20, 'element_choice' => $element_choice)).'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'.set_admin_link( 'plugin_admin', array('op' => 20, 'element_choice' => $element_choice)).'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 			
 			}
 		
@@ -1713,7 +1713,7 @@ function ShopAdmin()
 			if(isset($plugins->arr_plugin_list[$plugin]))
 			{
 			
-				echo '<h2>'.PhangoVar::$l_['shop']->lang('plugin_product_admin', 'plugin_product_admin').'</h2>';
+				echo '<h2>'.i18n_lang('shop', 'plugin_product_admin', 'plugin_product_admin').'</h2>';
 				
 				$plugins->load_plugin($plugin);
 				
@@ -1738,7 +1738,7 @@ function ShopAdmin()
 			if(isset($plugins->arr_plugin_list[$plugin]))
 			{
 			
-				echo '<h2>'.PhangoVar::$l_['shop']->lang('plugin_product_admin_home', 'plugin_product_admin_home').'</h2>';
+				echo '<h2>'.i18n_lang('shop', 'plugin_product_admin_home', 'plugin_product_admin_home').'</h2>';
 				
 				$plugins->load_plugin($plugin);
 				
@@ -1780,7 +1780,7 @@ function ShopAdmin()
 			
 			$product=PhangoVar::$model['product']->select_a_row($_GET['idproduct'], array('title'), true);
 		
-			echo '<h3>'.PhangoVar::$l_['shop']->lang('change_shop_category', 'Cambiar categoría de tienda').' - '.I18nField::show_formatted($product['title']).'</h3>';
+			echo '<h3>'.i18n_lang('shop', 'change_shop_category', 'Cambiar categoría de tienda').' - '.I18nField::show_formatted($product['title']).'</h3>';
 			
 			$arr_fields=array('idcat_product');
 			$arr_fields_edit=array();
@@ -1794,7 +1794,7 @@ function ShopAdmin()
 			PhangoVar::$model['product_relationship']->forms['idproduct']->form='HiddenForm';
 			PhangoVar::$model['product_relationship']->forms['idproduct']->set_param_value_form($_GET['idproduct']);
 			
-			PhangoVar::$model['product_relationship']->forms['idcat_product']->label=PhangoVar::$l_['shop']->lang('category', 'Categoría');
+			PhangoVar::$model['product_relationship']->forms['idcat_product']->label=i18n_lang('shop', 'category', 'Categoría');
 			PhangoVar::$model['product_relationship']->forms['idcat_product']->form='SelectModelFormByOrder';
 			PhangoVar::$model['product_relationship']->forms['idcat_product']->parameters=array('idcat_product', '', 0, 'cat_product', 'title', 'subcat', $where='');
 			
@@ -1815,7 +1815,7 @@ function ShopAdmin()
 			if($_GET['op_edit']==0 && $_GET['op_action']==0)
 			{
 			
-				echo '<p><a href="'.$url_back.'">'.PhangoVar::$l_['common']->lang('go_back', 'Go back').'</a></p>';
+				echo '<p><a href="'.$url_back.'">'.i18n_lang('common', 'go_back', 'Go back').'</a></p>';
 				
 			}
 		
@@ -1823,7 +1823,7 @@ function ShopAdmin()
 		
 		case 25:
 		
-			echo '<h2>'.PhangoVar::$l_['shop']->lang('admin_users', 'admin_users').'</h2>';
+			echo '<h2>'.i18n_lang('shop', 'admin_users', 'admin_users').'</h2>';
 		
 			PhangoVar::$model['user_shop']->components['token_client']->required=0;
 			
@@ -1866,11 +1866,11 @@ function ShopAdmin()
 		
 			settype($_GET['IdUser_shop'], 'integer');
 		
-			echo '<h2>'.PhangoVar::$l_['shop']->lang('modify_address_transport_user', 'Modificar direcciones de transporte de usuario').'</h2>';
+			echo '<h2>'.i18n_lang('shop', 'modify_address_transport_user', 'Modificar direcciones de transporte de usuario').'</h2>';
 		
-			$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => PhangoVar::$l_['user']->lang('admin_users', 'admin_users'), 'name_op' => 'op', 'params' => array('op' => 25, 'IdOrder_shop' => $_GET['IdUser_shop']));
+			$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => i18n_lang('user', 'admin_users', 'admin_users'), 'name_op' => 'op', 'params' => array('op' => 25, 'IdOrder_shop' => $_GET['IdUser_shop']));
 		
-			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => PhangoVar::$l_['shop']->lang('admin_address_users', 'Administrar direcciones de usuario'), 'name_op' => 'op', 'params' => array('op' => 26, 'IdOrder_shop' => $_GET['IdUser_shop']));
+			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => i18n_lang('shop', 'admin_address_users', 'Administrar direcciones de usuario'), 'name_op' => 'op', 'params' => array('op' => 26, 'IdOrder_shop' => $_GET['IdUser_shop']));
 		
 			echo menu_barr_hierarchy_control($arr_menu);
 		
@@ -1907,7 +1907,7 @@ function UserOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 26, 'IdUser_shop' => $id) ).'">'.PhangoVar::$l_['shop']->lang('modify_address_transport_user', 'Modificar direcciones de transporte de usuario').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 26, 'IdUser_shop' => $id) ).'">'.i18n_lang('shop', 'modify_address_transport_user', 'Modificar direcciones de transporte de usuario').'</a>';
 
 	return $arr_options;
 
@@ -1918,7 +1918,7 @@ function CurrencyOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 18, 'IdCurrency' => $id) ).'">'.PhangoVar::$l_['shop']->lang('modify_change_currencies', 'Modificar cambios entre monedas').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 18, 'IdCurrency' => $id) ).'">'.i18n_lang('shop', 'modify_change_currencies', 'Modificar cambios entre monedas').'</a>';
 
 	return $arr_options;
 
@@ -1929,9 +1929,9 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $id) ).'">'.PhangoVar::$l_['shop']->lang('modify_products', 'Modificar productos').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 3, 'idcat' => $id) ).'">'.i18n_lang('shop', 'modify_products', 'Modificar productos').'</a>';
 
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 2, 'subcat' => $id) ).'">'.PhangoVar::$l_['shop']->lang('subcat_products', 'Subcategorías de productos').'</a>';	
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 2, 'subcat' => $id) ).'">'.i18n_lang('shop', 'subcat_products', 'Subcategorías de productos').'</a>';	
 
 	return $arr_options;
 
@@ -1942,9 +1942,9 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw, $
 	
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 24, 'idproduct' => $id) ).'">'.PhangoVar::$l_['shop']->lang('edit_cat_product', 'Editar categorías de producto').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 24, 'idproduct' => $id) ).'">'.i18n_lang('shop', 'edit_cat_product', 'Editar categorías de producto').'</a>';
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $id) ).'">'.PhangoVar::$l_['shop']->lang('edit_image_product', 'Editar imagen de producto').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $id) ).'">'.i18n_lang('shop', 'edit_image_product', 'Editar imagen de producto').'</a>';
 	
 	$plugins=$args['plugins'];
 	
@@ -1964,7 +1964,7 @@ function TransportOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 9, 'IdTransport' => $id) ).'">'.PhangoVar::$l_['shop']->lang('add__select_prices_for_transport', 'Añadir tabla de precios para el transporte').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 9, 'IdTransport' => $id) ).'">'.i18n_lang('shop', 'add__select_prices_for_transport', 'Añadir tabla de precios para el transporte').'</a>';
 
 	return $arr_options;
 
@@ -1975,7 +1975,7 @@ function GroupShopOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 12, 'IdGroup_shop' => $id) ).'">'.PhangoVar::$l_['shop']->lang('add__user_to_group_shop', 'Añadir usuario a grupo de descuento').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 12, 'IdGroup_shop' => $id) ).'">'.i18n_lang('shop', 'add__user_to_group_shop', 'Añadir usuario a grupo de descuento').'</a>';
 
 	return $arr_options;
 
@@ -1986,7 +1986,7 @@ function BillOptionsListModel($url_options, $model_name, $id)
 
 	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
 	
-	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 16, 'IdOrder_shop' => $id) ).'">'.PhangoVar::$l_['shop']->lang('obtain_bill', 'Obtener factura').'</a>';
+	$arr_options[]='<a href="'. set_admin_link( 'shop', array('op' => 16, 'IdOrder_shop' => $id) ).'">'.i18n_lang('shop', 'obtain_bill', 'Obtener factura').'</a>';
 
 	return $arr_options;
 
@@ -2007,7 +2007,7 @@ function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
 		
 		
 		
-		$arr_options[]='<a href="'.set_admin_link( 'shop', array('op' => 23, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.PhangoVar::$l_['shop']->lang('edit_plugin_external', 'Editar plugin externo').'</a>';
+		$arr_options[]='<a href="'.set_admin_link( 'shop', array('op' => 23, 'plugin' => $arr_row['plugin'], 'element_choice' => $_GET['element_choice']) ).'">'.i18n_lang('shop', 'edit_plugin_external', 'Editar plugin externo').'</a>';
 		
 		//$func_admin_plugin();
 	

@@ -13,11 +13,11 @@ function MailAdminCartView($arr_address, $arr_address_transport, $arr_order_shop
 	</style>
 	<?php
 	
-	echo '<h1>'.PhangoVar::$l_['shop']->lang('new_order', 'Nuevo pedido').'</h1><p>'.PhangoVar::$l_['shop']->lang('explain_new_order', 'Un cliente ha hecho un nuevo pedido. Le enviamos todos los datos de este para verificación y su gestión.').'</p>'; 
+	echo '<h1>'.i18n_lang('shop', 'new_order', 'Nuevo pedido').'</h1><p>'.i18n_lang('shop', 'explain_new_order', 'Un cliente ha hecho un nuevo pedido. Le enviamos todos los datos de este para verificación y su gestión.').'</p>'; 
 	
 	echo load_view(array($arr_address, $arr_address_transport, $cart, $no_show_button_checkout), 'shop/checkoutcart');
 	
-	echo '<h3>'.PhangoVar::$l_['shop']->lang('url_bill_for_admin', 'Enlace de factura para administrador').'</h3><p><a href="'.set_admin_link( 'shop', array('op' => 16, 'IdOrder_shop' => $arr_order_shop['IdOrder_shop'])).'">'.PhangoVar::$l_['shop']->lang('click_here_for_download_bill', 'Pulse aquí para descargar factura').'</a></p>';
+	echo '<h3>'.i18n_lang('shop', 'url_bill_for_admin', 'Enlace de factura para administrador').'</h3><p><a href="'.set_admin_link( 'shop', array('op' => 16, 'IdOrder_shop' => $arr_order_shop['IdOrder_shop'])).'">'.i18n_lang('shop', 'click_here_for_download_bill', 'Pulse aquí para descargar factura').'</a></p>';
 }
 
 ?>

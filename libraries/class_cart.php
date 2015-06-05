@@ -67,7 +67,7 @@ class CartClass {
 		
 		if($this->yes_update==1)
 		{
-			echo '<p>'.PhangoVar::$l_['shop']->lang('explain_cart_options', 'Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.').'</p>';
+			echo '<p>'.i18n_lang('shop', 'explain_cart_options', 'Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.').'</p>';
 		}
 		
 		//Add plugins for cart that added money to price, for example, taxes or discounts. You can configure taxes or discounts on its plugins admin.
@@ -324,7 +324,7 @@ class CartClass {
 				ob_end_clean();
 				
 				load_libraries(array('redirect'));
-				die( redirect_webtsys( $redirect_url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting') , $arr_block) );
+				die( redirect_webtsys( $redirect_url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting') , $arr_block) );
 
 			}
 			else
@@ -521,7 +521,7 @@ class CartClass {
 			if(!include(PhangoVar::$base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
 			{
 		
-				echo PhangoVar::$l_['shop']->lang('error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta').': '.$config_data['portal_email'];
+				echo i18n_lang('shop', 'error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta').': '.$config_data['portal_email'];
 
 			}
 			else
@@ -732,10 +732,10 @@ class CartClass {
 		
 		//If no send mail write a message with the reference, for send to mail shop...
 
-		if( !send_mail($arr_user['email'], PhangoVar::$l_['shop']->lang('your_orders', 'Su pedido'), $content_mail_user, 'html') || !send_mail(PhangoVar::$portal_email, PhangoVar::$l_['shop']->lang('orders', 'Pedidos'), $content_mail_admin, 'html') )
+		if( !send_mail($arr_user['email'], i18n_lang('shop', 'your_orders', 'Su pedido'), $content_mail_user, 'html') || !send_mail(PhangoVar::$portal_email, i18n_lang('shop', 'orders', 'Pedidos'), $content_mail_admin, 'html') )
 		{
 
-			echo '<p>'.PhangoVar::$l_['shop']->lang('error_cannot_send_email', 'Error: no puedo enviar el email').', '.PhangoVar::$l_['shop']->lang('use_this_id_for_contact_with_us', 'Este es su número de pedido, especifíquelo en el email que nos envíe.').': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
+			echo '<p>'.i18n_lang('shop', 'error_cannot_send_email', 'Error: no puedo enviar el email').', '.i18n_lang('shop', 'use_this_id_for_contact_with_us', 'Este es su número de pedido, especifíquelo en el email que nos envíe.').': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
 
 		}
 	

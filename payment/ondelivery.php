@@ -58,7 +58,7 @@ class OnDeliveryPaymentClass extends PaymentClass
 			//echo load_view(array('
 			
 			//simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'));
-			echo load_view(array( PhangoVar::$l_['shop']->lang('error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta'), PhangoVar::$l_['shop']->lang('error_contact_with_us', 'error_contact_with_us') ), 'content');
+			echo load_view(array( i18n_lang('shop', 'error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta'), i18n_lang('shop', 'error_contact_with_us', 'error_contact_with_us') ), 'content');
 		
 		}
 		

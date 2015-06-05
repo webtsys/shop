@@ -16,8 +16,8 @@ function ViewProductView($arr_product)
 	
 	PhangoVar::$arr_cache_jscript[]='show_big_image.js';
 	
-	$arr_stock[0]=PhangoVar::$l_['shop']->lang('no_stock', 'Sin stock');
-	$arr_stock[1]=PhangoVar::$l_['shop']->lang('in_stock', 'En stock');
+	$arr_stock[0]=i18n_lang('shop', 'no_stock', 'Sin stock');
+	$arr_stock[1]=i18n_lang('shop', 'in_stock', 'En stock');
 	
 	if($arr_product['about_order']==0)
 	{
@@ -28,7 +28,7 @@ function ViewProductView($arr_product)
 	else
 	{
 
-		$stock_text=PhangoVar::$l_['shop']->lang('served_on_request', 'Servido bajo pedido');
+		$stock_text=i18n_lang('shop', 'served_on_request', 'Servido bajo pedido');
 
 	}
 	
@@ -49,7 +49,7 @@ function ViewProductView($arr_product)
 		{
 			$add_tax_special_offer=calculate_taxes($idtax, $arr_product['special_offer']);
 
-			$price= '<strong>'.PhangoVar::$l_['shop']->lang('special_offer', 'Oferta especial').'</strong> <span style="text-decoration: line-through;">'.moneyfield::currency_format( ($price+$add_tax) ).'</span> -> '.moneyfield::currency_format( ($arr_product['special_offer']+$add_tax_special_offer) );
+			$price= '<strong>'.i18n_lang('shop', 'special_offer', 'Oferta especial').'</strong> <span style="text-decoration: line-through;">'.moneyfield::currency_format( ($price+$add_tax) ).'</span> -> '.moneyfield::currency_format( ($arr_product['special_offer']+$add_tax_special_offer) );
 
 		}
 		
@@ -57,7 +57,7 @@ function ViewProductView($arr_product)
 	else
 	{
 	
-		$price=PhangoVar::$l_['shop']->lang('free_product', 'Gratuito');
+		$price=i18n_lang('shop', 'free_product', 'Gratuito');
 	
 	}
 
@@ -84,13 +84,13 @@ function ViewProductView($arr_product)
 			<?php echo I18nField::show_formatted($arr_product['description']); ?>
 		</p>
 		<p>
-			<strong><?php echo PhangoVar::$l_['shop']->lang('pvp', 'PVP'); ?>:</strong> <?php echo MoneyField::currency_format($arr_product['price']); ?>
+			<strong><?php echo i18n_lang('shop', 'pvp', 'PVP'); ?>:</strong> <?php echo MoneyField::currency_format($arr_product['price']); ?>
 		</p>	
 		<p>
 			<?php echo $stock_text; ?>
 		</p>
 		<!--<p>
-			<?php echo PhangoVar::$l_['shop']->lang('weight', 'Peso'); ?>: <?php echo $arr_product['weight']; ?> <?php echo PhangoVar::$l_['shop']->lang('kg', 'Kg'); ?>
+			<?php echo i18n_lang('shop', 'weight', 'Peso'); ?>: <?php echo $arr_product['weight']; ?> <?php echo i18n_lang('shop', 'kg', 'Kg'); ?>
 		</p>-->
 		<?php
 		if(ConfigShop::$config_shop['view_only_mode']==0 && $arr_product['view_only_mode']==0)
@@ -100,10 +100,10 @@ function ViewProductView($arr_product)
 			{
 			?>
 			<a onclick="javascript:buy_product(<?php echo $arr_product['IdProduct']; ?>); return false;" href="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'buy', array('IdProduct' => $arr_product['IdProduct']) ); ?>" class="ship">
-			<span id="text_buy_<?php echo $arr_product['IdProduct']; ?>"><?php echo PhangoVar::$l_['shop']->lang('buy_product', 'Comprar producto'); ?></span>
-			</a><img id="loading_buy_<?php echo $arr_product['IdProduct']; ?>" src="<?php echo PhangoVar::$base_url; ?>/media/default/images/loading.gif" alt="<?php echo PhangoVar::$l_['shop']->lang('buying_product', 'Comprando producto'); ?>" style="display: none;" />
+			<span id="text_buy_<?php echo $arr_product['IdProduct']; ?>"><?php echo i18n_lang('shop', 'buy_product', 'Comprar producto'); ?></span>
+			</a><img id="loading_buy_<?php echo $arr_product['IdProduct']; ?>" src="<?php echo PhangoVar::$base_url; ?>/media/default/images/loading.gif" alt="<?php echo i18n_lang('shop', 'buying_product', 'Comprando producto'); ?>" style="display: none;" />
 
-			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo PhangoVar::$l_['shop']->lang('buying_product', 'Comprando producto'); ?></span></p><p id="sucess_buy_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo PhangoVar::$l_['shop']->lang('success_buy', 'Se añadio este producto al carrito de la compra'); ?></span></p></div>
+			<br clear="all" /><div id="show_process_buying"><p id="buying_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo i18n_lang('shop', 'buying_product', 'Comprando producto'); ?></span></p><p id="sucess_buy_<?php echo $arr_product['IdProduct']; ?>" style="display: none;"><span class="error"><?php echo i18n_lang('shop', 'success_buy', 'Se añadio este producto al carrito de la compra'); ?></span></p></div>
 			
 			<?php
 			}

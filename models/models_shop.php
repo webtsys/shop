@@ -60,7 +60,7 @@ class zone_shop extends Webmodel {
 			if($num_count>0)
 			{
 
-				$this->components['other_countries']->std_error=PhangoVar::$l_['shop']->lang('error_other_countries_is_selected', 'Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona');
+				$this->components['other_countries']->std_error=i18n_lang('shop', 'error_other_countries_is_selected', 'Error: se ha seleccionado que esta zona abarque el resto de países, pero no se ha especificado el tipo de zona');
 
 				return 0;
 
@@ -553,7 +553,7 @@ class product_relationship extends Webmodel {
 		}
 		else
 		{
-			$this->std_error=PhangoVar::$l_['shop']->lang('product_is_already_on_category', 'Este producto está realmente en la categoría');
+			$this->std_error=i18n_lang('shop', 'product_is_already_on_category', 'Este producto está realmente en la categoría');
 		
 			return false;
 		
@@ -572,7 +572,7 @@ class product_relationship extends Webmodel {
 		}
 		else
 		{
-			$this->std_error=PhangoVar::$l_['shop']->lang('product_is_already_on_category', 'Este producto está realmente en la categoría');
+			$this->std_error=i18n_lang('shop', 'product_is_already_on_category', 'Este producto está realmente en la categoría');
 		
 			return false;
 		
@@ -987,34 +987,34 @@ PhangoVar::$model['order_shop']->components['price_payment']->required=0;
 
 PhangoVar::$model['order_shop']->create_form();
 
-PhangoVar::$model['order_shop']->forms['referer']->label=PhangoVar::$l_['shop']->lang('referer', 'Referencia');
-PhangoVar::$model['order_shop']->forms['name']->label=PhangoVar::$l_['users']->lang('name', 'Name');
-PhangoVar::$model['order_shop']->forms['last_name']->label=PhangoVar::$l_['users']->lang('last_name', 'Lastname');
-PhangoVar::$model['order_shop']->forms['enterprise_name']->label=PhangoVar::$l_['users']->lang('enterprise_name', 'Enterprise name');
-PhangoVar::$model['order_shop']->forms['email']->label=PhangoVar::$l_['users']->lang('email', 'Email');
-PhangoVar::$model['order_shop']->forms['nif']->label=PhangoVar::$l_['users']->lang('nif', 'Nif');
-PhangoVar::$model['order_shop']->forms['address']->label=PhangoVar::$l_['common']->lang('address', 'Address');
-PhangoVar::$model['order_shop']->forms['zip_code']->label=PhangoVar::$l_['users']->lang('zip_code', 'Zip code');
-PhangoVar::$model['order_shop']->forms['city']->label=PhangoVar::$l_['users']->lang('city', 'City');
-PhangoVar::$model['order_shop']->forms['region']->label=PhangoVar::$l_['common']->lang('region', 'Region');
-PhangoVar::$model['order_shop']->forms['country']->label=PhangoVar::$l_['common']->lang('country', 'Country');
-PhangoVar::$model['order_shop']->forms['phone']->label=PhangoVar::$l_['common']->lang('phone', 'Phone');
-PhangoVar::$model['order_shop']->forms['fax']->label=PhangoVar::$l_['common']->lang('fax', 'Fax');
-PhangoVar::$model['order_shop']->forms['name_transport']->label=PhangoVar::$l_['users']->lang('name', 'Name');
-PhangoVar::$model['order_shop']->forms['last_name_transport']->label=PhangoVar::$l_['users']->lang('last_name', 'Lastname');
-PhangoVar::$model['order_shop']->forms['enterprise_name_transport']->label=PhangoVar::$l_['users']->lang('enterprise_name', 'Enterprise name');
-PhangoVar::$model['order_shop']->forms['address_transport']->label=PhangoVar::$l_['common']->lang('address', 'Address');
-PhangoVar::$model['order_shop']->forms['zip_code_transport']->label=PhangoVar::$l_['common']->lang('zip_code', 'Zip code');
-PhangoVar::$model['order_shop']->forms['city_transport']->label=PhangoVar::$l_['common']->lang('city', 'City');
-PhangoVar::$model['order_shop']->forms['region_transport']->label=PhangoVar::$l_['common']->lang('region', 'Region');
-PhangoVar::$model['order_shop']->forms['country_transport']->label=PhangoVar::$l_['common']->lang('country', 'Country');
-PhangoVar::$model['order_shop']->forms['phone_transport']->label=PhangoVar::$l_['common']->lang('phone', 'Phone');
-//PhangoVar::$model['order_shop']->forms['zone_transport']->label=PhangoVar::$l_['shop']->lang('zone', 'Zona');
-PhangoVar::$model['order_shop']->forms['transport']->label=PhangoVar::$l_['shop']->lang('transport', 'Transporte');
-PhangoVar::$model['order_shop']->forms['payment_done']->label=PhangoVar::$l_['shop']->lang('make_payment', '¿Pagado?');
-PhangoVar::$model['order_shop']->forms['observations']->label=PhangoVar::$l_['shop']->lang('observations', 'Observaciones');
-PhangoVar::$model['order_shop']->forms['date_order']->label=PhangoVar::$l_['common']->lang('date', 'date');
-//PhangoVar::$model['order_shop']->forms['invoice_num']->label=PhangoVar::$l_['shop']->lang('invoice_num', 'Número de factura');
+PhangoVar::$model['order_shop']->forms['referer']->label=i18n_lang('shop', 'referer', 'Referencia');
+PhangoVar::$model['order_shop']->forms['name']->label=i18n_lang('users', 'name', 'Name');
+PhangoVar::$model['order_shop']->forms['last_name']->label=i18n_lang('users', 'last_name', 'Lastname');
+PhangoVar::$model['order_shop']->forms['enterprise_name']->label=i18n_lang('users', 'enterprise_name', 'Enterprise name');
+PhangoVar::$model['order_shop']->forms['email']->label=i18n_lang('users', 'email', 'Email');
+PhangoVar::$model['order_shop']->forms['nif']->label=i18n_lang('users', 'nif', 'Nif');
+PhangoVar::$model['order_shop']->forms['address']->label=i18n_lang('common', 'address', 'Address');
+PhangoVar::$model['order_shop']->forms['zip_code']->label=i18n_lang('users', 'zip_code', 'Zip code');
+PhangoVar::$model['order_shop']->forms['city']->label=i18n_lang('users', 'city', 'City');
+PhangoVar::$model['order_shop']->forms['region']->label=i18n_lang('common', 'region', 'Region');
+PhangoVar::$model['order_shop']->forms['country']->label=i18n_lang('common', 'country', 'Country');
+PhangoVar::$model['order_shop']->forms['phone']->label=i18n_lang('common', 'phone', 'Phone');
+PhangoVar::$model['order_shop']->forms['fax']->label=i18n_lang('common', 'fax', 'Fax');
+PhangoVar::$model['order_shop']->forms['name_transport']->label=i18n_lang('users', 'name', 'Name');
+PhangoVar::$model['order_shop']->forms['last_name_transport']->label=i18n_lang('users', 'last_name', 'Lastname');
+PhangoVar::$model['order_shop']->forms['enterprise_name_transport']->label=i18n_lang('users', 'enterprise_name', 'Enterprise name');
+PhangoVar::$model['order_shop']->forms['address_transport']->label=i18n_lang('common', 'address', 'Address');
+PhangoVar::$model['order_shop']->forms['zip_code_transport']->label=i18n_lang('common', 'zip_code', 'Zip code');
+PhangoVar::$model['order_shop']->forms['city_transport']->label=i18n_lang('common', 'city', 'City');
+PhangoVar::$model['order_shop']->forms['region_transport']->label=i18n_lang('common', 'region', 'Region');
+PhangoVar::$model['order_shop']->forms['country_transport']->label=i18n_lang('common', 'country', 'Country');
+PhangoVar::$model['order_shop']->forms['phone_transport']->label=i18n_lang('common', 'phone', 'Phone');
+//PhangoVar::$model['order_shop']->forms['zone_transport']->label=i18n_lang('shop', 'zone', 'Zona');
+PhangoVar::$model['order_shop']->forms['transport']->label=i18n_lang('shop', 'transport', 'Transporte');
+PhangoVar::$model['order_shop']->forms['payment_done']->label=i18n_lang('shop', 'make_payment', '¿Pagado?');
+PhangoVar::$model['order_shop']->forms['observations']->label=i18n_lang('shop', 'observations', 'Observaciones');
+PhangoVar::$model['order_shop']->forms['date_order']->label=i18n_lang('common', 'date', 'date');
+//PhangoVar::$model['order_shop']->forms['invoice_num']->label=i18n_lang('shop', 'invoice_num', 'Número de factura');
 
 PhangoVar::$model['order_shop_plugins']=new Webmodel('order_shop_plugins');
 
@@ -1202,7 +1202,7 @@ class currency_change extends Webmodel {
 		else
 		{
 
-			$this->std_error=PhangoVar::$l_['shop']->lang('this_currency_have_equivalence', 'Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia');
+			$this->std_error=i18n_lang('shop', 'this_currency_have_equivalence', 'Ya ha aplicado un valor a esta moneda. Edite la relación correspondiente creada anteriormente, o cambie la moneda a la que quiere aplicar la equivalencia');
 			return 0;
 
 		}
