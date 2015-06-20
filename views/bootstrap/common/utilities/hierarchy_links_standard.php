@@ -19,7 +19,7 @@ function Hierarchy_Links_StandardView($arr_hierarchy, $url_fancy, $idfield, $arr
 		
 		//$arr_tmp_param[]=slugify($arr_id['name']);
 	
-		$arr_final[$x]='<a href="'.Routes::addGetParameters($url_fancy, $arr_tmp_param).'">'.$arr_id['name'].'</a>';
+		$arr_final[$x]='<a href="'.Routes::add_get_parameters($url_fancy, $arr_tmp_param).'">'.$arr_id['name'].'</a>';
 	
 	}
 	
@@ -40,7 +40,7 @@ function Hierarchy_Links_StandardView($arr_hierarchy, $url_fancy, $idfield, $arr
 			
 			$arr_tmp_param[]=Utils::slugify($arr_hierarchy[$x]['name']);
 		
-			$arr_final[$x]='<a href="'.Routes::addGetParameters($url_fancy, $arr_tmp_param).'">'.$arr_hierarchy[$x]['name'].'</a>';
+			$arr_final[$x]='<a href="'.Routes::add_get_parameters($url_fancy, $arr_tmp_param).'">'.$arr_hierarchy[$x]['name'].'</a>';
 		
 		break;
 		

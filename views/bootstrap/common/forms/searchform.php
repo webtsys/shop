@@ -3,7 +3,7 @@
 function SearchFormView($arr_search_field, $arr_order_field, $arr_order_select, $url_options)
 {
 
-	$form_search='<form method="get" action="'.Routes::addGetParameters( $url_options, array() ).'">';
+	$form_search='<form method="get" action="'.Routes::add_get_parameters( $url_options, array() ).'">';
 	$form_search.=Utils::set_csrf_key();
 	$form_search.=I18n::lang('common', 'order_by', 'Order by').': '.SelectForm('order_field', '', $arr_order_field)
 	.' '.I18n::lang('common', 'in_order', 'By order').': '.SelectForm('order_desc', '', $arr_order_select);
@@ -19,7 +19,7 @@ function SearchFormView($arr_search_field, $arr_order_field, $arr_order_select, 
 
 	$form_search.='</form></p>';
 	
-	echo View::loadView(array(I18n::lang('common', 'order_and_search', 'Order and search'), $form_search), 'content');
+	echo View::load_view(array(I18n::lang('common', 'order_and_search', 'Order and search'), $form_search), 'content');
 
 }
 

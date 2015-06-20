@@ -136,7 +136,7 @@ function UpdateModelFormView($model_form, $arr_fields=array(), $url_post, $encty
 		
 		<?php
 		
-		echo View::loadView(array($model_form, $arr_fields_tab['fields']), 'common/forms/modelform');
+		echo View::load_view(array($model_form, $arr_fields_tab['fields']), 'common/forms/modelform');
 	
 		?>
 		</div>

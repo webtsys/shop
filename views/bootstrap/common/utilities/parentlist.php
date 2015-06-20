@@ -32,7 +32,7 @@ function ParentListView($model_name, $arr_cat, $arr_list_father, $idfather, $url
 		
 		settype($arr_perm[$idcat], 'integer');
 		
-		$url_blog=Routes::addGetParameters($url_cat, array($idfield => $idcat) );
+		$url_blog=Routes::add_get_parameters($url_cat, array($idfield => $idcat) );
 		
 		$arr_hidden[$arr_perm[$idcat]]='<span class="error">'.$arr_cat[$idcat].'</span>';
 		$arr_hidden[0]='<a href="'.$url_blog.'">'.$arr_cat[$idcat].'</a>';

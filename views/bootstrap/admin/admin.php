@@ -34,7 +34,7 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 			$arr_selected[Utils::slugify(I18n::$language)]='choose_flag_general';
 
 			?>
-			<a class="<?php echo $arr_selected[Utils::slugify($lang_item)]; ?>" href="<?php echo Routes::makeStaticUrl( 'lang', 'index', 'index', array('language' => $lang_item));?>"><img src="<?php echo View::getMediaUrl('images/languages/'.$lang_item.'.png'); ?>" alt="<?php echo $lang_item; ?>"/></a> 
+			<a class="<?php echo $arr_selected[Utils::slugify($lang_item)]; ?>" href="<?php echo Routes::make_module_url( 'lang', 'index', 'index', array('language' => $lang_item));?>"><img src="<?php echo View::get_media_url('images/languages/'.$lang_item.'.png'); ?>" alt="<?php echo $lang_item; ?>"/></a> 
 			<?php
 
 		}
@@ -43,7 +43,7 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 		</div>
 		
 		<div id="logout">
-		<a href="<?php echo Routes::makeUrl('admin', 'logout');?>">Logout</a>
+		<a href="<?php echo Routes::make_url('admin', 'logout');?>">Logout</a>
 		</div>
 
 		<div id="center_body">

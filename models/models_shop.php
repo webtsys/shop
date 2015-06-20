@@ -2,9 +2,9 @@
 
 Utils::load_libraries(array('fields/i18nfield', 'fields/moneyfield', 'fields/passwordfield', 'models/userphangomodel'));
 
-I18n::loadLang('shop');
-I18n::loadLang('common');
-I18n::loadLang('users');
+I18n::load_lang('shop');
+I18n::load_lang('common');
+I18n::load_lang('users');
 
 //Countries. A Country is from a zone_shop
 

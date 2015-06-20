@@ -8,7 +8,7 @@ function InsertUserFormView($model_user, $model_login)
 	<?php
 	
 	
-	echo View::loadView(array($model_user->forms, $model_login->arr_user_insert), 'common/forms/modelform');
+	echo View::load_view(array($model_user->forms, $model_login->arr_user_insert), 'common/forms/modelform');
 		
 
 	?>

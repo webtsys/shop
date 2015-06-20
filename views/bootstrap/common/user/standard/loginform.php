@@ -14,7 +14,7 @@ function LoginFormView($model_user, $model_login)
 	<?php
 		Utils::set_csrf_key();
 		
-		echo View::loadView(array($model_user->forms, $arr_fields_login), 'common/forms/modelform');
+		echo View::load_view(array($model_user->forms, $arr_fields_login), 'common/forms/modelform');
 
 	?>
 	<p><a href="<?php echo $model_login->url_recovery; ?>"><?php echo I18n::lang('users', 'remember_password', 'Remember password'); ?></a></p>
