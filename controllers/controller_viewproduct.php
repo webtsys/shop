@@ -85,9 +85,9 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 		else
 		{
 
-			$title=$lang['shop']['no_exists_product'];
+			$title=i18n_lang('shop', 'no_exists_product', 'Product not exists');
 			
-			echo load_view(array($lang['shop']['no_exists_product'], $lang['shop']['this_product_is_not_found']), 'content');
+			echo load_view(array($title, i18n_lang('shop', 'this_product_is_not_found', 'This product is not found')), 'content');
 
 		}
 
