@@ -167,8 +167,14 @@ class zone_shop extends Webmodel {
 		if($post['other_countries']==1 && isset($post['type']))
 		{
 
-			$num_count=parent::select_count('where other_countries=1 and type='.$post['type'], 'IdZone_shop');
+            $old_conditions=$this->conditions;
+		
+            $this->conditions='where other_countries=1 and type='.$post['type'];
+		
+			$num_count=parent::select_count('IdZone_shop');
 
+			$this->conditions=$old_conditions;
+			
 			if($num_count>0)
 			{
 
@@ -204,7 +210,7 @@ Webmodel::$model['zone_shop']->register('code', new CharField(25), 1);
 //Code 1 is for taxes
 
 Webmodel::$model['zone_shop']->register('type', new IntegerField(11));
-Webmodel::$model['zone_shop']->components['type']->form='HiddenForm';
+Webmodel::$model['zone_shop']->components['type']->form='PhangoApp\PhaModels\Forms\HiddenForm';
 
 Webmodel::$model['zone_shop']->register('other_countries', new BooleanField());
 
@@ -220,12 +226,13 @@ Webmodel::$model['country_shop']=new country_shop();
 
 Webmodel::$model['country_shop']->register('name', new I18nField(new CharField(255)) , 1);
 
-SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
+//SlugifyField::add_slugify_i18n_fields('country_shop', 'name');
+Webmodel::$model['country_shop']=SlugifyField::add_slugify_i18n_fields(Webmodel::$model['country_shop'], 'name');
 
 Webmodel::$model['country_shop']->register('code', new CharField(25), 1);
 
 //Webmodel::$model['country_shop']->register('idzone_taxes', new ForeignKeyField('zone_shop'));
-Webmodel::$model['country_shop']->register('idzone_transport', new ForeignKeyField(Webmodel::$model['zone_shop']));
+Webmodel::$model['country_shop']->register('idzone_transport', new ForeignKeyField(Webmodel::$model['zone_shop'], 11, $default_id=0, $name_field='name', $name_value='IdZone_shop'));
 
 //Users shop
 //When delete, don't delete, only leave the data how user deleted.
@@ -275,7 +282,7 @@ Webmodel::$model['user_shop']->register('address', new CharField(255), 1);
 Webmodel::$model['user_shop']->register('zip_code', new CharField(255), 1);
 Webmodel::$model['user_shop']->register('region', new CharField(255), 1);
 Webmodel::$model['user_shop']->register('city', new CharField(255), 1);
-Webmodel::$model['user_shop']->register('country', new ForeignKeyField(Webmodel::$model['country_shop']), 1);
+Webmodel::$model['user_shop']->register('country', new ForeignKeyField(Webmodel::$model['country_shop'], 11, $default_id=0, $name_field='name', $name_value='IdCountry_shop'), 1);
 Webmodel::$model['user_shop']->register('phone', new CharField(255), 1);//Only for special effects...
 Webmodel::$model['user_shop']->register('fax', new CharField(255));//Only for special effects...
 Webmodel::$model['user_shop']->register('nif', new CharField(255), 1);//Only for special effects...
@@ -363,9 +370,9 @@ class currency_change extends Webmodel {
 
 Webmodel::$model['currency_change']=new currency_change('currency_change');
 
-Webmodel::$model['currency_change']->register('idcurrency', new ParentField(Webmodel::$model['currency'], 11), 1);
+Webmodel::$model['currency_change']->register('idcurrency', new ForeignKeyField(Webmodel::$model['currency'], 11, $default_id=0, $name_field='name', $name_value='IdCurrency'), 1);
 
-Webmodel::$model['currency_change']->register('idcurrency_related', new ForeignKeyField(Webmodel::$model['currency'], 11), 1);
+Webmodel::$model['currency_change']->register('idcurrency_related', new ForeignKeyField(Webmodel::$model['currency'], 11, $default_id=0, $name_field='name', $name_value='IdCurrency'), 1);
 Webmodel::$model['currency_change']->components['idcurrency_related']->name_field_to_field='name';
 //Webmodel::$model['currency_change']->components['idcurrency_related']->fields_related_model=array('name');
 
@@ -393,11 +400,17 @@ class product extends Webmodel {
 			settype($_GET['idcat'], 'integer');
 		
 			$idproduct=parent::insert_id();
+			
+			Webmodel::$model['product_relationship']->fields_to_update=['idproduct', 'idcat_product'];
+			
+			
 		
-			if( Webmodel::$model['product_relationship']->insert(array('idproduct' => $idproduct, 'idcat_product' => $_GET['idcat'])) )
+			if( !Webmodel::$model['product_relationship']->insert(array('idproduct' => $idproduct, 'idcat_product' => $_GET['idcat'])) )
 			{
+                
 				$this->std_error='Cannot insert a new relationship';
 			}
+			
 			
 			return true;
 		
@@ -425,6 +438,8 @@ class product extends Webmodel {
 	
 		//Obtain ids for this product for delete images of product.
 		
+		$old_conditions=$this->conditions;
+		
 		$query=$this->select(array('IdProduct'));
 		
 		$arr_id_prod=array(0);
@@ -435,6 +450,8 @@ class product extends Webmodel {
 			$arr_id_prod[]=$idproduct;
 		
 		}
+		
+		$this->conditions=$old_conditions;
 		
 		Webmodel::$model['image_product']->conditions='where image_product.idproduct IN ('.implode(', ', $arr_id_prod).')';
 		
@@ -469,7 +486,7 @@ Webmodel::$model['product']->register('referer', new CharField(255), 1);
 
 Webmodel::$model['product']->register('title', new I18nField(new CharField(255)), 1);
 
-SlugifyField::add_slugify_i18n_fields('product', 'title');
+Webmodel::$model['product']=SlugifyField::add_slugify_i18n_fields(Webmodel::$model['product'], 'title');
 
 Webmodel::$model['product']->register('description', new I18nField(new TextHTMLField()), 1);
 
@@ -517,8 +534,14 @@ class image_product extends Webmodel {
 		if($post['idproduct']>0)
 		{
 
-			$num_principal_photo=$this->select_count('where principal=1 and idproduct='.$post['idproduct'], 'IdImage_product');
+            $old_conditions=$this->conditions;
+		
+            $this->conditions='where principal=1 and idproduct='.$post['idproduct'];
+		
+			$num_principal_photo=$this->select_count();
 
+			$this->conditions=$old_conditions;
+			
 			if($num_principal_photo==0)
 			{
 
@@ -529,7 +552,7 @@ class image_product extends Webmodel {
 			if($post['principal']==1)
 			{
 
-				$query=MySQLClass::webtsys_query('update image_product set principal=0 where idproduct='.$post['idproduct']);
+				$query=$this->query('update image_product set principal=0 where idproduct='.$post['idproduct']);
 
 			}
 
@@ -564,7 +587,13 @@ class image_product extends Webmodel {
 		if($post['idproduct']>0)
 		{
 
-			$num_principal_photo=$this->select_count('where principal=1 and idproduct='.$post['idproduct'], 'IdImage_product');
+			$old_conditions=$this->conditions;
+        
+            $this->conditions='where principal=1 and idproduct='.$post['idproduct'];
+        
+            $num_principal_photo=$this->select_count();
+
+            $this->conditions=$old_conditions;
 
 			if($num_principal_photo==0)
 			{
@@ -576,7 +605,7 @@ class image_product extends Webmodel {
 			if($post['principal']==1)
 			{
 
-				$query=MySQLClass::webtsys_query('update image_product set principal=0 where idproduct='.$post['idproduct']);
+				$query=$this->query('update image_product set principal=0 where idproduct='.$post['idproduct']);
 
 			}
 
@@ -665,13 +694,13 @@ class image_product extends Webmodel {
 			if($principal==1)
 			{
 				
-				$query2=MySQLClass::webtsys_query('update image_product set principal=1 where idproduct='.$idproduct.' and IdImage_product!='.$idimage.' limit 1');
+				$query2=$this->query('update image_product set principal=1 where idproduct='.$idproduct.' and IdImage_product!='.$idimage.' limit 1');
 
 			}
 
 		}
 
- 		return MySQLClass::webtsys_query('delete from '.$this->name.' '.$conditions);
+ 		return $this->query('delete from '.$this->name.' '.$conditions);
 		
 	}
 
@@ -680,8 +709,11 @@ class image_product extends Webmodel {
 Webmodel::$model['image_product']=new image_product();
 
 Webmodel::$model['image_product']->register('principal', new BooleanField());
-Webmodel::$model['image_product']->register('photo', new ImageField('photo', 'shop/products/images/', Routes::$root_url.'/shop/products/images', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
-Webmodel::$model['image_product']->register('idproduct', new ForeignKeyField(Webmodel::$model['product'], 11), 1);
+
+//($path, $url_path, $thumb=0, $img_width=array('mini' => 150), $quality_jpeg=85)
+
+Webmodel::$model['image_product']->register('photo', new ImageField('shop/products/images', Routes::$root_url.'/shop/products/images', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
+Webmodel::$model['image_product']->register('idproduct', new ForeignKeyField(Webmodel::$model['product'], 11, $default_id=0, $name_field='title', $name_value='IdProduct'), 1);
 
 
 class cat_product extends Webmodel {
@@ -726,7 +758,7 @@ $field_title_cat=new TextHTMLField();
 
 Webmodel::$model['cat_product']->register('title', new I18nField($field_title_cat), 1);
 
-Webmodel::$model['cat_product']->register('subcat', new ParentField(Webmodel::$model['cat_product'], 255));
+Webmodel::$model['cat_product']->register('subcat', new ParentField(11, Webmodel::$model['cat_product'], $name_field='title', $name_value='IdCat_product'));
 
 Webmodel::$model['cat_product']->register('description', new I18nField(new TextHTMLField()) , 1);
 
@@ -741,14 +773,22 @@ class product_relationship extends Webmodel {
 	function insert($post, $safe_query = 0, $cache_name = '')
 	{
 		
-		if( !$this->select_count('where idproduct='.$post['idproduct'].' and idcat_product='.$post['idcat_product'], 'IdProduct_relationship') )
+		$old_conditions=$this->conditions;
+		
+		$this->conditions='where idproduct='.$post['idproduct'].' and idcat_product='.$post['idcat_product'];
+		
+		if( !$this->select_count('IdProduct_relationship') )
 		{
+		
+            $this->conditions=$old_conditions;
 		
 			return parent::insert($post, $safe_query, $cache_name);
 		
 		}
 		else
 		{
+            $this->conditions=$old_conditions;
+		
 			$this->std_error=I18n::lang('shop', 'product_is_already_on_category', 'Este producto está realmente en la categoría');
 		
 			return false;
@@ -780,9 +820,11 @@ class product_relationship extends Webmodel {
 
 Webmodel::$model['product_relationship']=new product_relationship('product_relationship');
 
-Webmodel::$model['product_relationship']->register('idproduct', new ForeignKeyField(Webmodel::$model['product'], 11), 1);
+//, $default_id=0, $name_field='', $name_value='')
 
-Webmodel::$model['product_relationship']->register('idcat_product', new ForeignKeyField(Webmodel::$model['cat_product'], 11), 1);
+Webmodel::$model['product_relationship']->register('idproduct', new ForeignKeyField(Webmodel::$model['product'], 11, $default_id=0, $name_field='title', $name_value='IdProduct'), 1);
+
+Webmodel::$model['product_relationship']->register('idcat_product', new ForeignKeyField(Webmodel::$model['cat_product'], 11, $default_id=0, $name_field='title', $name_value='IdCat_product'), 1);
 Webmodel::$model['product_relationship']->components['idcat_product']->name_field_to_field='title';
 
 
@@ -822,7 +864,7 @@ Webmodel::$model['transport']=new transport();
 
 Webmodel::$model['transport']->register('name', new CharField(255), 1);
 
-Webmodel::$model['transport']->register('country', new ForeignKeyField(Webmodel::$model['zone_shop']), 1);
+Webmodel::$model['transport']->register('country', new ForeignKeyField(Webmodel::$model['zone_shop'], 11, $default_id=0, $name_field='name', $name_value='IdZone_shop'), 1);
 
 Webmodel::$model['transport']->register('type', new ChoiceField($size=11, $type='integer', $arr_values=array(0, 1), $default_value=0));
 
@@ -845,7 +887,7 @@ Webmodel::$model['price_transport']->components['price']->required=1;
 Webmodel::$model['price_transport']->register('weight', new DoubleField());
 Webmodel::$model['price_transport']->components['weight']->required=0;
 
-Webmodel::$model['price_transport']->register('idtransport', new ForeignKeyField(Webmodel::$model['transport']));
+Webmodel::$model['price_transport']->register('idtransport', new ForeignKeyField(Webmodel::$model['transport'], 11, $default_id=0, $name_field='name', $name_value=''));
 Webmodel::$model['price_transport']->components['idtransport']->form='HiddenForm';
 Webmodel::$model['price_transport']->components['idtransport']->required=1;
 
@@ -868,7 +910,7 @@ Webmodel::$model['price_transport_price']->components['price']->required=0;
 Webmodel::$model['price_transport_price']->register('min_price', new ShopMoneyField());
 Webmodel::$model['price_transport_price']->components['min_price']->required=0;
 
-Webmodel::$model['price_transport_price']->register('idtransport', new ForeignKeyField(Webmodel::$model['transport']));
+Webmodel::$model['price_transport_price']->register('idtransport', new ForeignKeyField(Webmodel::$model['transport'], 11, $default_id=0, $name_field='name', $name_value='IdTransport'));
 Webmodel::$model['price_transport_price']->components['idtransport']->form='HiddenForm';
 Webmodel::$model['price_transport_price']->components['idtransport']->required=1;
 
@@ -894,7 +936,7 @@ class config_shop extends Webmodel {
 
 		}
 
-		$query=MySQLClass::webtsys_query('ALTER TABLE order_shop AUTO_INCREMENT = '.$_POST['num_begin_bill']);
+		$query=$this->query('ALTER TABLE order_shop AUTO_INCREMENT = '.$_POST['num_begin_bill']);
 		
 
 		return parent::update($post, $safe_query, $cache_name);
@@ -957,7 +999,7 @@ class address_transport extends Webmodel {
 
 Webmodel::$model['address_transport']=new address_transport();
 
-Webmodel::$model['address_transport']->register('iduser', new ForeignKeyField(Webmodel::$model['user_shop']), 1);
+Webmodel::$model['address_transport']->register('iduser', new ForeignKeyField(Webmodel::$model['user_shop'], 11, $default_id=0, $name_field='email', $name_value='IdUser_shop'), 1);
 Webmodel::$model['address_transport']->register('name_transport', new CharField(255), 1);
 Webmodel::$model['address_transport']->register('last_name_transport', new CharField(255), 1);
 Webmodel::$model['address_transport']->register('enterprise_name_transport', new CharField(255));
@@ -966,7 +1008,7 @@ Webmodel::$model['address_transport']->register('zip_code_transport', new CharFi
 Webmodel::$model['address_transport']->register('phone_transport', new CharField(255), 1);
 Webmodel::$model['address_transport']->register('city_transport', new CharField(255), 1);
 Webmodel::$model['address_transport']->register('region_transport', new CharField(255), 1);
-Webmodel::$model['address_transport']->register('country_transport', new ForeignKeyField(Webmodel::$model['country_shop'], 11), 1);
+Webmodel::$model['address_transport']->register('country_transport', new ForeignKeyField(Webmodel::$model['country_shop'], 11, 0, 'name', 'IdCountry_shop'), 1);
 //Webmodel::$model['address_transport']->register('zone_transport', new ForeignKeyField('zone_shop', 11));
 
 class payment_form extends Webmodel {
@@ -1453,7 +1495,7 @@ class product_attachments extends Webmodel {
 
 		}
 
- 		return MySQLClass::webtsys_query('delete from '.$this->name.' '.$self->conditions);
+ 		return $this->query('delete from '.$this->name.' '.$self->conditions);
 		
 	}
 
@@ -1579,7 +1621,11 @@ class PreparePluginClass {
 	
 		//$arr_plugin=array();
 		
-		$query=Webmodel::$model['plugin_shop']->select('where element="'.$this->hook_plugin.'" order by position ASC', array('plugin'));
+		Webmodel::$model['plugin_shop']->conditions='where element="'.$this->hook_plugin.'"';
+		
+		Webmodel::$model['plugin_shop']->order_by='order by position ASC';
+		
+		$query=Webmodel::$model['plugin_shop']->select(array('plugin'));
 		
 		while(list($plugin)=Webmodel::$model['plugin_shop']->fetch_row($query))
 		{

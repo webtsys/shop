@@ -6,6 +6,10 @@ use PhangoApp\PhaModels\Webmodel;
 use PhangoApp\PhaUtils\Utils;
 use PhangoApp\PhaUtils\MenuSelected;
 use PhangoApp\PhaLibs\GenerateAdminClass;
+use PhangoApp\PhaLibs\HierarchyLinks;
+use PhangoApp\PhaLibs\ParentLinks;
+use PhangoApp\PhaView\View;
+use PhangoApp\PhaRouter\Routes;
 
 function ShopAdmin()
 {
@@ -37,7 +41,7 @@ function ShopAdmin()
 	
 	$arr_link_options[20]=array('link' => AdminUtils::set_admin_link( 'shop', array('op' => 20) ), 'text' => I18n::lang('shop', 'plugins_shop', 'Plugins de tienda'));
 	
-	$arr_link_options[25]=array('link' => AdminUtils::set_admin_link( 'shop', array('op' => 25) ), 'text' => I18n::lang('shop', 'admin_users', 'admin_users'));
+	$arr_link_options[25]=array('link' => AdminUtils::set_admin_link( 'shop', array('op' => 25) ), 'text' => I18n::lang('shop', 'admin_users', 'Administración de usuarios'));
 	
 	MenuSelected::menu_selected($_GET['op'], $arr_link_options);
 	
@@ -66,6 +70,8 @@ function ShopAdmin()
 		
 			//Load type_index
 			Webmodel::$model['config_shop']->set_field('conditions',['parameters' => [new PhangoApp\PhaModels\Forms\TextAreaEditor('conditions', '')]]);
+			
+			Webmodel::$model['config_shop']->set_field('description_shop',['parameters' => [new PhangoApp\PhaModels\Forms\TextAreaEditor('description_shop', '')]]);
 
 			Webmodel::$model['config_shop']->create_forms();
 			
@@ -93,7 +99,7 @@ function ShopAdmin()
 			echo '<h3>'.I18n::lang('shop', 'edit_config_shop', 'Editar configuración de tienda').'</h3>';
 			
 			$admin=new GenerateAdminClass($m->config_shop, AdminUtils::set_admin_link('shop', array('op' => 1)));
-
+			
 			$admin->show_config();
 
 			//Webmodel::$model['config_shop']->set_enctype_binary();
@@ -128,25 +134,75 @@ function ShopAdmin()
 			$admin->show_config_mode();*/
 
 		break;
-        /*
+        
 		case 2:
+		
+            settype($_GET['subcat'], 'integer');
 
-			settype($_GET['subcat'], 'integer');
+            $m->cat_product->conditions='where IdCat_product='.$_GET['subcat'];
+            
+            $query=$m->cat_product->select(array('title', 'subcat'));
 
-			$query=Webmodel::$model['cat_product']->select('where IdCat_product='.$_GET['subcat'], array('title', 'subcat'));
+            list($title, $parent)=$m->cat_product->fetch_row($query);
 
-			list($title, $parent)=Webmodel::$model['cat_product']->fetch_row($query);
+            $title=$m->cat_product->components['title']->show_formatted($title);
 
-			$title=Webmodel::$model['cat_product']->components['title']->show_formatted($title);
+            $title=' - '.$title;
 
-			$title=' - '.$title;
+            if($title==' - ')
+            {
 
-			if($title==' - ')
-			{
+                $title='';
 
-				$title='';
+            }
+		
+            echo '<h3>'.I18n::lang('shop', 'edit_categories_shop', 'Editar categorias de tienda').' '.$title.'</h3>';
+		
+            $url_fancy=AdminUtils::set_admin_link('shop', array('op' => 2));
+		
+            $arr_parent_links=new ParentLinks($url_fancy, 'cat_product', 'subcat', 'title', $_GET['subcat'], $last_link=0, $arr_parameters=[]);
+            
+            echo '<p>'.$arr_parent_links->show().'</p>';
+		
+            //Get view_only_mode from config_shop
+            
+            Webmodel::$model['config_shop']->limit='limit 1';
+            
+            $query=Webmodel::$model['config_shop']->select(array('view_only_mode'), 1);
+            
+            list($view_only_mode)=Webmodel::$model['config_shop']->fetch_row($query);
+		
+            $url_options=AdminUtils::set_admin_link( 'shop', array('op' => 2, 'subcat' => $_GET['subcat']) );
 
-			}
+            $arr_fields=array('title');
+            $arr_fields_edit=array('title', 'subcat', 'description', 'view_only_mode');
+            
+            $m->cat_product->set_field('description', ['parameters' => [new PhangoApp\PhaModels\Forms\TextAreaEditor('description_shop', '')]]);
+
+            $m->cat_product->create_forms();
+            
+            Webmodel::$model['cat_product']->forms['title']->label=I18n::lang('common', 'title', 'Title');
+            Webmodel::$model['cat_product']->forms['subcat']->label=I18n::lang('shop', 'subcat', 'Elija categoría padre');
+            Webmodel::$model['cat_product']->forms['description']->label=I18n::lang('shop', 'description', 'Descripción');
+            Webmodel::$model['cat_product']->forms['view_only_mode']->label=I18n::lang('shop', 'view_only_mode', 'Modo mostrador');
+            Webmodel::$model['cat_product']->forms['image_cat']->label=I18n::lang('common', 'image', 'image');
+            Webmodel::$model['cat_product']->forms['position']->label=I18n::lang('common', 'position', 'Position');
+            
+            $admin=new GenerateAdminClass($m->cat_product, $url_options);
+            
+            $admin->list->arr_fields_showed=$arr_fields;
+            
+            $admin->list->options_func='ShopOptionsListModel';
+            
+            $admin->arr_fields_edit=$arr_fields_edit;
+            
+            $admin->options_func='ShopOptionsListModel';
+            
+            $admin->list->where_sql=['where subcat=?', [$_GET['subcat']]];
+            
+            $admin->show();
+		
+            /*
 			
 			$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['subcat'], 0);
 			
@@ -221,27 +277,36 @@ function ShopAdmin()
 			
 			$admin->generate_position_model('title', 'position', AdminUtils::set_admin_link( 'shop', array('op' => '2_5')), $admin->where_sql);
 		
-		}
+		}*/
 		
 		break;
-
+        
 		case 3:
-
+		
+            
 			settype($_GET['idcat'], 'integer');
 			settype($_GET['IdProduct'], 'integer');
 
 			if($_GET['idcat']>0)
 			{
 			
-				$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['idcat'], 0);
+				/*$arr_hierarchy_links=hierarchy_links('cat_product', 'subcat', 'title', $_GET['idcat'], 0);
 			
 				$url_fancy=AdminUtils::set_admin_link('shop', array('op' => 3));
 				
-				echo View::load_view(array($arr_hierarchy_links, $url_fancy, 'idcat', $arr_parameters=array(), $last_link=0, 'Todos los productos'), 'common/utilities/hierarchy_links_standard');
+				echo View::load_view(array($arr_hierarchy_links, $url_fancy, 'idcat', $arr_parameters=array(), $last_link=0, 'Todos los productos'), 'common/utilities/hierarchy_links_standard');*/
+				
+				$url_fancy=AdminUtils::set_admin_link('shop', array('op' => 3));
+        
+                $arr_parent_links=new ParentLinks($url_fancy, 'cat_product', 'subcat', 'title', $_GET['idcat'], $last_link=0, $arr_parameters=[]);
+                
+                echo '<p>'.$arr_parent_links->show().'</p>';
 			
 			}
 			
-			$query=Webmodel::$model['cat_product']->select('where IdCat_product='.$_GET['idcat'], array('IdCat_product', 'title', 'subcat'));
+			$m->cat_product->conditions='where IdCat_product='.$_GET['idcat'];
+			
+			$query=Webmodel::$model['cat_product']->select(array('IdCat_product', 'title', 'subcat'));
 
 			list($idcat, $title, $parent)=Webmodel::$model['cat_product']->fetch_row($query);
 			
@@ -254,7 +319,9 @@ function ShopAdmin()
 				
 				//Obtain id's from product_relantionship
 				
-				$arr_id=Webmodel::$model['product_relationship']->select_a_field('where idcat_product='.$idcat, 'idproduct');
+				Webmodel::$model['product_relationship']->conditions='where idcat_product='.$idcat;
+				
+				$arr_id=Webmodel::$model['product_relationship']->select_a_field('idproduct');
 				
 				$arr_id[]=0;
 				
@@ -295,16 +362,22 @@ function ShopAdmin()
 			
 			ob_end_clean();
 			
-			echo '<p><strong>'.I18n::lang('shop', 'choose_category', 'Elegir categoría').'</strong>: '.SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='').'</p>';
+			$select_form=new PhangoApp\PhaModels\Forms\SelectModelFormByOrder('idcat', $idcat, $m->cat_product, 'title', 'subcat', $where='');
+			
+			echo '<p><strong>'.I18n::lang('shop', 'choose_category', 'Elegir categoría').'</strong>: '.$select_form->form().'</p>';
+			
 			
 			$arr_fields=array('referer', 'title');
 			$arr_fields_edit=array( 'IdProduct', 'referer', 'title', 'description', 'description_short', 'price', 'special_offer', 'stock', 'date', 'about_order', 'weight', 'num_sold', 'cool' );
 			
 			$url_options=AdminUtils::set_admin_link( 'shop', array('op' => 3, 'idcat' => $_GET['idcat']) );
+            
+            $m->product->set_field('description', ['parameters' => [new PhangoApp\PhaModels\Forms\TextAreaEditor('description', '')]]);
+            $m->product->set_field('description_short', ['parameters' => [new PhangoApp\PhaModels\Forms\TextAreaEditor('description_short', '')]]);
+            
+			Webmodel::$model['product']->create_forms();
 
-			Webmodel::$model['product']->create_form();
-
-			$arr_options=array('', I18n::lang('common', 'any_option', 'any option'), '');
+			/*$arr_options=array('', I18n::lang('common', 'any_option', 'any option'), '');
 			$arr_options_check=array();
 
 			$dir = opendir(PhangoVar::$base_path.'/modules/shop/options');
@@ -347,6 +420,22 @@ function ShopAdmin()
 			//Set enctype for this model...
 
 			Webmodel::$model['product']->set_enctype_binary();
+			*/
+			
+			Webmodel::$model['product']->forms['referer']->label=I18n::lang('shop', 'referer', 'Referencia');
+            Webmodel::$model['product']->forms['title']->label=I18n::lang('common', 'title', 'Title');
+            Webmodel::$model['product']->forms['description']->label=I18n::lang('common', 'description', 'Description');
+            Webmodel::$model['product']->forms['description_short']->label=I18n::lang('shop', 'description_short', 'Descripción breve del producto, útil para listados');
+            //Webmodel::$model['product']->forms['idcat']->label=I18n::lang('shop', 'idcat', 'Categoría de tienda');
+            Webmodel::$model['product']->forms['price']->label=I18n::lang('shop', 'price', 'Precio');
+            Webmodel::$model['product']->forms['special_offer']->label=I18n::lang('shop', 'special_offer', 'Oferta especial');
+            Webmodel::$model['product']->forms['stock']->label=I18n::lang('shop', 'stock', 'Stock');
+            Webmodel::$model['product']->forms['date']->label=I18n::lang('common', 'date', 'date');
+            Webmodel::$model['product']->forms['about_order']->label=I18n::lang('shop', 'about_order', 'Bajo pedido');
+            //Webmodel::$model['product']->forms['extra_options']->label=I18n::lang('shop', 'extra_options', 'Opciones extra');
+            Webmodel::$model['product']->forms['weight']->label=I18n::lang('shop', 'weight', 'Peso');
+            Webmodel::$model['product']->forms['num_sold']->label=I18n::lang('shop', 'num_sold', 'Número de veces vendido');
+            Webmodel::$model['product']->forms['cool']->label=I18n::lang('shop', 'cool', 'Recomendado');
 			
 			//Load plugins for show links to ProductOptionsListModel
 			
@@ -356,18 +445,17 @@ function ShopAdmin()
 			
 			$plugins->load_all_plugins();
 			
-			$admin=new GenerateAdminClass('product');
+			$admin=new GenerateAdminClass($m->product, $url_options);
 			
-			$admin->arr_fields=&$arr_fields;
-			$admin->arr_fields_edit=&$arr_fields_edit;
-			$admin->set_url_post($url_options);
-			$admin->options_func='ProductOptionsListModel';
-			$admin->options_func_extra_args=array('plugins' => $plugins);
-			$admin->where_sql=&$where_sql;
+			$admin->list->arr_fields_showed=$arr_fields;
+			$admin->arr_fields_edit=$arr_fields_edit;
+			$admin->list->options_func='ProductOptionsListModel';
+			$admin->list->options_func_extra_args=array('plugins' => $plugins);
+			$admin->list->where_sql=$where_sql;
 			
 			$admin->show();
 			
-
+            /*
 			//generate_admin_model_ng('product', $arr_fields, $arr_fields_edit, $url_options, $options_func='ProductOptionsListModel', $where_sql, $arr_fields_form=array(), $type_list='Basic');
 			
 			
@@ -380,9 +468,9 @@ function ShopAdmin()
 			}
 
 			
-
+        */
 		break;
-
+        /*
 		case 4:
 
 			echo '<h3>'.I18n::lang('shop', 'edit_options_for_product', 'Editar opciones para el producto').'</h3>';
@@ -470,7 +558,7 @@ function ShopAdmin()
 			generate_admin_model_ng('taxes', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 
 		break;
-
+        */
 		case 7:
 
 			echo '<h3>'.I18n::lang('shop', 'edit_transport', 'Editar transporte').'</h3>';
@@ -486,28 +574,28 @@ function ShopAdmin()
 			$arr_fields=array('name');
 			$arr_fields_edit=array();
 	
-			Webmodel::$model['transport']->create_form();
-		
+			Webmodel::$model['transport']->create_forms();
+            /*
 			Webmodel::$model['transport']->forms['country']->form='SelectModelForm';
 			
-			Webmodel::$model['transport']->forms['country']->parameters=array('country', '', '', 'zone_shop', 'name', $where='where type=0');
+			Webmodel::$model['transport']->forms['country']->parameters=array('country', '', '', 'zone_shop', 'name', $where='where type=0');*/
 	
 			Webmodel::$model['transport']->forms['name']->label=I18n::lang('common', 'name', 'name');
 			Webmodel::$model['transport']->forms['country']->label=I18n::lang('shop', 'zone', 'Zona');
 			Webmodel::$model['transport']->forms['type']->label=I18n::lang('shop', 'type_transport', 'Tipo de transporte');
 			
-			$arr_type_transport=array(0, I18n::lang('shop', 'type_by_weight', 'Por peso'), 0, 
-			I18n::lang('shop', 'type_by_price', 'Por precio'), 1);
+			$arr_type_transport[0]=I18n::lang('shop', 'type_by_weight', 'Por peso'); 
+			$arr_type_transport[1]=I18n::lang('shop', 'type_by_price', 'Por precio');
 			
-			Webmodel::$model['transport']->forms['type']->set_parameter_value($arr_type_transport);
+			Webmodel::$model['transport']->forms['type']->default_value=0; //$arr_type_transport;
 			
-			$admin= new GenerateAdminClass('transport');
+			Webmodel::$model['transport']->forms['type']->arr_select=$arr_type_transport;
 			
-			$admin->arr_fields=&$arr_fields;
+			$admin= new GenerateAdminClass($m->transport, $url_options);
+			
+			$admin->list->arr_fields_showed=&$arr_fields;
 			
 			$admin->arr_fields_edit=&$arr_fields_edit;
-			
-			$admin->set_url_post($url_options);
 			
 			$admin->options_func='TransportOptionsListModel';
 			
@@ -516,7 +604,7 @@ function ShopAdmin()
 			//generate_admin_model_ng('transport', $arr_fields, $arr_fields_edit, $url_options, $options_func='TransportOptionsListModel', $where_sql='where IdTransport>0', $arr_fields_form=array(), $type_list='Basic');
 
 		break;
-
+        
 		case 8:
 
 			settype($_GET['type'], 'integer');
@@ -537,9 +625,9 @@ function ShopAdmin()
 
 			$url_options=AdminUtils::set_admin_link( 'shop', array('op' => 8, 'type' => $_GET['type']) );
 
-			Webmodel::$model['zone_shop']->create_form();
+			Webmodel::$model['zone_shop']->create_forms();
 
-			Webmodel::$model['zone_shop']->forms['type']->set_parameter_value($_GET['type']);
+			Webmodel::$model['zone_shop']->forms['type']->default_value=$_GET['type'];
 
 			Webmodel::$model['zone_shop']->forms['name']->label=I18n::lang('common', 'name', 'name');
 
@@ -559,11 +647,9 @@ function ShopAdmin()
 
 			//generate_admin_model_ng('zone_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql=$sql_type_zone[$_GET['type']], $arr_fields_form=array(), $type_list='Basic');
 			
-			$admin=new GenerateAdminClass('zone_shop');
+			$admin=new GenerateAdminClass($m->zone_shop, $url_options);
 			
-			$admin->set_url_post($url_options);
-			
-			$admin->arr_fields=&$arr_fields;
+			$admin->list->arr_fields_showed=&$arr_fields;
 			
 			$admin->arr_fields_edit=&$arr_fields_edit;
 			
@@ -575,7 +661,7 @@ function ShopAdmin()
 			echo '<p><a href="'. AdminUtils::set_admin_link( 'shop', array('op' => $back_type_zone[$_GET['type']]) ).'">'.$go_back_text[$_GET['type']].'</a></p>';
 
 		break;
-
+        /*
 		case 9:
 		
 			Utils::load_libraries(array('config_shop'), PhangoVar::$base_path.'/modules/shop/libraries/');
@@ -649,7 +735,7 @@ function ShopAdmin()
 			}
 
 		break;
-
+        */
 		case 10:
 
 			echo '<h3>'.I18n::lang('shop', 'gateways_payment', 'Pasarelas de pago').'</h3>';
@@ -661,11 +747,11 @@ function ShopAdmin()
 
 			list($arr_code, $arr_code_check)=obtain_payment_form();
 			
-			Webmodel::$model['payment_form']->create_form();
+			Webmodel::$model['payment_form']->create_forms();
 			//$this->arr_values=$arr_values;
-			Webmodel::$model['payment_form']->components['code']->arr_values=&$arr_code_check;
+			Webmodel::$model['payment_form']->forms['code']->arr_select=$arr_code;
 
-			Webmodel::$model['payment_form']->forms['code']->set_parameter_value($arr_code);
+			//Webmodel::$model['payment_form']->forms['code']->set_parameter_value($arr_code);
 
 			Webmodel::$model['payment_form']->forms['name']->label=I18n::lang('common', 'name', 'name');
 			Webmodel::$model['payment_form']->forms['code']->label=I18n::lang('shop', 'code_payment', 'Código php');
@@ -673,16 +759,14 @@ function ShopAdmin()
 
 			//generate_admin_model_ng('payment_form', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 			
-			$admin=new GenerateAdminClass('payment_form');
+			$admin=new GenerateAdminClass($m->payment_form, $url_options);
 			
-			$admin->arr_fields=&$arr_fields;
-			
-			$admin->set_url_post($url_options);
+			$admin->list->arr_fields_showed=$arr_fields;
 			
 			$admin->show();
 
 		break;
-
+        /*
 		case 11:
 
 			echo '<h3>'.I18n::lang('shop', 'group_shop', 'Grupo').'</h3>';
@@ -849,37 +933,44 @@ function ShopAdmin()
 			}
 
 		break;
-
+        */
 		case 14:
+            
 
 			settype($_GET['IdProduct'], 'integer');
 
-			$arr_relationship=Webmodel::$model['product_relationship']->select_a_row_where('where idproduct='.$_GET['IdProduct'].' limit 1', array('idcat_product'));
+			Webmodel::$model['product_relationship']->conditions='where idproduct='.$_GET['IdProduct'];
 			
-			$query=Webmodel::$model['product']->select('where IdProduct='.$_GET['IdProduct'], array('title'));
+			$arr_relationship=Webmodel::$model['product_relationship']->select_a_row_where(array('idcat_product'), true);
+			
+			settype($arr_relationship['IdCat_product'], 'integer');
+			
+			Webmodel::$model['product']->conditions='where IdProduct='.$_GET['IdProduct'];
+			
+			$query=Webmodel::$model['product']->select(array('title'));
 			
 			list($title)=Webmodel::$model['product']->fetch_row($query);
 			
-			$title=I18nField::show_formatted($title);
+			$title=PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($title);
 
 			echo '<h3>'.I18n::lang('shop', 'edit_image_product', 'Editar imagen de producto').' - '.$title.'</h3>';
 			
 			$url_add_images=AdminUtils::set_admin_link( 'edit_image_product',array('op' => 19, 'IdProduct' => $_GET['IdProduct']) );
 			
-			echo '<p><a href="'.$url_add_images.'">'.I18n::lang('shop', 'add_new_images', 'Añadir nuevas imágenes').'</a></h3>';
+			//echo '<p><a href="'.$url_add_images.'">'.I18n::lang('shop', 'add_new_images', 'Añadir nuevas imágenes').'</a></p>';
 
 			$url_options=AdminUtils::set_admin_link( 'shop', array('op' => 14, 'IdProduct' => $_GET['IdProduct']) );
 
 			$arr_fields=array('photo', 'principal');
 			$arr_fields_edit=array('photo', 'idproduct', 'principal');
 
-			Webmodel::$model['image_product']->create_form();
+			Webmodel::$model['image_product']->components['idproduct']->form='PhangoApp\PHaModels\Forms\HiddenForm';
+			
+			Webmodel::$model['image_product']->create_forms();
 
-			Webmodel::$model['image_product']->forms['photo']->parameters=array('photo', '', '', 0, Webmodel::$model['image_product']->components['photo']->url_path);
+			Webmodel::$model['image_product']->forms['photo']->parameters=array(0, Webmodel::$model['image_product']->components['photo']->url_path);
 
-			Webmodel::$model['image_product']->forms['idproduct']->form='HiddenForm';
-
-			Webmodel::$model['image_product']->forms['idproduct']->set_param_value_form($_GET['IdProduct']);
+			Webmodel::$model['image_product']->forms['idproduct']->default_value=$_GET['IdProduct'];
 
 			Webmodel::$model['image_product']->forms['photo']->label=I18n::lang('common', 'image', 'image');
 			Webmodel::$model['image_product']->forms['principal']->label=I18n::lang('shop', 'principal_photo', 'Imagen principal');
@@ -893,30 +984,35 @@ function ShopAdmin()
 				$_GET['order_desc']=1;
 
 			}
-			Webmodel::$model['image_product']->set_enctype_binary();
+			//Webmodel::$model['image_product']->set_enctype_binary();
 			
 			//generate_admin_model_ng('image_product', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where IdProduct='.$_GET['IdProduct'], $arr_fields_form=array(), $type_list='Basic');
 			
-			$admin=new GenerateAdminClass('image_product');
+			$admin=new GenerateAdminClass($m->image_product, $url_options);
 			
-			$admin->arr_fields=&$arr_fields;
+			$admin->list->arr_fields_showed=&$arr_fields;
 			$admin->arr_fields_edit=&$arr_fields_edit;
 			
-			$admin->set_url_post($url_options);
+			$admin->list->where_sql=['where image_product.idproduct=?', [$_GET['IdProduct']]];
 			
-			$admin->where_sql='where idproduct='.$_GET['IdProduct'];
+			$url_fancy=AdminUtils::set_admin_link('shop', array('op' => 3));
+            
+            $arr_parent_links=new ParentLinks($url_fancy, 'cat_product', 'subcat', 'title', $arr_relationship['idcat_product'], $last_link=1, $arr_parameters=[]);
+            
+            echo '<p>'.$arr_parent_links->show().'</p>';
 			
 			$admin->show();
 
+            /*
 			if($_GET['op_action']==0 && $_GET['op_edit']==0)
 			{
 
 				echo '<p><a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 3, 'idcat' => $arr_relationship['idcat_product']) ).'">'.I18n::lang('common', 'go_back', 'Go back').'</a></p>';
 
-			}
+			}*/
 
 		break;
-
+        
 		case 15:
 
 			echo '<h3>'.I18n::lang('shop', 'countries', 'Paises').'</h3>';
@@ -926,11 +1022,11 @@ function ShopAdmin()
 			$arr_fields=array('name');
 			$arr_fields_edit=array('name', 'code', 'idzone_transport');
 
-			Webmodel::$model['country_shop']->create_form();
+			Webmodel::$model['country_shop']->create_forms();
 
-			Webmodel::$model['country_shop']->forms['idzone_transport']->form='SelectModelForm';
+			/*Webmodel::$model['country_shop']->forms['idzone_transport']->form='SelectModelForm';
 			
-			Webmodel::$model['country_shop']->forms['idzone_transport']->parameters=array('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0');
+			Webmodel::$model['country_shop']->forms['idzone_transport']->parameters=array('idzone_transport', '', '', 'zone_shop', 'name', $where='where type=0');*/
 
 			Webmodel::$model['country_shop']->forms['name']->label=I18n::lang('common', 'name', 'name');
 
@@ -940,18 +1036,17 @@ function ShopAdmin()
 
 			//generate_admin_model_ng('country_shop', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
 			
-			$admin=new GenerateAdminClass('country_shop');
+			$admin=new GenerateAdminClass($m->country_shop, $url_options);
 			
-			$admin->arr_fields=&$arr_fields;
-			$admin->arr_fields_edit=&$arr_fields_edit;
+			$admin->list->arr_fields_showed=$arr_fields;
+			$admin->arr_fields_edit=$arr_fields_edit;
 			
-			$admin->set_url_post($url_options);
 			
 			$admin->show();
 
 
 		break;
-
+        /*
 		case 16:
 		
 			ob_end_clean();
@@ -963,7 +1058,7 @@ function ShopAdmin()
 			die;
 
 		break;
-
+        */
 		case 17:
 
 			echo '<h3>'.I18n::lang('shop', 'currency', 'Moneda').'</h3>';
@@ -973,18 +1068,18 @@ function ShopAdmin()
 			$arr_fields=array('name', 'symbol');
 			$arr_fields_edit=array('name', 'symbol');
 
-			Webmodel::$model['currency']->create_form();
+			$m->currency->create_forms();
 
-			Webmodel::$model['currency']->forms['name']->label=I18n::lang('common', 'name', 'name');
-			Webmodel::$model['currency']->forms['symbol']->label=I18n::lang('shop', 'symbol', 'Símbolo');
+			$m->currency->forms['name']->label=I18n::lang('common', 'name', 'Name');
+			$m->currency->forms['symbol']->label=I18n::lang('shop', 'symbol', 'Símbolo');
 		
 			//generate_admin_model_ng('currency', $arr_fields, $arr_fields_edit, $url_options, $options_func='CurrencyOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic');
-			$admin=new GenerateAdminClass('currency');
+			$admin=new GenerateAdminClass($m->currency, $url_options);
 			
-			$admin->arr_fields=&$arr_fields;
-			$admin->arr_fields_edit=&$arr_fields_edit;
+			$admin->arr_fields=$arr_fields;
+			$admin->arr_fields_edit=$arr_fields_edit;
 			
-			$admin->set_url_post($url_options);
+			//$admin->set_url_post($url_options);
 			
 			$admin->options_func='CurrencyOptionsListModel';
 			
@@ -992,7 +1087,7 @@ function ShopAdmin()
 			
 
 		break;
-	
+        /*
 		case 18:
 
 			settype($_GET['IdCurrency'], 'integer');
@@ -1035,9 +1130,9 @@ function ShopAdmin()
 			}
 
 		break;
-		
+		*/
 		case 19:
-		
+            /*
 			settype($_GET['op_image'], 'integer');
 			settype($_GET['IdProduct'], 'integer');
 			
@@ -1131,9 +1226,9 @@ function ShopAdmin()
 				break;
 			
 			}
-		
+            */
 		break;
-		
+		/*
 		case 20:
 		
 			//First, select form for choose an module, for now, products.
@@ -1311,57 +1406,59 @@ function ShopAdmin()
 			}
 		
 		break;
-		
+		*/
 		case 24:
-		
+            
 			settype($_GET['idproduct'], 'integer');
 			
 			$product=Webmodel::$model['product']->select_a_row($_GET['idproduct'], array('title'), true);
 		
-			echo '<h3>'.I18n::lang('shop', 'change_shop_category', 'Cambiar categoría de tienda').' - '.I18nField::show_formatted($product['title']).'</h3>';
+			echo '<h3>'.I18n::lang('shop', 'change_shop_category', 'Cambiar categoría de tienda').' - '.PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($product['title']).'</h3>';
 			
 			$arr_fields=array('idcat_product');
 			$arr_fields_edit=array();
 			$url_options=AdminUtils::set_admin_link( 'shop', array('op' => 24, 'idproduct' => $_GET['idproduct']));
 			$url_back=AdminUtils::set_admin_link( 'shop', array('op' => 3));
 			
-			Webmodel::$model['product_relationship']->components['idproduct']->form='HiddenForm';
+			Webmodel::$model['product_relationship']->components['idproduct']->form='PhangoApp\PhaModels\Forms\HiddenForm';
 			
-			Webmodel::$model['product_relationship']->create_form();
+			Webmodel::$model['product_relationship']->create_forms();
 			
-			Webmodel::$model['product_relationship']->forms['idproduct']->form='HiddenForm';
-			Webmodel::$model['product_relationship']->forms['idproduct']->set_param_value_form($_GET['idproduct']);
+			Webmodel::$model['product_relationship']->forms['idproduct']->form='PhangoApp\PhaModels\Forms\HiddenForm';
+			Webmodel::$model['product_relationship']->forms['idproduct']->default_value=$_GET['idproduct'];
 			
 			Webmodel::$model['product_relationship']->forms['idcat_product']->label=I18n::lang('shop', 'category', 'Categoría');
-			Webmodel::$model['product_relationship']->forms['idcat_product']->form='SelectModelFormByOrder';
-			Webmodel::$model['product_relationship']->forms['idcat_product']->parameters=array('idcat_product', '', 0, 'cat_product', 'title', 'subcat', $where='');
+			
+			
+			
+			Webmodel::$model['product_relationship']->forms['idcat_product']->form='PhangoApp\PhaModels\Forms\SelectModelFormByOrder';
+			Webmodel::$model['product_relationship']->forms['idcat_product']->parameters=array('cat_product', 'title', 'subcat', $where='');
 			
 			//SelectModelFormByOrder('idcat', '', $idcat, 'cat_product', 'title', 'subcat', $where='')
 			
-			$admin=new GenerateAdminClass('product_relationship');
+			$admin=new GenerateAdminClass($m->product_relationship, $url_options);
 			
-			$admin->arr_fields=&$arr_fields;
+			$admin->list->arr_fields_showed=&$arr_fields;
 			$admin->arr_fields_edit=&$arr_fields_edit;
-			$admin->set_url_post($url_options);
 			//$admin->set_url_back($url_back);
-			$admin->where_sql='where product_relationship.idproduct='.$_GET['idproduct'];
+			$admin->list->where_sql=['where product_relationship.idproduct=?', [$_GET['idproduct']]];
 			
 			$admin->show();
 			
 			//generate_admin_model_ng('product_relationship', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where product_relationship.idproduct='.$_GET['idproduct'], $arr_fields_form=array(), $type_list='Basic');
-			
+			/*
 			if($_GET['op_edit']==0 && $_GET['op_action']==0)
 			{
 			
 				echo '<p><a href="'.$url_back.'">'.I18n::lang('common', 'go_back', 'Go back').'</a></p>';
 				
 			}
-		
+            */
 		break;
 		
 		case 25:
 		
-			echo '<h2>'.I18n::lang('shop', 'admin_users', 'admin_users').'</h2>';
+			echo '<h2>'.I18n::lang('shop', 'admin_users', 'Administración de usuarios').'</h2>';
 		
 			Webmodel::$model['user_shop']->components['token_client']->required=0;
 			
@@ -1369,17 +1466,25 @@ function ShopAdmin()
 			
 			Webmodel::$model['user_shop']->components['password']->required=0;
 		
-			Webmodel::$model['user_shop']->create_form();
+			Webmodel::$model['user_shop']->create_forms();
 		
-			Webmodel::$model['user_shop']->forms['country']->form='SelectModelForm';
+			/*Webmodel::$model['user_shop']->forms['country']->form='SelectModelForm';
 			
-			Webmodel::$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='');
+			Webmodel::$model['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='');*/
 			
-			ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where('');
+			ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where();
 			
-			$admin=new GenerateAdminClass('user_shop');
+			$url_post=AdminUtils::set_admin_link('shop', array('op' => 25));
 			
-			$admin->arr_fields=array('email', 'name', 'last_name', 'region');
+			$admin=new GenerateAdminClass($m->user_shop, $url_post);
+			
+			$admin->list->arr_fields_showed=array('email', 'name', 'last_name', 'region');
+			
+			$repeat_password=new \PhangoApp\PhaModels\Forms\PasswordForm('repeat_password');
+        
+            $repeat_password->label=I18n::lang('users', 'repeat_password', 'Repeat password');
+            
+            $m->user_shop->insert_after_field_form('password', 'repeat_password', $repeat_password);
 			
 			$admin->arr_fields_edit=ConfigShop::$arr_fields_address;
 			
@@ -1387,16 +1492,15 @@ function ShopAdmin()
 			
 			$admin->arr_fields_edit[]='password';
 			
-			$url_post=AdminUtils::set_admin_link('shop', array('op' => 25));
+			$admin->arr_fields_edit[]='repeat_password';
 			
-			$admin->set_url_post($url_post);
 			
-			if(ConfigShop::$config_shop['no_transport']==0)
-			{
+			/*if(ConfigShop::$config_shop['no_transport']==0)
+			{*/
 			
-				$admin->options_func='UserOptionsListModel';
+				$admin->list->options_func='UserOptionsListModel';
 			
-			}
+			//}
 			
 			$admin->show();
 		
@@ -1408,36 +1512,46 @@ function ShopAdmin()
 		
 			echo '<h2>'.I18n::lang('shop', 'modify_address_transport_user', 'Modificar direcciones de transporte de usuario').'</h2>';
 		
-			$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => I18n::lang('user', 'admin_users', 'admin_users'), 'name_op' => 'op', 'params' => array('op' => 25, 'IdOrder_shop' => $_GET['IdUser_shop']));
+			/*$arr_menu[0]=array('module' => 'admin', 'controller' => 'index', 'text' => I18n::lang('user', 'admin_users', 'admin_users'), 'name_op' => 'op', 'params' => array('op' => 25, 'IdOrder_shop' => $_GET['IdUser_shop']));
 		
-			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => I18n::lang('shop', 'admin_address_users', 'Administrar direcciones de usuario'), 'name_op' => 'op', 'params' => array('op' => 26, 'IdOrder_shop' => $_GET['IdUser_shop']));
+			$arr_menu[1]=array('module' => 'admin', 'controller' => 'index', 'text' => I18n::lang('shop', 'admin_address_users', 'Administrar direcciones de usuario'), 'name_op' => 'op', 'params' => array('op' => 26, 'IdOrder_shop' => $_GET['IdUser_shop']));*/
 		
-			echo menu_barr_hierarchy_control($arr_menu);
+			//echo menu_barr_hierarchy_control($arr_menu);
+			
+			$arr_menu[0]=[I18n::lang('user', 'admin_users', 'Administración de usuarios'), AdminUtils::set_admin_link('shop', array('op' => 25, 'IdOrder_shop' => $_GET['IdUser_shop']))];
+			//AdminUtils::set_admin_link('shop', array('op' => 26, 'IdOrder_shop' => $_GET['IdUser_shop']))
+			$arr_menu[1]=[I18n::lang('shop', 'admin_address_users', 'Administrar direcciones de usuario'), AdminUtils::set_admin_link('shop', array('op' => 26, 'IdOrder_shop' => $_GET['IdUser_shop']))];
+			
+			echo '<p>'.implode(' &gt;&gt; ', PhangoApp\PhaLibs\FatherLinks::show(1, $arr_menu)).'</p>';
+			
+			//echo '<p>'.$links->show($arr_menu[$arr_menu[''][0]][0]).'<p>';
 		
 			settype($_GET['IdUser_shop'], 'integer');
 			
-			Webmodel::$model['address_transport']->create_form();
+			$m->address_transport->components['iduser']->form='PhangoApp\PhaModels\Forms\HiddenForm';
+			
+			Webmodel::$model['address_transport']->create_forms();
 		
-			Webmodel::$model['address_transport']->forms['country_transport']->form='SelectModelForm';
+			/*Webmodel::$model['address_transport']->forms['country_transport']->form='SelectModelForm';
 			
-			Webmodel::$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='');
+			Webmodel::$model['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='');*/
 		
-			$admin=new GenerateAdminClass('address_transport');
+            $url_post=AdminUtils::set_admin_link('shop', array('op' => 26, 'IdUser_shop' => $_GET['IdUser_shop']));
+		
+			$admin=new GenerateAdminClass($m->address_transport, $url_post);
 			
-			$url_post=AdminUtils::set_admin_link('users', array('op' => 26));
-			
-			$admin->set_url_post($url_post);
-			
-			$admin->arr_fields=array('address_transport', 'city_transport');
+			$admin->list->arr_fields_showed=array('address_transport', 'city_transport');
 			
 			$admin->arr_fields_edit=ConfigShop::$arr_fields_transport;
 			
-			$admin->where_sql='where iduser='.$_GET['IdUser_shop'];
+			$admin->arr_fields_edit[]='iduser';
+			
+			$admin->list->where_sql='where iduser='.$_GET['IdUser_shop'];
 		
 			$admin->show();
 		
 		break;
-        */
+        
 	}
 
 }
@@ -1445,7 +1559,7 @@ function ShopAdmin()
 function UserOptionsListModel($url_options, $model_name, $id)
 {
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 26, 'IdUser_shop' => $id) ).'">'.I18n::lang('shop', 'modify_address_transport_user', 'Modificar direcciones de transporte de usuario').'</a>';
 
@@ -1456,7 +1570,7 @@ function UserOptionsListModel($url_options, $model_name, $id)
 function CurrencyOptionsListModel($url_options, $model_name, $id)
 {
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 18, 'IdCurrency' => $id) ).'">'.I18n::lang('shop', 'modify_change_currencies', 'Modificar cambios entre monedas').'</a>';
 
@@ -1467,7 +1581,7 @@ function CurrencyOptionsListModel($url_options, $model_name, $id)
 function ShopOptionsListModel($url_options, $model_name, $id)
 {
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 3, 'idcat' => $id) ).'">'.I18n::lang('shop', 'modify_products', 'Modificar productos').'</a>';
 
@@ -1480,7 +1594,7 @@ function ShopOptionsListModel($url_options, $model_name, $id)
 function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw, $args)
 {
 	
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 24, 'idproduct' => $id) ).'">'.I18n::lang('shop', 'edit_cat_product', 'Editar categorías de producto').'</a>';
 	
@@ -1502,7 +1616,7 @@ function ProductOptionsListModel($url_options, $model_name, $id, $arr_row_raw, $
 function TransportOptionsListModel($url_options, $model_name, $id)
 {
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 9, 'IdTransport' => $id) ).'">'.I18n::lang('shop', 'add__select_prices_for_transport', 'Añadir tabla de precios para el transporte').'</a>';
 
@@ -1513,7 +1627,7 @@ function TransportOptionsListModel($url_options, $model_name, $id)
 function GroupShopOptionsListModel($url_options, $model_name, $id)
 {
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 12, 'IdGroup_shop' => $id) ).'">'.I18n::lang('shop', 'add__user_to_group_shop', 'Añadir usuario a grupo de descuento').'</a>';
 
@@ -1524,7 +1638,7 @@ function GroupShopOptionsListModel($url_options, $model_name, $id)
 function BillOptionsListModel($url_options, $model_name, $id)
 {
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	$arr_options[]='<a href="'. AdminUtils::set_admin_link( 'shop', array('op' => 16, 'IdOrder_shop' => $id) ).'">'.I18n::lang('shop', 'obtain_bill', 'Obtener factura').'</a>';
 
@@ -1537,7 +1651,7 @@ function PluginsOptionsListModel($url_options, $model_name, $id, $arr_row)
 
 	//global $arr_plugin_options;
 
-	$arr_options=BasicOptionsListModel($url_options, $model_name, $id);
+	$arr_options=PhangoApp\PhaLibs\SimpleList::BasicOptionsListModel($url_options, $model_name, $id);
 	
 	
 	if(isset(ConfigShop::$arr_plugin_options[$arr_row['plugin']]['admin_external']))
@@ -1563,14 +1677,13 @@ function obtain_payment_form()
 	$arr_code=array('');
 	$arr_code_check=array();
 
-	$dir=opendir(PhangoVar::$base_path.'/modules/shop/payment');
+	$dir=opendir(Routes::$base_path.'/vendor/phangoapp/shop/payment');
 
 	while($file=readdir($dir))
 	{
 		if(!preg_match('/^\./', $file))
 		{
-			$arr_code[]=ucfirst(str_replace('.php', '',$file));
-			$arr_code[]=$file;
+			$arr_code[$file]=ucfirst(str_replace('.php', '',$file));
 			$arr_code_check[]=$file;
 		}
 
