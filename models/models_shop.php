@@ -712,7 +712,7 @@ Webmodel::$model['image_product']->register('principal', new BooleanField());
 
 //($path, $url_path, $thumb=0, $img_width=array('mini' => 150), $quality_jpeg=85)
 
-Webmodel::$model['image_product']->register('photo', new ImageField('shop/products/images', Routes::$root_url.'/shop/products/images', 'image', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
+Webmodel::$model['image_product']->register('photo', new ImageField('shop/products/images', Routes::$root_url.'/shop/products/images', 1, array('small' => 45, 'mini' => 150, 'medium' => 300, 'preview' => 600)), 1);
 Webmodel::$model['image_product']->register('idproduct', new ForeignKeyField(Webmodel::$model['product'], 11, $default_id=0, $name_field='title', $name_value='IdProduct'), 1);
 
 

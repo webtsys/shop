@@ -1,16 +1,16 @@
 <?php
 
-class ObtaincartSwitchClass extends ControllerSwitchClass {
+class ObtaincartController extends Controller {
 
 	function index()
 	{
 
 		//global $user_data, $model, $ip, PhangoVar::$lang, $config_data, PhangoVar::$base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop;
 
-		load_lang('shop');
-		load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
+		Utils::load_lang('shop');
+		Utils::load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
 
-		load_model('shop');
+		Webmodel::load_model('shop');
 
 		$cart=new CartClass();
 		

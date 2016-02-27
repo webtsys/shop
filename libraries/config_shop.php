@@ -3,12 +3,13 @@
 //Load shop config...
 
 //global $arr_currency, $arr_change_currency;
+use PhangoApp\PhaModels\Webmodel;
 
-Webmodel::load_model('shop');
+Webmodel::load_model('vendor/phangoapp/shop/models/models_shop');
 
 //$query=Webmodel::$model['config_shop']->select('', array(), 1);
 
-ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where('');
+ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where();
 
 ConfigShop::$config_shop['title_shop']=Webmodel::$model['config_shop']->components['title_shop']->show_formatted(ConfigShop::$config_shop['title_shop']);
 ConfigShop::$config_shop['conditions']=Webmodel::$model['config_shop']->components['conditions']->show_formatted(ConfigShop::$config_shop['conditions']);
@@ -50,7 +51,7 @@ while(list($idtaxes, $name, $percent)=webtsys_fetch_row($query))
 */
 //Load currencies...
 
-$query=Webmodel::$model['currency']->select('', array(Webmodel::$model['currency']->idmodel, 'symbol') );
+$query=Webmodel::$model['currency']->select( array(Webmodel::$model['currency']->idmodel, 'symbol') );
 
 while(list($idcurrency, $symbol_currency)=Webmodel::$model['currency']->fetch_row($query))
 {
@@ -59,7 +60,7 @@ while(list($idcurrency, $symbol_currency)=Webmodel::$model['currency']->fetch_ro
 
 }
 
-$query=Webmodel::$model['currency_change']->select('', array('idcurrency', 'idcurrency_related', 'change_value') , 1);
+$query=Webmodel::$model['currency_change']->select(array('idcurrency', 'idcurrency_related', 'change_value') , 1);
 
 while(list($idcurrency, $idcurrency_related, $change_value)=Webmodel::$model['currency_change']->fetch_row($query))
 {

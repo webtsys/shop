@@ -6,6 +6,7 @@ use PhangoApp\PhaModels\Webmodel;
 use PhangoApp\PhaUtils\Utils;
 use PhangoApp\PhaUtils\MenuSelected;
 use PhangoApp\PhaLibs\GenerateAdminClass;
+use PhangoApp\PhaLibs\SimpleList;
 use PhangoApp\PhaLibs\HierarchyLinks;
 use PhangoApp\PhaLibs\ParentLinks;
 use PhangoApp\PhaView\View;
@@ -818,12 +819,12 @@ function ShopAdmin()
 			}
 
 		break;
-
+        */
 		case 13:
 
 			//?order_field=date_order&order_desc=1&search_word=&search_field=IdOrder_shop
 			
-			Utils::load_libraries(array('config_shop'), PhangoVar::$base_path.'/modules/shop/libraries/');
+			Utils::load_libraries(array('config_shop'), Routes::$base_path.'/vendor/phangoapp/shop/libraries/');
 			
 			echo '<h2>'.I18n::lang('shop', 'orders', 'Pedidos').'</h2>';
 
@@ -854,10 +855,10 @@ function ShopAdmin()
 			$arr_fields_edit=array('name', 'last_name', 'enterprise_name', 'email', 'nif', 'address', 'zip_code', 'city', 'region', 'country', 'phone', 'fax', 'name_transport', 'last_name_transport', 'address_transport', 'zip_code_transport', 'city_transport', 'region_transport', 'country_transport', 'phone_transport', 'date_order', 'observations', 'transport', 'name_payment', 'payment_done', 'total_price');
 			
 			$url_options=AdminUtils::set_admin_link( 'shop', array('op' => 13, 'op_payment' => $_GET['op_payment']) );
-	
+            /*
 			$arr_country=array('');
 
-			$query=Webmodel::$model['country_shop']->select('', array('IdCountry_shop', 'name'));
+			$query=Webmodel::$model['country_shop']->select(array('IdCountry_shop', 'name'));
 
 			while(list($idcountry_shop, $name_country)=Webmodel::$model['country_shop']->fetch_row($query))
 			{
@@ -865,13 +866,13 @@ function ShopAdmin()
 				$arr_country[]=I18nField::show_formatted($name_country);
 				$arr_country[]=$idcountry_shop;
 
-			}
+			}*/
 
-			Webmodel::$model['order_shop']->forms['country']->form='SelectForm';
+			/*Webmodel::$model['order_shop']->forms['country']->form='SelectForm';
 			Webmodel::$model['order_shop']->forms['country']->set_parameter_value($arr_country);
 
 			Webmodel::$model['order_shop']->forms['country_transport']->form='SelectForm';
-			Webmodel::$model['order_shop']->forms['country_transport']->set_parameter_value($arr_country);
+			Webmodel::$model['order_shop']->forms['country_transport']->set_parameter_value($arr_country);*/
 
 			Webmodel::$model['order_shop']->forms['name']->label=I18n::lang('common', 'name', 'name');
 			Webmodel::$model['order_shop']->forms['last_name']->label=I18n::lang('common', 'last_name', 'Lastname');
@@ -881,7 +882,7 @@ function ShopAdmin()
 			Webmodel::$model['order_shop']->forms['date_order']->label=I18n::lang('common', 'date', 'date');
 
 			//Zone_transport...
-
+            /*
 			$arr_transport=array('');
 
 			$query=Webmodel::$model['transport']->select('', array('IdTransport', 'name'));
@@ -889,19 +890,19 @@ function ShopAdmin()
 			while(list($idtransport, $name_transport)=Webmodel::$model['transport']->fetch_row($query))
 			{
 
-				$arr_transport[]=$name_transport;
-				$arr_transport[]=$idtransport;
+				$arr_transport[$idtransport]=$name_transport;
 
 			}
 
 			Webmodel::$model['order_shop']->forms['transport']->form='SelectForm';
-			Webmodel::$model['order_shop']->forms['transport']->set_parameter_value($arr_transport);
+			Webmodel::$model['order_shop']->forms['transport']->arr_select=$arr_transport;
+			*/
 			
 			$arr_link_orders[0]=array('link' => AdminUtils::set_admin_link( 'shop', array('op' => 13, 'op_payment' => 0) ), 'text' => I18n::lang('shop', 'payment_orders', 'Pedidos pagados'));
 			
 			$arr_link_orders[1]=array('link' => AdminUtils::set_admin_link( 'shop', array('op' => 13, 'op_payment' => 1) ), 'text' => I18n::lang('shop', 'no_payment_orders', 'Pedidos no pagados'));
 			
-			menu_selected($_GET['op_payment'], $arr_link_orders, 1);
+			MenuSelected::menu_selected($_GET['op_payment'], $arr_link_orders, 1);
 			
 			switch($_GET['op_payment'])
 			{
@@ -912,7 +913,15 @@ function ShopAdmin()
 
 				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=1', $arr_fields_edit, 0);
 				//($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $options_func_extra_args=array(), $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
-				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $options_func_extra_args=array(), $where_sql='where payment_done=1', $arr_fields_edit, 0);
+				//$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $options_func_extra_args=array(), $where_sql='where payment_done=1', $arr_fields_edit, 0);
+				
+				$list=new SimpleList($m->order_shop);
+				
+				$list->arr_fields_showed=$arr_fields;
+				
+				$list->where_sql=['where payment_done=1', []];
+				
+				$list->options_func='BillOptionsListModel';
 				
 				$list->show();
 				
@@ -924,16 +933,26 @@ function ShopAdmin()
 
 				//ListModel('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where make_payment=0', $arr_fields_edit, 0);
 				
-				$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where payment_done=0', $arr_fields_edit, 0);
+				//$list=new ListModelClass('order_shop', $arr_fields, $url_options, $options_func='BillOptionsListModel', $where_sql='where payment_done=0', $arr_fields_edit, 0);
 				
-				$list->show();
+				//$list->show();
+				
+				$list=new SimpleList($m->order_shop);
+                
+                $list->arr_fields_showed=$arr_fields;
+                
+                $list->where_sql=['where payment_done=0', []];
+                
+                $list->options_func='BillOptionsListModel';
+                
+                $list->show();
 				
 				break;
 				
 			}
 
 		break;
-        */
+        
 		case 14:
             
 
@@ -1228,7 +1247,7 @@ function ShopAdmin()
 			}
             */
 		break;
-		/*
+		
 		case 20:
 		
 			//First, select form for choose an module, for now, products.
@@ -1237,12 +1256,19 @@ function ShopAdmin()
 			
 			settype($_GET['element_choice'], 'string');
 			
-			$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart');
+			//$arr_elements_plugin=array($_GET['element_choice'], '', '', 'products', 'product', 'cart', 'cart');
+			$arr_elements_plugin['']='';
+			$arr_elements_plugin['product']='products';
+			$arr_elements_plugin['cart']='cart';
 			
 			echo '<form method="get" action="'.AdminUtils::set_admin_link( 'shop', array('op' => 20)).'">';
 			
+			$select_form=new PhangoApp\PhaModels\Forms\SelectForm('element_choice', '');
+			
+			$select_form->arr_select=$arr_elements_plugin;
+			
 			echo '<p>'.I18n::lang('shop', 'element_choice', 'Elegir elemento')
-			.': '.SelectForm('element_choice', '', $arr_elements_plugin).' <input type="submit" value="'.
+			.': '.$select_form->form().' <input type="submit" value="'.
 			I18n::lang('common', 'send', 'Send').'" /></p>';
 			
 			echo '</form>';
@@ -1253,56 +1279,56 @@ function ShopAdmin()
 			
 			//settype($arr_plugin_list[$element_choice], 'array');
 			
+			Webmodel::$model['plugin_shop']->components['element']->form='PhangoApp\PhaModels\Forms\HiddenForm';
+			
 			if($element_choice!='')
 			{
 			
-				Webmodel::$model['plugin_shop']->create_form();
-// 				
-				Webmodel::$model['plugin_shop']->forms['element']->form='HiddenForm';
-				Webmodel::$model['plugin_shop']->forms['element']->set_parameter_value($element_choice);
+                $arr_plugins['']='';
+                
+                $arr_plugin_choice=array();
+                
+                $dir = opendir( Routes::$base_path."/vendor/phangoapp/shop/plugins" );
+                
+                while ( $plugin_dir = readdir( $dir ) )
+                {
+                
+                    if(!preg_match('/^\./', $plugin_dir))
+                    {
+                    
+                        $subdir=opendir(Routes::$base_path."/vendor/phangoapp/shop/plugins/".$plugin_dir);
+                        
+                        while ( $plugin_subdir = readdir( $subdir ) )
+                        {
+                        
+                            if($plugin_subdir==$element_choice)
+                            {
+                                
+                                $arr_plugins[$plugin_dir]=ucfirst($plugin_dir);
+                                
+                                $arr_plugin_choice[]=$plugin_dir;
+                    
+                            }
+                        
+                        }
+                        
+                        closedir($subdir);
+                    
+                    }
+                
+                }
+                
+                closedir($dir);
+			
+				Webmodel::$model['plugin_shop']->create_forms();
 				
-				$arr_plugins=array('', '', '');
-
-				$arr_plugin_choice=array();
+				Webmodel::$model['plugin_shop']->forms['plugin']->arr_select=$arr_plugins;
 				
-				$dir = opendir( PhangoVar::$base_path."/modules/shop/plugins" );
-
-				while ( $plugin_dir = readdir( $dir ) )
-				{
+				Webmodel::$model['plugin_shop']->forms['element']->default_value=$element_choice;
 				
-					if(!preg_match('/^\./', $plugin_dir))
-					{
-					
-						$subdir=opendir(PhangoVar::$base_path."/modules/shop/plugins/".$plugin_dir);
-						
-						while ( $plugin_subdir = readdir( $subdir ) )
-						{
-						
-							if($plugin_subdir==$element_choice)
-							{
-								
-								$arr_plugins[]=ucfirst($plugin_dir);
-								$arr_plugins[]=$plugin_dir;
-								
-								$arr_plugin_choice[]=$plugin_dir;
-					
-							}
-						
-						}
-						
-						closedir($subdir);
-					
-					}
+				/*Webmodel::$model['plugin_shop']->components['plugin']->arr_values=&$arr_plugin_choice;
 				
-				}
-				
-				closedir($dir);
-				
-				Webmodel::$model['plugin_shop']->components['plugin']->arr_values=&$arr_plugin_choice;
-				
-				Webmodel::$model['plugin_shop']->components['plugin']->restart_formatted();
-				
-				Webmodel::$model['plugin_shop']->forms['plugin']->parameters=array('plugin', '', $arr_plugins);
+				Webmodel::$model['plugin_shop']->components['plugin']->restart_formatted();*/
 			
 				Webmodel::$model['plugin_shop']->forms['name']->label=I18n::lang('common', 'name', 'name');
 			
@@ -1315,13 +1341,11 @@ function ShopAdmin()
 				$where_sql='where element="'.$element_choice.'"';
 				//, $arr_fields_form=array(), $type_list='Basic');
 				
-				$admin=new GenerateAdminClass('plugin_shop');
+				$admin=new GenerateAdminClass($m->plugin_shop, $url_options);
 				
-				$admin->arr_fields=&$arr_fields;
+				$admin->list->arr_fields_showed=$arr_fields;
 				
-				$admin->arr_fields_edit=&$arr_fields_edit;
-				
-				$admin->set_url_post($url_options);
+				$admin->arr_fields_edit=$arr_fields_edit;
 				
 				$admin->where_sql=$where_sql;
 				
@@ -1338,7 +1362,7 @@ function ShopAdmin()
 			
 		
 		break;
-		
+		/*
 		case 21:
 		
 			$element_choice=Webmodel::$model['plugin_shop']->components['element']->check($_GET['element_choice']);
