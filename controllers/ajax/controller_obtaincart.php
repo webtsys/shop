@@ -1,5 +1,11 @@
 <?php
 
+use PhangoApp\PhaModels\Webmodel;
+use PhangoApp\PhaUtils\Utils;
+use PhangoApp\PhaRouter\Routes;
+use PhangoApp\PhaRouter\Controller;
+use PhangoApp\PhaI18n\I18n;
+
 class ObtaincartController extends Controller {
 
 	function index()
@@ -7,10 +13,10 @@ class ObtaincartController extends Controller {
 
 		//global $user_data, $model, $ip, PhangoVar::$lang, $config_data, PhangoVar::$base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, $config_shop;
 
-		Utils::load_lang('shop');
-		Utils::load_libraries(array('config_shop', 'class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
+		I18n::load_lang('phangoapp/shop');
+		Utils::load_libraries(array('config_shop', 'class_cart'), 'vendor/phangoapp/shop/libraries');
 
-		Webmodel::load_model('shop');
+		Webmodel::load_model('vendor/phangoapp/shop/models/models_shop');
 
 		$cart=new CartClass();
 		
@@ -26,7 +32,7 @@ class ObtaincartController extends Controller {
 
 		$text_taxes=add_text_taxes($idtax);*/
 		
-		$jsondata['price_product']=MoneyField::currency_format($total_price_product);//number_format($total_price_product, 2);
+		$jsondata['price_product']=ShopMoneyField::currency_format($total_price_product);//number_format($total_price_product, 2);
 
 		echo json_encode($jsondata);
 

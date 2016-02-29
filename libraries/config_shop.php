@@ -9,7 +9,7 @@ Webmodel::load_model('vendor/phangoapp/shop/models/models_shop');
 
 //$query=Webmodel::$model['config_shop']->select('', array(), 1);
 
-ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where();
+ConfigShop::$config_shop=Webmodel::$model['config_shop']->select_a_row_where([], true);
 
 ConfigShop::$config_shop['title_shop']=Webmodel::$model['config_shop']->components['title_shop']->show_formatted(ConfigShop::$config_shop['title_shop']);
 ConfigShop::$config_shop['conditions']=Webmodel::$model['config_shop']->components['conditions']->show_formatted(ConfigShop::$config_shop['conditions']);

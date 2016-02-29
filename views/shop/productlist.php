@@ -3,6 +3,7 @@
 use PhangoApp\PhaModels\Webmodel;
 use PhangoApp\PhaModels\CoreFields\I18nField;
 use PhangoApp\PhaView\View;
+use PhangoApp\PhaRouter\Routes;
 
 function ProductListView($arr_product, $image, $view_only_mode=0)
 {
@@ -31,7 +32,7 @@ else
         <img src="<?php echo $image; ?>" />
     </div>
 	<div class="cont_product">
-        
+        <a href="#" class="see_more">Ver + <i class="fa fa-eye"></i></a> <a href="#" class="buy_button" onclick="javascript:buy_product('<?php echo Routes::make_simple_url('shop/cart/ajax/buy'); ?>', <?php echo $arr_product['IdProduct']; ?>)">Comprar <i class="fa fa-shopping-cart"></i></a>
 	</div>
 </div>
 

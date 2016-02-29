@@ -1,5 +1,7 @@
 <?php
 
+use PhangoApp\PhaI18n\I18n;
+
 I18n::$lang['shop']['config_shop']='Configuración de su tienda';
 
 I18n::$lang['shop']['products_categories']='Categorías de productos';

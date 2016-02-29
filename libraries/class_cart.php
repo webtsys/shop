@@ -1,5 +1,9 @@
 <?php
 
+use PhangoApp\PhaI18n\I18n;
+use PhangoApp\PhaModels\Webmodel;
+use PhangoApp\PhaRouter\Routes;
+
 class CartClass {
 
 	public $token;
@@ -32,7 +36,7 @@ class CartClass {
 		
 		$this->token=sha1($token);
 		
-		$this->url_update=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_update');
+		$this->url_update=Routes::make_url('shop', 'cart_update');
 	
 		$this->yes_update=$yes_update;
 	
@@ -49,7 +53,7 @@ class CartClass {
 	
 		$token=sha1(uniqid(rand(), true));
 
-		setcookie  ( 'webtsys_shop', $token, 0, PhangoVar::$cookie_path);
+		setcookie  ( 'webtsys_shop', $token, 0, Routes::$root_url);
 		
 		return $token;
 	
@@ -67,7 +71,7 @@ class CartClass {
 		
 		if($this->yes_update==1)
 		{
-			echo '<p>'.PhangoVar::$l_['shop']->lang('explain_cart_options', 'Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.').'</p>';
+			echo '<p>'.I18n::lang('shop', 'explain_cart_options', 'Desde aquí usted puede cambiar las opciones de sus productos o eliminar su compra.').'</p>';
 		}
 		
 		//Add plugins for cart that added money to price, for example, taxes or discounts. You can configure taxes or discounts on its plugins admin.
@@ -91,7 +95,9 @@ class CartClass {
 		
 		//$query=webtsys_query('select idproduct,price_product from cart_shop where token="'.$this->token.'"');
 		
-		$query=Webmodel::$model['cart_shop']->select('where token="'.$this->token.'"', array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight', 'details'));
+		Webmodel::$model['cart_shop']->conditions='where token="'.$this->token.'"';
+		
+		$query=Webmodel::$model['cart_shop']->select(array('IdCart_shop', 'idproduct', 'price_product', 'units', 'weight', 'details'));
 		
 		while($arr_product=Webmodel::$model['cart_shop']->fetch_array($query))
 		{
@@ -212,7 +218,7 @@ class CartClass {
 	
 			settype($_POST['IdCart_shop'], 'integer');
 
-			$redirect_url=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart');
+			$redirect_url=Routes::make_url('shop', 'cart');
 
 			if($special_offer>0)
 			{
@@ -256,7 +262,9 @@ class CartClass {
 			
 				$where_sql='where cart_shop.idproduct='.$idproduct.' and token="'.$this->token.'" and details="'.addslashes(serialize($arr_details)).'"';
 				
-				if(Webmodel::$model['cart_shop']->select_count($where_sql)==0)
+				Webmodel::$model['cart_shop']->conditions=$where_sql;
+				
+				if(Webmodel::$model['cart_shop']->select_count()==0)
 				{
 				
 					if($_POST['units']<=0)
@@ -265,24 +273,32 @@ class CartClass {
 						$_POST['units']=1;
 					
 					}
-				
-					if(!Webmodel::$model['cart_shop']->insert( array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']) ))
+                    
+                    $post=array('token' => $this->token, 'idproduct' => $idproduct, 'details' => $arr_details, 'time' => time(), 'units' => $_POST['units'], 'price_product' => $price, 'weight' => $arr_product['weight']);
+                    
+                    Webmodel::$model['cart_shop']->fields_to_update=array_keys($post);
+                    
+					if(!Webmodel::$model['cart_shop']->insert($post))
 					{
-
+                        
 						return 0;
 
 					}
-				
+                    
 				}
 				else
 				{
 				
-					$arr_cart=Webmodel::$model['cart_shop']->select_a_row_where($where_sql);
+                    Webmodel::$model['cart_shop']->conditions=$where_sql;
+				
+					$arr_cart=Webmodel::$model['cart_shop']->select_a_row_where();
 					
 					if($_POST['units']<=0 && $defined_post==1)
 					{
 					
-						Webmodel::$model['cart_shop']->delete($where_sql);
+                        Webmodel::$model['cart_shop']->conditions=$where_sql;
+					
+						Webmodel::$model['cart_shop']->delete();
 					
 					}
 					else
@@ -296,14 +312,18 @@ class CartClass {
 						}
 						else
 						{
-						
+                            
 							$arr_cart['units']++;
 						
 						}
 						
-						$arr_cart['details']=SerializeField::unserialize($arr_cart['details']);
+						$arr_cart['details']=PhangoApp\PhaModels\CoreFields\SerializeField::unserialize($arr_cart['details']);
 						
-						Webmodel::$model['cart_shop']->update($arr_cart, $where_sql);
+						Webmodel::$model['cart_shop']->conditions=$where_sql;
+						
+						Webmodel::$model['cart_shop']->fields_to_update=['details', 'units'];
+						
+						Webmodel::$model['cart_shop']->update($arr_cart);
 					
 					}
 					
@@ -329,7 +349,7 @@ class CartClass {
 			}
 			else
 			{
-
+                
 				return 1;
 
 			}
@@ -345,14 +365,18 @@ class CartClass {
 		
 			Webmodel::$model['cart_shop']->reset_require();
 		
-			return Webmodel::$model['cart_shop']->update(array('units' => $units), 'where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
+            Webmodel::$model['cart_shop']->conditions='where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"';
+		
+			return Webmodel::$model['cart_shop']->update(array('units' => $units));
 		
 		}
 		else
 		if($units<=0)
 		{
 		
-			return Webmodel::$model['cart_shop']->delete('where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"');
+            Webmodel::$model['cart_shop']->conditions='where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"';
+		
+			return Webmodel::$model['cart_shop']->delete();
 		
 		}
 	
@@ -367,7 +391,9 @@ class CartClass {
 	
 		$plugin_price=array();
 		
-		$query=Webmodel::$model['cart_shop']->select('where token="'.$this->token.'"', array('idproduct', 'price_product', 'units', 'weight'));
+		Webmodel::$model['cart_shop']->conditions='where token="'.$this->token.'"';
+		
+		$query=Webmodel::$model['cart_shop']->select(array('idproduct', 'price_product', 'units', 'weight'));
 		
 		while(list($idproduct, $price_product, $units, $weight)=Webmodel::$model['cart_shop']->fetch_row($query))
 		{
@@ -407,7 +433,9 @@ class CartClass {
 	public function check_order()
 	{
 	
-		$arr_order=Webmodel::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
+        Webmodel::$model['order_shop']->conditions='where token="'.$this->token.'"';
+	
+		$arr_order=Webmodel::$model['order_shop']->select_a_row_where();
 		
 		settype($arr_order['IdOrder_shop'], 'integer');
 		
@@ -521,7 +549,7 @@ class CartClass {
 			if(!include(PhangoVar::$base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
 			{
 		
-				echo PhangoVar::$l_['shop']->lang('error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta').': '.$config_data['portal_email'];
+				echo I18n::lang('shop', 'error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta').': '.$config_data['portal_email'];
 
 			}
 			else
@@ -547,7 +575,7 @@ class CartClass {
 		
 		$this->clean_cart();
 			
-		simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+		simple_redirect_location(Routes::make_url('shop', 'cart_finished'));
 						
 		
 	
@@ -556,7 +584,9 @@ class CartClass {
 	public function obtain_transport_price($total_weight, $total_price, $idtransport)
 	{
 
-		$query=Webmodel::$model['transport']->select('where IdTransport='.$idtransport, array('name', 'type'));
+        Webmodel::$model['transport']->conditions='where IdTransport='.$idtransport;
+	
+		$query=Webmodel::$model['transport']->select(array('name', 'type'));
 		
 		list($name, $type)=Webmodel::$model['transport']->fetch_row($query);
 		
@@ -686,7 +716,9 @@ class CartClass {
 	{
 
 	
-		return Webmodel::$model['cart_shop']->select_count('where token="'.$this->token.'"');
+        Webmodel::$model['cart_shop']->conditions='where token="'.$this->token.'"';
+	
+		return Webmodel::$model['cart_shop']->select_count();
 	
 	}
 	
@@ -706,7 +738,9 @@ class CartClass {
 			
 		}
 	
-		$arr_order_shop=Webmodel::$model['order_shop']->select_a_row_where('where token="'.$this->token.'"');
+        Webmodel::$model['order_shop']->conditions='where token="'.$this->token.'"';
+	
+		$arr_order_shop=Webmodel::$model['order_shop']->select_a_row_where();
 		
 		$arr_address=$arr_order_shop;
 		
@@ -732,10 +766,10 @@ class CartClass {
 		
 		//If no send mail write a message with the reference, for send to mail shop...
 
-		if( !send_mail($arr_user['email'], PhangoVar::$l_['shop']->lang('your_orders', 'Su pedido'), $content_mail_user, 'html') || !send_mail(PhangoVar::$portal_email, PhangoVar::$l_['shop']->lang('orders', 'Pedidos'), $content_mail_admin, 'html') )
+		if( !send_mail($arr_user['email'], I18n::lang('shop', 'your_orders', 'Su pedido'), $content_mail_user, 'html') || !send_mail(PhangoVar::$portal_email, I18n::lang('shop', 'orders', 'Pedidos'), $content_mail_admin, 'html') )
 		{
 
-			echo '<p>'.PhangoVar::$l_['shop']->lang('error_cannot_send_email', 'Error: no puedo enviar el email').', '.PhangoVar::$l_['shop']->lang('use_this_id_for_contact_with_us', 'Este es su número de pedido, especifíquelo en el email que nos envíe.').': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
+			echo '<p>'.I18n::lang('shop', 'error_cannot_send_email', 'Error: no puedo enviar el email').', '.I18n::lang('shop', 'use_this_id_for_contact_with_us', 'Este es su número de pedido, especifíquelo en el email que nos envíe.').': <strong>'.$arr_order_shop['IdOrder_shop'].'</strong></p>';
 
 		}
 	
@@ -744,7 +778,9 @@ class CartClass {
 	public function cancel_order()
 	{
 	
-		return Webmodel::$model['order_shop']->delete('where token="'.$this->token.'"');
+        Webmodel::$model['order_shop']->conditions='where token="'.$this->token.'"';
+	
+		return Webmodel::$model['order_shop']->delete();
 	
 	}
 
@@ -753,7 +789,7 @@ class CartClass {
 function show_text_form($idcart_shop, $units)
 {
 	
-	return TextForm('num_products['.$idcart_shop.']', 'units', $units);
+	return new PhangoApp\PhaModels\Forms\TextForm('num_products['.$idcart_shop.']', $units);
 	
 }
 	

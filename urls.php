@@ -15,7 +15,7 @@ Routes::$urls['shop\/cart\/ajax\/buy']=['ajax/buy', 'index'];
 
 Routes::$urls['shop\/cart\/ajax\/checkoptionsproduct']=['ajax/checkoptionsproduct', 'index'];
 
-Routes::$urls['shop\/cart\/ajax\/obtain_cart\/(.*)']=['ajax/obtaincart', 'index'];
+Routes::$urls['shop\/cart\/ajax\/obtain_cart']=['ajax/obtaincart', 'index'];
 
 Routes::$urls['shop\/cart\/update']=['cart', 'update'];
 

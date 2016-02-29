@@ -15,7 +15,7 @@ class IndexController extends Controller {
 	
         Webmodel::load_model('vendor/phangoapp/shop/models/models_shop');
 	
-        Utils::load_libraries(array('config_shop'), Routes::$base_path.'/vendor/phangoapp/shop/libraries/');
+        Utils::load_libraries(array('config_shop'), 'vendor/phangoapp/shop/libraries/');
 	
         $m->product->set_order(['date' => 1]);
         
