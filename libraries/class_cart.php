@@ -65,7 +65,7 @@ class CartClass {
 		
 		I18n::load_lang('shop');
 	
-		Utils::load_libraries(array('table_config'));
+		//Utils::load_libraries(array('table_config'));
 	
 		$plugin_price=array();
 		
