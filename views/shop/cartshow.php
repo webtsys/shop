@@ -1,5 +1,12 @@
 <?php
 
+use PhangoApp\PhaModels\Webmodel;
+use PhangoApp\PhaUtils\Utils;
+use PhangoApp\PhaRouter\Routes;
+use PhangoApp\PhaRouter\Controller;
+use PhangoApp\PhaI18n\I18n;
+use PhangoApp\PhaView\View;
+
 function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $yes_update, $method_text_form)
 {
 
@@ -13,7 +20,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 		$('#checkout_order').click( function() {
 		
-			location.href='<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_get_address'); ?>';
+			location.href='<?php echo Routes::make_simple_url('shop/cart/get_address'); ?>';
 		
 		});
 		
@@ -22,7 +29,7 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	</script>
 	<?php
 	
-	PhangoVar::$arr_cache_header[]=ob_get_contents();
+	View::$header[]=ob_get_contents();
 	
 	ob_end_clean();
 	
@@ -35,12 +42,12 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	$plugins_product->load_all_plugins();
 	
 
-	$fields=array(PhangoVar::$l_['shop']->lang('referer', 'Referencia'), PhangoVar::$l_['common']->lang('name', 'name'), PhangoVar::$l_['shop']->lang('num_products', 'Unidades'));
+	$fields=array(I18n::lang('shop', 'referer', 'Referencia'), I18n::lang('common', 'name', 'name'), I18n::lang('shop', 'num_products', 'Unidades'));
 	
 	/*if(count($arr_product_cart['details'])>0)
 	{*/
 	
-		$fields[]=PhangoVar::$l_['shop']->lang('details', 'details');
+		$fields[]=I18n::lang('shop', 'details', 'details');
 	
 	//}
 
@@ -53,37 +60,39 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	//here the plugins applied to this shit.
 	
-	$fields[]=PhangoVar::$l_['shop']->lang('total_price', 'Precio total');
+	$fields[]=I18n::lang('shop', 'total_price', 'Precio total');
 	
 	$set_options_func='no_set_options';
 	
 	/*if($yes_update==1)
 	{
-		$fields[]=PhangoVar::$l_['common']->lang('options', 'Options');
+		$fields[]=I18n::lang('common', 'options', 'Options');
 		
 		$set_options_func='set_options';
 		
 	}*/
 	
-	//$fields[]=PhangoVar::$l_['shop']->lang('select_product', 'Seleccionar producto');
+	//$fields[]=I18n::lang('shop', 'select_product', 'Seleccionar producto');
 
 	$total=0;
 	$total_units=0;
 	
-	up_table_config( $fields );
+	//up_table_config( $fields );
+	
+	echo View::load_view([$fields], 'common/tables/headtable');
 	
 	$z=0;
 
 	foreach($arr_product_cart as $arr_product)
 	{
 	
-		$arr_product['product_title']=I18nField::show_formatted($arr_product['product_title']);
+		$arr_product['product_title']=PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($arr_product['product_title']);
 	
 		$price_last=$arr_price_filter[$arr_product['IdCart_shop']];
 		
-		$price_base=$arr_product['units'].' x '.MoneyField::currency_format($arr_price_base[$arr_product['IdCart_shop']]).' = '.MoneyField::currency_format($arr_price_base_total[$arr_product['IdCart_shop']]);
+		$price_base=$arr_product['units'].' x '.ShopMoneyField::currency_format($arr_price_base[$arr_product['IdCart_shop']]).' = '.ShopMoneyField::currency_format($arr_price_base_total[$arr_product['IdCart_shop']]);
 		
-		$arr_product['price_product_last_txt']=MoneyField::currency_format($price_last);
+		$arr_product['price_product_last_txt']=ShopMoneyField::currency_format($price_last);
 	
 		$total+=$price_last;
 	
@@ -121,7 +130,9 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 		
 		$set_options_func($arr_product, $arr_row);
 	
-		middle_table_config($arr_row);
+		//middle_table_config($arr_row);
+		
+		echo View::load_view([$arr_row], 'common/tables/middletable');
 		
 		$total_units+=$arr_product['units'];
 	
@@ -133,18 +144,22 @@ function CartShowView($plugins, $arr_product_cart, $arr_price_base, $arr_price_b
 	
 	if($z>0)
 	{
-		middle_table_config(array('', '', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
+		//middle_table_config(array('', '', '', '', '<h2>'.MoneyField::currency_format($total).'</h2>'));
 		
-		$text_submit='<input type="submit" value="'.PhangoVar::$l_['shop']->lang('modify_products', 'Modificar productos').'"/> <input type="button" value="'.PhangoVar::$l_['shop']->lang('checkout_order', 'Pagar pedido').'" id="checkout_order" />';
+		echo View::load_view([array('', '', '', '', '<h2>'.ShopMoneyField::currency_format($total).'</h2>')], 'common/tables/middletable');
+		
+		$text_submit='<input type="submit" value="'.I18n::lang('shop', 'modify_products', 'Modificar productos').'"/> <input type="button" value="'.I18n::lang('shop', 'checkout_order', 'Pagar pedido').'" id="checkout_order" />';
 	}
 	else
 	{
 	
-		middle_table_config(array(PhangoVar::$l_['shop']->lang('no_products_in_index', 'No hay productos para mostrar')), array(' colspan='.count($fields)));
+        echo View::load_view([array(I18n::lang('shop', 'no_products_in_index', 'No hay productos para mostrar')), array(' colspan='.count($fields))], 'common/tables/middletable');
+	
+		//middle_table_config(array(I18n::lang('shop', 'no_products_in_index', 'No hay productos para mostrar')), array(' colspan='.count($fields)));
 	
 	}
 
-	down_table_config();
+	echo View::load_view([], 'common/tables/bottomtable');
 
 	//Plugins for added values text.
 	if($yes_update==1)
@@ -172,7 +187,7 @@ function set_options($arr_product, $arr_options)
 {
 
 
-	$arr_options[]= '<a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.PhangoVar::$l_['common']->lang('delete', 'Delete').'</a>';
+	$arr_options[]= '<a href="'.make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'deleteproductfromcart', array('action' => 'delete', 'IdCart_shop' => $arr_product['IdCart_shop'])).'">'.I18n::lang('common', 'delete', 'Delete').'</a>';
 	
 	return $arr_options;
 

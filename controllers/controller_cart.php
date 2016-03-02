@@ -6,6 +6,7 @@ use PhangoApp\PhaLibs\LoginClass;
 use PhangoApp\PhaRouter\Routes;
 use PhangoApp\PhaRouter\Controller;
 use PhangoApp\PhaI18n\I18n;
+use PhangoApp\PhaView\View;
 
 Webmodel::load_model('vendor/phangoapp/shop/models/models_shop');
 Utils::load_config('shop');
@@ -20,7 +21,7 @@ class CartController extends Controller
 	public $cart;
 	public $m;
 
-	public function __construct()
+	public function __construct($route, $name, $yes_view=1)
 	{
 		
 		$this->m=&Webmodel::$model;
@@ -86,6 +87,8 @@ class CartController extends Controller
 		$this->login->url_recovery_send=Routes::make_simple_url('shop/cart/recovery_password_send');
 		
 		$this->cart=new CartClass();
+		
+		parent::__construct($route, $name, $yes_view);
 	
 	}
 
@@ -109,7 +112,7 @@ class CartController extends Controller
 			
 			ob_end_clean();
 			
-			echo load_view(array(I18n::lang('p', 'cart', 'Carrito'), $cont_index), 'home');
+			echo View::load_view(array(I18n::lang('p', 'cart', 'Carrito'), $cont_index), 'home');
 			
 		}
 		else

@@ -3,6 +3,8 @@
 use PhangoApp\PhaI18n\I18n;
 use PhangoApp\PhaModels\Webmodel;
 use PhangoApp\PhaRouter\Routes;
+use PhangoApp\PhaUtils\Utils;
+use PhangoApp\PhaView\View;
 
 class CartClass {
 
@@ -13,7 +15,7 @@ class CartClass {
 	
 	public function __construct($yes_update=1, $token_selected='')
 	{
-	
+        
 		if(!isset($_COOKIE['webtsys_shop']))
 		{
 			
@@ -178,7 +180,7 @@ class CartClass {
 		<form method="post" action="<?php echo $this->url_update; ?>">
 		
 		<?php
-		set_csrf_key();
+		Utils::set_csrf_key();
 		}
 		else
 		{
@@ -196,7 +198,7 @@ class CartClass {
 		
 		//Go to view...
 		
-		echo load_view(array($this->plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update, $method_text_form), 'shop/cartshow');
+		echo View::load_view(array($this->plugins, $arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $this->yes_update, $method_text_form), 'shop/cartshow');
 		
 		echo $close_form;
 		
@@ -789,7 +791,9 @@ class CartClass {
 function show_text_form($idcart_shop, $units)
 {
 	
-	return new PhangoApp\PhaModels\Forms\TextForm('num_products['.$idcart_shop.']', $units);
+	$form=new PhangoApp\PhaModels\Forms\BaseForm('num_products['.$idcart_shop.']', $units);
+	
+	return $form->form();
 	
 }
 	
