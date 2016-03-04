@@ -3,11 +3,11 @@
 //Routes::$urls['welcome\/([0-9]+)\/(\w+)']=array('index', 'page');
 use PhangoApp\PhaRouter\Routes;
 
-Routes::$urls['shop\/viewproduct\/([0-9]+)\/(.*)']=array('viewproduct', 'index');
+Routes::$urls['shop\/viewproduct\/([0-9]+)\/(\w+)']=array('viewproduct', 'home');
 
-Routes::$urls['shop\/viewcategory\/([0-9]+)\/(.*)']=array('viewcategory', 'index');
+Routes::$urls['shop\/viewcategory\/([0-9]+)\/(\S+)']=['viewcategory', 'home'];
 
-Routes::$urls['shop\/viewcategory\/([0-9]+)']=['viewcategory', 'index'];
+Routes::$urls['shop\/viewcategory\/([0-9]+)']=['viewcategory', 'home'];
 
 Routes::$urls['shop\/cart\/ajax\/cart_ajax_jscript']=['ajax/fjscript', 'index'];
 

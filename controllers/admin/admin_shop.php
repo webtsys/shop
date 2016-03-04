@@ -751,6 +751,8 @@ function ShopAdmin()
 			Webmodel::$model['payment_form']->create_forms();
 			//$this->arr_values=$arr_values;
 			Webmodel::$model['payment_form']->forms['code']->arr_select=$arr_code;
+			
+			Webmodel::$model['payment_form']->components['code']->arr_values=array_keys($arr_code);
 
 			//Webmodel::$model['payment_form']->forms['code']->set_parameter_value($arr_code);
 

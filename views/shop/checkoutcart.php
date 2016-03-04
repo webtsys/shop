@@ -1,17 +1,23 @@
 <?php
 
+use PhangoApp\PhaI18n\I18n;
+use PhangoApp\PhaUtils\Utils;
+use PhangoApp\PhaRouter\Routes;
+use PhangoApp\PhaView\View;
+use PhangoApp\PhaModels\Webmodel;
+
 function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_button_checkout=1)
 {
 
 	//global PhangoVar::$lang, PhangoVar::$config_shop, PhangoVar::$model, PhangoVar::$base_url;
 	
-	load_libraries(array('forms/textplainform'));
+	//load_libraries(array('forms/textplainform'));
 				
 	$cart->yes_update=0;
 	
 	?>
-	<h1><?php echo PhangoVar::$l_['shop']->lang('final_order', 'Pedido final'); ?></h1>
-	<h2><?php echo PhangoVar::$l_['shop']->lang('shopping_list', 'Lista de la compra'); ?></h2>
+	<h1><?php echo I18n::lang('shop','final_order', 'Pedido final'); ?></h1>
+	<h2><?php echo I18n::lang('shop','shopping_list', 'Lista de la compra'); ?></h2>
 	<?php
 	
 	list($arr_product_cart, $arr_price_base, $arr_price_base_total, $arr_price_filter, $arr_weight_product)=$cart->show_cart();
@@ -21,7 +27,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	if(isset($_SESSION['idtransport']))
 	{
 	?>
-	<h2><?php echo PhangoVar::$l_['shop']->lang('transport_price', 'Portes'); ?></h2>
+	<h2><?php echo I18n::lang('shop','transport_price', 'Portes'); ?></h2>
 	<?php
 	
 		$total_weight_product=array_sum($arr_weight_product);
@@ -30,7 +36,7 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 		
 		?>
 		
-			<p><strong><?php echo $name_transport; ?>: <?php echo MoneyField::currency_format($price_transport); ?></strong></p>
+			<p><strong><?php echo $name_transport; ?>: <?php echo ShopMoneyField::currency_format($price_transport); ?></strong></p>
 		
 		<?php
 		
@@ -39,46 +45,46 @@ function CheckOutCartView($arr_address, $arr_address_transport, $cart, $yes_butt
 	}
 	
 	?>
-	<p style="font-size:28px;"><?php echo PhangoVar::$l_['shop']->lang('total_price', 'Precio total'); ?>: <?php echo MoneyField::currency_format($total_price_product); ?></p>
+	<p style="font-size:28px;"><?php echo I18n::lang('shop','total_price', 'Precio total'); ?>: <?php echo ShopMoneyField::currency_format($total_price_product); ?></p>
 	<?php
 	?>
-	<h2><?php echo PhangoVar::$l_['shop']->lang('address_billing', 'Dirección de facturación'); ?></h2>
+	<h2><?php echo I18n::lang('shop','address_billing', 'Dirección de facturación'); ?></h2>
 	<?php
 	
 	foreach(ConfigShop::$arr_fields_address as $field)
 	{
 		
-		PhangoVar::$model['user_shop']->forms[$field]->form='TextPlainForm';
+		Webmodel::$model['user_shop']->forms[$field]=new PhangoApp\PhaModels\Forms\NoForm($field, '');
 	
 	}
 	
-	$arr_address['country']=I18nField::show_formatted($arr_address['country']);
+	$arr_address['country']=PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($arr_address['country']);
 	
-	ModelForm::set_values_form($arr_address, PhangoVar::$model['user_shop']->forms, $show_error=1);
+	PhangoApp\PhaModels\ModelForm::set_values_form(Webmodel::$model['user_shop']->forms, $arr_address, $show_error=1);
 	
-	echo load_view(array(PhangoVar::$model['user_shop']->forms, ConfigShop::$arr_fields_address), 'common/forms/modelform');
+	echo View::load_view(array(Webmodel::$model['user_shop']->forms, ConfigShop::$arr_fields_address), 'forms/modelform');
 	?>
 	<br />
-	<h2><?php echo PhangoVar::$l_['shop']->lang('address_transport', 'Dirección de envio'); ?></h2>
+	<h2><?php echo I18n::lang('shop','address_transport', 'Dirección de envio'); ?></h2>
 	<?php
 	
 	foreach(ConfigShop::$arr_fields_transport as $field)
 	{
 	
-		PhangoVar::$model['address_transport']->forms[$field]->form='TextPlainForm';
+		Webmodel::$model['address_transport']->forms[$field]->form='TextPlainForm';
 	
 	}
 	
-	ModelForm::set_values_form($arr_address_transport, PhangoVar::$model['address_transport']->forms, $show_error=1);
+	PhangoApp\PhaModels\ModelForm::set_values_form(Webmodel::$model['address_transport']->forms, $arr_address_transport, $show_error=1);
 	
-	echo load_view(array(PhangoVar::$model['address_transport']->forms, ConfigShop::$arr_fields_transport), 'common/forms/modelform');
+	echo View::load_view(array(Webmodel::$model['address_transport']->forms, ConfigShop::$arr_fields_transport), 'forms/modelform');
 	
 	if($yes_button_checkout==1)
 	{
 	?>
 	<br />
-	<form method="get" action="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finish_checkout'); ?>">
-	<p><input type="submit" value="<?php echo PhangoVar::$l_['shop']->lang('send_order_and_checkout', 'Enviar pedido y pagar'); ?>" /></p>
+	<form method="get" action="<?php echo Routes::make_simple_url('shop/cart/finish_checkout'); ?>">
+	<p><input type="submit" value="<?php echo I18n::lang('shop','send_order_and_checkout', 'Enviar pedido y pagar'); ?>" /></p>
 	</form>
 	<?php
 	}

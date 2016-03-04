@@ -38,7 +38,7 @@ class CartClass {
 		
 		$this->token=sha1($token);
 		
-		$this->url_update=Routes::make_url('shop', 'cart_update');
+		$this->url_update=Routes::make_simple_url('shop/cart/update');
 	
 		$this->yes_update=$yes_update;
 	
@@ -369,6 +369,8 @@ class CartClass {
 		
             Webmodel::$model['cart_shop']->conditions='where IdCart_shop='.$idcart_shop.' and token="'.$this->token.'"';
 		
+            Webmodel::$model['cart_shop']->fields_to_update=['units'];
+		
 			return Webmodel::$model['cart_shop']->update(array('units' => $units));
 		
 		}
@@ -477,18 +479,32 @@ class CartClass {
 		
 		if(ConfigShop::$config_shop['no_transport']==0)
 		{
-		
+            
 			settype($_SESSION['idaddress'], 'integer');
-		
-			$arr_address_transport=Webmodel::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
-		
-			$arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
-		
-			$arr_transport=Webmodel::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+			settype($_SESSION['idtransport'], 'integer');
 			
-			$post['address_transport_id']=$_SESSION['idaddress'];
-			
-			$post['transport']=$arr_transport['name'];
+			$arr_address_transport['country_transport']=[];
+            
+            if($_SESSION['idtransport']!=0)
+            {
+            
+                $arr_address_transport=Webmodel::$model['address_transport']->select_a_row($_SESSION['idaddress'], ConfigShop::$arr_fields_transport);
+            
+                $arr_address_transport['country_transport']=unserialize($arr_address_transport['country_transport']);
+            
+                $arr_transport=Webmodel::$model['transport']->select_a_row($_SESSION['idtransport'], array('name'));
+                
+                $post['address_transport_id']=$_SESSION['idaddress'];
+                
+                $post['transport']=$arr_transport['name'];
+
+            }
+            else
+            {
+            
+                echo '<p>Error: transport is not set</p>';
+            
+            }
 	
 		}
 		
@@ -498,7 +514,7 @@ class CartClass {
 		
 		$post['make_payment']=1;*/
 		
-		$post['date_order']=DateTimeNow::$today;
+		$post['date_order']=PhangoApp\PhaTime\DateTimeNow::$today;
 		
 		$post['iduser']=$iduser_shop;
 		
@@ -521,7 +537,13 @@ class CartClass {
 		
 		}
 		
-		if(!Webmodel::$model['order_shop']->$method($post, 'where token="'.$this->token.'"'))
+		Webmodel::$model['order_shop']->conditions='where token="'.$this->token.'"';
+		
+		Webmodel::$model['order_shop']->fields_to_update=array_keys($post);
+		
+		Webmodel::$model['order_shop']->reset_require();
+		
+		if(!Webmodel::$model['order_shop']->$method($post))
 		{
 			
 			echo Webmodel::$model['order_shop']->std_error;
@@ -542,13 +564,13 @@ class CartClass {
 		//Here define the payment and notify that the product was paid. Also fill order_shop and delete cart.
 		
 		$arr_payment=Webmodel::$model['payment_form']->select_a_row($idpayment);
-				
+        
 		settype($arr_payment['IdPayment_form'], 'integer');
 		
 		if($arr_payment['IdPayment_form']>0)
 		{
 			
-			if(!include(PhangoVar::$base_path.'modules/shop/payment/'.basename($arr_payment['code'])))
+			if(!include(Routes::$base_path.'/vendor/phangoapp/shop/payment/'.basename($arr_payment['code'])))
 			{
 		
 				echo I18n::lang('shop', 'error_no_proccess_payment_send_email', 'Error: no se pudo procesar el pago ni el envio del email de respuesta').': '.$config_data['portal_email'];
@@ -595,9 +617,9 @@ class CartClass {
 		if($type==0)
 		{
 
-			$query=MySQLClass::webtsys_query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
+			$query=Webmodel::$model['transport']->query('select price from price_transport where weight>='.$total_weight.' and idtransport='.$idtransport.' order by price ASC limit 1');
 				
-			list($price_transport)=MySQLClass::webtsys_fetch_row($query);
+			list($price_transport)=Webmodel::$model['transport']->fetch_row($query);
 
 			settype($price_transport, 'double');
 			
@@ -614,9 +636,9 @@ class CartClass {
 				$price_transport=0;
 				$total_price_transport=0;
 
-				$query=MySQLClass::webtsys_query('select weight, price from price_transport order by price DESC limit 1');
+				$query=Webmodel::$model['transport']->query('select weight, price from price_transport order by price DESC limit 1');
 
-				list($max_weight, $max_price)=MySQLClass::webtsys_fetch_row($query);
+				list($max_weight, $max_price)=Webmodel::$model['transport']->fetch_row($query);
 
 				//Tenemos que ver en cuanto supera los kilos...
 
@@ -641,9 +663,9 @@ class CartClass {
 
 				$weight_last=$total_weight-$weight_substract;
 			
-				$query=MySQLClass::webtsys_query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
+				$query=Webmodel::$model['transport']->query('select price from price_transport where weight>='.$weight_last.' and idtransport='.$idtransport.' order by price ASC limit 1');
 				
-				list($price_transport)=MySQLClass::webtsys_fetch_row($query);
+				list($price_transport)=Webmodel::$model['transport']->fetch_row($query);
 
 				settype($price_transport, 'double');
 				

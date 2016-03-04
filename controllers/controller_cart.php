@@ -32,25 +32,25 @@ class CartController extends Controller
 
         $this->m['user_shop']->forms['country']->parameters=array('country', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');*/
 
-        $this->m['user_shop']->forms['name']->label=I18n::lang('s', 'name', 'Name');
+        $this->m['user_shop']->forms['name']->label=I18n::lang('shop', 'name', 'Name');
 
-        $this->m['user_shop']->forms['last_name']->label=I18n::lang('s', 'last_name', 'Lastname');
+        $this->m['user_shop']->forms['last_name']->label=I18n::lang('shop', 'last_name', 'Lastname');
 
-        $this->m['user_shop']->forms['nif']->label=I18n::lang('s', 'nif', 'Nif');
+        $this->m['user_shop']->forms['nif']->label=I18n::lang('shop', 'nif', 'Nif');
 
-        $this->m['user_shop']->forms['address']->label=I18n::lang('n', 'address', 'Address');
+        $this->m['user_shop']->forms['address']->label=I18n::lang('common', 'address', 'Address');
 
-        $this->m['user_shop']->forms['city']->label=I18n::lang('s', 'city', 'City');
+        $this->m['user_shop']->forms['city']->label=I18n::lang('shop', 'city', 'City');
 
-        $this->m['user_shop']->forms['region']->label=I18n::lang('n', 'region', 'Region');
+        $this->m['user_shop']->forms['region']->label=I18n::lang('common', 'region', 'Region');
 
-        $this->m['user_shop']->forms['country']->label=I18n::lang('n', 'country', 'Country');
+        $this->m['user_shop']->forms['country']->label=I18n::lang('common', 'country', 'Country');
 
-        $this->m['user_shop']->forms['zip_code']->label=I18n::lang('s', 'zip_code', 'Zip code');
+        $this->m['user_shop']->forms['zip_code']->label=I18n::lang('shop', 'zip_code', 'Zip code');
 
-        $this->m['user_shop']->forms['phone']->label=I18n::lang('n', 'phone', 'Phone');
+        $this->m['user_shop']->forms['phone']->label=I18n::lang('common', 'phone', 'Phone');
 
-        $this->m['user_shop']->forms['fax']->label=I18n::lang('n', 'fax', 'Fax');
+        $this->m['user_shop']->forms['fax']->label=I18n::lang('common', 'fax', 'Fax');
 
         $this->m['address_transport']->create_forms();
         /*
@@ -58,21 +58,21 @@ class CartController extends Controller
 
         $this->m['address_transport']->forms['country_transport']->parameters=array('country_transport', '', '', 'country_shop', 'name', $where='order by `name_'.$_SESSION['language'].'` ASC');*/
 
-        $this->m['address_transport']->forms['name_transport']->label=I18n::lang('s', 'name', 'Name');
+        $this->m['address_transport']->forms['name_transport']->label=I18n::lang('shop', 'name', 'Name');
 
-        $this->m['address_transport']->forms['last_name_transport']->label=I18n::lang('s', 'last_name', 'Lastname');
+        $this->m['address_transport']->forms['last_name_transport']->label=I18n::lang('shop', 'last_name', 'Lastname');
 
-        $this->m['address_transport']->forms['address_transport']->label=I18n::lang('n', 'address', 'Address');
+        $this->m['address_transport']->forms['address_transport']->label=I18n::lang('common', 'address', 'Address');
 
-        $this->m['address_transport']->forms['city_transport']->label=I18n::lang('s', 'city', 'City');
+        $this->m['address_transport']->forms['city_transport']->label=I18n::lang('shop', 'city', 'City');
 
-        $this->m['address_transport']->forms['region_transport']->label=I18n::lang('n', 'region', 'Region');
+        $this->m['address_transport']->forms['region_transport']->label=I18n::lang('common', 'region', 'Region');
 
-        $this->m['address_transport']->forms['country_transport']->label=I18n::lang('n', 'country', 'Country');
+        $this->m['address_transport']->forms['country_transport']->label=I18n::lang('common', 'country', 'Country');
 
-        $this->m['address_transport']->forms['zip_code_transport']->label=I18n::lang('s', 'zip_code', 'Zip code');
+        $this->m['address_transport']->forms['zip_code_transport']->label=I18n::lang('shop', 'zip_code', 'Zip code');
 
-        $this->m['address_transport']->forms['phone_transport']->label=I18n::lang('n', 'phone', 'Phone');
+        $this->m['address_transport']->forms['phone_transport']->label=I18n::lang('common', 'phone', 'Phone');
 		
 		//parent::__construct();
 	
@@ -112,7 +112,7 @@ class CartController extends Controller
 			
 			ob_end_clean();
 			
-			echo View::load_view(array(I18n::lang('p', 'cart', 'Carrito'), $cont_index), 'home');
+			echo View::load_view(array(I18n::lang('shop', 'cart', 'Carrito'), $cont_index), 'home');
 			
 		}
 		else
@@ -130,7 +130,7 @@ class CartController extends Controller
 		if(!$this->cart->check_order())
 		{
 	
-			load_libraries(array('class_cart'), PhangoVar::$base_path.'modules/shop/libraries/');
+			Utils::load_libraries(array('class_cart'), 'vendor/phangoapp/shop/libraries');
 			
 			settype($_POST['num_products'], 'array');
 			
@@ -146,7 +146,7 @@ class CartController extends Controller
 			
 			//Redirect
 		
-			$this->redirect( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', array()), I18n::lang('n', 'press_here_redirecting', 'Press here for redirecting'));
+			Routes::redirect( Routes::make_url('cart', 'index'));
 			
 		}
 		else
@@ -170,7 +170,7 @@ class CartController extends Controller
 
 			$this->cart->sum_product_to_cart($_GET['IdCart_shop'], 0);
 		
-			$this->redirect( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', array()), I18n::lang('n', 'press_here_redirecting', 'Press here for redirecting'));
+			$this->redirect( make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', array()), I18n::lang('common', 'press_here_redirecting', 'Press here for redirecting'));
 			
 		}
 		else
@@ -200,21 +200,21 @@ class CartController extends Controller
 			if(!$this->login->check_login())
 			{
 						
-				echo load_view(array($this->login), 'shop/forms/registershopform');
+				echo View::load_view(array($this->login), 'shop/forms/registershopform');
 				
 				//$this->login->create_account_form();
 				
-				echo load_view(array($this->login), 'shop/forms/loginshopform');
+				echo View::load_view(array($this->login), 'shop/forms/loginshopform');
 		
 			}
 			else
 			{
 				
-				$arr_user=$this->m['user_shop']->select_a_row($this->login->session['IdUser_shop']);
+				$arr_user=$this->m['user_shop']->select_a_row(LoginClass::$session['user_shop']['IdUser_shop']);
 			
-				ModelForm::set_values_form($arr_user, $this->m['user_shop']->forms, $show_error=1);
+				PhangoApp\PhaModels\ModelForm::set_values_form($this->m['user_shop']->forms, $arr_user, $show_error=1);
 				
-				echo load_view(array(), 'shop/forms/addressform');
+				echo View::load_view(array(), 'shop/forms/addressform');
 				
 			
 			}
@@ -223,7 +223,7 @@ class CartController extends Controller
 				
 			ob_end_clean();
 				
-			echo load_view(array(I18n::lang('p', 'cart', 'Carrito'), $cont_index), 'home');
+			echo View::load_view(array(I18n::lang('shop', 'cart', 'Carrito'), $cont_index), 'home');
 			
 		}
 		else
@@ -255,12 +255,15 @@ class CartController extends Controller
 				
 				$this->m['user_shop']->arr_fields_updated=&ConfigShop::$arr_fields_address;
 			
-				if($this->m['user_shop']->update($_POST, 'where IdUser_shop='.$this->login->session['IdUser_shop']))
+                $this->m['user_shop']->conditions='where IdUser_shop='.LoginClass::$session['user_shop']['IdUser_shop'];
+			
+				if($this->m['user_shop']->update($_POST))
 				{
 				
-					$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_set_transport');
+					$url_return=Routes::make_simple_url('shop/cart/set_transport');
 				
-					$this->redirect($url_return, I18n::lang('n', 'success', 'Success'), PhangoVar::$lang['common']	['press_here_redirecting']);
+					//$this->redirect($url_return, I18n::lang('common', 'success', 'Success'), PhangoVar::$lang['common']	['press_here_redirecting']);
+					Routes::redirect($url_return);
 				
 				}
 				else
@@ -268,7 +271,7 @@ class CartController extends Controller
 				
 					ModelForm::set_values_form($_POST, $this->m['user_shop']->forms, $show_error=1);
 				
-					echo load_view(array(), 'shop/forms/addressform');
+					View::load_view(array(), 'shop/forms/addressform');
 				
 				}
 				
@@ -276,7 +279,7 @@ class CartController extends Controller
 					
 				ob_end_clean();
 				
-				$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+				$this->load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 			
 			}
 			
@@ -292,23 +295,35 @@ class CartController extends Controller
 	
 	public function get_user_save()
 	{
-	
+        
 		if(!$this->cart->check_order())
-		{
+		{   
 			ob_start();
 			
 			if($this->login->create_account())
 			{
-			
-				$iduser=webtsys_insert_id();
-			
-				$this->login->automatic_login($iduser);
+                
+				$iduser=$this->login->model_login->insert_id();
+                
+				if(!$this->login->automatic_login($iduser))
+				{
+                    
+                    $this->login->model_login->set_conditions=['where IdUser_shop=?', [$iduser]];
 				
-				load_libraries(array('redirect'));
+                    $this->login->model_login->delete();
+                    
+                    $url_return=Routes::make_simple_url('shop/cart/get_user_save');
+                    
+                    Routes::redirect($url_return);
 				
-				$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'cat_get_address');
+				}
+                    
+				//load_libraries(array('redirect'));
 				
-				simple_redirect($url_return, I18n::lang('n', 'press_here_redirecting', 'Press here for redirecting'), $content_view='content');
+				$url_return=Routes::make_simple_url('shop/cart/get_address');
+				
+				Routes::redirect($url_return);
+				die;
 			
 			}
 			else
@@ -323,16 +338,16 @@ class CartController extends Controller
 				
 			ob_end_clean();
 			
-			echo load_view(array(I18n::lang('p', 'cart', 'Carrito'), $cont_index,), 'home');
+			echo View::load_view(array(I18n::lang('shop', 'cart', 'Carrito'), $cont_index,), 'home');
 			
 		}
 		else
 		{
-		
+                
 			$this->finish_checkout();
 		
 		}
-	
+        
 	}
 	
 	public function set_transport()
@@ -350,15 +365,19 @@ class CartController extends Controller
 				
 					ob_start();
 					
-					$arr_transport=$this->m['address_transport']->select_to_array('where iduser='.$this->login->session['IdUser_shop'].' limit '.ConfigShop::$num_address_transport, array('IdAddress_transport', 'address_transport', 'region_transport'));
+					$this->m['address_transport']->set_limit([ConfigShop::$num_address_transport]);
 					
-					echo load_view(array($arr_transport), 'shop/forms/transportform');
+					$this->m['address_transport']->conditions='where iduser='.LoginClass::$session['user_shop']['IdUser_shop'];
+					
+					$arr_transport=$this->m['address_transport']->select_to_array(array('IdAddress_transport', 'address_transport', 'region_transport'));
+					
+					echo View::load_view(array($arr_transport), 'shop/forms/transportform');
 					
 					$cont_index=ob_get_contents();
 					
 					ob_end_clean();
 				
-					$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+					View::load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 				
 				}
 				else
@@ -390,27 +409,36 @@ class CartController extends Controller
 				ob_start();
 				
 				$this->m['address_transport']->arr_fields_updated=&ConfigShop::$arr_fields_transport;
+				$this->m['address_transport']->fields_to_update=ConfigShop::$arr_fields_transport;
+				
+				$this->m['address_transport']->fields_to_update[]='iduser';
 				
 				ConfigShop::$arr_fields_transport[]='iduser';
+                
+				$_POST['iduser']=LoginClass::$session['user_shop']['IdUser_shop'];
 			
-				$_POST['iduser']=$this->login->session['IdUser_shop'];
+                $this->m['address_transport']->set_conditions(['where iduser=?', [LoginClass::$session['user_shop']['IdUser_shop']]]);
 			
-				if($this->m['address_transport']->select_count('where iduser='.$this->login->session['IdUser_shop'])<5)
+				if($this->m['address_transport']->select_count()<5)
 				{
 					if($this->m['address_transport']->insert($_POST))
 					{
 					
-						$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_set_transport');
+						$url_return=Routes::make_simple_url('shop/cart/set_transport');
 					
-						$this->redirect($url_return, I18n::lang('n', 'success', 'Success'), PhangoVar::$lang['common']	['press_here_redirecting']);
+						Routes::redirect($url_return, I18n::lang('shop', 'success', 'Success'));
 					
 					}
 					else
 					{
-						
-						ModelForm::set_values_form($_POST, $this->m['address_transport']->forms, $show_error=1);
 					
-						echo load_view(array($arr_transport=array(), 1), 'shop/forms/transportform');
+                        //$this->m['address_transport']->create_forms();
+                        
+                        unset($_POST['iduser']);
+						
+						PhangoApp\PhaModels\ModelForm::set_values_form( $this->m['address_transport']->forms, $_POST, $show_error=1);
+					
+						echo View::load_view(array($arr_transport=array(), 1), 'shop/forms/transportform');
 					
 					}
 					
@@ -418,7 +446,7 @@ class CartController extends Controller
 				else
 				{
 				
-					echo '<p>'.I18n::lang('p', 'cannot_add_more_address', 'cannot_add_more_address').'</p>';
+					echo '<p>'.I18n::lang('shop', 'cannot_add_more_address', 'cannot_add_more_address').'</p>';
 				
 				}
 				
@@ -426,7 +454,7 @@ class CartController extends Controller
 					
 				ob_end_clean();
 				
-				$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+				View::load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 			}
 			else
 			{
@@ -449,7 +477,9 @@ class CartController extends Controller
 			
 				settype($_GET['idaddress'], 'integer');
 				
-				if($this->m['address_transport']->select_count('where iduser='.$this->login->session['IdUser_shop'].' and IdAddress_transport='.$_GET['idaddress'])==1)
+				$this->m['address_transport']->set_conditions(['where iduser=? and IdAddress_transport=?', [LoginClass::$session['user_shop']['IdUser_shop'], $_GET['idaddress']]]);
+				
+				if($this->m['address_transport']->select_count()==1)
 				{
 				
 					$_SESSION['idaddress']=$_GET['idaddress'];
@@ -458,13 +488,13 @@ class CartController extends Controller
 					
 					//Now, select transport
 					
-					$this->simple_redirect($this->get_method_url('cart_set_method_transport'));
+                    Routes::redirect(Routes::make_simple_url('shop/cart/set_method_transport'));
 					
 					/*$cont_index=ob_get_contents();
 						
 					ob_end_clean();
 					
-					$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);*/
+					$this->load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);*/
 					
 					
 				
@@ -472,7 +502,8 @@ class CartController extends Controller
 				else
 				{
 				
-					$this->simple_redirect($this->get_method_url('index'));
+					//$this->simple_redirect($this->get_method_url('index'));
+					Routes::redirect(Routes::make_simple_url('shop/cart'));
 				
 				}
 			}
@@ -498,16 +529,16 @@ class CartController extends Controller
 					
 				//Now, load country_shop and zone_shop.
 				
-				//$this->m['address_transport']->components['country_transport']->name_field_to_field='name';
+				$this->m['address_transport']->components['country_transport']->name_field_to_field='';
 				$this->m['address_transport']->components['country_transport']->fields_related_model=array('idzone_transport');
 				
-				$address_transport=$this->m['address_transport']->select_a_row($_SESSION['idaddress'], array('country_transport'));
+				$address_transport=$this->m['address_transport']->select_a_row($_SESSION['idaddress'], ['country_transport']);
 				
 				settype($address_transport['country_transport'], 'integer');
 				
 				if($address_transport['country_transport']>0)
 				{
-				
+                    
 					$this->cart=new CartClass(0);
 					
 					list($num_product, $total_price_product, $total_weight_product)=$this->cart->obtain_simple_cart();
@@ -516,10 +547,12 @@ class CartController extends Controller
 					
 					//$zone_transport=$this->m['zone_shop']->select_a_row('where IdZone_shop='.$address_transport['country_shop_idzone_transport'], array('));
 					
-					$arr_transport=$this->m['transport']->select_to_array('where country='.$address_transport['country_shop_idzone_transport']);
+					$this->m['transport']->conditions='where country='.$address_transport['country_shop_idzone_transport'];
+					
+					$arr_transport=$this->m['transport']->select_to_array();
 				
 					//print_r($arr_transport);
-					echo load_view(array($arr_transport, $total_price_product, $total_weight_product, $this->cart), 'shop/forms/choosetransport'); 
+					echo View::load_view(array($arr_transport, $total_price_product, $total_weight_product, $this->cart), 'shop/forms/choosetransport'); 
 				
 				}
 				
@@ -531,7 +564,7 @@ class CartController extends Controller
 					
 				ob_end_clean();
 				
-				$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+				View::load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 				
 			}
 			else
@@ -556,7 +589,9 @@ class CartController extends Controller
 		
 				settype($_GET['idtransport'], 'integer');
 				
-				if($this->m['transport']->select_count('where IdTransport='.$_GET['idtransport'])==1)
+				$this->m['transport']->conditions='where IdTransport='.$_GET['idtransport'];
+				
+				if($this->m['transport']->select_count()==1)
 				{
 				
 					$_SESSION['idtransport']=$_GET['idtransport'];
@@ -565,13 +600,13 @@ class CartController extends Controller
 					
 					//Now, select transport
 					
-					$this->simple_redirect($this->get_method_url('cart_checkout', array()));
+					Routes::redirect(Routes::make_simple_url('shop/cart/checkout'));
 					
 					/*$cont_index=ob_get_contents();
 						
 					ob_end_clean();
 					
-					$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);*/
+					$this->load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);*/
 					
 					
 				
@@ -579,7 +614,7 @@ class CartController extends Controller
 				else
 				{
 				
-					$this->simple_redirect($this->get_method_url('cart', array()));
+					Routes::redirect(Routes::make_simple_url('shop/cart'));
 				
 				}
 			}
@@ -627,30 +662,30 @@ class CartController extends Controller
 						
 						$arr_country=$this->m['country_shop']->select_a_row($arr_address_transport['country_transport'], array('name'));
 						
-						$arr_address_transport['country_transport']=I18nField::show_formatted($arr_country['name']);
+						$arr_address_transport['country_transport']=PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($arr_country['name']);
 					
 					}
 				
 				}
 				
-				$arr_address=$this->m['user_shop']->select_a_row($this->login->session['IdUser_shop']);
+				$arr_address=$this->m['user_shop']->select_a_row(LoginClass::$session['user_shop']['IdUser_shop']);
 						
 				$arr_country=$this->m['country_shop']->select_a_row($arr_address['country'], array('name'));
 				
-				$arr_address['country']=I18nField::show_formatted($arr_country['name']);
+				$arr_address['country']=PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($arr_country['name']);
 				
 				if($yes_use_transport==1)
 				{
 					
 					
 					
-					echo load_view(array($arr_address, $arr_address_transport, $this->cart), 'shop/checkoutcart');
+					echo View::load_view(array($arr_address, $arr_address_transport, $this->cart), 'shop/checkoutcart');
 				
 				}
 				else
 				{
 				
-					$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+					Routes::redirect(Routes::make_simple_url('shop/cart'));
 				
 				}
 				
@@ -658,7 +693,7 @@ class CartController extends Controller
 							
 				ob_end_clean();
 				
-				$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+				View::load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 			}
 			else
 			{
@@ -670,7 +705,7 @@ class CartController extends Controller
 		else
 		{
 		
-			$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+			Routes::redirect(Routes::make_simple_url('shop/cart'));
 		
 		}
 	
@@ -689,10 +724,10 @@ class CartController extends Controller
 		{
 			if(!$this->cart->check_order())
 			{
-				if(!$this->cart->create_order_shop($this->login->session['IdUser_shop']))
+				if(!$this->cart->create_order_shop(LoginClass::$session['user_shop']['IdUser_shop']))
 				{
 				
-					echo load_view(array('Error', 'Error, cannot create order shop'), 'content');
+					echo View::load_view(array('Error', 'Error, cannot create order shop'), 'content');
 				
 				}
 				else
@@ -701,7 +736,7 @@ class CartController extends Controller
 					//$this->finish_checkout();
 					//http://localhost/phango2/index.php/shop/cart/finish_checkout
 					//simple_redirect(PhangoVar::$base_url, 'shop', 'cart', 'di);
-					$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'finish_checkout'));
+					Routes::redirect(Routes::make_simple_url('shop/cart/finish_checkout'));
 				}
 			}
 			else
@@ -715,32 +750,31 @@ class CartController extends Controller
 				
 					default:
 					
-						$arr_payment=array(0);
+						$arr_payment=[];
 
-						$query=$this->m['payment_form']->select('', array($this->m['payment_form']->idmodel, 'name', 'price_payment'));
+						$query=$this->m['payment_form']->select(array($this->m['payment_form']->idmodel, 'name', 'price_payment'));
 						
-						while(list($idpayment, $name, $price)=webtsys_fetch_row($query))
+						while(list($idpayment, $name, $price)=$this->m['payment_form']->fetch_row($query))
 						{
 						
-							$name=I18nField::show_formatted($name);
+							$name=PhangoApp\PhaModels\CoreFields\I18nField::show_formatted($name);
 
 							if($price>0)
 							{
-								$price=MoneyField::currency_format( $price );
+								$price=ShopMoneyField::currency_format( $price );
 							}
 							else
 							{
 
-								$price=I18n::lang('p', 'mode_payment_free_charge', 'Modo de pago libre de cargo');
+								$price=I18n::lang('shop', 'mode_payment_free_charge', 'Modo de pago libre de cargo');
 
 							}
 
-							$arr_payment[]=$name.' - '.$price;
-							$arr_payment[]=$idpayment;
+							$arr_payment[$idpayment]=$name.' - '.$price;
 
 						}
 				
-						echo load_view(array($arr_payment), 'shop/forms/methodpayment');
+						echo View::load_view(array($arr_payment), 'shop/forms/methodpayment');
 					
 					break;
 					
@@ -753,13 +787,13 @@ class CartController extends Controller
 						
 							//The payment gateway
 						
-							$this->cart->payment_gateway($this->login->session['IdUser_shop'], $_POST['payment_form']);
+							$this->cart->payment_gateway(LoginClass::$session['user_shop']['IdUser_shop'], $_POST['payment_form']);
 					
 						}
 						else
 						{
 						
-							$this->simple_redirect(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart'));
+							Routes::redirect(Routes::make_simple_url('shop/cart'));
 						
 						}
 					
@@ -771,7 +805,7 @@ class CartController extends Controller
 				else
 				{
 				
-					simple_redirect_location(make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished'));
+					Routes::redirect(Routes::make_simple_url('shop/cart/finished'));
 				
 				}
 			
@@ -781,7 +815,7 @@ class CartController extends Controller
 								
 			ob_end_clean();
 					
-			$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+			View::load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 			
 		}
 	
@@ -803,7 +837,7 @@ class CartController extends Controller
 			
 			$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_get_address');
 			
-			$this->redirect($url_return, I18n::lang('n', 'press_here_redirecting', 'Press here for redirecting'));
+			$this->redirect($url_return, I18n::lang('common', 'press_here_redirecting', 'Press here for redirecting'));
 		
 		}
 		else
@@ -817,7 +851,7 @@ class CartController extends Controller
 			
 			ob_end_clean();
 			
-			$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+			$this->load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 		
 		}
 	
@@ -834,7 +868,7 @@ class CartController extends Controller
 			
 		ob_end_clean();
 		
-		$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+		$this->load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 	
 	}
 	
@@ -849,7 +883,7 @@ class CartController extends Controller
 		
 		ob_end_clean();
 		
-		$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+		$this->load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 	
 	}
 	
@@ -869,7 +903,7 @@ class CartController extends Controller
 			
 					$this->cart->clean_cart();
 			
-					echo load_view(array( I18n::lang('p', 'order_success_cart_clean', '<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>') ), 'content');
+					echo load_view(array( I18n::lang('shop', 'order_success_cart_clean', '<p><strong>Se realizó el pedido con éxito.</strong></p><p>Recibirá un email con los datos de su compra así como el número de referencia con el cual podrá hacer una reclamación de este pedido si se produjera alguna indidencia.</p>') ), 'content');
 					
 				}
 				else
@@ -877,7 +911,7 @@ class CartController extends Controller
 				
 					$this->cart->clean_cart();
 				
-					echo load_view(array( I18n::lang('p', 'error_contact_with_us', 'error_contact_with_us') ), 'content');
+					echo View::load_view(array( I18n::lang('shop', 'error_contact_with_us', 'error_contact_with_us') , I18n::lang('shop', 'error_contact_with_us_explain', 'Error: no se pudo finalizar la transacción correctamente. Por favor, contacte con nosotros urgentemente si efectuó el pago.')), 'content');
 				
 				}
 				
@@ -889,7 +923,7 @@ class CartController extends Controller
 		
 		ob_end_clean();
 		
-		$this->load_theme(I18n::lang('p', 'cart', 'Carrito'), $cont_index);
+		View::load_theme(I18n::lang('shop', 'cart', 'Carrito'), $cont_index);
 	
 	}
 	

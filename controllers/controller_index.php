@@ -31,8 +31,12 @@ class IndexController extends Controller {
             $arr_photo[$idproduct]='default_image.jpg';
         
         }
+       
+        $arr_q=array_fill(0, count($arr_id), '?');
         
-        $m->image_product->set_conditions(['where idproduct IN (?) and principal=?', [ implode("', '", $arr_id), 1]]);
+        $arr_id[]=1;
+       
+        $m->image_product->set_conditions(['where idproduct IN ('.implode(',', $arr_q).') and principal=?', $arr_id]);
         
         $query=$m->image_product->select(['photo', 'idproduct'], true);
         

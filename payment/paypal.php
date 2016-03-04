@@ -1,6 +1,11 @@
 <?php
 
-load_libraries(array('config_shop', 'class_cart'));
+use PhangoApp\PhaUtils\Utils;
+use PhangoApp\PhaI18n\I18n;
+use PhangoApp\PhaRouter\Routes;
+use PhangoApp\PhaModels\Webmodel;
+
+Utils::load_libraries(array('config_shop', 'class_cart'));
 
 class PaypalPaymentClass extends PaymentClass
 {
@@ -10,7 +15,7 @@ class PaypalPaymentClass extends PaymentClass
 	
 		settype($_GET['op_pay'], 'integer');
 		
-		if(EMAIL_PAYPAL_SHOP && URL_PAYPAL_SHOP)
+		if(defined('EMAIL_PAYPAL_SHOP') && defined('URL_PAYPAL_SHOP'))
 		{
 			
 			switch($_GET['op_pay'])
@@ -18,25 +23,27 @@ class PaypalPaymentClass extends PaymentClass
 				default:
 				
 					?>
-					<p><strong><?php echo PhangoVar::$l_['shop']->lang('paypal_explain', 'Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.'); ?></strong></p>
+					<p><strong><?php echo I18n::lang('shop', 'paypal_explain', 'Al pulsar en pagar pedido, usted irá a una pasarela de pago de paypal para poder efectuar el pago.'); ?></strong></p>
 					<?php
 
 					/*$query=PhangoVar::$model['config_shop']->select('', array('yes_transport'));
 
 					list($yes_transport)=webtsys_fetch_row($query);*/
 					
-					$url_return=make_fancy_url(PhangoVar::$base_url, 'shop', 'cart', 'finish_checkout', array(), array('op' => 1, 'op_pay' => 1));
+					$url_return=Routes::make_simple_url('shop/cart/finish_checkout', array(), array('op' => 1, 'op_pay' => 1));
 					
 					?>
 					<form action="<?php echo URL_PAYPAL_SHOP; ?>" method="post">
 					<input type="hidden" name="cmd" value="_cart">
 					<input type="hidden" name="business" value="<?php echo EMAIL_PAYPAL_SHOP; ?>">
-					<input type="hidden" name="notify_url" value="<?php echo make_direct_url(PhangoVar::$base_url, 'shop', 'paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'])); ?>/?csrf_token=<?php echo PhangoVar::$prefix_key; ?>">
-					<input type="hidden" name="return" value="<?php echo make_fancy_url(PhangoVar::$base_url, 'shop', 'cart_finished', array(), array()); ?>">
+					<input type="hidden" name="notify_url" value="<?php echo Routes::make_simple_url('shop/paypalipn', array('webtsys_shop' => $_COOKIE['webtsys_shop'])); ?>/?csrf_token=">
+					<input type="hidden" name="return" value="<?php echo Routes::make_simple_url('shop/cart/finished', array(), array()); ?>">
 					<!--<input type="hidden" name="quantity" value="1">-->
 					<?php
 					
-					$arr_products=PhangoVar::$model['cart_shop']->select_to_array('where token="'.sha1($_COOKIE['webtsys_shop']).'"');
+					Webmodel::$model['cart_shop']->conditions='where token="'.sha1($_COOKIE['webtsys_shop']).'"';
+					
+					$arr_products=Webmodel::$model['cart_shop']->select_to_array();
 					
 					$total_weight=0;
 					
@@ -49,11 +56,11 @@ class PaypalPaymentClass extends PaymentClass
 					
 					$idproduct=$arr_cart_shop['idproduct'];
 					
-					$price_total=MoneyField::currency_format($arr_cart_shop['price_product']*$arr_cart_shop['units'], 0);
+					$price_total=ShopMoneyField::currency_format($arr_cart_shop['price_product']*$arr_cart_shop['units'], 0);
 					
 					?>
 					
-					<input type="hidden" name="item_name_<?php echo $z; ?>" value="<?php echo $arr_cart_shop['units']; ?> x <?php echo PhangoVar::$model['product']->components['title']->show_formatted($arr_cart_shop['product_title']); ?>">
+					<input type="hidden" name="item_name_<?php echo $z; ?>" value="<?php echo $arr_cart_shop['units']; ?> x <?php echo Webmodel::$model['product']->components['title']->show_formatted($arr_cart_shop['product_title']); ?>">
 					<input type="hidden" name="amount_<?php echo $z; ?>" value="<?php echo $price_total; ?>">
 					<input type="hidden" name="quantity_<?php echo $z; ?>" value="1">
 					<?php
@@ -89,7 +96,7 @@ class PaypalPaymentClass extends PaymentClass
 						<input type="hidden" name="no_note" value="0">
 						<input type="hidden" name="upload" value="1">
 						<input type="hidden" name="currency_code" value="EUR">
-						<input type="submit" value="<?php echo PhangoVar::$l_['shop']->lang('checkout_order', 'Pagar pedido'); ?>" />
+						<input type="submit" value="<?php echo I18n::lang('shop', 'checkout_order', 'Pagar pedido'); ?>" />
 						</form>
 
 					<?php
@@ -103,7 +110,7 @@ class PaypalPaymentClass extends PaymentClass
 					//Here check that the payment was done.
 					//Check payment
 					
-					$c=PhangoVar::$model['paypal_check']->select_count('where cookie_shop="'.sha1($_COOKIE['webtsys_shop']).'"');
+					$c=Webmodel::$model['paypal_check']->select_count('where cookie_shop="'.sha1($_COOKIE['webtsys_shop']).'"');
 					
 					if($c>0)
 					{
@@ -125,7 +132,7 @@ class PaypalPaymentClass extends PaymentClass
 		}
 		else
 		{
-			echo '<p><strong>'.PhangoVar::$l_['shop']->lang('paypal_email_variable_no_isset', 'Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago').'</strong></p>';
+			echo '<p><strong>'.I18n::lang('shop', 'paypal_email_variable_no_isset', 'Por favor, defina las variables necesarias en su sistema para poder usar paypal como modo de pago').'</strong></p>';
 
 			return 0;
 		}

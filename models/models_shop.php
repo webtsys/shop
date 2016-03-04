@@ -1024,8 +1024,8 @@ class payment_form extends Webmodel {
 
 Webmodel::$model['payment_form']=new payment_form();
 Webmodel::$model['payment_form']->register('name', new I18nField(new TextField()) , 1);
-Webmodel::$model['payment_form']->register('code', new ChoiceField(255, 'string'));
-Webmodel::$model['payment_form']->register('price_payment', new ShopMoneyField() );
+Webmodel::$model['payment_form']->register('code', new ChoiceField(255, 'string'), 1);
+Webmodel::$model['payment_form']->register('price_payment', new ShopMoneyField());
 
 class cart_shop extends Webmodel {
 
