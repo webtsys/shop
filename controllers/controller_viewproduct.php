@@ -1,9 +1,17 @@
 <?php
 
-class ViewproductSwitchClass extends ControllerSwitchClass 
+use PhangoApp\PhaRouter\Controller;
+use PhangoApp\PhaRouter\Routes;
+use PhangoApp\PhaI18n\I18n;
+use PhangoApp\PhaUtils\Utils;
+use PhangoApp\PhaModels\Webmodel;
+use PhangoApp\PhaView\View;
+use PhangoApp\PhaModels\CoreFields\I18nField;
+
+class ViewProductController extends Controller
 {
 
-	public function index($idproduct, $text_product)
+	public function home($idproduct)
 	{
 
 		//global $user_data, $model, $ip, $lang, $config_data, PhangoVar::$base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $config_data, ConfigShop::$config_shop, $lang_taxes;
@@ -12,20 +20,20 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 
 		//Load page...
 
-		load_model('shop');
+		Webmodel::load_model('vendor/phangoapp/shop/models/models_shop');
 
-		load_lang('shop');
-		load_libraries(array('utilities/hierarchy_links'));
-		load_libraries(array('config_shop'), PhangoVar::$base_path.'modules/shop/libraries/');
+		I18n::load_lang('phangoapp/shop');
+		//load_libraries(array('utilities/hierarchy_links'));
+		Utils::load_libraries(array('config_shop'), 'vendor/phangoapp/shop/libraries');
 
 		settype($idproduct, 'integer');
 		settype($_GET['img_big'], 'integer');
 
 		//$idtax=ConfigShop::$config_shop['idtax'];
 		
-		PhangoVar::$model['product']->related_models=array('product_relationship' => array('idproduct', 'idcat_product'));
+		Webmodel::$model['product']->related_models=array('product_relationship' => array('idproduct', 'idcat_product'));
 		
-		$arr_product=PhangoVar::$model['product']->select_a_row($idproduct, array(), 0);
+		$arr_product=Webmodel::$model['product']->select_a_row($idproduct, array(), 0);
 		
 		$idcat_product=$arr_product['product_relationship_idcat_product'];
 		
@@ -40,16 +48,24 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 			$title=$arr_product['title'];
 			$description=$arr_product['description'];
 			
-			$title=PhangoVar::$model['product']->components['title']->show_formatted($title);
-			$description=PhangoVar::$model['product']->components['description']->show_formatted($description);
-
-			list($view_only_mode)=PhangoVar::$model['cat_product']->select_a_row($idcat_product, array('view_only_mode'), false, true);
+			$title=Webmodel::$model['product']->components['title']->show_formatted($title);
+			$description=Webmodel::$model['product']->components['description']->show_formatted($description);
+            
+			$arr_cat=Webmodel::$model['cat_product']->select_a_row($idcat_product, ['view_only_mode'], false, true);
+			
+			$view_only_mode=$arr_cat['view_only_mode'];
 			
 			$arr_product['view_only_mode']=$view_only_mode;
 		
 			//Prepare images
 			
-			$arr_product['images']=PhangoVar::$model['image_product']->select_to_array('where idproduct='.$idproduct.' order by principal DESC', array('photo'));
+			Webmodel::$model['image_product']->set_conditions(['where idproduct=?', [$idproduct]]);
+			
+			//order by principal DESC';
+			
+			Webmodel::$model['image_product']->set_order(['principal' =>1 ]);
+			
+			$arr_product['images']=Webmodel::$model['image_product']->select_to_array(array('photo'));
 			
 			if(count($arr_product['images'])==0)
 			{
@@ -62,12 +78,17 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 			
 			$arr_plugin=array();
 			
-			$query=PhangoVar::$model['plugin_shop']->select('where element="product" order by position ASC', array('plugin'));
+			Webmodel::$model['plugin_shop']->conditions='where element="product"';
 			
-			while(list($plugin)=webtsys_fetch_row($query))
+			//'order by position ASC'
+			
+			Webmodel::$model['plugin_shop']->set_order(['position' => 0]);
+			
+			$query=Webmodel::$model['plugin_shop']->select(array('plugin'));
+			
+			while(list($plugin)=Webmodel::$model['plugin_shop']->fetch_row($query))
 			{
 				
-				/*load_libraries(array($plugin), PhangoVar::$base_path.'modules/shop/plugins/product/');*/
 			
 				$func_plugin=ucfirst($plugin).'Show';
 				
@@ -77,7 +98,7 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 			
 			$arr_product['plugins']=$arr_plugin;
 			
-			echo load_view(array('arr_product' => $arr_product), 'shop/viewproduct');
+			echo View::load_view(array('arr_product' => $arr_product), 'shop/viewproduct');
 			
 			
 
@@ -90,14 +111,14 @@ class ViewproductSwitchClass extends ControllerSwitchClass
 			echo load_view(array($lang['shop']['no_exists_product'], $lang['shop']['this_product_is_not_found']), 'content');
 
 		}
-
+        
 		$cont_index=ob_get_contents();
-
+        
 		ob_clean();
 		
 		//Show links for categories
 
-		echo load_view(array($title, $cont_index), 'home');
+		echo View::load_view(array($title, $cont_index), 'home');
 
 	}
 		

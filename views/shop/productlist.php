@@ -34,7 +34,7 @@ else
         <div class='uil-squares-css' style='transform:scale(0.12);display:none;' id="add_product_<?php echo $arr_product['IdProduct']; ?>"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
     </div>
 	<div class="cont_product">
-        <a href="#" class="see_more">Ver + <i class="fa fa-eye"></i></a> <a href="#" class="buy_button" onclick="javascript:Cart.buy_product(<?php echo $arr_product['IdProduct']; ?>); return false;">Comprar <i class="fa fa-shopping-cart"></i></a>
+        <a href="<?php echo Routes::make_simple_url('shop/viewproduct', [$arr_product['IdProduct']]); ?>" class="see_more">Ver + <i class="fa fa-eye"></i></a> <a href="#" class="buy_button" onclick="javascript:Cart.buy_product(<?php echo $arr_product['IdProduct']; ?>); return false;">Comprar <i class="fa fa-shopping-cart"></i></a>
 	</div>
 </div>
 
