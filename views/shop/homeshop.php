@@ -82,8 +82,8 @@ function HomeShopView($title, $arr_product, $arr_photo)
     ?>
     <div id="container_slider">
         <div id="slider" class="nivoSlider theme-default">
-            <img src="<?php echo Routes::$root_url; ?>/slider/image1.jpg" title="#slide_0" />
-            <img src="<?php echo Routes::$root_url; ?>/slider/image2.jpg" title="#slide_1" />
+            <img src="<?php echo Routes::$root_url; ?>slider/image1.jpg" title="#slide_0" />
+            <img src="<?php echo Routes::$root_url; ?>slider/image2.jpg" title="#slide_1" />
         </div>
         <div id="slide_0" class="nivo-html-caption">
             <div class="title_slide">
