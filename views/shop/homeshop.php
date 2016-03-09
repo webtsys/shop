@@ -17,9 +17,9 @@ function HomeShopView($title, $arr_product, $arr_photo)
     View::$css[]='owl.carousel.css';
     View::$css[]='owl.theme.css';
     
-    View::$css_module['shopindex'][]='everindex.css';
-    View::$css_module['shopindex'][]='nivo-slider.css';
-    View::$css_module['shopindex'][]='default.css';
+    View::$css[]='everindex.css';
+    View::$css[]='nivo-slider.css';
+    View::$css[]='default.css';
 
     ob_start();
     
