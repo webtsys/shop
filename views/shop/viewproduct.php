@@ -22,12 +22,27 @@ function ViewProductView($arr_product)
 	echo $hierarchy_links->show();
 	
 	ob_start();
+	
+	?>
+    <script>
+    
+        $('.img_desc').ShowBigImage();
+    
+    </script>
+	<?php
+	
+	View::$header[]=ob_get_contents();
+	
+	ob_end_clean();
+	
+	ob_start();
     
 	//Prepare images
 
 	//$idtax=ConfigShop::$config_shop['idtax'];
 	
-	View::$js[]='show_big_image.js';
+	View::$js[]='jquery.min.js';
+	View::$js[]='show_big_image2.js';
 	
 	$arr_stock[0]=I18n::lang('shop', 'no_stock', 'Sin stock');
 	$arr_stock[1]=I18n::lang('shop', 'in_stock', 'En stock');
@@ -88,7 +103,7 @@ function ViewProductView($arr_product)
                 ?>
                 <!--<div class="image_product">-->
                 <div align="center">
-                    <a href="<?php echo Webmodel::$model['image_product']->components['photo']->url_path.'/'.$image['photo']; ?>" id="image<?php echo $key; ?>">
+                    <a href="<?php echo Webmodel::$model['image_product']->components['photo']->url_path.'/'.$image['photo']; ?>" id="image<?php echo $key; ?>" class="img_desc">
                         <img src="<?php echo $image_min; ?>" />
                     </a>
                     <div class="product_buyed" style="display:none;" id="successful_product_<?php echo $arr_product['IdProduct']; ?>">Añadido al carrito con éxito</div>
@@ -137,7 +152,6 @@ function ViewProductView($arr_product)
 	?>
 	<br />
 	</div>
-	
 	<?php
 	
 	$arr_plugin=$arr_product['plugins'];

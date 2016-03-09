@@ -106,9 +106,9 @@ class ViewProductController extends Controller
 		else
 		{
 
-			$title=$lang['shop']['no_exists_product'];
+			$title=I18n::lang('shop', 'no_exists_product', 'Product not exists');
 			
-			echo load_view(array($lang['shop']['no_exists_product'], $lang['shop']['this_product_is_not_found']), 'content');
+			echo View::load_view(array(I18n::lang('shop', 'no_exists_product', 'Product not exists'), I18n::lang('shop', 'this_product_is_not_found', 'This product is not found')), 'content');
 
 		}
         
