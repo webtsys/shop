@@ -10,7 +10,7 @@ function HomeShopView($title, $arr_product, $arr_photo)
     View::$js[]='jquery.min.js';
     View::$js[]='owl-carousel/owl.carousel.min.js';
     View::$js[]='show_big_image2.js';
-    View::$js_module['shopindex'][]='nivoslider/jquery.nivo.slider.pack.js';
+    View::$js[]='nivoslider/jquery.nivo.slider.pack.js';
     
     //PhangoVar::$arr_cache_css['shopindex'][]='style.css';
     
