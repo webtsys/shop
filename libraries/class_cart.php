@@ -815,6 +815,8 @@ function show_text_form($idcart_shop, $units)
 	
 	$form=new PhangoApp\PhaModels\Forms\BaseForm('num_products['.$idcart_shop.']', $units);
 	
+	$form->css='units';
+	
 	return $form->form();
 	
 }
